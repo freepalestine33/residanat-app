@@ -1,13 +1,14 @@
 import { Link } from 'react-router-dom';
+import { Cloud, CloudOff, RefreshCw, CircleAlert } from 'lucide-react';
 import { useAuthStore, useSyncStore } from '../../stores';
 
 const indicators = {
-  local: { color: 'var(--muted)', label: 'Local only' },
-  offline: { color: 'var(--muted)', label: 'Offline · changes saved locally' },
-  syncing: { color: 'var(--orange)', label: 'Syncing…' },
-  synced: { color: 'var(--green)', label: 'Synced' },
-  error: { color: 'var(--red)', label: 'Sync error' },
-  conflict: { color: 'var(--orange)', label: 'Choose initial sync' },
+  local: { className: 'is-local', label: 'Données locales', Icon: CloudOff },
+  offline: { className: 'is-offline', label: 'Hors ligne · changements enregistrés', Icon: CloudOff },
+  syncing: { className: 'is-syncing', label: 'Synchronisation…', Icon: RefreshCw },
+  synced: { className: 'is-synced', label: 'Synchronisé', Icon: Cloud },
+  error: { className: 'is-error', label: 'Erreur de synchronisation', Icon: CircleAlert },
+  conflict: { className: 'is-conflict', label: 'Choisir la synchronisation initiale', Icon: CircleAlert },
 } as const;
 
 export function SyncStatus() {
@@ -15,10 +16,11 @@ export function SyncStatus() {
   const user = useAuthStore((state) => state.user);
   const configured = useAuthStore((state) => state.configured);
   const indicator = indicators[status];
+  const { Icon } = indicator;
   return (
-    <Link className="sync-status" to="/settings" title={indicator.label} aria-label={`${indicator.label}. Open sync settings.`}>
-      <span className="sync-status-dot" style={{ background: indicator.color }} aria-hidden="true">☁</span>
-      <span>{user ? indicator.label : configured ? 'Sign in to sync' : 'Local only'}</span>
+    <Link className={`sync-status ${indicator.className}`} to="/settings" title={indicator.label} aria-label={`${indicator.label}. Open sync settings.`}>
+      <Icon className="sync-status-icon" size={15} strokeWidth={1.8} aria-hidden="true" />
+      <span>{user ? indicator.label : configured ? 'Connectez-vous pour synchroniser' : 'Données locales'}</span>
     </Link>
   );
 }

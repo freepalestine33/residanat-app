@@ -6,7 +6,7 @@ import { db, type UserLecture } from '../db/db';
 import { blobToBase64 } from '../lib/images';
 import { LectureSchema } from '../lib/schema';
 import { queueSyncChange } from '../lib/syncEvents';
-import { useAuthStore, useSyncStore } from '../stores';
+import { useAuthStore, useSettingsStore, useSyncStore } from '../stores';
 
 const LOCAL_KEYS = [
   'sa_settings_v1',
@@ -29,6 +29,7 @@ const LOCAL_KEYS = [
 export function SettingsPage() {
   const { user, configured, loading: authLoading, error: authError, sendMagicLink, signOut, clearError } = useAuthStore();
   const { status, error: syncError, initialChoiceRequired, syncNow, chooseInitialSync } = useSyncStore();
+  const { theme, setTheme } = useSettingsStore();
   const [email, setEmail] = useState('');
   const [sent, setSent] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -166,69 +167,83 @@ export function SettingsPage() {
     <>
       <Header />
       <TabBar tabs={coreTabs} />
-      <main className="wrap">
-        <section className="panel">
-          <p className="eyebrow">Secure account · offline-ready</p>
-          <h2>Account & synchronisation</h2>
-          {!configured && <p className="notice error">Cloud sign-in is not configured. Set the Supabase URL and anon key in the deployment environment.</p>}
+      <main className="wrap settings-wrap">
+        <section className="panel appearance-panel">
+          <div>
+            <p className="eyebrow">Apparence</p>
+            <h2>Votre thème</h2>
+            <p className="muted">Votre préférence est enregistrée sur cet appareil et synchronisée avec votre compte.</p>
+          </div>
+          <div className="theme-switch" role="group" aria-label="Thème de couleur">
+            <button type="button" className={theme === 'light' ? 'theme-choice active' : 'theme-choice'} aria-pressed={theme === 'light'} onClick={() => setTheme('light')}>Clair</button>
+            <button type="button" className={theme === 'dark' ? 'theme-choice active' : 'theme-choice'} aria-pressed={theme === 'dark'} onClick={() => setTheme('dark')}>Sombre</button>
+          </div>
+        </section>
+
+        <section className="panel settings-section">
+          <p className="eyebrow">Compte · synchronisation hors ligne</p>
+          <h2>Compte et synchronisation</h2>
+          {!configured && <p className="notice error">La connexion cloud n’est pas configurée. Renseignez l’URL Supabase et la clé anon dans l’environnement de déploiement.</p>}
           {configured && !user && (
             <form className="note-form" onSubmit={(event) => void sendLink(event)}>
-              <p className="muted">Sign in with an email magic link to sync your study data across devices. Changes stay on this device while offline.</p>
+              <p className="muted">Connectez-vous par lien e-mail pour synchroniser vos données de révision entre vos appareils. Vos changements restent sur cet appareil hors ligne.</p>
               <label>
-                <span className="field-label">Email</span>
+                <span className="field-label">Adresse e-mail</span>
                 <input type="email" autoComplete="email" required value={email} onChange={(event) => setEmail(event.target.value)} />
               </label>
-              <button className="btn" type="submit" disabled={authLoading}>{authLoading ? 'Sending…' : 'Send sign-in link'}</button>
-              {sent && <p className="notice success" role="status">Check your inbox for the sign-in link.</p>}
+              <button className="btn" type="submit" disabled={authLoading}>{authLoading ? 'Envoi…' : 'Envoyer le lien de connexion'}</button>
+              {sent && <p className="notice success" role="status">Consultez votre boîte de réception pour ouvrir le lien de connexion.</p>}
               {authError && <p className="notice error" role="alert">{authError}</p>}
             </form>
           )}
           {user && (
             <>
-              <p className="muted">Signed in as {user.email ?? 'your account'}.</p>
-              <p className="notice" role="status">Sync status: {status}{syncError ? ` · ${syncError}` : ''}</p>
+              <p className="muted">Connecté en tant que {user.email ?? 'votre compte'}.</p>
+              <p className="notice sync-detail" role="status">État de synchronisation : {status}{syncError ? ` · ${syncError}` : ''}</p>
               {initialChoiceRequired && (
                 <div className="notice">
-                  <strong>Choose how to start on this device.</strong>
-                  <p>Your local and cloud data will be merged safely; newer records win, with review progress merged by review count and due date.</p>
+                  <strong>Choisissez comment démarrer sur cet appareil.</strong>
+                  <p>Vos données locales et cloud seront fusionnées. Les enregistrements les plus récents et la progression de révision seront préservés.</p>
                   <div className="btn-row">
-                    <button className="btn" type="button" disabled={busy} onClick={() => void initialSync('upload')}>Upload this device’s data</button>
-                    <button className="btn ghost" type="button" disabled={busy} onClick={() => void initialSync('download')}>Download cloud data</button>
+                    <button className="btn" type="button" disabled={busy} onClick={() => void initialSync('upload')}>Envoyer les données locales</button>
+                    <button className="btn ghost" type="button" disabled={busy} onClick={() => void initialSync('download')}>Télécharger les données cloud</button>
                   </div>
                 </div>
               )}
               <div className="btn-row">
-                <button className="btn" type="button" disabled={busy || status === 'offline'} onClick={() => void runSync()}>{busy ? 'Synchronizing…' : 'Sync now'}</button>
-                <button className="btn ghost" type="button" disabled={busy} onClick={() => void signOut()}>Sign out</button>
+                <button className="btn" type="button" disabled={busy || status === 'offline'} onClick={() => void runSync()}>{busy ? 'Synchronisation…' : 'Synchroniser maintenant'}</button>
+                <button className="btn ghost" type="button" disabled={busy} onClick={() => void signOut()}>Se déconnecter</button>
               </div>
               {authError && <p className="notice error" role="alert">{authError}</p>}
             </>
           )}
         </section>
 
-        <section className="panel">
-          <h2>Imported lectures</h2>
-          <p className="muted">Import a lecture JSON file matching the app’s lecture format. It is saved locally and queued for secure cloud sync.</p>
+        <section className="panel settings-section">
+          <p className="eyebrow">Bibliothèque personnelle</p>
+          <h2>Cours importés</h2>
+          <p className="muted">Importez un cours au format JSON de l’application. Il sera enregistré localement puis synchronisé de façon sécurisée.</p>
           <label>
-            <span className="field-label">Lecture JSON</span>
+            <span className="field-label">Fichier JSON du cours</span>
             <input type="file" accept=".json,application/json" onChange={(event) => void importLecture(event.target.files?.[0])} />
           </label>
           {importedLectures.map((lecture) => (
             <div className="card" key={lecture.id}>
               <div className="question-meta"><strong>{lecture.name}</strong><span className="pill">Custom</span></div>
-              <p className="muted">{lecture.content.cards.length} cards · {lecture.content.quiz.length} quizzes · {lecture.content.vf.length} true/false</p>
-              <button className="btn ghost btn-sm" type="button" onClick={() => void deleteLecture(lecture)}>Delete lecture</button>
+              <p className="muted">{lecture.content.cards.length} cartes · {lecture.content.quiz.length} quiz · {lecture.content.vf.length} vrai / faux</p>
+              <button className="btn ghost btn-sm" type="button" onClick={() => void deleteLecture(lecture)}>Supprimer ce cours</button>
             </div>
           ))}
         </section>
 
-        <section className="panel">
-          <h2>Local data</h2>
-          <p className="muted">Study data is stored in this browser and remains available offline. Clearing this device does not delete your cloud copy.</p>
+        <section className="panel settings-section">
+          <p className="eyebrow">Sauvegarde et stockage</p>
+          <h2>Données sur cet appareil</h2>
+          <p className="muted">Vos données de révision sont conservées dans ce navigateur et restent accessibles hors ligne. Effacer cet appareil ne supprime pas votre copie cloud.</p>
           <div className="btn-row">
-            <button className="btn ghost" type="button" onClick={() => void exportData()}>Export all data (JSON backup)</button>
-            <button className="btn ghost" type="button" disabled={busy} onClick={() => void clearLocalData()}>{confirmClear ? 'Confirm clear local data' : 'Clear local data'}</button>
-            {confirmClear && <button className="btn ghost" type="button" onClick={() => setConfirmClear(false)}>Cancel</button>}
+            <button className="btn ghost" type="button" onClick={() => void exportData()}>Exporter une sauvegarde JSON</button>
+            <button className="btn ghost" type="button" disabled={busy} onClick={() => void clearLocalData()}>{confirmClear ? 'Confirmer l’effacement local' : 'Effacer les données locales'}</button>
+            {confirmClear && <button className="btn ghost" type="button" onClick={() => setConfirmClear(false)}>Annuler</button>}
           </div>
           {exportError && <p className="notice error" role="alert">{exportError}</p>}
           {message && <p className="notice success" role="status">{message}</p>}

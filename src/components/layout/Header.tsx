@@ -1,4 +1,6 @@
 import React from 'react';
+import { BookOpen, ChevronDown, ChevronUp, Volume2, VolumeX } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useProgressStore, useSettingsStore } from '../../stores';
 import { SyncStatus } from './SyncStatus';
 
@@ -6,164 +8,72 @@ export const Header: React.FC = () => {
   const { dueCount, matureCount, errorCount, streak, progressPercent } = useProgressStore();
   const { headerCollapsed, toggleHeader, soundEnabled, toggleSound } = useSettingsStore();
 
-  const collapsedStyle = {
-    display: 'flex' as const,
-    alignItems: 'center' as const,
-    justifyContent: 'space-between' as const,
-    gap: '0.5rem',
-    padding: '0.35rem 0.85rem',
-    background: 'var(--card)',
-    borderBottom: '1px solid var(--border)',
-    fontSize: '0.72rem',
-    color: 'var(--muted)',
-    position: 'sticky' as const,
-    top: 0,
-    zIndex: 50,
-  };
-
-  const headerWrapStyle = {
-    position: 'sticky' as const,
-    top: 0,
-    zIndex: 50,
-    background: 'rgba(11, 15, 20, 0.85)',
-    backdropFilter: 'saturate(160%) blur(18px)',
-    WebkitBackdropFilter: 'saturate(160%) blur(18px)',
-    borderBottom: '1px solid var(--border)',
-  };
-
-  const topbarStyle = {
-    background: 'transparent',
-    borderBottom: 'none',
-    padding: '0.85rem 1.1rem 0.65rem',
-    position: 'relative' as const,
-  };
-
-  const buttonStyle = {
-    position: 'absolute' as const,
-    top: '0.55rem',
-    right: '0.55rem',
-    width: '30px',
-    height: '30px',
-    border: 'none',
-    borderRadius: '50%',
-    background: 'var(--card2)',
-    color: 'var(--muted)',
-    fontSize: '0.8rem',
-    cursor: 'pointer',
-    display: 'flex' as const,
-    alignItems: 'center' as const,
-    justifyContent: 'center' as const,
-    zIndex: 2,
-  };
-
-  const soundButtonStyle = {
-    ...buttonStyle,
-    right: '2.4rem',
-  };
-
-  const h1Style = {
-    fontSize: '1.15rem',
-    fontWeight: 650,
-    letterSpacing: '-0.03em',
-    color: 'var(--text)',
-    marginBottom: '0.15rem',
-  };
-
-  const subStyle = {
-    fontSize: '0.72rem',
-    color: 'var(--muted)',
-    fontWeight: 400,
-    letterSpacing: '-0.01em',
-  };
-
-  const progressRowStyle = {
-    display: 'flex' as const,
-    alignItems: 'center' as const,
-    gap: '0.55rem',
-    marginTop: '0.55rem',
-  };
-
-  const statPillsStyle = {
-    display: 'flex' as const,
-    gap: '0.35rem',
-    flexWrap: 'wrap' as const,
-    marginTop: '0.45rem',
-  };
-
   if (headerCollapsed) {
     return (
-      <div className="header-collapsed-bar" style={collapsedStyle}>
-        <span>
-          Due <strong>{dueCount}</strong> · <strong>{progressPercent}%</strong>
-        </span>
-        <SyncStatus />
-        <button
-          onClick={toggleHeader}
-          style={{
-            border: '1px solid var(--border)',
-            borderRadius: '7px',
-            background: 'var(--card2)',
-            color: 'var(--text-secondary)',
-            padding: '0.25rem 0.7rem',
-            fontSize: '0.72rem',
-            cursor: 'pointer',
-          }}
-        >
-          ▾ Afficher header
-        </button>
-      </div>
+      <header className="app-header app-header-collapsed">
+        <div className="app-header-inner collapsed-inner">
+          <Link className="brand-lockup" to="/" aria-label="Résidanat, accueil">
+            <span className="brand-mark"><BookOpen size={19} strokeWidth={1.8} /></span>
+            <span className="brand-name">Résidanat</span>
+          </Link>
+          <div className="collapsed-summary">
+            <span><strong>{dueCount}</strong> à revoir</span>
+            <span className="summary-divider" aria-hidden="true" />
+            <span><strong>{progressPercent}%</strong> progressé</span>
+          </div>
+          <SyncStatus />
+          <button className="icon-button" onClick={toggleHeader} type="button" aria-label="Afficher l’en-tête">
+            <ChevronDown size={17} />
+          </button>
+        </div>
+      </header>
     );
   }
 
   return (
-    <div className="header-wrap" style={headerWrapStyle}>
-      <div className="topbar" style={topbarStyle}>
-        <button
-          onClick={toggleSound}
-          style={soundButtonStyle}
-          title={soundEnabled ? 'Sons activés' : 'Sons désactivés'}
-        >
-          {soundEnabled ? '🔊' : '🔇'}
-        </button>
+    <header className="app-header">
+      <div className="app-header-inner">
+        <Link className="brand-lockup" to="/" aria-label="Résidanat, accueil">
+          <span className="brand-mark"><BookOpen size={19} strokeWidth={1.8} /></span>
+          <span>
+            <span className="brand-name">Résidanat</span>
+            <span className="brand-caption">Smart Learning</span>
+          </span>
+        </Link>
 
-        <button
-          onClick={toggleHeader}
-          style={buttonStyle}
-          title="Réduire le header"
-        >
-          ▴
-        </button>
-        <SyncStatus />
-
-        <h1 style={h1Style}>
-          Résidanat · Smart Learning
-        </h1>
-        <div className="sub" style={subStyle}>
-          Révision espacée · multi-cours
-        </div>
-
-        <div className="progress-row" style={progressRowStyle}>
+        <div className="header-progress" aria-label={`Progression ${progressPercent}%`}>
+          <div className="header-progress-copy">
+            <span>Progression globale</span>
+            <strong>{progressPercent}%</strong>
+          </div>
           <div className="progress-track">
             <div className="progress-fill" style={{ width: `${progressPercent}%` }} />
           </div>
-          <span style={{ fontSize: '0.8rem', fontWeight: 600 }}>{progressPercent}%</span>
         </div>
 
-        <div className="stat-pills" style={statPillsStyle}>
-          <span className="pill due" title="Révisions dues + nouvelles du jour">
-            À revoir : <strong>{dueCount}</strong>
-          </span>
-          <span className="pill">
-            Mature : <strong>{matureCount}</strong>
-          </span>
-          <span className="pill err">
-            Erreurs : <strong>{errorCount}</strong>
-          </span>
-          <span className="pill">
-            Streak : <strong>{streak}</strong>j
-          </span>
+        <div className="header-stats" aria-label="Résumé de votre activité">
+          <span className="header-stat"><strong>{dueCount}</strong><span>à revoir</span></span>
+          <span className="header-stat"><strong>{matureCount}</strong><span>maîtrisées</span></span>
+          <span className="header-stat"><strong>{streak}<small>j</small></strong><span>série</span></span>
+          <span className="header-stat header-stat-errors"><strong>{errorCount}</strong><span>erreurs</span></span>
+        </div>
+
+        <div className="header-actions">
+          <SyncStatus />
+          <button
+            className="icon-button"
+            onClick={toggleSound}
+            type="button"
+            title={soundEnabled ? 'Désactiver les sons' : 'Activer les sons'}
+            aria-label={soundEnabled ? 'Désactiver les sons' : 'Activer les sons'}
+          >
+            {soundEnabled ? <Volume2 size={17} /> : <VolumeX size={17} />}
+          </button>
+          <button className="icon-button collapse-button" onClick={toggleHeader} type="button" aria-label="Réduire l’en-tête">
+            <ChevronUp size={17} />
+          </button>
         </div>
       </div>
-    </div>
+    </header>
   );
 };

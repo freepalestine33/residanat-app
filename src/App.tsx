@@ -9,6 +9,7 @@ import LecturePage from './pages/LecturePage';
 import { GlobalPracticePage } from './pages/GlobalPracticePage';
 import { NotesPage } from './pages/NotesPage';
 import { SettingsPage } from './pages/SettingsPage';
+import { DesignPreviewPage } from './pages/DesignPreviewPage';
 import { ToastContainer } from './components/ui/Toast';
 import { useSync } from './hooks/useSync';
 import { AuthGate } from './components/auth/AuthGate';
@@ -17,10 +18,14 @@ import { useProgressStore, useSettingsStore } from './stores';
 function SignedInApp() {
   const loadSettings = useSettingsStore((state) => state.loadSettings);
   const loadStats = useProgressStore((state) => state.loadStats);
+  const theme = useSettingsStore((state) => state.theme);
   useEffect(() => {
     loadSettings();
     void loadStats();
   }, [loadSettings, loadStats]);
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+  }, [theme]);
 
   return (
     <Routes>
@@ -42,6 +47,9 @@ function SignedInApp() {
 export default function App() {
   useSync();
   useEffect(() => { document.title = 'Résidanat · Smart Learning'; }, []);
+  if (import.meta.env.DEV && window.location.hash === '#/__design-preview') {
+    return <DesignPreviewPage />;
+  }
   return (
     <HashRouter>
       <div style={{ minHeight: '100vh' }}>

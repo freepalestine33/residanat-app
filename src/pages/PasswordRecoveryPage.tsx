@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useAuthStore } from '../stores';
+import { AuthBrandPanel } from '../components/auth/AuthBrandPanel';
 
 export function PasswordRecoveryPage() {
   const { loading, error, updatePassword, clearError } = useAuthStore();
@@ -17,21 +18,22 @@ export function PasswordRecoveryPage() {
   };
 
   return (
-    <main className="auth-shell">
+    <main className="auth-shell auth-login-shell">
+      <AuthBrandPanel />
       <section className="panel auth-panel">
-        <p className="eyebrow">Résidanat · Smart Learning</p>
-        <h1>Set a new password</h1>
-        <p className="muted">Choose a password with at least 8 characters. You can use it to sign in without requesting an email link.</p>
+        <p className="eyebrow">Espace personnel</p>
+        <h1>Choisir un nouveau mot de passe</h1>
+        <p className="muted">Choisissez un mot de passe d’au moins 8 caractères. Vous pourrez ensuite vous connecter avec votre adresse e-mail.</p>
         <form className="note-form" onSubmit={(event) => void submit(event)}>
           <label>
-            <span className="field-label">New password</span>
+            <span className="field-label">Nouveau mot de passe</span>
             <input type="password" autoComplete="new-password" minLength={8} required value={password} onChange={(event) => setPassword(event.target.value)} />
           </label>
           <label>
-            <span className="field-label">Confirm new password</span>
+            <span className="field-label">Confirmer le nouveau mot de passe</span>
             <input type="password" autoComplete="new-password" minLength={8} required value={confirmation} onChange={(event) => setConfirmation(event.target.value)} />
           </label>
-          <button type="submit" className="btn btn-lg" disabled={loading}>{loading ? 'Updating password…' : 'Set password'}</button>
+          <button type="submit" className="btn btn-lg" disabled={loading}>{loading ? 'Mise à jour…' : 'Mettre à jour le mot de passe'}</button>
           {error && <p className="notice error" role="alert">{error}</p>}
         </form>
       </section>

@@ -18,7 +18,7 @@ interface SettingsState {
 export const useSettingsStore = create<SettingsState>((set) => ({
   soundEnabled: true,
   speechEnabled: false,
-  theme: 'dark',
+  theme: 'light',
   headerCollapsed: false,
 
   loadSettings: () => {
@@ -29,7 +29,7 @@ export const useSettingsStore = create<SettingsState>((set) => ({
         set({
           soundEnabled: settings.soundEnabled ?? true,
           speechEnabled: settings.speechEnabled ?? false,
-          theme: settings.theme ?? 'dark',
+          theme: settings.theme ?? 'light',
           headerCollapsed: settings.headerCollapsed ?? false,
         });
       }

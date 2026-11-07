@@ -148,10 +148,10 @@ export function GlobalPracticePage({ kind }: { kind: Kind }) {
     <>
       <Header />
       <TabBar tabs={coreTabs} />
-      <main className="wrap">
-        <section className="panel">
+      <main className={`wrap practice-wrap practice-${kind}`}>
+        <section className="panel practice-overview">
           <p className="eyebrow">Pratique inter-cours · données locales</p>
-          <h2>{title}</h2>
+          <h1>{title}</h1>
           <p className="muted">
             {kind === 'quiz'
               ? 'Mélangez les quiz des cours, choisissez le nombre de questions et lancez un mode examen avec correction à la fin.'
@@ -185,10 +185,14 @@ export function GlobalPracticePage({ kind }: { kind: Kind }) {
 
         {current && !complete && (
           <article className="panel practice-question" aria-live="polite">
-            <div className="question-meta">
-              <span className="pill">Question {index + 1} / {queue.length}</span>
-              <Link className="text-link muted" to={`/lecture/${current.lectureId}`}>{current.lectureName}</Link>
+            <div className="practice-question-topline">
+              <div>
+                <p className="eyebrow">{kind === 'quiz' ? 'Question à choix' : 'Affirmation'}</p>
+                <Link className="text-link muted" to={`/lecture/${current.lectureId}`}>{current.lectureName}</Link>
+              </div>
+              <span className="practice-step-count">{String(index + 1).padStart(2, '0')} <span>/ {String(queue.length).padStart(2, '0')}</span></span>
             </div>
+            <div className="study-session-track" aria-label={`Progression de la session : ${index + 1} sur ${queue.length}`}><span style={{ width: `${((index + 1) / queue.length) * 100}%` }} /></div>
             <h3 className="question-text">{current.prompt}</h3>
             {current.source && <p className="muted">Source : {current.source}</p>}
             <fieldset className="option-list" disabled={checked}>

@@ -41,10 +41,10 @@ export const ProgrammePage: React.FC = () => {
     <>
       <Header />
       <TabBar tabs={coreTabs} />
-      <main className="wrap">
-        <section className="panel">
+      <main className="wrap programme-wrap">
+        <section className="panel programme-overview">
           <p className="eyebrow">Programme officiel importé</p>
-          <h2>Programme du résidanat</h2>
+          <h1>Programme du résidanat</h1>
           <p className="muted" style={{ marginBottom: '0.75rem' }}>
             209 cours organisés par spécialité. Les fiches interactives s’ouvrent directement dans l’application.
           </p>

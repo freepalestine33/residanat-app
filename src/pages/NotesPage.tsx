@@ -99,10 +99,10 @@ export function NotesPage() {
     <>
       <Header />
       <TabBar tabs={coreTabs} />
-      <main className="wrap">
-        <section className="panel">
+      <main className="wrap notes-wrap">
+        <section className="panel notes-composer">
           <p className="eyebrow">Stockage local · anciennes notes conservées</p>
-          <h2>Notes & images</h2>
+          <h1>Notes & images</h1>
           <p className="muted">Les notes de l’ancienne application sont affichées en lecture seule depuis leur stockage d’origine. Les nouvelles notes sont enregistrées dans la base locale de l’application.</p>
           <form className="note-form" onSubmit={(event) => void save(event)}>
             <label>
@@ -139,8 +139,11 @@ export function NotesPage() {
         </section>
 
         {(error || legacyError) && <p className="notice error" role="alert">{error || legacyError}</p>}
-        <section className="panel">
-          <h2>Mes notes ({notes.length + safeLegacy.length})</h2>
+        <section className="panel notes-library">
+          <div className="notes-library-heading">
+            <div><p className="eyebrow">Votre carnet</p><h2>Mes notes</h2></div>
+            <span className="pill">{notes.length + safeLegacy.length} notes</span>
+          </div>
           {loading && <p className="muted" role="status">Chargement des notes…</p>}
           {!loading && notes.length === 0 && safeLegacy.length === 0 && <p className="muted">Aucune note enregistrée.</p>}
           {notes.map((note) => (

@@ -313,7 +313,7 @@ async function applyRemote(payload: PullPayload, forceCloud = false) {
       const settings = {
         soundEnabled: preferences.soundEnabled ?? true,
         speechEnabled: preferences.speechEnabled ?? false,
-        theme: preferences.theme ?? 'dark',
+        theme: preferences.theme ?? 'light',
         headerCollapsed: preferences.headerCollapsed ?? false,
       };
       localStorage.setItem('sa_settings_v1', JSON.stringify(settings));

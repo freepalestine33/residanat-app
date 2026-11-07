@@ -24,7 +24,6 @@ export const StudyPage: React.FC = () => {
   useEffect(() => { void loadCards(); }, [loadCards]);
 
   const current = queue[index];
-  const remaining = Math.max(0, queue.length - index);
   const startSession = async () => {
     setReviewError('');
     setMessage('');
@@ -75,12 +74,17 @@ export const StudyPage: React.FC = () => {
     <>
       <Header />
       <TabBar tabs={coreTabs} />
-      <main className="wrap">
-        <section className="panel">
+      <main className="wrap study-wrap">
+        <section className="panel study-overview">
           <p className="eyebrow">Répétition espacée · FSRS</p>
-          <h2>Révision</h2>
-          <p className="muted">{dueCount} carte{dueCount === 1 ? '' : 's'} planifiée{dueCount === 1 ? '' : 's'} à revoir aujourd’hui.</p>
-          <p className="muted" style={{ marginTop: '0.25rem' }}>Les évaluations sont sauvegardées dans la base locale IndexedDB.</p>
+          <div className="study-heading-row">
+            <div>
+              <h1>Votre temps de révision.</h1>
+              <p className="muted">{dueCount} carte{dueCount === 1 ? '' : 's'} planifiée{dueCount === 1 ? '' : 's'} à revoir aujourd’hui.</p>
+            </div>
+            <span className="study-method-mark"><span>FSRS</span><small>révision<br />espacée</small></span>
+          </div>
+          <p className="muted study-storage-note">Vos évaluations sont enregistrées localement et synchronisées dès que vous êtes en ligne.</p>
           <div className="btn-row">
             <button type="button" className="btn" disabled={loading || allCards.length === 0 || busy} onClick={() => void startSession()}>
               {loading ? 'Chargement des cartes…' : 'Commencer une session'}
@@ -94,12 +98,17 @@ export const StudyPage: React.FC = () => {
         </section>
 
         {current && (
-          <article className="panel study-session" aria-live="polite">
-            <div className="question-meta">
-              <span className="pill">Carte {index + 1} / {queue.length}</span>
-              <span className="muted">{remaining} restante{remaining > 1 ? 's' : ''}</span>
+          <article className="panel study-session study-active-session" aria-live="polite">
+            <div className="study-session-topline">
+              <div>
+                <p className="eyebrow">Session en cours</p>
+                <p className="muted"><Link className="text-link" to={`/lecture/${current.lectureId}`}>{current.lectureName}</Link></p>
+              </div>
+              <span className="study-step-count">{String(index + 1).padStart(2, '0')} <span>/ {String(queue.length).padStart(2, '0')}</span></span>
             </div>
-            <p className="muted"><Link className="text-link" to={`/lecture/${current.lectureId}`}>{current.lectureName}</Link></p>
+            <div className="study-session-track" aria-label={`Progression de la session : ${index + 1} sur ${queue.length}`}>
+              <span style={{ width: `${((index + 1) / queue.length) * 100}%` }} />
+            </div>
             <h2 className="study-prompt">{current.card.q}</h2>
             {current.card.src && <p className="muted">Source : {current.card.src}</p>}
             {!revealed ? (

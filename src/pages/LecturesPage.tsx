@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { ArrowRight, BookOpen, Search } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Header } from '../components/layout/Header';
 import { TabBar } from '../components/layout/TabBar';
@@ -18,36 +19,46 @@ export const LecturesPage: React.FC = () => {
     <>
       <Header />
       <TabBar tabs={coreTabs} />
-      <div className="wrap">
-        <div className="panel">
-          <h2>Cours interactifs OTR</h2>
-          <p className="muted" style={{ marginBottom: '0.65rem' }}>
-            {lectures.length} cours · cartes, quiz et vrai/faux reliés aux données importées.
-          </p>
-          <label className="field-label" htmlFor="lecture-search">Rechercher un cours</label>
-          <input id="lecture-search" type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Nom du cours…" />
+      <main className="wrap library-wrap">
+        <section className="library-heading">
+          <div className="page-title-block">
+            <p className="eyebrow">Votre bibliothèque</p>
+            <h1>Cours interactifs OTR</h1>
+            <p className="muted">{lectures.length} cours · cartes, quiz et vrai/faux reliés aux données importées.</p>
+          </div>
+          <label className="library-search">
+            <Search size={17} aria-hidden="true" />
+            <span className="sr-only">Rechercher un cours</span>
+            <input id="lecture-search" type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Rechercher un cours…" />
+          </label>
+        </section>
+        <section className="library-results" aria-label="Cours disponibles">
           {loading && <p className="muted" role="status">Chargement des cours…</p>}
           {error && <p className="notice error" role="alert">Impossible de charger les cours : {error}</p>}
-          {!loading && !error && visible.length === 0 && <p className="muted">Aucun cours ne correspond à cette recherche.</p>}
-          <div style={{ marginTop: '1rem' }}>
-            {visible.map((lecture) => (
-              <div key={lecture.id} className="card">
-                <Link className="text-link" to={`/lecture/${lecture.id}`}>
-                  <h3 style={{ fontSize: '0.95rem', marginBottom: '0.3rem' }}>{lecture.name}</h3>
-                </Link>
-                <p className="muted" style={{ fontSize: '0.75rem' }}>
-                  {lecture.cards} cartes · {lecture.quiz} quiz · {lecture.vf} vrai/faux
-                </p>
-                <div className="btn-row">
-                  <Link className="btn ghost btn-sm" to={`/lecture/${lecture.id}?tab=cards`}>Cartes</Link>
-                  <Link className="btn ghost btn-sm" to={`/lecture/${lecture.id}?tab=quiz`}>Quiz</Link>
-                  <Link className="btn ghost btn-sm" to={`/lecture/${lecture.id}?tab=vf`}>Vrai / faux</Link>
+          {!loading && !error && visible.length === 0 && (
+            <p className="library-empty"><BookOpen size={20} aria-hidden="true" />Aucun cours ne correspond à cette recherche.</p>
+          )}
+          <div className="course-grid library-course-grid">
+            {visible.map((lecture, index) => (
+              <article key={lecture.id} className="course-card">
+                <div className="course-card-topline">
+                  <span className="course-index">{String(index + 1).padStart(2, '0')}</span>
+                  <Link className="course-open" to={`/lecture/${lecture.id}`} aria-label={`Ouvrir ${lecture.name}`}>
+                    <ArrowRight size={16} aria-hidden="true" />
+                  </Link>
                 </div>
-              </div>
+                <Link className="text-link course-title-link" to={`/lecture/${lecture.id}`}><h2>{lecture.name}</h2></Link>
+                <p className="course-counts"><span>{lecture.cards} cartes</span><span aria-hidden="true">·</span><span>{lecture.quiz} quiz</span><span aria-hidden="true">·</span><span>{lecture.vf} vrai / faux</span></p>
+                <div className="course-actions">
+                  <Link to={`/lecture/${lecture.id}?tab=cards`}>Flashcards</Link>
+                  <Link to={`/lecture/${lecture.id}?tab=quiz`}>Quiz</Link>
+                  <Link to={`/lecture/${lecture.id}?tab=vf`}>Vrai / faux</Link>
+                </div>
+              </article>
             ))}
           </div>
-        </div>
-      </div>
+        </section>
+      </main>
     </>
   );
 };
