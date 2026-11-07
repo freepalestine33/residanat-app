@@ -4,7 +4,7 @@ Offline-ready medical study app with Supabase email sign-in and cross-device syn
 
 ## Features
 
-- Secure email magic-link sign-in with Supabase Auth.
+- Email-and-password sign-in, account creation, and password recovery with Supabase Auth. Magic links are also available as an alternative.
 - Local-first flashcard scheduling (FSRS), notes, quiz results, errors, settings, and user-imported lecture JSON.
 - Background sync after local changes, on reconnect/focus, and every 30 seconds while active.
 - Per-record last-write-wins merge; flashcard progress favors the higher review count, then the later due date.
@@ -56,7 +56,7 @@ npm run build
 
 ## Sync flow
 
-1. A user signs in by email magic link. Without Supabase configuration or a valid session, the study app remains behind the sign-in screen.
+1. A user creates an account once, then signs in with email and password on each device. Password reset and optional magic links use email; routine password sign-ins do not send email. Without Supabase configuration or a valid session, the study app remains behind the sign-in screen.
 2. On the first device sync, the app compares local and cloud data. If both have study data, the user chooses whether to upload this device's data or download cloud data; records are still merged according to the conflict rules.
 3. Local mutations are written to IndexedDB/localStorage and an IndexedDB retry queue. A debounced background sync pushes queued changes, then pulls records changed since the last successful sync.
 4. Failed requests stay queued and retry on the next change, reconnect, focus, manual sync, or polling interval. The cloud indicator shows offline, syncing, synced, conflict-choice, or error state.
