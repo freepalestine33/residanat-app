@@ -1,0 +1,1122 @@
+{
+ "schema": 1,
+ "id": "SA",
+ "progId": "MSA",
+ "name": "Spondylarthrite Ankylosante",
+ "keys": [
+  "SA séronégative, HLA-B27 ~90 %, ni nécessaire ni suffisant.",
+  "Lésion élémentaire = enthésite. Cible SI + rachis (charnière DL d’abord).",
+  "Douleur inflammatoire : 2ᵉ moitié de nuit, AINS+, non impulsive à la toux.",
+  "Périphérique : oligo asymétrique MI, talalgies, dactylite.",
+  "Extra-articulaire : uvéite antérieure aiguë unilatérale récidivante (+++).",
+  "Radio : sacro-iliite bilatérale, syndesmophytes, squaring, bambou. Pas d’ostéophytes ni géodes.",
+  "Associations : psoriasis, MICI, arthrite réactionnelle.",
+  "Tx : AINS → anti-TNF (TB). Corticoïdes généraux inefficaces. Kiné +++.",
+  "Risque = raideur. Mauvais pro : coxite, début précoce, tabac, dactylite.",
+  "PR épargne SI + rachis DL. SA n’est pas le rhumatisme le plus fréquent."
+ ],
+ "contrasts": [
+  "Ostéophytes (arthrose) ≠ Syndesmophytes (SA)",
+  "Épisclérite ≠ atteinte oculaire la plus fréquente → uvéite antérieure",
+  "PR (symétrique, FR+) vs SA (axial, B27+, séronégative)",
+  "Douleur mécanique (impulsive toux) vs inflammatoire (nocturne, AINS+)",
+  "Stades de la sacro-iliite (Forestier I–IV) ≠ Hyperostose / DISH",
+  "Liquide Reiter aseptique · preuve Chlamydia = sérologie + IF"
+ ],
+ "cards": [
+  {
+   "id": "c1",
+   "type": "basic",
+   "q": "Lésion élémentaire de la SA ?",
+   "a": "Enthésite (pas la synovite). L’inflammation part de l’enthèse puis peut gagner la synoviale.",
+   "src": "§2"
+  },
+  {
+   "id": "c2",
+   "type": "basic",
+   "q": "HLA-B27 dans la SA : fréquence et valeur ?",
+   "a": "≈ 90 %. Oriente mais ni nécessaire ni suffisant. ~10 % de SA sont B27−.",
+   "src": "§2",
+   "freq": 11
+  },
+  {
+   "id": "c3",
+   "type": "basic",
+   "q": "Caractéristiques de la douleur inflammatoire SA ?",
+   "a": "Réveil 2ᵉ moitié de nuit, plusieurs réveils, raideur matinale prolongée, AINS+, exercice+, NON impulsive à la toux.",
+   "src": "§3.1",
+   "freq": 13
+  },
+  {
+   "id": "c4",
+   "type": "basic",
+   "q": "Signe radiologique le plus précoce et fidèle ?",
+   "a": "Sacro-iliite bilatérale (≥ grade 2 bilatérale ou 3–4 unilatérale).",
+   "src": "§4.2",
+   "freq": 15
+  },
+  {
+   "id": "c5",
+   "type": "basic",
+   "q": "Siège initial des signes rachidiens ?",
+   "a": "Charnière dorso-lombaire, puis évolution ascendante.",
+   "src": "§4.3",
+   "freq": 15
+  },
+  {
+   "id": "c6",
+   "type": "basic",
+   "q": "Qu’est-ce qu’un syndesmophyte ?",
+   "a": "Ossification de l’enthèse rachidienne sous-ligamentaire → ponts fins verticaux → colonne en bambou.",
+   "src": "§4.3",
+   "freq": 15
+  },
+  {
+   "id": "c7",
+   "type": "basic",
+   "q": "Manifestation extra-articulaire la plus fréquente ?",
+   "a": "Uvéite antérieure aiguë (iridocyclite) non granulomateuse, souvent unilatérale, récidivante (≈ 30 %).",
+   "src": "§3.3",
+   "freq": 11
+  },
+  {
+   "id": "c8",
+   "type": "basic",
+   "q": "Traitement de 1ʳᵉ intention et suite ?",
+   "a": "AINS. Après échec : anti-TNF (dépistage TB). Corticoïdes généraux inefficaces. Kiné +++.",
+   "src": "§8"
+  },
+  {
+   "id": "c9",
+   "type": "basic",
+   "q": "Facteurs de mauvais pronostic ?",
+   "a": "Coxite, début précoce, tabac, dactylite, syndrome inflammatoire, mauvaise réponse aux AINS.",
+   "src": "§8"
+  },
+  {
+   "id": "c10",
+   "type": "basic",
+   "q": "Risque principal de la SA ?",
+   "a": "Raideur / ankylose du rachis.",
+   "src": "§8"
+  },
+  {
+   "id": "c11",
+   "type": "basic",
+   "q": "Tableau périphérique le plus évocateur ?",
+   "a": "Oligoarthrite asymétrique des grosses articulations des MI + talalgies + dactylite.",
+   "src": "§3.2",
+   "freq": 13
+  },
+  {
+   "id": "c12",
+   "type": "basic",
+   "q": "Schöber : technique et normale ?",
+   "a": "Penché en avant, ligne bi-iliaque + épineuses. Normal = 10 + 5 cm. Pas toujours pathologique dans la SA.",
+   "src": "§5"
+  },
+  {
+   "id": "c13",
+   "type": "basic",
+   "q": "Stades de la sacro-iliite (classification de Forestier) ?",
+   "a": "I élargissement/flou · II irrégularités/érosions (« timbre de poste ») · III condensation · IV ankylose.",
+   "src": "§4.2",
+   "freq": 15
+  },
+  {
+   "id": "c14",
+   "type": "basic",
+   "q": "Dans le Reiter, le liquide articulaire contient-il le germe ?",
+   "a": "Non — aseptique. Preuve Chlamydia = sérologie + immunofluorescence urétrale (pas culture du liquide).",
+   "src": "§7"
+  },
+  {
+   "id": "c15",
+   "type": "basic",
+   "q": "HLA-B27 en population générale et risque de SpA ?",
+   "a": "4–8 % (≈ 5 %). Seuls ≈ 13,6 % des porteurs développent une SpA (chiffre du cours).",
+   "src": "§2",
+   "freq": 11
+  },
+  {
+   "id": "c16",
+   "type": "contrast",
+   "q": "Ostéophytes vs Syndesmophytes ?",
+   "a": "Ostéophytes = arthrose (base large, dirigés en dehors). Syndesmophytes = SA (fins, verticaux, sous-ligamentaires).",
+   "src": "§4",
+   "freq": 15
+  },
+  {
+   "id": "c17",
+   "type": "contrast",
+   "q": "Uvéite vs Épisclérite — plus fréquente dans la SA ?",
+   "a": "Uvéite antérieure aiguë. L’épisclérite n’est PAS la plus fréquente.",
+   "src": "§3.3",
+   "freq": 11
+  },
+  {
+   "id": "c18",
+   "type": "contrast",
+   "q": "PR vs SA — points discriminants ?",
+   "a": "PR : symétrique, acromélique, FR+, épargne SI et rachis DL. SA : axial + enthésite, B27+, séronégative.",
+   "src": "§6"
+  },
+  {
+   "id": "c19",
+   "type": "contrast",
+   "q": "Douleur mécanique vs inflammatoire ?",
+   "a": "Mécanique : impulsive à la toux, effort, calmée par repos. Inflammatoire : nocturne 2ᵉ moitié, AINS+, NON impulsive.",
+   "src": "§3.1",
+   "freq": 13
+  },
+  {
+   "id": "c20",
+   "type": "contrast",
+   "q": "SA vs Hyperostose vertébrale ankylosante (DISH) ?",
+   "a": "DISH : sujet âgé ± diabète, ponts antéro-latéraux droits, disques normaux, SI souvent normales. SA : jeune, SI atteintes, syndesmophytes, B27.",
+   "src": "§6",
+   "freq": 15
+  },
+  {
+   "id": "c21",
+   "type": "contrast",
+   "q": "Corticoïdes généraux dans la SA ?",
+   "a": "Peu ou pas efficaces par voie générale. Infiltration locale possible. Contrairement à la PR.",
+   "src": "§8"
+  },
+  {
+   "id": "c22",
+   "type": "basic",
+   "q": "Ampliation thoracique et occiput-mur pathologiques ?",
+   "a": "Ampliation pathologique si faible (ex. 3,5 cm dans un cas de la banque). Occiput-mur : 10 cm = pathologique.",
+   "src": "§5"
+  },
+  {
+   "id": "c23",
+   "type": "basic",
+   "q": "Associations de la SA ?",
+   "a": "Psoriasis, MICI (Crohn, RCH), arthrite réactionnelle. Diarrhée chronique → coloscopie.",
+   "src": "§3.3"
+  },
+  {
+   "id": "c24",
+   "type": "basic",
+   "q": "Kinésithérapie : postures essentielles ?",
+   "a": "Plat dos, plat ventre, gym respiratoire, gym intensive (dorsal en rectitude, lombaire en lordose).",
+   "src": "§8"
+  },
+  {
+   "id": "c25",
+   "type": "basic",
+   "q": "Critères New York modifiés — SA avérée ?",
+   "a": "Sacro-iliite radiologique + ≥ 1 critère clinique (lombalgie/raideur >3 mois améliorée par exercice, limitation mobilité, limitation ampliation).",
+   "src": "§6"
+  },
+  {
+   "id": "c26",
+   "type": "contrast",
+   "q": "Talalgies / dactylite = syndrome pelvi-rachidien ?",
+   "a": "Non. Syndrome enthésique / périphérique. Pelvi-rachidien = fesses, dorso-lombalgies inflammatoires, ↓ ampliation.",
+   "src": "§3.2",
+   "freq": 13
+  },
+  {
+   "id": "c27",
+   "type": "basic",
+   "q": "Sex-ratio et âge de début ?",
+   "a": "3 H / 1 F. Début 20–30 ans. Forme féminine souvent fruste.",
+   "src": "§2"
+  },
+  {
+   "id": "c28",
+   "type": "basic",
+   "q": "3 phases de l’enthésopathie inflammatoire ?",
+   "a": "1) Inflammation (érosions) → 2) Fibrose → 3) Ossification (enthésophyte / syndesmophyte).",
+   "src": "§2"
+  }
+ ],
+ "quiz": [
+  {
+   "id": "q1",
+   "q": "Lesquelles caractérisent les spondyloarthrites ?",
+   "src": "§1",
+   "cards": [
+    "c1",
+    "c2",
+    "c8"
+   ],
+   "explain": "SpA = jeune, enthésite, B27, AINS. Séronégatives.",
+   "opts": [
+    {
+     "t": "Liaison à HLA-B27",
+     "ok": true,
+     "c": [
+      "c2"
+     ]
+    },
+    {
+     "t": "Lésion élémentaire = enthésite",
+     "ok": true,
+     "c": [
+      "c1"
+     ]
+    },
+    {
+     "t": "Touchent avec prédilection le sujet âgé",
+     "ok": false,
+     "c": [
+      "c27"
+     ]
+    },
+    {
+     "t": "AINS = base du traitement",
+     "ok": true,
+     "c": [
+      "c8"
+     ]
+    },
+    {
+     "t": "Forte production d’anticorps (FR, ACPA)",
+     "ok": false,
+     "c": [
+      "c18"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q2",
+   "q": "Douleur de la SA — propositions JUSTES ?",
+   "src": "§3.1",
+   "cards": [
+    "c3",
+    "c19"
+   ],
+   "explain": "Inflammatoire : nocturne 2ᵉ moitié, non impulsive, AINS-sensible.",
+   "opts": [
+    {
+     "t": "Réveille dans la 2ᵉ moitié de la nuit",
+     "ok": true,
+     "c": [
+      "c3"
+     ]
+    },
+    {
+     "t": "Plusieurs réveils indépendants des changements de position",
+     "ok": true,
+     "c": [
+      "c3"
+     ]
+    },
+    {
+     "t": "Impulsive à la toux",
+     "ok": false,
+     "c": [
+      "c3",
+      "c19"
+     ]
+    },
+    {
+     "t": "Soulagée par les AINS",
+     "ok": true,
+     "c": [
+      "c3"
+     ]
+    },
+    {
+     "t": "Rythme mécanique",
+     "ok": false,
+     "c": [
+      "c19"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q3",
+   "q": "Signes radiologiques de SA — JUSTES ?",
+   "src": "§4",
+   "cards": [
+    "c4",
+    "c6",
+    "c16"
+   ],
+   "explain": "Pas d’ostéophytes ni de géodes à l’emporte-pièce.",
+   "opts": [
+    {
+     "t": "Syndesmophytes",
+     "ok": true,
+     "c": [
+      "c6"
+     ]
+    },
+    {
+     "t": "Ostéophytes à base large",
+     "ok": false,
+     "c": [
+      "c16"
+     ]
+    },
+    {
+     "t": "Squaring des vertèbres",
+     "ok": true,
+     "c": [
+      "c6"
+     ]
+    },
+    {
+     "t": "Géodes à l’emporte-pièce",
+     "ok": false,
+     "c": [
+      "c16"
+     ]
+    },
+    {
+     "t": "Sacro-iliite bilatérale",
+     "ok": true,
+     "c": [
+      "c4"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q4",
+   "q": "Traitement de la SA — JUSTES ?",
+   "src": "§8",
+   "cards": [
+    "c8",
+    "c21",
+    "c24"
+   ],
+   "explain": "Corticoïdes généraux et MTX axial inefficaces / non indiqués.",
+   "opts": [
+    {
+     "t": "AINS en 1ʳᵉ intention",
+     "ok": true,
+     "c": [
+      "c8"
+     ]
+    },
+    {
+     "t": "Corticothérapie générale efficace",
+     "ok": false,
+     "c": [
+      "c21"
+     ]
+    },
+    {
+     "t": "Anti-TNF après échec des AINS (dépister TB)",
+     "ok": true,
+     "c": [
+      "c8"
+     ]
+    },
+    {
+     "t": "Méthotrexate très utile sur la forme axiale pure",
+     "ok": false,
+     "c": [
+      "c8"
+     ]
+    },
+    {
+     "t": "Kinésithérapie essentielle",
+     "ok": true,
+     "c": [
+      "c24"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q5",
+   "q": "Manifestations extra-articulaires — JUSTES ?",
+   "src": "§3.3",
+   "cards": [
+    "c7",
+    "c17"
+   ],
+   "explain": "Uvéite antérieure >>> épisclérite.",
+   "opts": [
+    {
+     "t": "Uvéite antérieure aiguë = la plus fréquente",
+     "ok": true,
+     "c": [
+      "c7",
+      "c17"
+     ]
+    },
+    {
+     "t": "Épisclérite = la plus fréquente",
+     "ok": false,
+     "c": [
+      "c17"
+     ]
+    },
+    {
+     "t": "Insuffisance aortique possible",
+     "ok": true,
+     "c": [
+      "c7"
+     ]
+    },
+    {
+     "t": "Syndrome restrictif pulmonaire possible",
+     "ok": true,
+     "c": [
+      "c7"
+     ]
+    },
+    {
+     "t": "Uvéite postérieure typique",
+     "ok": false,
+     "c": [
+      "c7"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q6",
+   "q": "Fiessinger-Leroy-Reiter — JUSTES ?",
+   "src": "§7",
+   "cards": [
+    "c14"
+   ],
+   "explain": "Arthrite aseptique. Pas de culture du liquide.",
+   "opts": [
+    {
+     "t": "Liquide articulaire aseptique",
+     "ok": true,
+     "c": [
+      "c14"
+     ]
+    },
+    {
+     "t": "Germe cultivable dans le liquide articulaire",
+     "ok": false,
+     "c": [
+      "c14"
+     ]
+    },
+    {
+     "t": "Preuve Chlamydia : sérologie + immunofluorescence urétrale",
+     "ok": true,
+     "c": [
+      "c14"
+     ]
+    },
+    {
+     "t": "Peut évoluer vers une SA (surtout si B27+)",
+     "ok": true,
+     "c": [
+      "c14"
+     ]
+    },
+    {
+     "t": "Pénicilline = traitement de l’arthrite",
+     "ok": false,
+     "c": [
+      "c14"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q7",
+   "q": "PR vs SA — JUSTES ?",
+   "src": "§6",
+   "cards": [
+    "c18"
+   ],
+   "explain": "PR = le plus fréquent, épargne SI/rachis DL. SA séronégative.",
+   "opts": [
+    {
+     "t": "PR épargne les sacro-iliaques et le rachis dorso-lombaire",
+     "ok": true,
+     "c": [
+      "c18"
+     ]
+    },
+    {
+     "t": "SA est le rhumatisme inflammatoire le plus fréquent",
+     "ok": false,
+     "c": [
+      "c18"
+     ]
+    },
+    {
+     "t": "PR = symétrique, acromélique, FR+ fréquent",
+     "ok": true,
+     "c": [
+      "c18"
+     ]
+    },
+    {
+     "t": "Un FR positif se voit régulièrement dans la SA",
+     "ok": false,
+     "c": [
+      "c18"
+     ]
+    },
+    {
+     "t": "TDM des SI non justifiée d’emblée dans une PR récente",
+     "ok": true,
+     "c": [
+      "c18"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q8",
+   "q": "Examen clinique — JUSTES ?",
+   "src": "§5",
+   "cards": [
+    "c12",
+    "c22"
+   ],
+   "explain": "Schöber = flexion lombaire + lombo-sacrée. Pas toujours patho.",
+   "opts": [
+    {
+     "t": "Schöber normal = 10 + 5 cm",
+     "ok": true,
+     "c": [
+      "c12"
+     ]
+    },
+    {
+     "t": "Schöber toujours pathologique dans la SA",
+     "ok": false,
+     "c": [
+      "c12"
+     ]
+    },
+    {
+     "t": "Ampliation thoracique 3,5 cm = pathologique (cas banque)",
+     "ok": true,
+     "c": [
+      "c22"
+     ]
+    },
+    {
+     "t": "Distance occiput-mur 10 cm = pathologique",
+     "ok": true,
+     "c": [
+      "c22"
+     ]
+    },
+    {
+     "t": "Schöber explore le rachis dorsal",
+     "ok": false,
+     "c": [
+      "c12"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q9",
+   "q": "Parmi ces affirmations, lesquelles sont FAUSSES concernant la SA ?",
+   "src": "pièges",
+   "cards": [
+    "c2",
+    "c5",
+    "c8",
+    "c16",
+    "c21"
+   ],
+   "explain": "Ostéophytes, « B27 obligatoire », corticoïdes 1ʳᵉ ligne = faux.",
+   "opts": [
+    {
+     "t": "Les ostéophytes sont typiques",
+     "ok": true,
+     "c": [
+      "c16"
+     ]
+    },
+    {
+     "t": "L’absence de B27 élimine le diagnostic",
+     "ok": true,
+     "c": [
+      "c2"
+     ]
+    },
+    {
+     "t": "La sacro-iliite est typiquement bilatérale",
+     "ok": false,
+     "c": [
+      "c4"
+     ]
+    },
+    {
+     "t": "Les corticoïdes généraux sont le traitement de 1ʳᵉ ligne",
+     "ok": true,
+     "c": [
+      "c8",
+      "c21"
+     ]
+    },
+    {
+     "t": "La charnière dorso-lombaire est le siège initial rachidien",
+     "ok": false,
+     "c": [
+      "c5"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q10",
+   "q": "HLA-B27 et SA — propositions JUSTES ?",
+   "src": "§2",
+   "cards": [
+    "c2",
+    "c15"
+   ],
+   "explain": "B27 ≈ 90 % des SA, ni nécessaire ni suffisant. Population générale 4–8 % ; ≈ 13,6 % des porteurs font une SpA (chiffre du cours).",
+   "opts": [
+    {
+     "t": "Présent dans ≈ 90 % des SA",
+     "ok": true,
+     "c": [
+      "c2"
+     ]
+    },
+    {
+     "t": "Son absence élimine le diagnostic",
+     "ok": false,
+     "c": [
+      "c2"
+     ]
+    },
+    {
+     "t": "Sa présence suffit à affirmer le diagnostic",
+     "ok": false,
+     "c": [
+      "c2"
+     ]
+    },
+    {
+     "t": "Retrouvé chez ≈ 50 % de la population générale",
+     "ok": false,
+     "c": [
+      "c15"
+     ]
+    },
+    {
+     "t": "La majorité des porteurs développent une spondylarthrite",
+     "ok": false,
+     "c": [
+      "c15"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q11",
+   "q": "Traitement de la SA — propositions JUSTES ?",
+   "src": "§8",
+   "cards": [
+    "c8",
+    "c24",
+    "c21"
+   ],
+   "explain": "Aucune juste : AINS en 1ʳᵉ ligne, anti-TNF après échec (avec dépistage TB), corticoïdes généraux inefficaces, kiné +++ (pas de repos strict).",
+   "opts": [
+    {
+     "t": "Corticothérapie générale en 1ʳᵉ intention",
+     "ok": false,
+     "c": [
+      "c8",
+      "c21"
+     ]
+    },
+    {
+     "t": "Anti-TNF d’emblée, avant les AINS",
+     "ok": false,
+     "c": [
+      "c8"
+     ]
+    },
+    {
+     "t": "Repos strict au lit pour limiter l’inflammation",
+     "ok": false,
+     "c": [
+      "c24"
+     ]
+    },
+    {
+     "t": "Pénicilline dans l’arthrite du Reiter",
+     "ok": false,
+     "c": [
+      "c14"
+     ]
+    },
+    {
+     "t": "Anti-TNF sans dépistage de la tuberculose",
+     "ok": false,
+     "c": [
+      "c8"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q12",
+   "q": "Manifestations ou associations possibles de la SA — JUSTES ?",
+   "src": "§3.3",
+   "cards": [
+    "c7",
+    "c23"
+   ],
+   "explain": "Toutes sont classiques : uvéite antérieure (la plus fréquente), insuffisance aortique, syndrome restrictif, psoriasis, MICI.",
+   "opts": [
+    {
+     "t": "Uvéite antérieure aiguë",
+     "ok": true,
+     "c": [
+      "c7"
+     ]
+    },
+    {
+     "t": "Insuffisance aortique",
+     "ok": true,
+     "c": [
+      "c7"
+     ]
+    },
+    {
+     "t": "Syndrome restrictif pulmonaire",
+     "ok": true,
+     "c": [
+      "c7"
+     ]
+    },
+    {
+     "t": "Psoriasis",
+     "ok": true,
+     "c": [
+      "c23"
+     ]
+    },
+    {
+     "t": "MICI (Crohn, RCH)",
+     "ok": true,
+     "c": [
+      "c23"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q13",
+   "q": "Pronostic de la SA — JUSTES ?",
+   "src": "§8",
+   "cards": [
+    "c9",
+    "c10"
+   ],
+   "explain": "Mauvais pronostic : coxite, début précoce, tabac, dactylite, syndrome inflammatoire, mauvaise réponse aux AINS. Risque principal = raideur / ankylose.",
+   "opts": [
+    {
+     "t": "Coxite = facteur de mauvais pronostic",
+     "ok": true,
+     "c": [
+      "c9"
+     ]
+    },
+    {
+     "t": "Tabagisme = facteur de mauvais pronostic",
+     "ok": true,
+     "c": [
+      "c9"
+     ]
+    },
+    {
+     "t": "Début tardif = mauvais pronostic",
+     "ok": false,
+     "c": [
+      "c9"
+     ]
+    },
+    {
+     "t": "Bonne réponse aux AINS = mauvais pronostic",
+     "ok": false,
+     "c": [
+      "c9"
+     ]
+    },
+    {
+     "t": "Le risque principal est l’atteinte neurologique",
+     "ok": false,
+     "c": [
+      "c10"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q14",
+   "q": "Critères de New York modifiés — JUSTES ?",
+   "src": "§6",
+   "cards": [
+    "c25",
+    "c4"
+   ],
+   "explain": "Radiologique (sacro-iliite ≥ grade 2 bilatérale ou 3–4 unilatérale) + ≥ 1 critère clinique. Le B27 n’est pas un critère obligatoire.",
+   "opts": [
+    {
+     "t": "Sacro-iliite bilatérale de grade ≥ 2",
+     "ok": true,
+     "c": [
+      "c4",
+      "c25"
+     ]
+    },
+    {
+     "t": "Sacro-iliite unilatérale de grade 3–4",
+     "ok": true,
+     "c": [
+      "c4",
+      "c25"
+     ]
+    },
+    {
+     "t": "Lombalgie > 3 mois améliorée par l’exercice",
+     "ok": true,
+     "c": [
+      "c25"
+     ]
+    },
+    {
+     "t": "Limitation de l’ampliation thoracique",
+     "ok": true,
+     "c": [
+      "c25",
+      "c22"
+     ]
+    },
+    {
+     "t": "HLA-B27 positif obligatoire",
+     "ok": false,
+     "c": [
+      "c25",
+      "c2"
+     ]
+    }
+   ]
+  }
+ ],
+ "vf": [
+  {
+   "id": "v1",
+   "s": "La SA est le rhumatisme inflammatoire chronique le plus fréquent.",
+   "a": false,
+   "w": "C’est la PR.",
+   "cards": [
+    "c18"
+   ]
+  },
+  {
+   "id": "v2",
+   "s": "Elle touche surtout l’homme jeune (≈ 3 H / 1 F).",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c27"
+   ]
+  },
+  {
+   "id": "v3",
+   "s": "La lésion élémentaire est la synovite.",
+   "a": false,
+   "w": "C’est l’enthésite.",
+   "cards": [
+    "c1"
+   ]
+  },
+  {
+   "id": "v4",
+   "s": "FR et ACPA sont négatifs dans la SA.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c18"
+   ]
+  },
+  {
+   "id": "v5",
+   "s": "HLA-B27 positif dans ≈ 90 % des SA.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c2"
+   ]
+  },
+  {
+   "id": "v6",
+   "s": "L’absence de HLA-B27 élimine le diagnostic de SA.",
+   "a": false,
+   "w": "≈ 10 % de SA sont B27−.",
+   "cards": [
+    "c2"
+   ]
+  },
+  {
+   "id": "v7",
+   "s": "La douleur lombaire de la SA est de rythme mécanique.",
+   "a": false,
+   "w": "Elle est inflammatoire.",
+   "cards": [
+    "c3",
+    "c19"
+   ]
+  },
+  {
+   "id": "v8",
+   "s": "Elle réveille dans la 2ᵉ moitié de la nuit et cède aux AINS.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c3"
+   ]
+  },
+  {
+   "id": "v9",
+   "s": "Premiers signes rachidiens à la charnière dorso-lombaire.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c5"
+   ]
+  },
+  {
+   "id": "v10",
+   "s": "Sacro-iliite typiquement bilatérale.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c4"
+   ]
+  },
+  {
+   "id": "v11",
+   "s": "Les ostéophytes sont évocateurs de SA.",
+   "a": false,
+   "w": "Ce sont les syndesmophytes.",
+   "cards": [
+    "c16",
+    "c6"
+   ]
+  },
+  {
+   "id": "v12",
+   "s": "Squaring et « rails de tramway » sont des signes de SA.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c6"
+   ]
+  },
+  {
+   "id": "v13",
+   "s": "L’atteinte oculaire la plus fréquente est l’épisclérite.",
+   "a": false,
+   "w": "C’est l’uvéite antérieure.",
+   "cards": [
+    "c7",
+    "c17"
+   ]
+  },
+  {
+   "id": "v14",
+   "s": "Insuffisance aortique et syndrome restrictif peuvent survenir.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c7"
+   ]
+  },
+  {
+   "id": "v15",
+   "s": "Traitement de 1ʳᵉ ligne = corticothérapie générale.",
+   "a": false,
+   "w": "Ce sont les AINS.",
+   "cards": [
+    "c8",
+    "c21"
+   ]
+  },
+  {
+   "id": "v16",
+   "s": "Les anti-TNF imposent de dépister la tuberculose.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c8"
+   ]
+  },
+  {
+   "id": "v17",
+   "s": "La PR épargne les sacro-iliaques.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c18"
+   ]
+  },
+  {
+   "id": "v18",
+   "s": "Rhumatisme psoriasique : IPD souvent atteintes, FR généralement absent.",
+   "a": true,
+   "w": "",
+   "cards": []
+  },
+  {
+   "id": "v19",
+   "s": "Dans un Reiter, le liquide articulaire contient le germe en culture.",
+   "a": false,
+   "w": "Il est aseptique.",
+   "cards": [
+    "c14"
+   ]
+  },
+  {
+   "id": "v20",
+   "s": "La coxite est un facteur de mauvais pronostic.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c9"
+   ]
+  },
+  {
+   "id": "v21",
+   "s": "Schöber normal = 10 + 5 cm.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c12"
+   ]
+  },
+  {
+   "id": "v22",
+   "s": "Talalgies et dactylite font partie du syndrome pelvi-rachidien.",
+   "a": false,
+   "w": "Elles sont enthésiques / périphériques.",
+   "cards": [
+    "c26"
+   ]
+  },
+  {
+   "id": "v23",
+   "s": "Corticoïdes généraux sont peu ou pas efficaces dans la SA.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c21"
+   ]
+  }
+ ]
+}

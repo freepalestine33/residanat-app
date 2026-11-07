@@ -1,0 +1,854 @@
+{
+ "schema": 1,
+ "id": "PIED_BOT",
+ "progId": "CPIED",
+ "name": "Malformations du pied & PBVE",
+ "pdf": "Malformations_Pied_PBVE_cours_QCM.pdf",
+ "pdfUrl": "pdfs/PIED_BOT.pdf",
+ "keys": [
+  "PBVE = urgence orthopédique néonatale : traitement dès les premiers jours (idéalement 1ʳᵉ semaine). Jamais attendre l'âge de la marche. Triade : équin + varus de l'arrière-pied + adduction de l'avant-pied (± supination). Le TALUS n'en fait JAMAIS partie.",
+  "Traitement de choix = méthode de Ponseti (plâtres successifs + ténotomie du tendon d'Achille). Fonctionnel (kiné) possible ; chirurgie = 2ᵉ recours. PAS de traitement médical.",
+  "Radio face : divergence talo-calcanéenne DIMINUÉE, angle talus-M1 AUGMENTÉ, angle calcanéum-M5 AUGMENTÉ. Profil : angle tibio-talien AUGMENTÉ (équin), divergence talo-calcanéenne diminuée.",
+  "PBVE : idiopathique le plus souvent ; bilatéral ≈ 49 % ; garçons 70 % ; secondaire 10 % (neuromusculaire / polymalformatif). Gravité = score de Dimeglio / 20 (grade IV = 15–20, raide).",
+  "Malformation (irréversible, intrinsèque, avant fin période embryonnaire, traitement nécessaire) ≠ déformation/malposition (contrainte extrinsèque, se corrige souvent seule : métatarsus adductus, pied talus).",
+  "Métatarsus adductus = déformation la plus fréquente : avant-pied en dedans, arrière-pied normal ; contrainte intra-utérine ; régresse le plus souvent. Pied talus : correction spontanée avant le 4ᵉ mois.",
+  "Pied convexe congénital : rare mais grave ; luxation dorsale fixée du naviculaire ; équin irréductible ; pied « en bateau ».",
+  "Swanson : I formation · II différenciation · III duplication · IV hypertrophie · V hypotrophie · VI brides amniotiques · VII syndromes. Maladie amniotique : sillons, amputations, acrosyndactylie.",
+  "PBVE / malformation des pieds → rechercher une hanche à risque (LCH). Urgences orthopédiques néonatales : PBVE, torticolis congénital musculaire, syndactylies embryonnaires, ostéo-arthrite du NN (PAS scoliose idiopathique).",
+  "Appui normal du pied (tripode de Broca) : tête M1 + tête M5 + grosse tubérosité du calcanéum."
+ ],
+ "contrasts": [
+  "Malformation (PBVE, PCC, pied en Z) ≠ déformation/malposition (métatarsus adductus, pied talus)",
+  "Équin + varus + adduction (PBVE) ≠ talus comme composante (JAMAIS)",
+  "Ponseti 1ʳᵉ intention ≠ chirurgie d'emblée ≠ traitement médical",
+  "Divergence talo-calcanéenne diminuée (PBVE) ≠ augmentée",
+  "Swanson I formation ≠ II différenciation ≠ VI amniotique",
+  "Maladie amniotique (sillons, amputations) ≠ polydactylie / synostose / ectromélie longitudinale",
+  "Ectromélie latérale jambe = agénésie fibula ≠ agénésie tibia (médiale)",
+  "Urgences néonatales orthopédiques ≠ scoliose idiopathique"
+ ],
+ "cards": [
+  {
+   "id": "c1",
+   "type": "basic",
+   "q": "Malformation vs déformation vs malposition ?",
+   "a": "Malformation : anomalie congénitale irréversible, trouble intrinsèque avant la fin de la période embryonnaire, nécessite un traitement (PBVE, pied convexe, pied en Z). Déformation : problème de position par facteurs extrinsèques, se corrige spontanément (pied talus, métatarsus adductus). Malposition : contraintes intra-utérines. Examen dès J1 en salle d'accouchement = uniquement clinique.",
+   "src": "principes"
+  },
+  {
+   "id": "c2",
+   "type": "basic",
+   "q": "Appui normal du pied (tripode de Broca) ?",
+   "a": "Tête du 1ᵉʳ métatarsien + tête du 5ᵉ métatarsien + grosse tubérosité du calcanéum. PAS appui par le talus ni par les 5 têtes métatarsiennes.",
+   "src": "principes"
+  },
+  {
+   "id": "c3",
+   "type": "basic",
+   "q": "PBVE — définition et composantes ?",
+   "a": "Pied déformé dans les 3 plans : varus et équin de l'arrière-pied + adduction (± supination) de l'avant-pied. Présent dès la naissance. Le TALUS n'en fait JAMAIS partie. PAS de valgus. Réductibilité variable à la naissance (bien / partielle / raide) — « irréductible » est faux en QCM.",
+   "src": "PBVE"
+  },
+  {
+   "id": "c4",
+   "type": "basic",
+   "q": "PBVE — épidémiologie et étiologie ?",
+   "a": "Le plus souvent idiopathique. Secondaire dans ≈ 10 % (maladie neuromusculaire, syndrome polymalformatif). Bilatéral ≈ 49 %. Prédominance masculine ≈ 70 %. Gravité : score de Dimeglio sur 20 (I < 5, II 5–9, III 10–14, IV 15–20 = pied raide peu réductible).",
+   "src": "PBVE"
+  },
+  {
+   "id": "c5",
+   "type": "basic",
+   "q": "PBVE — urgence et pièges QCM ?",
+   "a": "Urgence orthopédique néonatale / urgence thérapeutique : traitement dès la naissance, idéalement 1ʳᵉ semaine. PAS attendre l'âge de la marche. Fait partie des urgences néonatales avec torticolis congénital musculaire, syndactylies embryonnaires, ostéo-arthrite du NN (PAS scoliose idiopathique). Banque : parfois « malformation » marqué faux (définition Broca = déformation) — lire l'énoncé.",
+   "src": "PBVE"
+  },
+  {
+   "id": "c6",
+   "type": "basic",
+   "q": "Radio du PBVE — face ?",
+   "a": "Divergence talo-calcanéenne (astragalo-calcanéenne) DIMINUÉE → adduction du bloc calcanéo-pédieux / varus du calcanéum. Angle talus–1ᵉʳ métatarsien AUGMENTÉ (N 10–15°) → adduction avant-pied. Angle calcanéum–5ᵉ métatarsien AUGMENTÉ → adduction médio-tarsienne. Ces angles de face concernent l'avant-pied (M1, M5).",
+   "src": "radio"
+  },
+  {
+   "id": "c7",
+   "type": "basic",
+   "q": "Radio du PBVE — profil ?",
+   "a": "Angle tibio-talien AUGMENTÉ (N 90°) → équinisme. Angle tibio-calcanéen AUGMENTÉ (équin sévère > 80° → ténotomie d'Achille selon corrigé). Divergence talo-calcanéenne DIMINUÉE (N 40–50° chez le petit enfant). PAS d'angles talus-M1 ou calcanéum-M5 sur le profil.",
+   "src": "radio"
+  },
+  {
+   "id": "c8",
+   "type": "basic",
+   "q": "Traitement du PBVE — méthodes et place ?",
+   "a": "But : pied plantigrade. 1) Fonctionnelle : kinésithérapie (difficile dans les formes sévères grade 4). 2) Orthopédique Ponseti = référence : série de plâtres + ténotomie du tendon d'Achille (y compris formes sévères) ; orthèse de maintien ensuite → compliance familiale majeure. 3) Chirurgicale (temps postéro-interne) = 2ᵉ recours après échec orthopédique, JAMAIS d'emblée. PAS de traitement médical.",
+   "src": "ttt"
+  },
+  {
+   "id": "c9",
+   "type": "basic",
+   "q": "Traitement PBVE — propositions FAUSSES ?",
+   "a": "FAUX : traitement médical · chirurgie d'emblée · attendre l'âge de la marche puis opérer · chirurgie toujours après échec partiel · attelles/plâtres inutiles après l'âge de la marche. VRAI : Ponseti = indication de choix y compris grade 4 néonatal ; orthopédique en 1ʳᵉ intention ; compliance familiale = facteur majeur.",
+   "src": "ttt"
+  },
+  {
+   "id": "c10",
+   "type": "basic",
+   "q": "Métatarsus adductus ?",
+   "a": "Déformation la plus fréquente (4–13 % à la naissance) ; 60 % bilatéraux. Avant-pied dévié en dedans, arrière-pied NORMAL. Contrainte intra-utérine. Majorité souple, régresse spontanément. Traitement le plus souvent orthopédique. PAS fréquemment associé au PBVE. PAS de chirurgie d'emblée.",
+   "src": "autres"
+  },
+  {
+   "id": "c11",
+   "type": "basic",
+   "q": "Pied talus et pied convexe congénital ?",
+   "a": "Pied talus (déformation) : flexion dorsale exagérée ; correction spontanée avant le 4ᵉ mois ; évolution favorable. Pied convexe congénital (malformation, rare mais grave) : idiopathique ½ des cas ou secondaire (arthrogrypose, spina bifida) ; luxation dorsale fixée du naviculaire ; équin irréductible ; avant-pied en flexion dorsale ; plante convexe = pied « en bateau » ; traitement ortho ou chirurgical si sévère.",
+   "src": "autres"
+  },
+  {
+   "id": "c12",
+   "type": "basic",
+   "q": "Pied en Z (serpentin) ?",
+   "a": "Malformation rare. Adduction angulaire du médio-avant-pied, proche du métatarsus adductus, avec bosse dorso-latérale. Traitement orthopédique (plâtres, attelles, kinésithérapie).",
+   "src": "autres"
+  },
+  {
+   "id": "c13",
+   "type": "basic",
+   "q": "Malformations des orteils (syndactylie, clinodactylie, polydactylie…) ?",
+   "a": "Syndactylie : défaut de creusement commissural ; main → séparer rapidement la 1ʳᵉ commissure ; orteils → après la marche (esthétique pour les autres). Clinodactylie : inclinaison + rotation (souvent 5ᵉ orteil sur 4ᵉ). Polydactylie : 1/1000 Caucasiens, 10/1000 Noirs ; postaxiale 70 %, préaxiale 30 % ; bilatérale 50 %, familiale 30 %. Macrodactylie : rare. Brachydactylie : 3ᵉ–4ᵉ rayons, peu de gêne.",
+   "src": "orteils"
+  },
+  {
+   "id": "c14",
+   "type": "basic",
+   "q": "Classification de Swanson (7 types) ?",
+   "a": "I défaut de formation (agénésie, ectromélie) · II défaut de différenciation/séparation (syndactylie, synostose) · III duplication (polydactylie) · IV hypertrophie/gigantisme (macrodactylie) · V hypotrophie · VI maladie des brides amniotiques (sillons, amputations, acrosyndactylie) · VII grands syndromes / anomalies squelettiques généralisées.",
+   "src": "Swanson"
+  },
+  {
+   "id": "c15",
+   "type": "basic",
+   "q": "Maladie amniotique (brides) — diagnostic et DD ?",
+   "a": "Brides fibreuses après rupture de la membrane amniotique → compression/section de segment. Diagnostic clinique à la naissance : sillons de striction (pathognomonique), amputations, acrosyndactylie (main en moufle). DD avec défaut de formation transversal (type I). PAS polydactylie, PAS synostose, PAS ectromélie longitudinale. « Libération toujours en extrême urgence » = faux (le « toujours »).",
+   "src": "amniotique"
+  },
+  {
+   "id": "c16",
+   "type": "basic",
+   "q": "Ectromélies et phocomélie ?",
+   "a": "Ectromélie longitudinale latérale de jambe = agénésie de la fibula (péroné). Médiale = agénésie du tibia. Latérale avant-bras = agénésie/hypoplasie du radius → main botte radiale, pouce souvent hypoplasique/absent. Phocomélie = aplasie segmentaire proximale, main présente rattachée près du tronc. Amélie = absence totale ; péromélie = moignon sans main. Synostose radio-ulnaire = défaut de séparation → limitation pronosupination (pas flexion-extension du coude).",
+   "src": "ectromélie"
+  },
+  {
+   "id": "c17",
+   "type": "basic",
+   "q": "Hanche à risque et urgences orthopédiques néonatales ?",
+   "a": "PBVE / malformation des pieds → rechercher luxation congénitale de hanche. Facteurs de hanche à risque : présentation par le siège, ATCD familial, sexe féminin, grossesse gémellaire, doigt surnuméraire (PAS multiparité, PAS malformation rénale). Urgences néonatales orthopédiques : PBVE, torticolis congénital musculaire, syndactylies embryonnaires, ostéo-arthrite du NN. PAS scoliose idiopathique.",
+   "src": "hanche"
+  },
+  {
+   "id": "c18",
+   "type": "basic",
+   "q": "Embryologie utile du pied (repères) ?",
+   "a": "28ᵉ j : bourgeon MI. 33ᵉ j : 1ʳᵉ ébauche du pied. 57ᵉ j (8 SA) : pied en équin-supination, plantes face à face. Après 10ᵉ sem : équin/varus/adduction diminuent par rotation médiale ; position neutre à 11 sem. PBVE ≈ pied d'embryon de 8 semaines figé. À la naissance : pied 7,5 cm, ossifié à 25 %.",
+   "src": "embryo"
+  }
+ ],
+ "quiz": [
+  {
+   "id": "q1",
+   "q": "PBVE — définition et composantes — JUSTES ?",
+   "src": "PBVE",
+   "cards": [
+    "c3",
+    "c5"
+   ],
+   "explain": "Équin + varus + adduction. Talus jamais. Urgence néonatale.",
+   "opts": [
+    {
+     "t": "Associe équin, varus et adduction de l'avant-pied",
+     "ok": true,
+     "c": [
+      "c3"
+     ]
+    },
+    {
+     "t": "Urgence orthopédique néonatale",
+     "ok": true,
+     "c": [
+      "c5"
+     ]
+    },
+    {
+     "t": "Le talus fait partie de la triade",
+     "ok": false,
+     "c": [
+      "c3"
+     ]
+    },
+    {
+     "t": "Déformation présente dès la naissance",
+     "ok": true,
+     "c": [
+      "c3"
+     ]
+    },
+    {
+     "t": "Valgus de l'arrière-pied",
+     "ok": false,
+     "c": [
+      "c3"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q2",
+   "q": "PBVE — épidémiologie — JUSTES ?",
+   "src": "PBVE",
+   "cards": [
+    "c4"
+   ],
+   "explain": "Idiopathique, garçons 70 %, bilatéral 49 %, Dimeglio /20.",
+   "opts": [
+    {
+     "t": "Le plus souvent idiopathique",
+     "ok": true,
+     "c": [
+      "c4"
+     ]
+    },
+    {
+     "t": "Bilatéral dans environ 49 % des cas",
+     "ok": true,
+     "c": [
+      "c4"
+     ]
+    },
+    {
+     "t": "Prédominance masculine ≈ 70 %",
+     "ok": true,
+     "c": [
+      "c4"
+     ]
+    },
+    {
+     "t": "Touche surtout les filles",
+     "ok": false,
+     "c": [
+      "c4"
+     ]
+    },
+    {
+     "t": "Gravité évaluée par le score de Dimeglio sur 20",
+     "ok": true,
+     "c": [
+      "c4"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q3",
+   "q": "Radiographie du PBVE — JUSTES ?",
+   "src": "radio",
+   "cards": [
+    "c6",
+    "c7"
+   ],
+   "explain": "Face : divergence ↓, talus-M1 ↑. Profil : tibio-talien ↑.",
+   "opts": [
+    {
+     "t": "Face : divergence talo-calcanéenne diminuée",
+     "ok": true,
+     "c": [
+      "c6"
+     ]
+    },
+    {
+     "t": "Face : angle talus–M1 augmenté",
+     "ok": true,
+     "c": [
+      "c6"
+     ]
+    },
+    {
+     "t": "Profil : angle tibio-talien augmenté (équin)",
+     "ok": true,
+     "c": [
+      "c7"
+     ]
+    },
+    {
+     "t": "Face : divergence talo-calcanéenne augmentée",
+     "ok": false,
+     "c": [
+      "c6"
+     ]
+    },
+    {
+     "t": "Profil : angle tibio-talien diminué",
+     "ok": false,
+     "c": [
+      "c7"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q4",
+   "q": "Traitement du PBVE — JUSTES ?",
+   "src": "ttt",
+   "cards": [
+    "c8",
+    "c9"
+   ],
+   "explain": "Ponseti = référence. Pas de médical. Chirurgie = 2ᵉ recours.",
+   "opts": [
+    {
+     "t": "Méthode de Ponseti = plâtres + ténotomie d'Achille",
+     "ok": true,
+     "c": [
+      "c8"
+     ]
+    },
+    {
+     "t": "Ponseti = méthode de choix y compris formes sévères",
+     "ok": true,
+     "c": [
+      "c8"
+     ]
+    },
+    {
+     "t": "Chirurgie = 2ᵉ recours, jamais d'emblée",
+     "ok": true,
+     "c": [
+      "c8"
+     ]
+    },
+    {
+     "t": "Il existe un traitement médical du PBVE",
+     "ok": false,
+     "c": [
+      "c9"
+     ]
+    },
+    {
+     "t": "On attend l'âge de la marche pour opérer",
+     "ok": false,
+     "c": [
+      "c9"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q5",
+   "q": "Métatarsus adductus et pied talus — JUSTES ?",
+   "src": "autres",
+   "cards": [
+    "c10",
+    "c11"
+   ],
+   "explain": "MA : avant-pied en dedans, régresse. Talus : corrige avant 4 mois.",
+   "opts": [
+    {
+     "t": "Métatarsus adductus : avant-pied en dedans, arrière-pied normal",
+     "ok": true,
+     "c": [
+      "c10"
+     ]
+    },
+    {
+     "t": "Lié le plus souvent à une contrainte intra-utérine",
+     "ok": true,
+     "c": [
+      "c10"
+     ]
+    },
+    {
+     "t": "Majorité des formes souples régressent spontanément",
+     "ok": true,
+     "c": [
+      "c10"
+     ]
+    },
+    {
+     "t": "Fréquemment associé à un PBVE",
+     "ok": false,
+     "c": [
+      "c10"
+     ]
+    },
+    {
+     "t": "Pied talus : correction spontanée avant le 4ᵉ mois",
+     "ok": true,
+     "c": [
+      "c11"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q6",
+   "q": "Pied convexe et principes — JUSTES ?",
+   "src": "autres",
+   "cards": [
+    "c1",
+    "c11"
+   ],
+   "explain": "PCC grave, naviculaire luxé. Malformation ≠ déformation.",
+   "opts": [
+    {
+     "t": "Pied convexe : luxation dorsale fixée du naviculaire, pied en bateau",
+     "ok": true,
+     "c": [
+      "c11"
+     ]
+    },
+    {
+     "t": "Pied convexe = malformation rare mais grave",
+     "ok": true,
+     "c": [
+      "c11"
+     ]
+    },
+    {
+     "t": "Malformation = irréversible, traitement nécessaire",
+     "ok": true,
+     "c": [
+      "c1"
+     ]
+    },
+    {
+     "t": "Déformation se corrige souvent spontanément",
+     "ok": true,
+     "c": [
+      "c1"
+     ]
+    },
+    {
+     "t": "Appui normal = les 5 têtes métatarsiennes",
+     "ok": false,
+     "c": [
+      "c2"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q7",
+   "q": "Swanson — JUSTES ?",
+   "src": "Swanson",
+   "cards": [
+    "c14"
+   ],
+   "explain": "I formation, II différenciation, III duplication, VI amniotique.",
+   "opts": [
+    {
+     "t": "Type III = duplication",
+     "ok": true,
+     "c": [
+      "c14"
+     ]
+    },
+    {
+     "t": "Type IV = hypertrophie (gigantisme)",
+     "ok": true,
+     "c": [
+      "c14"
+     ]
+    },
+    {
+     "t": "Type VI = maladie amniotique",
+     "ok": true,
+     "c": [
+      "c14"
+     ]
+    },
+    {
+     "t": "Type II = défaut de formation",
+     "ok": false,
+     "c": [
+      "c14"
+     ]
+    },
+    {
+     "t": "Type I = défaut de formation (agénésie, ectromélie)",
+     "ok": true,
+     "c": [
+      "c14"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q8",
+   "q": "Maladie amniotique — JUSTES ?",
+   "src": "amniotique",
+   "cards": [
+    "c15"
+   ],
+   "explain": "Sillons pathognomoniques, amputations, acrosyndactylie.",
+   "opts": [
+    {
+     "t": "Signes : sillons, amputations, acrosyndactylies",
+     "ok": true,
+     "c": [
+      "c15"
+     ]
+    },
+    {
+     "t": "Diagnostic posé à la naissance sur les sillons",
+     "ok": true,
+     "c": [
+      "c15"
+     ]
+    },
+    {
+     "t": "DD avec le défaut de formation transversal (type I)",
+     "ok": true,
+     "c": [
+      "c15"
+     ]
+    },
+    {
+     "t": "Donne typiquement des polydactylies et synostoses",
+     "ok": false,
+     "c": [
+      "c15"
+     ]
+    },
+    {
+     "t": "Due à des brides après rupture de la membrane amniotique",
+     "ok": true,
+     "c": [
+      "c15"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q9",
+   "q": "Ectromélies et hanche — JUSTES ?",
+   "src": "ectromélie",
+   "cards": [
+    "c16",
+    "c17"
+   ],
+   "explain": "Latérale jambe = fibula. PBVE → chercher LCH.",
+   "opts": [
+    {
+     "t": "Ectromélie latérale de jambe = agénésie de la fibula",
+     "ok": true,
+     "c": [
+      "c16"
+     ]
+    },
+    {
+     "t": "Ectromélie latérale avant-bras → main botte radiale",
+     "ok": true,
+     "c": [
+      "c16"
+     ]
+    },
+    {
+     "t": "Phocomélie = aplasie proximale avec main présente",
+     "ok": true,
+     "c": [
+      "c16"
+     ]
+    },
+    {
+     "t": "PBVE fait rechercher une luxation congénitale de hanche",
+     "ok": true,
+     "c": [
+      "c17"
+     ]
+    },
+    {
+     "t": "Scoliose idiopathique = urgence orthopédique néonatale",
+     "ok": false,
+     "c": [
+      "c17"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q10",
+   "q": "Orteils et urgences — JUSTES ?",
+   "src": "orteils",
+   "cards": [
+    "c13",
+    "c17"
+   ],
+   "explain": "Syndactylie main : 1ʳᵉ commissure rapide. Polydactylie postaxiale 70 %.",
+   "opts": [
+    {
+     "t": "Syndactylie de la main : séparer rapidement la 1ʳᵉ commissure",
+     "ok": true,
+     "c": [
+      "c13"
+     ]
+    },
+    {
+     "t": "Polydactylie postaxiale ≈ 70 % des cas",
+     "ok": true,
+     "c": [
+      "c13"
+     ]
+    },
+    {
+     "t": "Syndactylies embryonnaires = urgences orthopédiques néonatales",
+     "ok": true,
+     "c": [
+      "c17"
+     ]
+    },
+    {
+     "t": "Syndactylie = défaut de séparation transversal",
+     "ok": false,
+     "c": [
+      "c13"
+     ]
+    },
+    {
+     "t": "Clinodactylie : souvent 5ᵉ orteil sur le 4ᵉ",
+     "ok": true,
+     "c": [
+      "c13"
+     ]
+    }
+   ]
+  }
+ ],
+ "vf": [
+  {
+   "id": "v1",
+   "s": "Le PBVE est une urgence orthopédique néonatale.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c5"
+   ]
+  },
+  {
+   "id": "v2",
+   "s": "Le PBVE associe équin, varus et adduction ; le talus en fait partie.",
+   "a": false,
+   "w": "Le talus n'en fait jamais partie.",
+   "cards": [
+    "c3"
+   ]
+  },
+  {
+   "id": "v3",
+   "s": "Le PBVE est bilatéral dans environ 49 % des cas.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c4"
+   ]
+  },
+  {
+   "id": "v4",
+   "s": "Le PBVE touche surtout les filles.",
+   "a": false,
+   "w": "Garçons ≈ 70 %.",
+   "cards": [
+    "c4"
+   ]
+  },
+  {
+   "id": "v5",
+   "s": "Il est secondaire à une maladie neuromusculaire dans ≈ 10 % des cas.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c4"
+   ]
+  },
+  {
+   "id": "v6",
+   "s": "La gravité s'évalue par le score de Dimeglio sur 20.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c4"
+   ]
+  },
+  {
+   "id": "v7",
+   "s": "La méthode de Ponseti associe plâtres et ténotomie d'Achille.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c8"
+   ]
+  },
+  {
+   "id": "v8",
+   "s": "Il existe un traitement médical du PBVE.",
+   "a": false,
+   "w": "Aucun médicament ne corrige le PBVE.",
+   "cards": [
+    "c9"
+   ]
+  },
+  {
+   "id": "v9",
+   "s": "On attend l'âge de la marche pour opérer un PBVE.",
+   "a": false,
+   "w": "Traitement dès les premiers jours.",
+   "cards": [
+    "c5"
+   ]
+  },
+  {
+   "id": "v10",
+   "s": "Radio de face : divergence talo-calcanéenne diminuée.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c6"
+   ]
+  },
+  {
+   "id": "v11",
+   "s": "Radio de profil : angle tibio-talien augmenté.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c7"
+   ]
+  },
+  {
+   "id": "v12",
+   "s": "Le métatarsus adductus s'associe fréquemment au PBVE et se traite chirurgicalement d'emblée.",
+   "a": false,
+   "w": "Régresse souvent ; pas de chirurgie d'emblée.",
+   "cards": [
+    "c10"
+   ]
+  },
+  {
+   "id": "v13",
+   "s": "Le pied talus se corrige spontanément avant le 4ᵉ mois.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c11"
+   ]
+  },
+  {
+   "id": "v14",
+   "s": "Le pied convexe congénital est rare mais grave.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c11"
+   ]
+  },
+  {
+   "id": "v15",
+   "s": "La polydactylie postaxiale représente 70 % des cas.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c13"
+   ]
+  },
+  {
+   "id": "v16",
+   "s": "Swanson : type II = défaut de formation.",
+   "a": false,
+   "w": "Type II = différenciation/séparation. Type I = formation.",
+   "cards": [
+    "c14"
+   ]
+  },
+  {
+   "id": "v17",
+   "s": "Swanson : type VI = maladie amniotique.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c14"
+   ]
+  },
+  {
+   "id": "v18",
+   "s": "La maladie amniotique se diagnostique par les sillons.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c15"
+   ]
+  },
+  {
+   "id": "v19",
+   "s": "L'ectromélie latérale de jambe est une agénésie de la fibula.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c16"
+   ]
+  },
+  {
+   "id": "v20",
+   "s": "Un PBVE doit faire chercher une luxation de hanche.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c17"
+   ]
+  },
+  {
+   "id": "v21",
+   "s": "Appui normal du pied = tête M1 + tête M5 + grosse tubérosité du calcanéum.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c2"
+   ]
+  },
+  {
+   "id": "v22",
+   "s": "La chirurgie est le traitement de 1ʳᵉ intention du PBVE.",
+   "a": false,
+   "w": "Ponseti en 1ʳᵉ intention ; chirurgie = 2ᵉ recours.",
+   "cards": [
+    "c8"
+   ]
+  },
+  {
+   "id": "v23",
+   "s": "Les syndactylies embryonnaires font partie des urgences orthopédiques néonatales.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c17"
+   ]
+  },
+  {
+   "id": "v24",
+   "s": "Phocomélie = aplasie proximale avec main présente près du tronc.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c16"
+   ]
+  },
+  {
+   "id": "v25",
+   "s": "Angle talus–M1 diminué dans le PBVE.",
+   "a": false,
+   "w": "Augmenté (adduction de l'avant-pied).",
+   "cards": [
+    "c6"
+   ]
+  }
+ ]
+}

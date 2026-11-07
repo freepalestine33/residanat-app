@@ -1,0 +1,1047 @@
+{
+ "schema": 1,
+ "id": "TRAUMA",
+ "progId": "MTRAUMA",
+ "name": "Lésions traumatiques en MPR",
+ "keys": [
+  "Objectif MPR : redonner un fonctionnement locomoteur proche du physiologique + autonomie ; éducation pour éviter les récidives.",
+  "Coopération patient + médecin MPR/kiné + chirurgien. Protocoles standardisés. Auto-rééducation indispensable.",
+  "Techniques de base : masso-kinésithérapie (principe actif essentiel) + physiothérapie, ergothérapie, balnéothérapie, appareillage.",
+  "Antalgiques directs = massages + physiothérapie (électrothérapie, thermothérapie, ultrasons). Facilitent les exercices.",
+  "CI électrothérapie : grossesse, stimulateur cardiaque, région antérolatérale du cou.",
+  "Kinésithérapie = mobilisations (passive/active/contracter-relâcher) + postures + renforcement (isométrique/isotonique/isocinétique) + proprioception.",
+  "Bilan MPR : tropho-cutané, orthopédique, articulaire (goniomètre), neuromusculaire (testing 0–5), fonctionnel (AVQ, marche), psy + paraclinique.",
+  "Phase aiguë : prévenir décubitus/douleur/attitudes vicieuses, indépendance fonctionnelle, lever précoce, cryothérapie++++.",
+  "Phase secondaire : amplitudes + force max, proprioception, balnéothérapie (32°C ; épaules = −90 % charge, ombilic = −50 %), réentraînement à l’effort en fin.",
+  "Aléas : SDRC (algodystrophie), inflammation post-séance (charge trop lourde), phlébite (douleur mollet + perte ballottement → urgence).",
+  "Entorse cheville : mobilisation précoce protégée (PEACE J1–J5) puis amplitudes/éverseurs puis proprioception intensive.",
+  "LCA post-op (6–9 mois) : mois 1 extension complète + verrouillage quadri ; mois 2–3 CCF (pas de chaîne ouverte) ; mois 6–9 return to play."
+ ],
+ "contrasts": [
+  "Travail analytique (début) → travail fonctionnel (progression)",
+  "Isométrique (sans mouvement, artic immobilisée/douloureuse) ≠ isotonique (charge constante) ≠ isocinétique (vitesse constante)",
+  "Orthèse d’immobilisation / de repos ≠ orthèse de fonction / de posture",
+  "Traitement orthopédique (plâtre, traction : long, peu de risque infectieux) ≠ chirurgical (appui plus rapide, risques anesthésie/infection)",
+  "Phase aiguë (prévention décubitus, indépendance) ≠ phase secondaire (récupération max, réinsertion)",
+  "Chaîne cinétique fermée (protège greffon LCA mois 2–3) ≠ chaîne ouverte (leg extension proscrite ou très encadrée)",
+  "Rééducation forcée → cercle vicieux douleur/raideur ≠ rester dans la tolérance douloureuse"
+ ],
+ "cards": [
+  {
+   "id": "c1",
+   "type": "basic",
+   "q": "Objectif principal de la rééducation en traumatologie ?",
+   "a": "Redonner un fonctionnement locomoteur le plus proche possible de l’état physiologique (corriger atrophie, instabilité, désadaptation…) et une bonne qualité de vie ; éducation pour éviter les récidives.",
+   "src": "intro"
+  },
+  {
+   "id": "c2",
+   "type": "basic",
+   "q": "Principes organisationnels de la rééducation ?",
+   "a": "Exercices spécifiques + motivation du patient + auto-rééducation + coopération complète patient / médecin-kiné / chirurgien. Protocoles standardisés, consensuels, reproductibles.",
+   "src": "principe"
+  },
+  {
+   "id": "c3",
+   "type": "basic",
+   "q": "Qui met en œuvre les moyens de rééducation ?",
+   "a": "Masseurs-kinésithérapeutes, ergothérapeutes et orthoprothésistes, sur prescription médicale.",
+   "src": "techniques"
+  },
+  {
+   "id": "c4",
+   "type": "basic",
+   "q": "Progression générale kiné / ergo ?",
+   "a": "Programmes évolutifs : d’un travail analytique vers un travail fonctionnel (activités et mises en situation de complexité croissante).",
+   "src": "techniques"
+  },
+  {
+   "id": "c5",
+   "type": "basic",
+   "q": "Techniques antalgiques directes — composition et rôle ?",
+   "a": "Massages + physiothérapie. Objectif : diminuer la douleur et faciliter exercices/activités thérapeutiques.",
+   "src": "antalgiques"
+  },
+  {
+   "id": "c6",
+   "type": "basic",
+   "q": "Techniques de massothérapie citées ?",
+   "a": "Effleurages, pétrissages, pressions glissées, massages transverses profonds, massage des cicatrices.",
+   "src": "massage"
+  },
+  {
+   "id": "c7",
+   "type": "basic",
+   "q": "Physiothérapie : définition et composantes électriques ?",
+   "a": "Utilisation d’agents physiques à visée thérapeutique. Électrothérapie : courant antalgique ; électrostimulation motrice (courant excitomoteur discontinu → contraction) ; ionisation/ionophorèse (courant continu → pénétration d’un produit) ; TENS (douleurs neurogènes chroniques).",
+   "src": "physio"
+  },
+  {
+   "id": "c8",
+   "type": "basic",
+   "q": "Contre-indications de l’électrothérapie ?",
+   "a": "1) Grossesse 2) Stimulateurs cardiaques 3) Stimulation dans la région antérolatérale du cou.",
+   "src": "physio"
+  },
+  {
+   "id": "c9",
+   "type": "basic",
+   "q": "Thermothérapie et cryothérapie — exemples ?",
+   "a": "Chaleur : fangothérapie/parafango, lampe infrarouge. Cryothérapie : vessie de glace, pulvérisation de gaz, bains écossais (alternance chaud/froid).",
+   "src": "thermo"
+  },
+  {
+   "id": "c10",
+   "type": "basic",
+   "q": "Ultrasons en rééducation ?",
+   "a": "Vibrations dans les milieux hydriques des tissus de soutien ; vertu essentiellement antalgique.",
+   "src": "physio"
+  },
+  {
+   "id": "c11",
+   "type": "basic",
+   "q": "Rôle de la kinésithérapie en traumato-orthopédie ?",
+   "a": "Principe actif essentiel. Repose sur mobilisations et postures, entretien/renforcement musculaire, reprogrammation sensori-motrice (proprioception).",
+   "src": "kiné"
+  },
+  {
+   "id": "c12",
+   "type": "basic",
+   "q": "Mobilisations : types et but ?",
+   "a": "Exercices dynamiques pour entretenir/améliorer l’amplitude. Gain d’amplitude = étirement/assouplissement des structures abarticulaires (capsule, ligament, tendon, muscle). Types : passives, actives, contracter-relâcher.",
+   "src": "kiné"
+  },
+  {
+   "id": "c13",
+   "type": "basic",
+   "q": "Postures : définition et indications ?",
+   "a": "Techniques statiques : mise en tension progressivement croissante jusqu’à étirement maximal sans dépasser le seuil douloureux. Surtout rétractions musculo-tendineuses. Contre pesanteur, autopostures, ou manuelles par le kiné.",
+   "src": "kiné"
+  },
+  {
+   "id": "c14",
+   "type": "basic",
+   "q": "Trois modes de renforcement musculaire ?",
+   "a": "1) Isométrique/statique : contraction sans mouvement (artic immobilisée ou très douloureuse). 2) Isotonique : dynamique contre charge constante (musculation). 3) Isocinétique : mouvements à vitesse constante.",
+   "src": "kiné"
+  },
+  {
+   "id": "c15",
+   "type": "basic",
+   "q": "Reprogrammation sensori-motrice ?",
+   "a": "Réapprentissage global du geste/fonction (équilibre, marche, gestes quotidiens/professionnels) ou rééducation proprioceptive (ex. entorse de cheville).",
+   "src": "kiné"
+  },
+  {
+   "id": "c16",
+   "type": "basic",
+   "q": "Ergothérapie — but ?",
+   "a": "Maintien ou accession à un maximum d’autonomie dans l’environnement quotidien (aménagement domicile…). Activités ludiques et artisanales pour optimisation fonctionnelle.",
+   "src": "ergo"
+  },
+  {
+   "id": "c17",
+   "type": "basic",
+   "q": "Balnéothérapie vs thalasso vs crénothérapie ?",
+   "a": "Balnéothérapie = activités du corps dans l’eau chaude. Thalassothérapie = variante eau de mer. Crénothérapie = cure thermale (eaux minérales naturelles).",
+   "src": "balneo"
+  },
+  {
+   "id": "c18",
+   "type": "basic",
+   "q": "Orthèses : définition et rôles ?",
+   "a": "Appareillage amovible de suppléance (immobilisation ou fonction). Ex. plantaires, chaussures ortho, ceinture, corset. Rôle antalgique (immobilisation/limitation) ou fonctionnel (posture/fonction). Indication non systématique.",
+   "src": "ortho"
+  },
+  {
+   "id": "c19",
+   "type": "basic",
+   "q": "Aides techniques — exemples et rôle des cannes ?",
+   "a": "Moyens palliatifs pour compenser restriction d’autonomie. Cannes : faciliter déambulation et/ou mise en décharge d’un MI (poussées douloureuses articulaires).",
+   "src": "ortho"
+  },
+  {
+   "id": "c20",
+   "type": "basic",
+   "q": "Composantes du bilan clinique MPR ?",
+   "a": "Interrogatoire (médical, social, douleur) ; tropho-cutané ; orthopédique/attitudes vicieuses ; articulaire chiffré (goniomètre) ; neuromusculaire (testing 0–5) ; fonctionnel (préhension, marche, AVQ) ; général ; psychologique.",
+   "src": "bilan"
+  },
+  {
+   "id": "c21",
+   "type": "basic",
+   "q": "Trois types de traitement des lésions locomoteurs ?",
+   "a": "1) Fonctionnel = reprise de la fonction. 2) Orthopédique = immobilisation (plâtre, résine, thermoformable, traction) — peu de risque infectieux/anesthésie, mais long. 3) Chirurgical — appui parfois plus rapide, risques anesthésie/infection.",
+   "src": "ttt"
+  },
+  {
+   "id": "c22",
+   "type": "basic",
+   "q": "Objectifs de rééducation en phase d’hospitalisation aiguë ?",
+   "a": "1) Prévenir complications du décubitus et de la douleur. 2) Favoriser l’indépendance fonctionnelle. 3) Prévenir attitudes vicieuses, enraidissement et fonte musculaire.",
+   "src": "phases"
+  },
+  {
+   "id": "c23",
+   "type": "basic",
+   "q": "Objectifs en phase secondaire ?",
+   "a": "1) Récupérer amplitudes et force maximales. 2) Capacités fonctionnelles optimales + réinsertion sociale. 3) Compenser déficits irréversibles. 4) Prévenir complications moyen/long terme.",
+   "src": "phases"
+  },
+  {
+   "id": "c24",
+   "type": "basic",
+   "q": "Moyens phase aiguë (prévention) ?",
+   "a": "Installation au lit (alignement articulaire) ; nursing ; lever précoce ± contention (évite œdème, phlébite, hypotension orthostatique) ; traitement douleur (médical + cryothérapie++++).",
+   "src": "aiguë"
+  },
+  {
+   "id": "c25",
+   "type": "basic",
+   "q": "Balnéothérapie phase secondaire — température et allègement ?",
+   "a": "Eau à 32°C : antalgique, décontracturante, facilitatrice. Immersion jusqu’aux épaules ≈ −90 % de charge ; jusqu’à l’ombilic ≈ −50 %. Permet mise en charge précoce.",
+   "src": "secondaire"
+  },
+  {
+   "id": "c26",
+   "type": "basic",
+   "q": "Réentraînement à l’effort — quand ?",
+   "a": "Toujours en fin de rééducation. Surtout sportifs / activité physique importante. Travail global vitesse, adresse, résistance, force. Marche tout terrain.",
+   "src": "secondaire"
+  },
+  {
+   "id": "c27",
+   "type": "basic",
+   "q": "Aléas de la rééducation à connaître ?",
+   "a": "1) SDRC/algodystrophie : douleur disproportionnée, raideur, œdème, troubles vasomoteurs. 2) Inflammation persistante post-séance = charge trop précoce/lourde. 3) Phlébite : douleur mollet + perte ballottement → urgence médicale.",
+   "src": "aléas"
+  },
+  {
+   "id": "c28",
+   "type": "basic",
+   "q": "Protocole entorse de cheville — 3 phases ?",
+   "a": "Moderne = mobilisation précoce protégée (pas d’immobilisation stricte prolongée). Phase 1 J1–J5 : PEACE (Protection orthèse, Élévation, Compression, Éducation) + cryo + appui soulagé. Phase 2 J6–J21 : amplitudes (FD++), massages, renforcement éverseurs iso puis concentrique. Phase 3 >3 sem : proprioception intensive, sauts, réathlétisation.",
+   "src": "entorse"
+  },
+  {
+   "id": "c29",
+   "type": "basic",
+   "q": "LCA post-op — durée et mois 1 ?",
+   "a": "Protocole 6–9 mois (DIDT ou Kenneth-Jones). Mois 1 (cicatrisation) : verrouillage actif du quadriceps (anti-sidération), extension complète passive impérative, flexion limitée à 90°, marche normale sans béquilles.",
+   "src": "LCA"
+  },
+  {
+   "id": "c30",
+   "type": "basic",
+   "q": "LCA mois 2–3 et chaîne cinétique ?",
+   "a": "Phase de fragilité du greffon (ligamentisation) : renforcement en chaîne cinétique fermée (presse, squat léger). Travail en chaîne ouverte (leg extension) proscrit ou très encadré.",
+   "src": "LCA"
+  },
+  {
+   "id": "c31",
+   "type": "basic",
+   "q": "LCA mois 4–9 ?",
+   "a": "Mois 4–6 : vélo extérieur, course si tests OK, pliométrie basse. Mois 6–9 : pivots/contacts, isocinétisme, Hop Tests → Return to Play.",
+   "src": "LCA"
+  },
+  {
+   "id": "c32",
+   "type": "basic",
+   "q": "Tendons de la main suturés — grandes lignes ?",
+   "a": "Immobilisation en position de détente du tendon 6 semaines (cicatrisation) → mobilisations activo-passives → renforcement statique/dynamique → travail proprioceptif.",
+   "src": "main"
+  },
+  {
+   "id": "c33",
+   "type": "basic",
+   "q": "Règle d’or sur la douleur en rééducation ?",
+   "a": "Rester dans les limites de la tolérance douloureuse. Une rééducation forcée risque un cercle vicieux douleur / raideur.",
+   "src": "conclusion"
+  },
+  {
+   "id": "c34",
+   "type": "basic",
+   "q": "Testing musculaire — échelle ?",
+   "a": "Cotation de la force musculaire de 0 à 5 (bilan neuromusculaire MPR).",
+   "src": "bilan"
+  }
+ ],
+ "quiz": [
+  {
+   "id": "q1",
+   "q": "Rééducation en traumatologie — propositions JUSTES ?",
+   "src": "intro-principe",
+   "cards": [
+    "c1",
+    "c2"
+   ],
+   "explain": "Objectif fonctionnel + autonomie + éducation. Coopération triadique et auto-rééducation.",
+   "opts": [
+    {
+     "t": "Vise un fonctionnement locomoteur proche du physiologique",
+     "ok": true,
+     "c": [
+      "c1"
+     ]
+    },
+    {
+     "t": "Comporte une éducation du patient pour éviter les récidives",
+     "ok": true,
+     "c": [
+      "c1"
+     ]
+    },
+    {
+     "t": "Nécessite la coopération patient / médecin-kiné / chirurgien",
+     "ok": true,
+     "c": [
+      "c2"
+     ]
+    },
+    {
+     "t": "L’auto-rééducation est facultative",
+     "ok": false,
+     "c": [
+      "c2"
+     ]
+    },
+    {
+     "t": "Les protocoles sont improvisés séance par séance sans standard",
+     "ok": false,
+     "c": [
+      "c2"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q2",
+   "q": "Techniques de base — JUSTES ?",
+   "src": "techniques",
+   "cards": [
+    "c3",
+    "c5",
+    "c11"
+   ],
+   "explain": "Prescription médicale. Antalgiques directs = massage + physio. Kiné = principe actif essentiel.",
+   "opts": [
+    {
+     "t": "Moyens mis en œuvre par kiné, ergo, orthoprothésistes sur prescription médicale",
+     "ok": true,
+     "c": [
+      "c3"
+     ]
+    },
+    {
+     "t": "Techniques antalgiques directes = massages + physiothérapie",
+     "ok": true,
+     "c": [
+      "c5"
+     ]
+    },
+    {
+     "t": "La kinésithérapie est le principe actif essentiel en traumato-orthopédie",
+     "ok": true,
+     "c": [
+      "c11"
+     ]
+    },
+    {
+     "t": "La progression va du fonctionnel vers l’analytique uniquement",
+     "ok": false,
+     "c": [
+      "c4"
+     ]
+    },
+    {
+     "t": "L’appareillage est toujours systématique",
+     "ok": false,
+     "c": [
+      "c18"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q3",
+   "q": "Électrothérapie et thermothérapie — JUSTES ?",
+   "src": "physio",
+   "cards": [
+    "c7",
+    "c8",
+    "c9"
+   ],
+   "explain": "TENS = douleurs neurogènes chroniques. CI : grossesse, pacemaker, cou antérolatéral.",
+   "opts": [
+    {
+     "t": "TENS utilisée surtout dans les douleurs neurogènes chroniques",
+     "ok": true,
+     "c": [
+      "c7"
+     ]
+    },
+    {
+     "t": "CI de l’électrothérapie : grossesse, stimulateur cardiaque, région antérolatérale du cou",
+     "ok": true,
+     "c": [
+      "c8"
+     ]
+    },
+    {
+     "t": "Électrostimulation motrice = courant excitomoteur discontinu induisant une contraction",
+     "ok": true,
+     "c": [
+      "c7"
+     ]
+    },
+    {
+     "t": "La cryothérapie fait partie de la thermothérapie au sens large (chaud/froid)",
+     "ok": true,
+     "c": [
+      "c9"
+     ]
+    },
+    {
+     "t": "L’électrothérapie n’a aucune contre-indication",
+     "ok": false,
+     "c": [
+      "c8"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q4",
+   "q": "Kinésithérapie — mobilisations, postures, renforcement — JUSTES ?",
+   "src": "kiné",
+   "cards": [
+    "c12",
+    "c13",
+    "c14"
+   ],
+   "explain": "Isométrique sans mouvement si artic immobilisée/douloureuse. Postures sans dépasser seuil douloureux.",
+   "opts": [
+    {
+     "t": "Mobilisations passives, actives et contracter-relâcher sont distinguées",
+     "ok": true,
+     "c": [
+      "c12"
+     ]
+    },
+    {
+     "t": "Isométrique = contraction sans mouvement segmentaire",
+     "ok": true,
+     "c": [
+      "c14"
+     ]
+    },
+    {
+     "t": "Isocinétique = mouvement à vitesse constante",
+     "ok": true,
+     "c": [
+      "c14"
+     ]
+    },
+    {
+     "t": "Les postures dépassent volontairement le seuil douloureux",
+     "ok": false,
+     "c": [
+      "c13"
+     ]
+    },
+    {
+     "t": "Isotonique = charge constante (musculation)",
+     "ok": true,
+     "c": [
+      "c14"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q5",
+   "q": "Bilan MPR et traitements — JUSTES ?",
+   "src": "bilan-ttt",
+   "cards": [
+    "c20",
+    "c21",
+    "c34"
+   ],
+   "explain": "Testing 0–5. Goniomètre. Orthopédique long mais peu de risque infectieux.",
+   "opts": [
+    {
+     "t": "Bilan articulaire chiffré au goniomètre",
+     "ok": true,
+     "c": [
+      "c20"
+     ]
+    },
+    {
+     "t": "Testing musculaire de 0 à 5",
+     "ok": true,
+     "c": [
+      "c34"
+     ]
+    },
+    {
+     "t": "Traitement orthopédique : peu de risque anesthésique/infectieux mais long",
+     "ok": true,
+     "c": [
+      "c21"
+     ]
+    },
+    {
+     "t": "Traitement chirurgical : aucun risque infectieux",
+     "ok": false,
+     "c": [
+      "c21"
+     ]
+    },
+    {
+     "t": "Le bilan fonctionnel inclut marche et AVQ",
+     "ok": true,
+     "c": [
+      "c20"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q6",
+   "q": "Phases aiguë et secondaire — JUSTES ?",
+   "src": "phases",
+   "cards": [
+    "c22",
+    "c23",
+    "c24"
+   ],
+   "explain": "Aiguë = prévention décubitus + indépendance. Cryothérapie++++. Lever précoce utile.",
+   "opts": [
+    {
+     "t": "Phase aiguë : prévenir complications du décubitus et attitudes vicieuses",
+     "ok": true,
+     "c": [
+      "c22"
+     ]
+    },
+    {
+     "t": "Lever précoce peut éviter œdème, phlébite, hypotension orthostatique",
+     "ok": true,
+     "c": [
+      "c24"
+     ]
+    },
+    {
+     "t": "Cryothérapie est un moyen physique majeur contre la douleur en phase aiguë",
+     "ok": true,
+     "c": [
+      "c24"
+     ]
+    },
+    {
+     "t": "Phase secondaire : récupérer amplitudes et force maximales",
+     "ok": true,
+     "c": [
+      "c23"
+     ]
+    },
+    {
+     "t": "En phase aiguë on vise d’abord la réathlétisation intensive",
+     "ok": false,
+     "c": [
+      "c22"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q7",
+   "q": "Phase secondaire et balnéothérapie — JUSTES ?",
+   "src": "secondaire",
+   "cards": [
+    "c25",
+    "c26"
+   ],
+   "explain": "32°C. Épaules −90 %, ombilic −50 %. Réentraînement à l’effort en fin.",
+   "opts": [
+    {
+     "t": "Balnéothérapie autour de 32°C",
+     "ok": true,
+     "c": [
+      "c25"
+     ]
+    },
+    {
+     "t": "Immersion jusqu’aux épaules ≈ allègement de 90 %",
+     "ok": true,
+     "c": [
+      "c25"
+     ]
+    },
+    {
+     "t": "Immersion jusqu’à l’ombilic ≈ allègement de 50 %",
+     "ok": true,
+     "c": [
+      "c25"
+     ]
+    },
+    {
+     "t": "Réentraînement à l’effort : toujours en fin de rééducation",
+     "ok": true,
+     "c": [
+      "c26"
+     ]
+    },
+    {
+     "t": "La balnéothérapie augmente la charge articulaire de 50 %",
+     "ok": false,
+     "c": [
+      "c25"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q8",
+   "q": "Aléas de la rééducation — JUSTES ?",
+   "src": "aléas",
+   "cards": [
+    "c27"
+   ],
+   "explain": "SDRC = douleur disproportionnée + raideur + œdème + vasomoteur. Phlébite = urgence.",
+   "opts": [
+    {
+     "t": "SDRC/algodystrophie : douleur disproportionnée, raideur, œdème, troubles vasomoteurs",
+     "ok": true,
+     "c": [
+      "c27"
+     ]
+    },
+    {
+     "t": "Articulation qui gonfle et chauffe après séance = charge trop précoce ou trop lourde",
+     "ok": true,
+     "c": [
+      "c27"
+     ]
+    },
+    {
+     "t": "Douleur vive du mollet + perte du ballottement évoque une phlébite",
+     "ok": true,
+     "c": [
+      "c27"
+     ]
+    },
+    {
+     "t": "La phlébite se surveille sans urgence particulière",
+     "ok": false,
+     "c": [
+      "c27"
+     ]
+    },
+    {
+     "t": "Une inflammation post-séance prouve toujours une infection du greffon",
+     "ok": false,
+     "c": [
+      "c27"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q9",
+   "q": "Entorse de cheville — protocole moderne — JUSTES ?",
+   "src": "entorse",
+   "cards": [
+    "c28"
+   ],
+   "explain": "Mobilisation précoce protégée. PEACE J1–J5. Proprioception en phase 3 anti-récidive.",
+   "opts": [
+    {
+     "t": "On abandonne l’immobilisation stricte prolongée au profit d’une mobilisation précoce protégée",
+     "ok": true,
+     "c": [
+      "c28"
+     ]
+    },
+    {
+     "t": "Phase 1 (J1–J5) : principe PEACE + cryothérapie + appui soulagé sous attelle",
+     "ok": true,
+     "c": [
+      "c28"
+     ]
+    },
+    {
+     "t": "Phase 2 : récupération des amplitudes (FD++) et renforcement des éverseurs",
+     "ok": true,
+     "c": [
+      "c28"
+     ]
+    },
+    {
+     "t": "Phase 3 : proprioception intensive pour limiter les récidives",
+     "ok": true,
+     "c": [
+      "c28"
+     ]
+    },
+    {
+     "t": "L’immobilisation plâtrée stricte 6 semaines est le gold standard moderne",
+     "ok": false,
+     "c": [
+      "c28"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q10",
+   "q": "LCA post-opératoire — JUSTES ?",
+   "src": "LCA",
+   "cards": [
+    "c29",
+    "c30",
+    "c31"
+   ],
+   "explain": "6–9 mois. Extension complète mois 1. CCF mois 2–3. Chaîne ouverte proscrite/encadrée.",
+   "opts": [
+    {
+     "t": "Protocole sur 6 à 9 mois après DIDT ou Kenneth-Jones",
+     "ok": true,
+     "c": [
+      "c29"
+     ]
+    },
+    {
+     "t": "Mois 1 : extension complète passive impérative et verrouillage du quadriceps",
+     "ok": true,
+     "c": [
+      "c29"
+     ]
+    },
+    {
+     "t": "Mois 2–3 : renforcement en chaîne cinétique fermée pour protéger le greffon",
+     "ok": true,
+     "c": [
+      "c30"
+     ]
+    },
+    {
+     "t": "Le leg extension (chaîne ouverte) est libre dès le mois 2",
+     "ok": false,
+     "c": [
+      "c30"
+     ]
+    },
+    {
+     "t": "Return to play validé notamment par isocinétisme et Hop Tests (mois 6–9)",
+     "ok": true,
+     "c": [
+      "c31"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q11",
+   "q": "Conclusion et règles de prescription — JUSTES ?",
+   "src": "conclusion",
+   "cards": [
+    "c33",
+    "c2",
+    "c1"
+   ],
+   "explain": "Tolérance douloureuse. Motivation + auto-rééducation. Coopération triadique.",
+   "opts": [
+    {
+     "t": "Rester dans les limites de la tolérance douloureuse",
+     "ok": true,
+     "c": [
+      "c33"
+     ]
+    },
+    {
+     "t": "Rééducation forcée risque un cercle vicieux douleur/raideur",
+     "ok": true,
+     "c": [
+      "c33"
+     ]
+    },
+    {
+     "t": "Auto-rééducation indispensable sur un programme souvent long",
+     "ok": true,
+     "c": [
+      "c2"
+     ]
+    },
+    {
+     "t": "Coopération complète patient / médecin MPR / chirurgien",
+     "ok": true,
+     "c": [
+      "c2"
+     ]
+    },
+    {
+     "t": "La douleur doit être systématiquement recherchée et maximisée à chaque séance",
+     "ok": false,
+     "c": [
+      "c33"
+     ]
+    }
+   ]
+  }
+ ],
+ "vf": [
+  {
+   "id": "v1",
+   "s": "La kinésithérapie est le principe actif essentiel de la rééducation en traumato-orthopédie.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c11"
+   ]
+  },
+  {
+   "id": "v2",
+   "s": "Les techniques de rééducation se font sans prescription médicale.",
+   "a": false,
+   "w": "Sur prescription médicale.",
+   "cards": [
+    "c3"
+   ]
+  },
+  {
+   "id": "v3",
+   "s": "Techniques antalgiques directes = massages + physiothérapie.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c5"
+   ]
+  },
+  {
+   "id": "v4",
+   "s": "Contre-indications de l’électrothérapie : grossesse, pacemaker, région antérolatérale du cou.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c8"
+   ]
+  },
+  {
+   "id": "v5",
+   "s": "TENS est surtout utilisée dans les douleurs neurogènes chroniques.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c7"
+   ]
+  },
+  {
+   "id": "v6",
+   "s": "Travail isométrique = contraction avec grand mouvement segmentaire.",
+   "a": false,
+   "w": "Sans mouvement segmentaire.",
+   "cards": [
+    "c14"
+   ]
+  },
+  {
+   "id": "v7",
+   "s": "Isocinétique = vitesse de mouvement constante.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c14"
+   ]
+  },
+  {
+   "id": "v8",
+   "s": "Les postures doivent dépasser le seuil douloureux pour être efficaces.",
+   "a": false,
+   "w": "Sans dépasser le seuil douloureux.",
+   "cards": [
+    "c13"
+   ]
+  },
+  {
+   "id": "v9",
+   "s": "Testing musculaire MPR : cotation de 0 à 5.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c34"
+   ]
+  },
+  {
+   "id": "v10",
+   "s": "Bilan articulaire chiffré avec un goniomètre.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c20"
+   ]
+  },
+  {
+   "id": "v11",
+   "s": "Traitement orthopédique : avantage = traitement court.",
+   "a": false,
+   "w": "Inconvénient = traitement long ; avantages = peu de risque anesthésie/infection.",
+   "cards": [
+    "c21"
+   ]
+  },
+  {
+   "id": "v12",
+   "s": "Phase aiguë : prévenir les complications du décubitus et les attitudes vicieuses.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c22"
+   ]
+  },
+  {
+   "id": "v13",
+   "s": "Le lever précoce peut limiter œdème, phlébite et hypotension orthostatique.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c24"
+   ]
+  },
+  {
+   "id": "v14",
+   "s": "Cryothérapie = moyen physique majeur contre la douleur en phase aiguë.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c24"
+   ]
+  },
+  {
+   "id": "v15",
+   "s": "Balnéothérapie à 32°C : immersion aux épaules ≈ −90 % de charge.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c25"
+   ]
+  },
+  {
+   "id": "v16",
+   "s": "Réentraînement à l’effort dès la phase aiguë hospitalière.",
+   "a": false,
+   "w": "Toujours en fin de rééducation.",
+   "cards": [
+    "c26"
+   ]
+  },
+  {
+   "id": "v17",
+   "s": "SDRC = douleur disproportionnée + raideur + œdème + troubles vasomoteurs.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c27"
+   ]
+  },
+  {
+   "id": "v18",
+   "s": "Douleur vive du mollet avec perte du ballottement évoque une phlébite (urgence).",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c27"
+   ]
+  },
+  {
+   "id": "v19",
+   "s": "Entorse de cheville : immobilisation stricte prolongée reste le protocole moderne de référence.",
+   "a": false,
+   "w": "Mobilisation précoce protégée (PEACE).",
+   "cards": [
+    "c28"
+   ]
+  },
+  {
+   "id": "v20",
+   "s": "Phase 1 entorse (J1–J5) : PEACE + cryothérapie + appui soulagé.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c28"
+   ]
+  },
+  {
+   "id": "v21",
+   "s": "LCA post-op : protocole typique sur 6 à 9 mois.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c29"
+   ]
+  },
+  {
+   "id": "v22",
+   "s": "Mois 1 post-LCA : extension complète passive impérative.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c29"
+   ]
+  },
+  {
+   "id": "v23",
+   "s": "Mois 2–3 post-LCA : privilégier la chaîne cinétique ouverte (leg extension libre).",
+   "a": false,
+   "w": "Chaîne fermée ; chaîne ouverte proscrite ou très encadrée.",
+   "cards": [
+    "c30"
+   ]
+  },
+  {
+   "id": "v24",
+   "s": "Tendons de la main suturés : immobilisation en détente environ 6 semaines.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c32"
+   ]
+  },
+  {
+   "id": "v25",
+   "s": "Une rééducation forcée peut entraîner un cercle vicieux douleur/raideur.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c33"
+   ]
+  },
+  {
+   "id": "v26",
+   "s": "L’indication des orthèses est systématique chez tout traumatisé.",
+   "a": false,
+   "w": "Non systématique.",
+   "cards": [
+    "c18"
+   ]
+  },
+  {
+   "id": "v27",
+   "s": "Progression générale : du travail analytique vers le travail fonctionnel.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c4"
+   ]
+  },
+  {
+   "id": "v28",
+   "s": "L’auto-rééducation est indispensable.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c2"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,808 @@
+{
+ "schema": 1,
+ "id": "FRX",
+ "progId": "CFRX",
+ "name": "Fractures de l'enfant & cartilage de croissance",
+ "keys": [
+  "L'enfant n'est PAS un adulte en miniature : consolidation plus rapide + remodelage angulaire.",
+  "Remodelage : corrige les angulations (surtout jeune enfant), JAMAIS les rotations ni les décalages importants.",
+  "Périoste épais : cal périosté en 2–3 sem, attelle interne, explique fractures incomplètes et rareté des pseudarthroses.",
+  "Bois vert = unicorticale/incomplète (diaphyse). Motte de beurre = tassement métaphysaire sans solution de continuité, pas de séquelle de croissance.",
+  "Fracture en cheveux = spiroïde tibia < 4 ans, refus d'appui, radio parfois normale au début.",
+  "Salter-Harris : I décollement pur (excellent) ; II le plus fréquent 40 % (+ fragment Thurstan-Holland) ; III intra-articulaire ; IV trans-métaphyso-épiphysaire (chirurgie) ; V compression (pronostic GRAVE, diag tardif).",
+  "Risque principal d'un décollement épiphysaire = trouble de croissance (épiphysiodèse), PAS infection ni pseudarthrose.",
+  "Diagnostic = radio de 1ère intention. Toujours demander l'âge (noyaux). Parfois radio comparative.",
+  "Traitement le plus souvent orthopédique (plâtre). ECMES = méthode propre à la traumatologie infantile.",
+  "Pas de thromboembolie → pas de prévention systématique. Peu de raideurs → immobilisation large acceptée. Remodelage SAUF rotation.",
+  "Monteggia = luxation tête radiale + fracture de l'ulna. Ligne capitello-radiale doit passer par le centre du capitellum (face + profil).",
+  "Syndrome des loges / Volkmann = complication redoutable (douleurs, engourdissement, pouls souvent conservés)."
+ ],
+ "contrasts": [
+  "Remodelage angulaire OUI ≠ rotation / décalage important NON",
+  "Bois vert (unicorticale diaphysaire) ≠ motte de beurre (tassement métaphysaire)",
+  "Salter I–II souvent orthopédique ≠ IV chirurgie quasi systématique ≠ V pronostic grave",
+  "Risque principal décollement = trouble de croissance ≠ infection / pseudarthrose",
+  "Traitement enfant le plus souvent orthopédique ≠ adulte plus souvent chirurgical",
+  "Pas de prévention thromboembolique systématique chez l'enfant ≠ adulte",
+  "Pseudarthrose exceptionnelle chez l'enfant ≠ adulte plus fréquente"
+ ],
+ "cards": [
+  {
+   "id": "c1",
+   "type": "basic",
+   "q": "Principe fondamental : l'enfant et l'adulte ?",
+   "a": "L'enfant n'est PAS un adulte en miniature. 1er motif d'urgences pédiatriques. Plus fréquent chez le garçon. Délais de consolidation inférieurs à ceux de l'adulte. Remodelage osseux souvent possible.",
+   "src": "intro"
+  },
+  {
+   "id": "c2",
+   "type": "basic",
+   "q": "Que corrige le remodelage osseux ?",
+   "a": "Les angulations (surtout chez le jeune enfant). JAMAIS les rotations ni les décalages importants.",
+   "src": "intro"
+  },
+  {
+   "id": "c3",
+   "type": "basic",
+   "q": "Phases de constitution du cal osseux ?",
+   "a": "1) Hématome péri-fracturaire + inflammation (≈ J0–J20). 2) Cal conjonctif/fibreux (J20–J30). 3) Ossification du cal (J30–J60). 4) Remodelage selon les contraintes mécaniques.",
+   "src": "intro"
+  },
+  {
+   "id": "c4",
+   "type": "basic",
+   "q": "Particularités du périoste de l'enfant ?",
+   "a": "Plus épais → résistance mécanique. S'étend d'un cartilage de croissance à l'autre. Cal périosté en 2–3 semaines (rôle majeur). Peut servir d'attelle interne (souvent intact d'un côté). Participe au remodelage. Explique fractures incomplètes et rareté des pseudarthroses.",
+   "src": "périoste"
+  },
+  {
+   "id": "c5",
+   "type": "basic",
+   "q": "Diagnostic d'une fracture de l'enfant ?",
+   "a": "Suspecté cliniquement (douleur, impotence, attitude antalgique, œdème, déformation, ecchymose). Confirmé par radiographie (1ère intention). Toujours rechercher ouverture cutanée, troubles vasculaires et neurologiques. Chez le jeune enfant : parfois radio comparative + toujours demander l'âge (noyaux d'ossification).",
+   "src": "diagnostic"
+  },
+  {
+   "id": "c6",
+   "type": "basic",
+   "q": "Fracture en « bois vert » (greenstick) ?",
+   "a": "Fracture unicorticale / incomplète (une corticale rompue, l'autre pliée). Typique de l'enfant (périoste + plasticité). Siège souvent diaphysaire des os longs. Traitement orthopédique après réduction éventuelle.",
+   "src": "types"
+  },
+  {
+   "id": "c7",
+   "type": "basic",
+   "q": "Fracture en « cheveux » ?",
+   "a": "Spiroïde longue du tibia. Enfant < 4 ans. Diagnostic difficile (radio parfois normale au début). Clinique : refus d'appui au lever.",
+   "src": "types"
+  },
+  {
+   "id": "c8",
+   "type": "basic",
+   "q": "Fracture en « motte de beurre » (torus / buckle) ?",
+   "a": "Fracture-tassement corticale sans solution de continuité. Siège métaphysaire (os spongieux). Mécanisme : impaction diaphyse dans métaphyse. Douleur sans déformation. Consolidation rapide, excellent remodelage. Aucune séquelle sur la croissance (n'intéresse pas le cartilage).",
+   "src": "types"
+  },
+  {
+   "id": "c9",
+   "type": "basic",
+   "q": "Classification de Salter-Harris — enjeu ?",
+   "a": "Les décollements épiphysaires intéressent le cartilage de croissance → risque de trouble de croissance (épiphysiodèse). Surveillance prolongée obligatoire. Pronostic variable selon le type.",
+   "src": "Salter"
+  },
+  {
+   "id": "c10",
+   "type": "basic",
+   "q": "Salter-Harris type I ?",
+   "a": "Décollement épiphysaire pur (séparation du cartilage). NN et jeunes enfants. Traitement orthopédique (attelle plâtrée après réduction). Excellent pronostic.",
+   "src": "Salter"
+  },
+  {
+   "id": "c11",
+   "type": "basic",
+   "q": "Salter-Harris type II ?",
+   "a": "Le plus fréquent (≈ 40 %). Décollement + trait métaphysaire (fragment de Thurstan-Holland). Grands enfants ≥ 10 ans. Presque toujours orthopédique. Bon pronostic. Interposition périostée possible.",
+   "src": "Salter"
+  },
+  {
+   "id": "c12",
+   "type": "basic",
+   "q": "Salter-Harris type III ?",
+   "a": "Décollement + trait épiphysaire (intra-articulaire) ≈ 20 %. Réduction anatomique (parfois chirurgicale). Bon si réduction parfaite.",
+   "src": "Salter"
+  },
+  {
+   "id": "c13",
+   "type": "basic",
+   "q": "Salter-Harris type IV ?",
+   "a": "Fracture trans-métaphyso-épiphysaire (traverse tout) ≈ 15 %. Réduction anatomique + chirurgie quasi systématique. Pronostic moins bon.",
+   "src": "Salter"
+  },
+  {
+   "id": "c14",
+   "type": "basic",
+   "q": "Salter-Harris type V ?",
+   "a": "Écrasement / compression du cartilage de croissance. Diagnostic souvent rétrospectif. Pronostic GRAVE. Épiphysiodèses fréquentes. Diagnostic tardif sur séquelles.",
+   "src": "Salter"
+  },
+  {
+   "id": "c15",
+   "type": "basic",
+   "q": "Risque principal d'un décollement épiphysaire ?",
+   "a": "Trouble de croissance (épiphysiodèse) — PAS l'infection ni la pseudarthrose.",
+   "src": "Salter"
+  },
+  {
+   "id": "c16",
+   "type": "basic",
+   "q": "Noyaux d'ossification du coude (ordre approximatif) ?",
+   "a": "Condyle externe (capitellum) ≈ 2 ans ; épitrochlée (médiale) ≈ 6 ans ; trochlée ≈ 8 ans ; épicondyle ≈ 12 ans. Toujours demander l'âge de l'enfant.",
+   "src": "coude"
+  },
+  {
+   "id": "c17",
+   "type": "basic",
+   "q": "Ligne capitello-radiale (Stören) et Monteggia ?",
+   "a": "La ligne prolongeant l'axe du radius doit passer par le centre du capitellum sur face ET profil, quel que soit le degré de flexion. Sinon → luxation de la tête radiale. Monteggia = luxation tête radiale + fracture de l'ulna (cubitus).",
+   "src": "coude"
+  },
+  {
+   "id": "c18",
+   "type": "basic",
+   "q": "Principes thérapeutiques chez l'enfant ?",
+   "a": "Traitement le plus souvent orthopédique (immobilisation plâtrée ± réduction, traction, Blount…). But : meilleure réduction + contention avec minimum d'agression. Respecter périoste et cartilage de croissance. On peut immobiliser l'articulation sus et sous-jacente (récupération quasi systématique).",
+   "src": "ttt"
+  },
+  {
+   "id": "c19",
+   "type": "basic",
+   "q": "Méthodes chirurgicales propres à l'enfant ?",
+   "a": "Embrochage, vissage percutané. ECMES (Embrochage Centro-Médullaire Élastique Stable) : broches cintrées → stabilité élastique — méthode propre à la traumatologie infantile. Fixateurs externes (ouvertes, multiples). Danger près de la physe (épiphysiodèse).",
+   "src": "ttt"
+  },
+  {
+   "id": "c20",
+   "type": "basic",
+   "q": "Surveillance sous plâtre ?",
+   "a": "Coloration, chaleur, sensibilité, points d'appui. Radio de contrôle à J+8 (risque de déplacement secondaire +++).",
+   "src": "ttt"
+  },
+  {
+   "id": "c21",
+   "type": "basic",
+   "q": "Syndrome des loges / Volkmann ?",
+   "a": "Complication secondaire redoutable. Douleurs, engourdissement, hypoesthésie ; pouls souvent conservés. Mesure de pression des loges.",
+   "src": "complications"
+  },
+  {
+   "id": "c22",
+   "type": "basic",
+   "q": "Pseudarthrose et cals vicieux chez l'enfant ?",
+   "a": "Pseudarthroses exceptionnelles (souvent simple retard de consolidation → immobilisation plus longue). Cals vicieux : règles de remodelage (angulaire oui, rotation non). Exemple classique à distance : cubitus varus post-traumatique.",
+   "src": "complications"
+  },
+  {
+   "id": "c23",
+   "type": "basic",
+   "q": "Particularités examen — thromboembolie et raideurs ?",
+   "a": "1) Pas de complications thromboemboliques → pas de prévention thromboembolique systématique. 2) Peu de raideurs d'immobilisation → on immobilise volontiers, même en position non physiologique si nécessaire ; rééducation exceptionnelle.",
+   "src": "résumé"
+  },
+  {
+   "id": "c24",
+   "type": "basic",
+   "q": "Séquelles et remodelage — messages parents / expertise ?",
+   "a": "Séquelles souvent de révélation tardive → prévenir les parents, réserves en expertise. Remodelage +++ chez l'enfant jeune, SAUF LA ROTATION.",
+   "src": "résumé"
+  }
+ ],
+ "quiz": [
+  {
+   "id": "q1",
+   "q": "Principes généraux — JUSTES ?",
+   "src": "intro",
+   "cards": [
+    "c1",
+    "c2"
+   ],
+   "explain": "Pas un adulte miniature. Remodelage angulaire oui, rotation non.",
+   "opts": [
+    {
+     "t": "L'enfant n'est pas un adulte en miniature",
+     "ok": true,
+     "c": [
+      "c1"
+     ]
+    },
+    {
+     "t": "Délais de consolidation inférieurs à ceux de l'adulte",
+     "ok": true,
+     "c": [
+      "c1"
+     ]
+    },
+    {
+     "t": "Le remodelage corrige les angulations chez le jeune enfant",
+     "ok": true,
+     "c": [
+      "c2"
+     ]
+    },
+    {
+     "t": "Le remodelage corrige aussi les rotations importantes",
+     "ok": false,
+     "c": [
+      "c2"
+     ]
+    },
+    {
+     "t": "Plus fréquent chez le garçon",
+     "ok": true,
+     "c": [
+      "c1"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q2",
+   "q": "Périoste de l'enfant — JUSTES ?",
+   "src": "périoste",
+   "cards": [
+    "c4"
+   ],
+   "explain": "Épais, cal 2–3 sem, attelle interne, fractures incomplètes, peu de pseudarthroses.",
+   "opts": [
+    {
+     "t": "Plus épais que chez l'adulte",
+     "ok": true,
+     "c": [
+      "c4"
+     ]
+    },
+    {
+     "t": "Produit un cal périosté en 2 à 3 semaines",
+     "ok": true,
+     "c": [
+      "c4"
+     ]
+    },
+    {
+     "t": "Peut servir d'attelle interne lors de la réduction",
+     "ok": true,
+     "c": [
+      "c4"
+     ]
+    },
+    {
+     "t": "Explique la rareté des pseudarthroses",
+     "ok": true,
+     "c": [
+      "c4"
+     ]
+    },
+    {
+     "t": "Est plus fin et fragile que chez l'adulte",
+     "ok": false,
+     "c": [
+      "c4"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q3",
+   "q": "Types de fractures spécifiques — JUSTES ?",
+   "src": "types",
+   "cards": [
+    "c6",
+    "c7",
+    "c8"
+   ],
+   "explain": "Bois vert unicorticale. Motte de beurre métaphysaire sans solution de continuité. Cheveux = tibia <4 ans.",
+   "opts": [
+    {
+     "t": "Bois vert = fracture unicorticale / incomplète, souvent diaphysaire",
+     "ok": true,
+     "c": [
+      "c6"
+     ]
+    },
+    {
+     "t": "Motte de beurre = tassement métaphysaire sans solution de continuité",
+     "ok": true,
+     "c": [
+      "c8"
+     ]
+    },
+    {
+     "t": "Motte de beurre : aucune séquelle sur la croissance",
+     "ok": true,
+     "c": [
+      "c8"
+     ]
+    },
+    {
+     "t": "Fracture en cheveux = spiroïde du tibia chez l'enfant < 4 ans",
+     "ok": true,
+     "c": [
+      "c7"
+     ]
+    },
+    {
+     "t": "Motte de beurre traverse toujours le cartilage de croissance",
+     "ok": false,
+     "c": [
+      "c8"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q4",
+   "q": "Salter-Harris — JUSTES ?",
+   "src": "Salter",
+   "cards": [
+    "c10",
+    "c11",
+    "c14",
+    "c15"
+   ],
+   "explain": "II le plus fréquent. V compression grave. Risque = trouble de croissance.",
+   "opts": [
+    {
+     "t": "Type II = le plus fréquent (≈ 40 %), fragment de Thurstan-Holland",
+     "ok": true,
+     "c": [
+      "c11"
+     ]
+    },
+    {
+     "t": "Type I = décollement pur, excellent pronostic orthopédique",
+     "ok": true,
+     "c": [
+      "c10"
+     ]
+    },
+    {
+     "t": "Type V = compression, diagnostic souvent tardif, pronostic grave",
+     "ok": true,
+     "c": [
+      "c14"
+     ]
+    },
+    {
+     "t": "Risque principal d'un décollement = trouble de croissance",
+     "ok": true,
+     "c": [
+      "c15"
+     ]
+    },
+    {
+     "t": "Type V a un excellent pronostic sous plâtre simple",
+     "ok": false,
+     "c": [
+      "c14"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q5",
+   "q": "Salter III et IV — JUSTES ?",
+   "src": "Salter",
+   "cards": [
+    "c12",
+    "c13"
+   ],
+   "explain": "III intra-articulaire. IV traverse tout, chirurgie quasi systématique.",
+   "opts": [
+    {
+     "t": "Type III = trait épiphysaire intra-articulaire",
+     "ok": true,
+     "c": [
+      "c12"
+     ]
+    },
+    {
+     "t": "Type IV = trans-métaphyso-épiphysaire, chirurgie quasi systématique",
+     "ok": true,
+     "c": [
+      "c13"
+     ]
+    },
+    {
+     "t": "Type IV a un pronostic moins bon que I–II",
+     "ok": true,
+     "c": [
+      "c13"
+     ]
+    },
+    {
+     "t": "Type III ne nécessite jamais de réduction anatomique",
+     "ok": false,
+     "c": [
+      "c12"
+     ]
+    },
+    {
+     "t": "Type IV est le plus fréquent (40 %)",
+     "ok": false,
+     "c": [
+      "c11"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q6",
+   "q": "Coude et Monteggia — JUSTES ?",
+   "src": "coude",
+   "cards": [
+    "c16",
+    "c17"
+   ],
+   "explain": "Âge pour noyaux. Ligne capitello-radiale. Monteggia = luxation + fracture ulna.",
+   "opts": [
+    {
+     "t": "Toujours demander l'âge de l'enfant (noyaux d'ossification)",
+     "ok": true,
+     "c": [
+      "c16"
+     ]
+    },
+    {
+     "t": "Ligne capitello-radiale doit passer par le centre du capitellum (face + profil)",
+     "ok": true,
+     "c": [
+      "c17"
+     ]
+    },
+    {
+     "t": "Monteggia = luxation tête radiale + fracture de l'ulna",
+     "ok": true,
+     "c": [
+      "c17"
+     ]
+    },
+    {
+     "t": "Le capitellum apparaît vers 12 ans",
+     "ok": false,
+     "c": [
+      "c16"
+     ]
+    },
+    {
+     "t": "Condyle externe (capitellum) ≈ 2 ans",
+     "ok": true,
+     "c": [
+      "c16"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q7",
+   "q": "Traitement — JUSTES ?",
+   "src": "ttt",
+   "cards": [
+    "c18",
+    "c19",
+    "c20"
+   ],
+   "explain": "Le plus souvent orthopédique. ECMES infantile. Radio contrôle J+8.",
+   "opts": [
+    {
+     "t": "Traitement le plus souvent orthopédique (plâtre)",
+     "ok": true,
+     "c": [
+      "c18"
+     ]
+    },
+    {
+     "t": "ECMES = méthode propre à la traumatologie infantile",
+     "ok": true,
+     "c": [
+      "c19"
+     ]
+    },
+    {
+     "t": "Radio de contrôle à J+8 (risque de déplacement secondaire)",
+     "ok": true,
+     "c": [
+      "c20"
+     ]
+    },
+    {
+     "t": "On ne doit jamais immobiliser l'articulation sus-jacente",
+     "ok": false,
+     "c": [
+      "c18"
+     ]
+    },
+    {
+     "t": "Respecter périoste et cartilage de croissance",
+     "ok": true,
+     "c": [
+      "c18"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q8",
+   "q": "Particularités et complications — JUSTES ?",
+   "src": "complications-résumé",
+   "cards": [
+    "c21",
+    "c23",
+    "c22"
+   ],
+   "explain": "Pas de prévention thromboembolique. Peu de raideurs. Volkmann redoutable. Pseudarthrose exceptionnelle.",
+   "opts": [
+    {
+     "t": "Pas de prévention thromboembolique systématique chez l'enfant",
+     "ok": true,
+     "c": [
+      "c23"
+     ]
+    },
+    {
+     "t": "Peu de raideurs d'immobilisation → immobilisation large acceptée",
+     "ok": true,
+     "c": [
+      "c23"
+     ]
+    },
+    {
+     "t": "Syndrome des loges / Volkmann = complication redoutable",
+     "ok": true,
+     "c": [
+      "c21"
+     ]
+    },
+    {
+     "t": "Pseudarthroses exceptionnelles chez l'enfant",
+     "ok": true,
+     "c": [
+      "c22"
+     ]
+    },
+    {
+     "t": "Le remodelage corrige toujours les rotations",
+     "ok": false,
+     "c": [
+      "c2"
+     ]
+    }
+   ]
+  }
+ ],
+ "vf": [
+  {
+   "id": "v1",
+   "s": "L'enfant n'est pas un adulte en miniature.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c1"
+   ]
+  },
+  {
+   "id": "v2",
+   "s": "Le remodelage corrige les rotations importantes.",
+   "a": false,
+   "w": "JAMAIS les rotations ni les décalages importants.",
+   "cards": [
+    "c2"
+   ]
+  },
+  {
+   "id": "v3",
+   "s": "Le périoste de l'enfant est plus épais et produit un cal en 2–3 semaines.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c4"
+   ]
+  },
+  {
+   "id": "v4",
+   "s": "Le périoste épais explique la rareté des pseudarthroses.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c4"
+   ]
+  },
+  {
+   "id": "v5",
+   "s": "Fracture en bois vert = unicorticale / incomplète.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c6"
+   ]
+  },
+  {
+   "id": "v6",
+   "s": "Motte de beurre = tassement métaphysaire sans solution de continuité, pas de séquelle de croissance.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c8"
+   ]
+  },
+  {
+   "id": "v7",
+   "s": "Fracture en cheveux = spiroïde du tibia chez l'enfant < 4 ans, refus d'appui.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c7"
+   ]
+  },
+  {
+   "id": "v8",
+   "s": "Salter-Harris II est le plus fréquent (≈ 40 %).",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c11"
+   ]
+  },
+  {
+   "id": "v9",
+   "s": "Salter-Harris V = compression, pronostic excellent sous plâtre.",
+   "a": false,
+   "w": "Pronostic GRAVE, épiphysiodèses fréquentes, diag souvent tardif.",
+   "cards": [
+    "c14"
+   ]
+  },
+  {
+   "id": "v10",
+   "s": "Risque principal d'un décollement épiphysaire = trouble de croissance.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c15"
+   ]
+  },
+  {
+   "id": "v11",
+   "s": "Le diagnostic de fracture repose en 1ère intention sur l'IRM.",
+   "a": false,
+   "w": "Radiographie.",
+   "cards": [
+    "c5"
+   ]
+  },
+  {
+   "id": "v12",
+   "s": "Traitement le plus souvent orthopédique chez l'enfant.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c18"
+   ]
+  },
+  {
+   "id": "v13",
+   "s": "ECMES est une méthode propre à la traumatologie infantile.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c19"
+   ]
+  },
+  {
+   "id": "v14",
+   "s": "Radio de contrôle sous plâtre à J+8 (déplacement secondaire).",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c20"
+   ]
+  },
+  {
+   "id": "v15",
+   "s": "Pas de prévention thromboembolique systématique chez l'enfant.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c23"
+   ]
+  },
+  {
+   "id": "v16",
+   "s": "Les raideurs d'immobilisation sont fréquentes → rééducation systématique.",
+   "a": false,
+   "w": "Rares ; immobilisation large acceptée ; rééducation exceptionnelle.",
+   "cards": [
+    "c23"
+   ]
+  },
+  {
+   "id": "v17",
+   "s": "Monteggia = luxation tête radiale + fracture de l'ulna.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c17"
+   ]
+  },
+  {
+   "id": "v18",
+   "s": "Ligne capitello-radiale doit passer par le centre du capitellum (face + profil).",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c17"
+   ]
+  },
+  {
+   "id": "v19",
+   "s": "Pseudarthroses exceptionnelles chez l'enfant.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c22"
+   ]
+  },
+  {
+   "id": "v20",
+   "s": "Syndrome de Volkmann : pouls toujours abolis.",
+   "a": false,
+   "w": "Pouls souvent conservés.",
+   "cards": [
+    "c21"
+   ]
+  },
+  {
+   "id": "v21",
+   "s": "Salter I = décollement pur, excellent pronostic orthopédique.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c10"
+   ]
+  },
+  {
+   "id": "v22",
+   "s": "Salter IV = chirurgie quasi systématique, pronostic moins bon.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c13"
+   ]
+  },
+  {
+   "id": "v23",
+   "s": "Capitellum (condyle externe) apparaît vers ≈ 2 ans.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c16"
+   ]
+  },
+  {
+   "id": "v24",
+   "s": "Séquelles souvent de révélation tardive → prévenir les parents.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c24"
+   ]
+  },
+  {
+   "id": "v25",
+   "s": "Remodelage +++ chez le jeune enfant, SAUF la rotation.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c24"
+   ]
+  }
+ ]
+}

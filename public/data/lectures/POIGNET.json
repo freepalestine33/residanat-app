@@ -1,0 +1,976 @@
+{
+ "schema": 1,
+ "id": "POIGNET",
+ "progId": "CPOIGNET",
+ "name": "Traumatisme du poignet",
+ "pdf": "Traumatisme_Poignet_cours_QCM.pdf",
+ "pdfUrl": "pdfs/POIGNET.pdf",
+ "keys": [
+  "EIR = fracture la plus fréquente de l'appareil locomoteur. Terrain : femme > 50 ans ostéoporotique, mécanisme indirect. Réduction = urgence fonctionnelle (ni vitale ni esthétique). Chez la femme âgée, forme la plus fréquente souvent comminutive (refends articulaires).",
+  "Pouteau-Colles (85–90 %) : hyperextension, chute sur la paume → trait sus-articulaire (extra-articulaire) à 15–25 mm → bascule postérieure + translation externe + ascension → dos de fourchette + main botte radiale + ligne bistyloïdienne horizontalisée. Orthopédique possible.",
+  "Goyrand-Smith : hyperflexion, déplacement antérieur → ventre de fourchette. Extra-articulaire. Instable → TOUJOURS chirurgical (plaque vissée antérieure). Idem marginales antérieures (Barton articulaire).",
+  "Castaing : compression-extension 85–90 % (postérieur) vs compression-flexion 10–15 % (antérieur). Gérard-Marchant = Pouteau-Colles + fracture styloïde cubitale.",
+  "Complications EIR : cal vicieux (la plus citée) + algodystrophie (surtout femme âgée) + raideur + déplacement secondaire + canal carpien. Pseudarthrose et ostéonécrose = EXCEPTIONNELLES.",
+  "Canal carpien post-traumatique : paresthésies nocturnes 3 doigts externes ± amyotrophie thénar. Traitement médical (attelle, infiltration) ; chirurgie si déficit moteur = section ligament annulaire (pas neurolyse systématique).",
+  "Scaphoïde = 75 % des fractures du carpe, sujet jeune. Tabatière anatomique. Radio initiale normale n'élimine PAS (Schneck, J10–15, scanner/IRM). Immobiliser au moindre doute.",
+  "Vascularisation scaphoïde rétrograde (entre par le tiers distal) → fractures proximales : ostéonécrose pôle proximal + pseudarthrose (complication la plus fréquente). Vis de Herbert si proximale/déplacée. Gant plâtré doit prendre la colonne du pouce.",
+  "Monteggia = ulna + luxation tête radiale. Galeazzi = radius + luxation RUD. Barton = marginale articulaire. Paralysie radiale = main tombante (extension impossible ; flexion palmaire conservée ; déficit abduction pouce).",
+  "Traitement EIR : peu déplacée → plâtre BABP (≈ 6 sem, kiné sans attendre). Postérieur instable → brochage / Kapandji. Antérieur → plaque vissée antérieure. Fixateur externe surtout fractures ouvertes."
+ ],
+ "contrasts": [
+  "Pouteau-Colles (postérieur, dos de fourchette, ortho possible) ≠ Goyrand-Smith (antérieur, ventre de fourchette, toujours chirurgical)",
+  "Extra-articulaire (Pouteau-Colles, Smith) ≠ Barton (marginale articulaire)",
+  "EIR sujet âgé ostéoporotique ≠ scaphoïde sujet jeune",
+  "Cal vicieux / algodystrophie (fréquents EIR) ≠ pseudarthrose EIR (exceptionnelle) ≠ pseudarthrose scaphoïde (fréquente)",
+  "Monteggia (ulna + tête radiale) ≠ Galeazzi (radius + RUD)",
+  "Radio normale n'élimine PAS le scaphoïde",
+  "Brochage/Kapandji (déplacement postérieur) ≠ plaque antérieure (déplacement antérieur)",
+  "Main tombante (radial) ≠ main de prédicateur (médian) ≠ main en griffe (ulnaire)"
+ ],
+ "cards": [
+  {
+   "id": "c1",
+   "type": "basic",
+   "q": "EIR — définition, fréquence, terrain ?",
+   "a": "Fractures épiphysaires et métaphysaires de l'extrémité inférieure du radius jusqu'à 4–5 cm au-dessus de l'interligne radio-carpien. 1ʳᵉ place en traumatologie d'urgence = fracture la plus fréquente de l'appareil locomoteur. Terrain : > 50 ans, femme ménopausée (ostéoporose) ; adulte jeune seulement si traumatisme violent (AC, AVP).",
+   "src": "EIR-géné"
+  },
+  {
+   "id": "c2",
+   "type": "basic",
+   "q": "EIR — mécanisme, diagnostic, pronostic ?",
+   "a": "Mécanisme indirect le plus souvent (chute sur la main) ; direct exceptionnel. Diagnostic clinique + radio face et profil. Pronostic lié à la qualité du traitement (séquelles fonctionnelles et morphologiques). Réduction = urgence fonctionnelle (ni vitale, ni esthétique). Peut perturber l'articulation radio-cubitale (cavité sigmoïde).",
+   "src": "EIR-géné"
+  },
+  {
+   "id": "c3",
+   "type": "basic",
+   "q": "Pièges « généralités EIR » en QCM ?",
+   "a": "FAUX à retenir : « surtout sujet jeune / traumatisme violent » · « moins fréquente / 2ᵉ après le fémur » · « mécanisme le plus souvent direct » · « prédominance masculine » · « traitement toujours chirurgical » · « ne se déplace jamais sous traitement orthopédique ». Chez la femme âgée, la forme la plus fréquente est souvent la comminutive (refends) plutôt que le Pouteau-Colles pur.",
+   "src": "EIR-géné"
+  },
+  {
+   "id": "c4",
+   "type": "basic",
+   "q": "Anatomie radio utile — angles et index ?",
+   "a": "Glène plan sagittal : regarde en bas et en avant, inclinaison palmaire ≈ 10°. Plan frontal : inclinaison 20–25° (ligne bistyloïdienne à 10° de l'horizontale). Index radio-ulnaire inférieur le plus souvent négatif (tête cubitale ≈ 2 mm plus haut que la glène). Capitatum, lunatum et radius alignés sur le profil.",
+   "src": "anatomie"
+  },
+  {
+   "id": "c5",
+   "type": "basic",
+   "q": "Pronosupination et critères de bonne réduction ?",
+   "a": "Pronosupination (Destot) exige : courbures du radius, intégrité de la radio-ulnaire inférieure, intégrité de la membrane interosseuse (PAS les courbures du cubitus ni la seule radio-carpienne). Bonne réduction : glène regardant en bas et en dedans de face. Le profil montre le déplacement antérieur ou postérieur.",
+   "src": "anatomie"
+  },
+  {
+   "id": "c6",
+   "type": "basic",
+   "q": "Classification de Castaing ?",
+   "a": "Deux familles selon le mécanisme. Compression-extension (85–90 %) : chute sur la paume, hyperextension → déplacement postérieur → Pouteau-Colles (± formes articulaires : 3ᵉ fragment, T, croix, Rhea-Barton…). Compression-flexion (10–15 %) : chute sur le dos de la main, hyperflexion → déplacement antérieur → Goyrand-Smith ou marginales antérieures (toujours chirurgical).",
+   "src": "Castaing"
+  },
+  {
+   "id": "c7",
+   "type": "basic",
+   "q": "Pouteau-Colles — mécanisme, trait, déplacement ?",
+   "a": "Chute sur la paume, poignet en hyperextension (indirect). PAS hyperflexion, PAS pronation forcée, PAS coup direct. Trait sus-articulaire (extra-articulaire) à 15–25 mm au-dessus de l'interligne. Déplacement du fragment distal : bascule postérieure + translation externe (+ ascension/engrènement) = baïonnette de face, dos de fourchette de profil.",
+   "src": "Pouteau"
+  },
+  {
+   "id": "c8",
+   "type": "basic",
+   "q": "Pouteau-Colles — signes cliniques complets ?",
+   "a": "Dos de fourchette ; main botte radiale (inclinaison radiale) ; ascension de la styloïde radiale ; horizontalisation de la ligne bistyloïdienne ; saillie de la styloïde cubitale ; dépression sus-articulaire dorsale (comminution postérieure) ; douleur métaphysaire ; quelques mouvements possibles ; ouverture cutanée rare.",
+   "src": "Pouteau"
+  },
+  {
+   "id": "c9",
+   "type": "basic",
+   "q": "Pouteau-Colles — terrain, traitement, variante ?",
+   "a": "Apanage du sujet âgé, femme ostéoporotique. Traitement : orthopédique possible (réduction + BABP) ; chirurgical (brochage) si déplacement important ou instabilité — JAMAIS « toujours chirurgical ». Variante Gérard-Marchant = Pouteau-Colles + fracture de la styloïde cubitale.",
+   "src": "Pouteau"
+  },
+  {
+   "id": "c10",
+   "type": "basic",
+   "q": "Pouteau-Colles — propositions FAUSSES classiques ?",
+   "a": "FAUX : fracture articulaire/intra-articulaire · déplacement antérieur · hyperflexion · ventre de fourchette · traitement toujours chirurgical · ouverture cutanée fréquente · pseudarthrose fréquente · fracture la plus rare des EIR · verticalisation de la ligne bistyloïdienne · paresthésies du médian comme signe caractéristique (c'est une complication).",
+   "src": "Pouteau"
+  },
+  {
+   "id": "c11",
+   "type": "basic",
+   "q": "Goyrand-Smith — fiche complète ?",
+   "a": "Compression-flexion : chute sur le dos de la main, poignet fléchi. Déplacement antérieur en ventre de fourchette, ascension styloïde radiale, translation externe. Extra-articulaire (non articulaire). Pose un problème de réduction. Instable → traitement chirurgical exclusif : réduction sanglante + plaque vissée par voie antérieure. PAS plâtre seul, PAS brochage Kapandji, PAS plaque postérieure.",
+   "src": "Smith"
+  },
+  {
+   "id": "c12",
+   "type": "basic",
+   "q": "Fractures marginales antérieures et Barton ?",
+   "a": "Marginales antérieures articulaires : type I (rebord antérieur simple) et type II (séparation métaphyso-épiphysaire + luxation antérieure du massif carpien). Toutes instables → plaque vissée antérieure. Barton = fracture marginale articulaire ; Rhea-Barton = marginale postéro-externe. Smith = déplacement antérieur + flexion.",
+   "src": "Smith"
+  },
+  {
+   "id": "c13",
+   "type": "basic",
+   "q": "Complications immédiates et secondaires de l'EIR ?",
+   "a": "Immédiates : ouverture cutanée ; syndrome du canal carpien (conflit contenant-contenu, irritation du médian : douleurs nocturnes accentuées par hyperextension, hyperflexion, percussion). Secondaires : œdème sous plâtre ; sepsis sur broche ; déplacement secondaire ; syndrome neuro-algo-dystrophique.",
+   "src": "compl"
+  },
+  {
+   "id": "c14",
+   "type": "basic",
+   "q": "Complications tardives de l'EIR ?",
+   "a": "Nerveuses : névrome irritatif du radial, compression du médian, compression cubitale (rare, Guyon). Rupture tendineuse du long extenseur du pouce (origine ischémique). Troubles de la radio-ulnaire inférieure. Cals vicieux (fréquents même après ostéosynthèse). Séquelles : raideur, arthrose radio-carpienne. PAS de pseudarthrose fréquente, PAS d'ostéonécrose classique.",
+   "src": "compl"
+  },
+  {
+   "id": "c15",
+   "type": "basic",
+   "q": "Complications EIR — ce qui tombe en QCM ?",
+   "a": "JUSTES : cal vicieux, algodystrophie, raideur, déplacement secondaire. Les 2 plus fréquentes chez la femme âgée (compression-extension) : algodystrophie + cal vicieux. Après Pouteau-Colles 45 j : canal carpien et algodystrophie. FAUX : pseudarthrose, ossification péri-articulaire, nécrose, « jamais de déplacement secondaire », Volkmann, névralgie cervico-brachiale.",
+   "src": "compl"
+  },
+  {
+   "id": "c16",
+   "type": "basic",
+   "q": "Canal carpien post-traumatique — diagnostic et traitement ?",
+   "a": "Paresthésies nocturnes des 3 doigts externes ± amyotrophie thénar (ex. 6 mois après Pouteau-Colles). Extension des doigts conservée. ≠ Guyon, ≠ Volkmann, ≠ algodystrophie. Médical : arrêt de travail court, attelle de fonction, infiltration de corticoïde au pli du poignet (pas d'infiltrations mensuelles). Chirurgie : section du ligament annulaire (endoscopique ou ciel ouvert) d'emblée si déficit moteur ; pas de neurolyse systématique.",
+   "src": "canal"
+  },
+  {
+   "id": "c17",
+   "type": "basic",
+   "q": "Algodystrophie du poignet — clinique et paraclinique ?",
+   "a": "Après traumatisme même minime ; fréquente chez anxieux et après Pouteau-Colles. Peau luisante, amplitudes diminuées, douleurs inflammatoires (2ᵉ moitié de nuit, dérouillage > 30 min). Radio normale possible ; hypertransparence sous-chondrale ; hypersignal T2 IRM ; hyperfixation scintigraphique précoce. PAS d'hypofixation, PAS de VS augmentée.",
+   "src": "algo"
+  },
+  {
+   "id": "c18",
+   "type": "basic",
+   "q": "Traitement orthopédique de l'EIR ?",
+   "a": "Réduction (traction douce progressive sous anesthésie, idéalement avant la 6ᵉ heure ; réduction de la corticale antérieure d'abord) + immobilisation BABP (brachio-antébrachio-palmaire) ; plâtre simple si non/peu déplacée. Retrait vers 6 semaines, kinésithérapie sans attendre. Indiqué pour Pouteau-Colles peu déplacée/stable.",
+   "src": "ttt"
+  },
+  {
+   "id": "c19",
+   "type": "basic",
+   "q": "Traitement chirurgical de l'EIR — quel moyen pour quel déplacement ?",
+   "a": "Déplacement postérieur important/instable → ostéosynthèse à foyer fermé : brochage percutané classique, brochage intra-focal de Kapandji (1973), brochage iso-élastique (Py), parfois fixateur externe. Déplacement antérieur, marginales antérieures, articulaires complexes → plaque vissée antérieure (foyer ouvert). Fixateur externe plutôt réservé aux fractures ouvertes (corrigé banque).",
+   "src": "ttt"
+  },
+  {
+   "id": "c20",
+   "type": "basic",
+   "q": "Traitement EIR — pièges QCM ?",
+   "a": "FAUX : réduction par pression manuelle antéro-postérieure ou contention en extension (reproduit la bascule postérieure) · chirurgie dans tous les cas · ostéotomie radiale systématique · cerclage · radios hebdomadaires jusqu'à S6 · retrait systématique du matériel. Radios de 1ʳᵉ intention = face + profil strict (pas d'incidence canal carpien, pas de clichés fonctionnels).",
+   "src": "ttt"
+  },
+  {
+   "id": "c21",
+   "type": "basic",
+   "q": "Scaphoïde — épidémiologie et adage ?",
+   "a": "Fracture la plus fréquente du carpe (≈ 75 %), sujet jeune (PAS le sujet âgé). Mécanisme indirect, hyperextension 95 %, bord radial. Adage de Watson-Jones : devant tout traumatisme fermé du poignet sans déformation évidente, présumer une fracture du scaphoïde jusqu'à preuve du contraire. Parfois découverte au stade de pseudarthrose.",
+   "src": "scapho"
+  },
+  {
+   "id": "c22",
+   "type": "basic",
+   "q": "Scaphoïde — anatomie et vascularisation ?",
+   "a": "80 % de la surface est cartilage (5 surfaces articulaires), pas de périoste → consolidation par cal endostal → réduction parfaite impérative. Vascularisation artère radiale : palmaire 20–30 % (pôle distal), dorsal 70–80 % (entre par l'isthme), sans anastomose. Tout le sang entre par le tiers inférieur → pôle supérieur dévascularisé si fracture du tiers supérieur = artère unique rétrograde.",
+   "src": "scapho"
+  },
+  {
+   "id": "c23",
+   "type": "basic",
+   "q": "Scaphoïde — clinique et radiologie ?",
+   "a": "Douleur bord externe, palpation de la tabatière anatomique (poignet en adduction), appui sur le tubercule, mobilité diminuée, impotence relative, PAS de déformation. 4 incidences (main à plat, poignet fermé, Schneck, profil). Trait souvent invisible au début → refaire à 10–15 jours ou scanner/IRM. Au moindre doute : immobiliser 10 j puis réévaluer. Radio normale N'élimine PAS la fracture.",
+   "src": "scapho"
+  },
+  {
+   "id": "c24",
+   "type": "basic",
+   "q": "Scaphoïde — traitement et complications ?",
+   "a": "Non déplacée : gant plâtré (+ BABP) prenant la colonne du pouce (ne PAS libérer la MCP du pouce). Déplacée / comminutive / proximale : vissage de Herbert. Complications : pseudarthrose (la plus fréquente), ostéonécrose du fragment proximal, cal vicieux, arthrose, iatrogènes. Les 2 principales = pseudarthrose + ostéonécrose du proximal.",
+   "src": "scapho"
+  },
+  {
+   "id": "c25",
+   "type": "basic",
+   "q": "Classification de Schernberg (scaphoïde) ?",
+   "a": "I polaires supérieures · II corporéales hautes · III corporéales basses · IV trans-tubérositaires · V fractures du pied · VI tubercule distal. Fractures distales = extra-articulaires, moins graves. Fractures du tiers moyen les plus fréquentes (Weber-Chao, Mayfield).",
+   "src": "scapho"
+  },
+  {
+   "id": "c26",
+   "type": "basic",
+   "q": "Paralysie du nerf radial — motrice et sensitive ?",
+   "a": "Motrice : main tombante — impossibilité d'étendre le poignet, les doigts (MCP) et le pouce ; déficit d'abduction du pouce ; main en pronation. Flexion palmaire du poignet et adduction du pouce CONSERVÉES. Sensitive : anesthésie bord radial dos de la main / face dorsale 1ʳᵉ commissure et pouce ; atteinte haute → face postérieure de l'avant-bras + réflexe tricipital diminué. Contexte : fracture diaphyse humérale.",
+   "src": "radial"
+  },
+  {
+   "id": "c27",
+   "type": "basic",
+   "q": "Monteggia, Galeazzi, avant-bras ?",
+   "a": "Monteggia = fracture diaphyse ulna + luxation tête radiale (chute bras en pronation forcée ; ostéosynthèse de l'ulna réduit la tête ; chercher la luxation devant toute fracture isolée de l'ulna). Galeazzi = fracture diaphyse radius + luxation radio-ulnaire distale (instabilité RUD ; PAS de luxation de la tête radiale). Avant-bras 2 os : complication la plus fréquente = raideur de la pronosupination ; plaque vissée chez l'adulte ; radio coude ET poignet inclus.",
+   "src": "équivalents"
+  },
+  {
+   "id": "c28",
+   "type": "basic",
+   "q": "Divers poignet (kyste, trapèze, ostéoporose) ?",
+   "a": "Kyste synovial = tumeur des tissus mous du poignet la plus fréquente (face dorsale, mou, peut régresser ; ponction ≠ traitement de référence ; récidive après exérèse non rare). Fracture comminutive du trapèze : retentit sur stabilité 2ᵉ métacarpien, ouverture 1ʳᵉ commissure, pince pouce-index. Fractures des 2 poignets sous traitement hormonal pour cancer prostate = ostéoporose secondaire (hypogonadisme), pas métastases. Tableau de bord ≠ fracture du poignet.",
+   "src": "divers"
+  }
+ ],
+ "quiz": [
+  {
+   "id": "q1",
+   "q": "Généralités EIR — JUSTES ?",
+   "src": "EIR-géné",
+   "cards": [
+    "c1",
+    "c2",
+    "c3"
+   ],
+   "explain": "Plus fréquente, femme âgée, indirect, urgence fonctionnelle.",
+   "opts": [
+    {
+     "t": "Fracture la plus fréquente de l'appareil locomoteur",
+     "ok": true,
+     "c": [
+      "c1"
+     ]
+    },
+    {
+     "t": "Terrain typique : femme > 50 ans ostéoporotique",
+     "ok": true,
+     "c": [
+      "c1"
+     ]
+    },
+    {
+     "t": "Mécanisme le plus souvent indirect",
+     "ok": true,
+     "c": [
+      "c2"
+     ]
+    },
+    {
+     "t": "Réduction = urgence fonctionnelle",
+     "ok": true,
+     "c": [
+      "c2"
+     ]
+    },
+    {
+     "t": "Surtout sujet jeune par traumatisme direct",
+     "ok": false,
+     "c": [
+      "c3"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q2",
+   "q": "Pouteau-Colles — JUSTES ?",
+   "src": "Pouteau",
+   "cards": [
+    "c7",
+    "c8",
+    "c9"
+   ],
+   "explain": "Extra-articulaire, hyperextension, postérieur, dos de fourchette, ortho possible.",
+   "opts": [
+    {
+     "t": "Trait sus-articulaire (extra-articulaire)",
+     "ok": true,
+     "c": [
+      "c7"
+     ]
+    },
+    {
+     "t": "Bascule postérieure + translation externe → dos de fourchette",
+     "ok": true,
+     "c": [
+      "c7"
+     ]
+    },
+    {
+     "t": "Chute sur la paume en hyperextension",
+     "ok": true,
+     "c": [
+      "c7"
+     ]
+    },
+    {
+     "t": "Traitement peut être orthopédique",
+     "ok": true,
+     "c": [
+      "c9"
+     ]
+    },
+    {
+     "t": "Fracture articulaire à déplacement antérieur",
+     "ok": false,
+     "c": [
+      "c10"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q3",
+   "q": "Pouteau-Colles — signes cliniques JUSTES ?",
+   "src": "Pouteau",
+   "cards": [
+    "c8"
+   ],
+   "explain": "Dos de fourchette, main botte radiale, ligne bistyloïdienne horizontalisée.",
+   "opts": [
+    {
+     "t": "Déformation en dos de fourchette",
+     "ok": true,
+     "c": [
+      "c8"
+     ]
+    },
+    {
+     "t": "Main botte radiale",
+     "ok": true,
+     "c": [
+      "c8"
+     ]
+    },
+    {
+     "t": "Horizontalisation de la ligne bistyloïdienne",
+     "ok": true,
+     "c": [
+      "c8"
+     ]
+    },
+    {
+     "t": "Verticalisation de la ligne bistyloïdienne",
+     "ok": false,
+     "c": [
+      "c10"
+     ]
+    },
+    {
+     "t": "Ascension de la styloïde radiale",
+     "ok": true,
+     "c": [
+      "c8"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q4",
+   "q": "Goyrand-Smith / déplacement antérieur — JUSTES ?",
+   "src": "Smith",
+   "cards": [
+    "c11",
+    "c12"
+   ],
+   "explain": "Toujours plaque antérieure. Smith extra-articulaire. Barton articulaire.",
+   "opts": [
+    {
+     "t": "Ventre de fourchette, déplacement antérieur",
+     "ok": true,
+     "c": [
+      "c11"
+     ]
+    },
+    {
+     "t": "Traitement : plaque vissée par voie antérieure",
+     "ok": true,
+     "c": [
+      "c11"
+     ]
+    },
+    {
+     "t": "Goyrand-Smith est extra-articulaire",
+     "ok": true,
+     "c": [
+      "c11"
+     ]
+    },
+    {
+     "t": "Barton est une fracture marginale articulaire",
+     "ok": true,
+     "c": [
+      "c12"
+     ]
+    },
+    {
+     "t": "Brochage Kapandji ou plâtre simple suffisent",
+     "ok": false,
+     "c": [
+      "c11"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q5",
+   "q": "Complications EIR — JUSTES ?",
+   "src": "compl",
+   "cards": [
+    "c13",
+    "c14",
+    "c15"
+   ],
+   "explain": "Cal vicieux + algodystrophie fréquents. Pseudarthrose exceptionnelle.",
+   "opts": [
+    {
+     "t": "Cal vicieux et algodystrophie sont fréquents",
+     "ok": true,
+     "c": [
+      "c15"
+     ]
+    },
+    {
+     "t": "Déplacement secondaire sous plâtre possible",
+     "ok": true,
+     "c": [
+      "c13"
+     ]
+    },
+    {
+     "t": "Canal carpien possible après Pouteau-Colles",
+     "ok": true,
+     "c": [
+      "c16"
+     ]
+    },
+    {
+     "t": "Pseudarthrose est une complication fréquente de l'EIR",
+     "ok": false,
+     "c": [
+      "c14"
+     ]
+    },
+    {
+     "t": "Ostéonécrose est classique après EIR",
+     "ok": false,
+     "c": [
+      "c14"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q6",
+   "q": "Canal carpien et algodystrophie — JUSTES ?",
+   "src": "canal-algo",
+   "cards": [
+    "c16",
+    "c17"
+   ],
+   "explain": "Paresthésies nocturnes 3 doigts = canal. Algo : peau luisante, hyperfixation précoce.",
+   "opts": [
+    {
+     "t": "Paresthésies nocturnes des 3 doigts externes = canal carpien",
+     "ok": true,
+     "c": [
+      "c16"
+     ]
+    },
+    {
+     "t": "Chirurgie canal = section du ligament annulaire (pas neurolyse systématique)",
+     "ok": true,
+     "c": [
+      "c16"
+     ]
+    },
+    {
+     "t": "Algodystrophie : hyperfixation scintigraphique précoce",
+     "ok": true,
+     "c": [
+      "c17"
+     ]
+    },
+    {
+     "t": "Algodystrophie : VS toujours augmentée",
+     "ok": false,
+     "c": [
+      "c17"
+     ]
+    },
+    {
+     "t": "Algodystrophie fréquente après Pouteau-Colles",
+     "ok": true,
+     "c": [
+      "c17"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q7",
+   "q": "Traitement EIR — JUSTES ?",
+   "src": "ttt",
+   "cards": [
+    "c18",
+    "c19"
+   ],
+   "explain": "Plâtre si peu déplacée. Brochage si postérieur. Plaque si antérieur.",
+   "opts": [
+    {
+     "t": "Peu déplacée : immobilisation plâtrée (BABP)",
+     "ok": true,
+     "c": [
+      "c18"
+     ]
+    },
+    {
+     "t": "Déplacement postérieur instable : brochage / Kapandji",
+     "ok": true,
+     "c": [
+      "c19"
+     ]
+    },
+    {
+     "t": "Déplacement antérieur : plaque vissée antérieure",
+     "ok": true,
+     "c": [
+      "c19"
+     ]
+    },
+    {
+     "t": "Toute EIR doit être opérée d'emblée",
+     "ok": false,
+     "c": [
+      "c20"
+     ]
+    },
+    {
+     "t": "Retrait immobilisation ≈ 6 semaines, kiné sans attendre",
+     "ok": true,
+     "c": [
+      "c18"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q8",
+   "q": "Scaphoïde — JUSTES ?",
+   "src": "scapho",
+   "cards": [
+    "c21",
+    "c22",
+    "c23",
+    "c24"
+   ],
+   "explain": "Plus fréquente du carpe, tabatière, radio peut être normale, nécrose proximale, pseudarthrose.",
+   "opts": [
+    {
+     "t": "Fracture la plus fréquente des os du carpe (≈ 75 %)",
+     "ok": true,
+     "c": [
+      "c21"
+     ]
+    },
+    {
+     "t": "Douleur de la tabatière anatomique",
+     "ok": true,
+     "c": [
+      "c23"
+     ]
+    },
+    {
+     "t": "Une radio initiale normale élimine la fracture",
+     "ok": false,
+     "c": [
+      "c23"
+     ]
+    },
+    {
+     "t": "Fractures proximales : ostéonécrose (vascularisation rétrograde)",
+     "ok": true,
+     "c": [
+      "c22"
+     ]
+    },
+    {
+     "t": "Complication la plus fréquente = pseudarthrose",
+     "ok": true,
+     "c": [
+      "c24"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q9",
+   "q": "Scaphoïde — traitement et pièges — JUSTES ?",
+   "src": "scapho",
+   "cards": [
+    "c24",
+    "c23"
+   ],
+   "explain": "Gant avec colonne du pouce. Vis Herbert si déplacée/proximale.",
+   "opts": [
+    {
+     "t": "Non déplacée : gant plâtré prenant la colonne du pouce",
+     "ok": true,
+     "c": [
+      "c24"
+     ]
+    },
+    {
+     "t": "Déplacée/proximale : vissage de Herbert",
+     "ok": true,
+     "c": [
+      "c24"
+     ]
+    },
+    {
+     "t": "Le gant doit libérer la MCP du pouce",
+     "ok": false,
+     "c": [
+      "c24"
+     ]
+    },
+    {
+     "t": "Refaire les radios à 10–15 jours si doute",
+     "ok": true,
+     "c": [
+      "c23"
+     ]
+    },
+    {
+     "t": "Fracture du sujet âgé ostéoporotique",
+     "ok": false,
+     "c": [
+      "c21"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q10",
+   "q": "Monteggia, Galeazzi, nerf radial — JUSTES ?",
+   "src": "équivalents-radial",
+   "cards": [
+    "c26",
+    "c27"
+   ],
+   "explain": "Monteggia ulna+tête radiale. Galeazzi radius+RUD. Main tombante = radial.",
+   "opts": [
+    {
+     "t": "Monteggia = fracture ulna + luxation tête radiale",
+     "ok": true,
+     "c": [
+      "c27"
+     ]
+    },
+    {
+     "t": "Galeazzi = fracture radius + luxation radio-ulnaire distale",
+     "ok": true,
+     "c": [
+      "c27"
+     ]
+    },
+    {
+     "t": "Paralysie radiale = main tombante",
+     "ok": true,
+     "c": [
+      "c26"
+     ]
+    },
+    {
+     "t": "Dans la paralysie radiale, la flexion palmaire est abolie",
+     "ok": false,
+     "c": [
+      "c26"
+     ]
+    },
+    {
+     "t": "Déficit d'abduction du pouce dans la paralysie radiale",
+     "ok": true,
+     "c": [
+      "c26"
+     ]
+    }
+   ]
+  }
+ ],
+ "vf": [
+  {
+   "id": "v1",
+   "s": "La fracture de l'EIR est la plus fréquente de l'appareil locomoteur.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c1"
+   ]
+  },
+  {
+   "id": "v2",
+   "s": "L'EIR survient surtout chez le sujet jeune par traumatisme direct.",
+   "a": false,
+   "w": "Femme âgée, mécanisme indirect.",
+   "cards": [
+    "c1"
+   ]
+  },
+  {
+   "id": "v3",
+   "s": "La réduction d'une EIR est une urgence fonctionnelle.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c2"
+   ]
+  },
+  {
+   "id": "v4",
+   "s": "Le Pouteau-Colles est une fracture articulaire.",
+   "a": false,
+   "w": "Sus-articulaire (extra-articulaire).",
+   "cards": [
+    "c7"
+   ]
+  },
+  {
+   "id": "v5",
+   "s": "Le Pouteau-Colles est dû à une chute en hyperflexion.",
+   "a": false,
+   "w": "Hyperextension, chute sur la paume.",
+   "cards": [
+    "c7"
+   ]
+  },
+  {
+   "id": "v6",
+   "s": "Pouteau-Colles : dos de fourchette, bascule postérieure + translation externe.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c7"
+   ]
+  },
+  {
+   "id": "v7",
+   "s": "Horizontalisation de la ligne bistyloïdienne dans le Pouteau-Colles.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c8"
+   ]
+  },
+  {
+   "id": "v8",
+   "s": "Le ventre de fourchette est celui du Goyrand-Smith.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c11"
+   ]
+  },
+  {
+   "id": "v9",
+   "s": "Le Pouteau-Colles peut être traité orthopédiquement.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c9"
+   ]
+  },
+  {
+   "id": "v10",
+   "s": "Une EIR à déplacement antérieur se traite par plaque vissée antérieure.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c11"
+   ]
+  },
+  {
+   "id": "v11",
+   "s": "Goyrand-Smith est une fracture articulaire.",
+   "a": false,
+   "w": "Extra-articulaire (sus-articulaire). Barton est articulaire.",
+   "cards": [
+    "c11"
+   ]
+  },
+  {
+   "id": "v12",
+   "s": "La pseudarthrose est une complication fréquente de l'EIR.",
+   "a": false,
+   "w": "Exceptionnelle (contrairement au scaphoïde).",
+   "cards": [
+    "c14"
+   ]
+  },
+  {
+   "id": "v13",
+   "s": "Cal vicieux et algodystrophie sont les complications les plus fréquentes de l'EIR.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c15"
+   ]
+  },
+  {
+   "id": "v14",
+   "s": "Paresthésies nocturnes des 3 doigts externes après Pouteau-Colles = canal carpien.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c16"
+   ]
+  },
+  {
+   "id": "v15",
+   "s": "L'algodystrophie s'accompagne typiquement d'une VS très élevée.",
+   "a": false,
+   "w": "VS normale ; hyperfixation scintigraphique précoce.",
+   "cards": [
+    "c17"
+   ]
+  },
+  {
+   "id": "v16",
+   "s": "Déplacement postérieur instable → brochage / Kapandji.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c19"
+   ]
+  },
+  {
+   "id": "v17",
+   "s": "Le scaphoïde est la fracture la plus rare du carpe.",
+   "a": false,
+   "w": "La plus fréquente (≈ 75 %).",
+   "cards": [
+    "c21"
+   ]
+  },
+  {
+   "id": "v18",
+   "s": "Une radiographie normale élimine une fracture du scaphoïde.",
+   "a": false,
+   "w": "Peut être invisible au début ; refaire à J10–15.",
+   "cards": [
+    "c23"
+   ]
+  },
+  {
+   "id": "v19",
+   "s": "La douleur de la tabatière anatomique évoque le scaphoïde.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c23"
+   ]
+  },
+  {
+   "id": "v20",
+   "s": "La vascularisation du scaphoïde est à artère unique rétrograde.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c22"
+   ]
+  },
+  {
+   "id": "v21",
+   "s": "Les fractures proximales du scaphoïde évoluent volontiers vers l'ostéonécrose.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c22"
+   ]
+  },
+  {
+   "id": "v22",
+   "s": "Le traitement du scaphoïde est toujours chirurgical.",
+   "a": false,
+   "w": "Non déplacée → gant plâtré ; déplacée/proximale → vis Herbert.",
+   "cards": [
+    "c24"
+   ]
+  },
+  {
+   "id": "v23",
+   "s": "Le gant plâtré du scaphoïde doit libérer la MCP du pouce.",
+   "a": false,
+   "w": "Doit prendre la colonne du pouce.",
+   "cards": [
+    "c24"
+   ]
+  },
+  {
+   "id": "v24",
+   "s": "Complication la plus fréquente du scaphoïde = pseudarthrose.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c24"
+   ]
+  },
+  {
+   "id": "v25",
+   "s": "Monteggia = fracture de l'ulna + luxation de la tête radiale.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c27"
+   ]
+  },
+  {
+   "id": "v26",
+   "s": "Galeazzi = fracture du radius + luxation de la radio-ulnaire distale.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c27"
+   ]
+  },
+  {
+   "id": "v27",
+   "s": "La paralysie radiale donne une main tombante.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c26"
+   ]
+  },
+  {
+   "id": "v28",
+   "s": "Dans la paralysie radiale, la flexion palmaire du poignet est abolie.",
+   "a": false,
+   "w": "Flexion palmaire et adduction du pouce sont conservées.",
+   "cards": [
+    "c26"
+   ]
+  },
+  {
+   "id": "v29",
+   "s": "Gérard-Marchant = Pouteau-Colles + fracture de la styloïde cubitale.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c9"
+   ]
+  },
+  {
+   "id": "v30",
+   "s": "Barton = fracture marginale articulaire.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c12"
+   ]
+  }
+ ]
+}

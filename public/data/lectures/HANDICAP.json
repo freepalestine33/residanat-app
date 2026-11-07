@@ -1,0 +1,501 @@
+{
+ "schema": 1,
+ "id": "HANDICAP",
+ "progId": "MPR2",
+ "name": "Situations de handicap & qualité de vie",
+ "keys": [
+  "≈ 15 % de la population mondiale vit avec un handicap (≈ 1 milliard). Dans les pays à espérance de vie > 70 ans : ≈ 8 ans de vie avec handicap en moyenne.",
+  "Handicap = aspects négatifs de l'interaction entre : ① problème de santé ② facteurs personnels ③ facteurs environnementaux. Multifactoriel.",
+  "Personne handicapée (gravité + persistance + grands besoins) ≠ personne en situation de handicap (terme plus large, évolutif selon l'environnement).",
+  "80 % des handicaps ne sont pas visibles au premier regard. 6 types : sensoriel, moteur, psychique, cognitif, maladie chronique/invalidante, mental/intellectuel.",
+  "Pays en voie de développement : causes principales = pathologies infectieuses et infantiles. Pays développés : vieillissement, surtout cardio-neuro-vasculaires. Ne pas inverser.",
+  "Algérie ≈ 2 millions PH : moteur 44 %, compréhension/communication 32 %, visuel 24 %. Causes : congénitales/héréditaires 28,5 %, accidents 16,7 %, infectieuses 14,2 %, vieillesse 12,5 %.",
+  "CIF rappel : Déficience (lésionnelle) → Incapacité (fonctionnelle) → Handicap (désavantage social). Modèle participatif : la société s'adapte à l'individu (vs intégratif : l'individu s'adapte à la société).",
+  "Échelles déficiences : raideur → goniométrie ; spasticité → Ashworth ; force → testing manuel ; douleur → EVA ; anxiété/dépression → HAD ; cognition → MMSE/BREF ; incontinence → Ditrovie ; dyspnée → NYHA.",
+  "Qualité de vie : subjective (perspective du patient) + multidimensionnelle (psychologique, physique, sociale, matérielle). Évaluée en interrogeant directement le patient.",
+  "Algérie — droits : 1 % des postes, 30 pts logement, exonération IRG si revenu < 30 000 DA, allocations 10 000 DA (handicap 100 %) / 3 000 DA (< 100 %). ONAAPH, centres spécialisés."
+ ],
+ "contrasts": [
+  "Personne handicapée ≠ personne en situation de handicap",
+  "PVD (infectieux/infantiles) ≠ pays développés (vieillissement cardio-neuro-vasculaire)",
+  "Modèle intégratif (individu s'adapte) ≠ modèle participatif (société s'adapte)",
+  "Handicap visible ≠ 80 % des cas invisibles",
+  "Syndrome grippal ≠ étiologie de handicap (aigu bénin sans séquelles)"
+ ],
+ "cards": [
+  {
+   "id": "c1",
+   "type": "basic",
+   "q": "Chiffres clés du handicap dans le monde ?",
+   "a": "Plus d'un milliard de personnes (≈ 15 % de la population mondiale en 2010, vs 10 % en 1970). Augmentation liée au vieillissement et aux maladies chroniques. Si espérance de vie > 70 ans : ≈ 8 ans de vie avec handicap en moyenne.",
+   "src": "chiffres"
+  },
+  {
+   "id": "c2",
+   "type": "basic",
+   "q": "Définition multifactorielle du handicap ?",
+   "a": "Aspects négatifs de l'interaction entre : ① le problème de santé (maladie, trouble, traumatisme) ; ② les facteurs personnels (ex. attitudes négatives) ; ③ les facteurs environnementaux (inaccessibilité des transports/bâtiments, soutiens sociaux limités…).",
+   "src": "déf"
+  },
+  {
+   "id": "c3",
+   "type": "basic",
+   "q": "Personne handicapée vs personne en situation de handicap ?",
+   "a": "Personne handicapée : gravité et persistance de l'incapacité, risques majeurs d'obstacles, grands besoins de soutien. Personne en situation de handicap : terme plus large, situation évolutive selon les obstacles de l'environnement (ex. béquilles temporaires + obstacles = situation de handicap sans être « handicapé »).",
+   "src": "déf"
+  },
+  {
+   "id": "c4",
+   "type": "basic",
+   "q": "Étiologies du handicap (catégories) ?",
+   "a": "Lésions cérébrales (AVC, TC, PC…) ; lésions médullaires (SEP, para/tétraplégie) ; rhumatismes inflammatoires (PR, SpA) ; autres (amputations, arthroses invalidantes, troubles vésicosphinctériens, malformations…). Le syndrome grippal N'EST PAS une étiologie.",
+   "src": "étiologies"
+  },
+  {
+   "id": "c5",
+   "type": "basic",
+   "q": "Causes selon le niveau de développement ?",
+   "a": "Pays en voie de développement : pathologies infectieuses et infantiles. Pays développés : pathologies du vieillissement, surtout cardio-neuro-vasculaires. Piège classique : ne pas inverser.",
+   "src": "étiologies"
+  },
+  {
+   "id": "c6",
+   "type": "basic",
+   "q": "Causes des handicaps en Algérie (ordre) ?",
+   "a": "Atteintes congénitales ou héréditaires 28,5 % ; séquelles d'accidents/blessures 16,7 % ; maladies infectieuses 14,2 % ; effets de la vieillesse 12,5 % ; violences 7,9 % ; traumatismes 2 %.",
+   "src": "Algérie"
+  },
+  {
+   "id": "c7",
+   "type": "basic",
+   "q": "Les 6 types de handicap ?",
+   "a": "1) Sensoriel (vue, audition). 2) Moteur (mobilité, motricité). 3) Psychique (émotions, comportement). 4) Cognitif (cognition, traitement de l'information). 5) Maladie chronique ou invalidante. 6) Mental ou intellectuel (apprentissage). Dans 80 % des cas le handicap n'est pas visible au premier regard.",
+   "src": "types"
+  },
+  {
+   "id": "c8",
+   "type": "basic",
+   "q": "CIF — rappel des 3 niveaux et modèles ?",
+   "a": "Déficience (lésionnelle) → Incapacité (fonctionnelle) → Handicap (désavantage social). Le handicap dépend aussi des facteurs environnementaux et personnels. Modèle intégratif : l'individu s'adapte à la société. Modèle participatif : la société s'adapte à l'individu.",
+   "src": "CIF"
+  },
+  {
+   "id": "c9",
+   "type": "basic",
+   "q": "Pourquoi évaluer le handicap ?",
+   "a": "Établir la réalité et la sévérité ; suivre l'évolution ; orienter les choix thérapeutiques et mesurer l'efficacité ; déterminer le coût / intérêt des techniques ; arguments pour protection juridique (sauvegarde, curatelle, tutelle) et indemnisations.",
+   "src": "évaluation"
+  },
+  {
+   "id": "c10",
+   "type": "basic",
+   "q": "Associations échelle / déficience (à connaître par cœur) ?",
+   "a": "Raideur → goniométrie. Spasticité → Ashworth. Force → testing musculaire manuel. Douleur → EVA / EN / DOLOPLUS. Anxiété-dépression → HAD. Cognition → MMSE / BREF. Incontinence → Ditrovie. Dyspnée / IC → NYHA.",
+   "src": "échelles"
+  },
+  {
+   "id": "c11",
+   "type": "basic",
+   "q": "Aides au retour à domicile ?",
+   "a": "Aides humaines : soins infirmiers, tierce personne (auxiliaire de vie / famille). Aides matérielles remboursables : lit médicalisé, fauteuil roulant, cannes, déambulateur, orthèses/prothèses, matelas anti-escarre… Non prises en charge : barres d'appui, rehausseur de cuvette, siège de baignoire, téléalarme…",
+   "src": "aides"
+  },
+  {
+   "id": "c12",
+   "type": "basic",
+   "q": "Concept de qualité de vie ?",
+   "a": "Notion subjective (ne peut être comprise que dans la perspective du patient) + multidimensionnelle (facteurs psychologiques, physiques, sociaux, matériels). Selon l'OMS : combinaison de ces facteurs pour évaluer le bien-être. Évaluée en interrogeant directement le patient.",
+   "src": "QdV"
+  },
+  {
+   "id": "c13",
+   "type": "basic",
+   "q": "Chiffres et droits en Algérie ?",
+   "a": "≈ 2 millions PH : moteur 44 %, communication 32 %, visuel 24 %. Droits : couverture sociale, transports gratuits/réduits, 30 pts logement, exonération IRG si < 30 000 DA, 1 % des postes, scolarité, formation (Mihnati). Allocations : 10 000 DA (handicap 100 % adulte / enfant) ; 3 000 DA (< 100 %). ONAAPH, centres spécialisés, CNCPPDH.",
+   "src": "Algérie"
+  }
+ ],
+ "quiz": [
+  {
+   "id": "q1",
+   "q": "Handicap — définitions — JUSTES ?",
+   "src": "déf",
+   "cards": [
+    "c2",
+    "c3"
+   ],
+   "explain": "Multifactoriel. Personne handicapée ≠ situation de handicap.",
+   "opts": [
+    {
+     "t": "Handicap = interaction problème de santé + facteurs personnels + environnementaux",
+     "ok": true,
+     "c": [
+      "c2"
+     ]
+    },
+    {
+     "t": "Personne en situation de handicap = terme plus large et évolutif",
+     "ok": true,
+     "c": [
+      "c3"
+     ]
+    },
+    {
+     "t": "Dans 80 % des cas le handicap n'est pas visible au premier regard",
+     "ok": true,
+     "c": [
+      "c7"
+     ]
+    },
+    {
+     "t": "Le handicap ne dépend que de la lésion organique",
+     "ok": false,
+     "c": [
+      "c2"
+     ]
+    },
+    {
+     "t": "Personne handicapée implique gravité et persistance",
+     "ok": true,
+     "c": [
+      "c3"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q2",
+   "q": "Étiologies et niveaux de développement — JUSTES ?",
+   "src": "étiologies",
+   "cards": [
+    "c4",
+    "c5"
+   ],
+   "explain": "PVD = infectieux/infantiles. Développés = vieillissement. Syndrome grippal non.",
+   "opts": [
+    {
+     "t": "Pays en voie de développement : causes principales infectieuses et infantiles",
+     "ok": true,
+     "c": [
+      "c5"
+     ]
+    },
+    {
+     "t": "Pays développés : pathologies du vieillissement cardio-neuro-vasculaires",
+     "ok": true,
+     "c": [
+      "c5"
+     ]
+    },
+    {
+     "t": "Lésions cérébrales, médullaires, rhumatismes inflammatoires sont des étiologies",
+     "ok": true,
+     "c": [
+      "c4"
+     ]
+    },
+    {
+     "t": "Le syndrome grippal est une étiologie classique de handicap",
+     "ok": false,
+     "c": [
+      "c4"
+     ]
+    },
+    {
+     "t": "Dans les pays développés ce sont les pathologies infectieuses infantiles",
+     "ok": false,
+     "c": [
+      "c5"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q3",
+   "q": "Types et Algérie — JUSTES ?",
+   "src": "types-Algérie",
+   "cards": [
+    "c7",
+    "c6",
+    "c13"
+   ],
+   "explain": "6 types. Algérie moteur 44 %. Allocations 10 000 / 3 000 DA.",
+   "opts": [
+    {
+     "t": "6 types : sensoriel, moteur, psychique, cognitif, maladie chronique, mental",
+     "ok": true,
+     "c": [
+      "c7"
+     ]
+    },
+    {
+     "t": "Algérie : handicap moteur le plus fréquent (≈ 44 %)",
+     "ok": true,
+     "c": [
+      "c13"
+     ]
+    },
+    {
+     "t": "Allocation 10 000 DA si handicap 100 % ; 3 000 DA si < 100 %",
+     "ok": true,
+     "c": [
+      "c13"
+     ]
+    },
+    {
+     "t": "1 % des postes de travail réservés aux personnes en situation de handicap",
+     "ok": true,
+     "c": [
+      "c13"
+     ]
+    },
+    {
+     "t": "En Algérie le handicap visuel représente 80 % des cas",
+     "ok": false,
+     "c": [
+      "c13"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q4",
+   "q": "Échelles et qualité de vie — JUSTES ?",
+   "src": "échelles-QdV",
+   "cards": [
+    "c10",
+    "c12"
+   ],
+   "explain": "Associations échelle/déficience. QdV subjective + multidimensionnelle.",
+   "opts": [
+    {
+     "t": "Raideur → goniométrie ; spasticité → Ashworth ; douleur → EVA",
+     "ok": true,
+     "c": [
+      "c10"
+     ]
+    },
+    {
+     "t": "Anxiété/dépression → HAD ; cognition → MMSE/BREF",
+     "ok": true,
+     "c": [
+      "c10"
+     ]
+    },
+    {
+     "t": "Qualité de vie : subjective et multidimensionnelle",
+     "ok": true,
+     "c": [
+      "c12"
+     ]
+    },
+    {
+     "t": "La qualité de vie s'évalue uniquement par des scores objectifs sans interroger le patient",
+     "ok": false,
+     "c": [
+      "c12"
+     ]
+    },
+    {
+     "t": "Incontinence → Ditrovie ; dyspnée → NYHA",
+     "ok": true,
+     "c": [
+      "c10"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q5",
+   "q": "CIF et modèles — JUSTES ?",
+   "src": "CIF",
+   "cards": [
+    "c8"
+   ],
+   "explain": "Déficience → incapacité → handicap. Participatif = société s'adapte.",
+   "opts": [
+    {
+     "t": "Déficience (lésionnelle) → Incapacité (fonctionnelle) → Handicap (social)",
+     "ok": true,
+     "c": [
+      "c8"
+     ]
+    },
+    {
+     "t": "Modèle participatif : la société s'adapte à l'individu",
+     "ok": true,
+     "c": [
+      "c8"
+     ]
+    },
+    {
+     "t": "Modèle intégratif : l'individu s'adapte à la société",
+     "ok": true,
+     "c": [
+      "c8"
+     ]
+    },
+    {
+     "t": "Le handicap ne dépend que de la maladie, jamais de l'environnement",
+     "ok": false,
+     "c": [
+      "c8"
+     ]
+    },
+    {
+     "t": "Le handicap dépend aussi des facteurs environnementaux et personnels",
+     "ok": true,
+     "c": [
+      "c8"
+     ]
+    }
+   ]
+  }
+ ],
+ "vf": [
+  {
+   "id": "v1",
+   "s": "Environ 15 % de la population mondiale vit avec un handicap.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c1"
+   ]
+  },
+  {
+   "id": "v2",
+   "s": "Le handicap est multifactoriel (santé + personnels + environnementaux).",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c2"
+   ]
+  },
+  {
+   "id": "v3",
+   "s": "Personne handicapée et personne en situation de handicap sont strictement synonymes.",
+   "a": false,
+   "w": "Situation de handicap = terme plus large et évolutif.",
+   "cards": [
+    "c3"
+   ]
+  },
+  {
+   "id": "v4",
+   "s": "Dans 80 % des cas le handicap n'est pas visible au premier regard.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c7"
+   ]
+  },
+  {
+   "id": "v5",
+   "s": "Pays en voie de développement : causes principales infectieuses et infantiles.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c5"
+   ]
+  },
+  {
+   "id": "v6",
+   "s": "Pays développés : causes principales infectieuses et infantiles.",
+   "a": false,
+   "w": "Vieillissement cardio-neuro-vasculaire.",
+   "cards": [
+    "c5"
+   ]
+  },
+  {
+   "id": "v7",
+   "s": "Le syndrome grippal est une étiologie classique de handicap.",
+   "a": false,
+   "w": "Affection aiguë bénigne sans séquelles incapacitantes.",
+   "cards": [
+    "c4"
+   ]
+  },
+  {
+   "id": "v8",
+   "s": "En Algérie le handicap moteur est le plus fréquent (≈ 44 %).",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c13"
+   ]
+  },
+  {
+   "id": "v9",
+   "s": "Allocation mensuelle 10 000 DA si handicap à 100 %.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c13"
+   ]
+  },
+  {
+   "id": "v10",
+   "s": "1 % des postes de travail sont consacrés aux personnes en situation de handicap.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c13"
+   ]
+  },
+  {
+   "id": "v11",
+   "s": "Spasticité → score d'Ashworth ; douleur → EVA ; cognition → MMSE.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c10"
+   ]
+  },
+  {
+   "id": "v12",
+   "s": "Qualité de vie : subjective et multidimensionnelle, évaluée avec le patient.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c12"
+   ]
+  },
+  {
+   "id": "v13",
+   "s": "Modèle participatif du handicap : la société s'adapte à l'individu.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c8"
+   ]
+  },
+  {
+   "id": "v14",
+   "s": "Causes en Algérie : congénitales/héréditaires en tête (≈ 28,5 %).",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c6"
+   ]
+  },
+  {
+   "id": "v15",
+   "s": "Il existe 6 types de handicap (sensoriel, moteur, psychique, cognitif, chronique, mental).",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c7"
+   ]
+  },
+  {
+   "id": "v16",
+   "s": "Exonération de l'IRG si revenu mensuel < 30 000 DA (Algérie).",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c13"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,1082 @@
+{
+ "schema": 1,
+ "id": "DECUB",
+ "progId": "MDECUB",
+ "name": "Complications du décubitus",
+ "keys": [
+  "Toute complication due à un alitement prolongé ; la prévention est la seule option valable.",
+  "Escarre = complication cutanée la plus redoutée. Classification EPUAP/NPIAP en 4 stades selon la profondeur.",
+  "Stade 1 = érythème persistant ne blanchissant pas (réversible). Stade 4 = os/muscle exposé → risque d’ostéite.",
+  "Zones d’appui dorsal : sacrum +++ , talons, occiput, malléoles. Assis : ischions. Rarement : région deltoïdienne.",
+  "Facteurs extrinsèques = pression, cisaillement, macération. Intrinsèques/généraux = dénutrition, incontinence, âge, troubles sensitifs/moteurs.",
+  "Prévention escarres : changement de position toutes les 2–4 h + support adapté + anti-macération + nutrition + mobilisations.",
+  "Complications CV les plus précoces (dès J4) : TVP / EP. Prévention = bas de contention + HBPM. Déconditionnement cardio précoce (pas tardif).",
+  "Respiratoire : stase bronchique, atélectasies, pneumopathie de décubitus. Locomoteur : ostéoporose (hypercalciurie dès J2), amyotrophie, PAON, rétractions.",
+  "Compressions nerveuses : ulnaire, radial, sciatique, fibulaire commun. Urinaire : stase, infection, lithiase. Digestif : constipation, fécalome.",
+  "Escarre constituée : suppression d’appui, soins locaux (pas d’ATB locaux systématiques), ATB systémique si infectée, chirurgie si échec ; stade 4 contact osseux → chercher ostéite."
+ ],
+ "contrasts": [
+  "Stade 1 (réversible, peau intacte) ≠ stades 3–4 (perte profonde, non réversibles simplement)",
+  "Région deltoïdienne = zone RARE d’escarre ≠ sacrum/talons (fréquents)",
+  "ATB locaux systématiques sur escarre ouverte = FAUX · ATB systémiques si infection = OUI",
+  "Déconditionnement cardio-vasculaire PRÉCOCE ≠ tardif",
+  "TVP = veines ≠ artères",
+  "Escarre peut apparaître en quelques heures si pression non relevée ≠ « toujours tardive »",
+  "PAON = ossification ectopique (os + articulation) ≠ simple amyotrophie"
+ ],
+ "cards": [
+  {
+   "id": "c1",
+   "type": "basic",
+   "q": "Définition des complications du décubitus ?",
+   "a": "Toute complication due à un alitement prolongé (médical, chirurgical ou autre). La prévention est la seule option valable.",
+   "src": "§1",
+   "freq": 3
+  },
+  {
+   "id": "c2",
+   "type": "basic",
+   "q": "Qu’est-ce que l’escarre ?",
+   "a": "Lésion cutanée et sous-cutanée par compression prolongée des parties molles sur un relief osseux. Complication cutanée la plus redoutée du décubitus.",
+   "src": "§2",
+   "freq": 10
+  },
+  {
+   "id": "c3",
+   "type": "basic",
+   "q": "Classification des escarres (nombre de stades) ?",
+   "a": "4 stades (EPUAP / NPIAP) selon la profondeur. Piège QCM : on ne distingue PAS seulement 2 stades.",
+   "src": "§2",
+   "freq": 10
+  },
+  {
+   "id": "c4",
+   "type": "basic",
+   "q": "Stade 1 d’escarre ?",
+   "a": "Érythème persistant ne blanchissant pas à la vitropression. Peau intacte. Réversible. Zone parfois douloureuse, plus chaude ou froide.",
+   "src": "§2",
+   "freq": 10
+  },
+  {
+   "id": "c5",
+   "type": "basic",
+   "q": "Stade 2 d’escarre ?",
+   "a": "Désépidermisation ou phlyctène (ampoule). Ulcération superficielle rosée sans nécrose. Perte partielle d’épaisseur (épiderme ± derme).",
+   "src": "§2",
+   "freq": 10
+  },
+  {
+   "id": "c6",
+   "type": "basic",
+   "q": "Stade 3 d’escarre ?",
+   "a": "Perte totale de substance cutanée. Fibrine (jaune) ou nécrose (noire) possible. Hypoderme visible. Muscles/os NON exposés.",
+   "src": "§2",
+   "freq": 8
+  },
+  {
+   "id": "c7",
+   "type": "basic",
+   "q": "Stade 4 d’escarre ?",
+   "a": "Perte tissulaire profonde totale : exposition muscles, tendons, cartilages ou os. Risque majeur d’ostéomyélite / ostéite si contact osseux.",
+   "src": "§2",
+   "freq": 10
+  },
+  {
+   "id": "c8",
+   "type": "basic",
+   "q": "Zones d’appui en décubitus dorsal ?",
+   "a": "Sacrum +++ , talons, occiput, omoplates, malléoles externes.",
+   "src": "§2",
+   "freq": 8
+  },
+  {
+   "id": "c9",
+   "type": "basic",
+   "q": "Zones d’appui en décubitus latéral et assis ?",
+   "a": "Latéral : trochanter, malléoles, oreille, épaule. Assis : ischions, sacrum, talons.",
+   "src": "§2",
+   "freq": 8
+  },
+  {
+   "id": "c10",
+   "type": "contrast",
+   "q": "Quelle région est RAREMENT le siège d’escarres ?",
+   "a": "Région deltoïdienne — piège classique QCM (ce n’est PAS une zone d’appui fréquente).",
+   "src": "§2",
+   "freq": 8
+  },
+  {
+   "id": "c11",
+   "type": "basic",
+   "q": "Facteurs favorisants extrinsèques de l’escarre ?",
+   "a": "Pression exagérée ou prolongée, cisaillement, macération.",
+   "src": "§3",
+   "freq": 6
+  },
+  {
+   "id": "c12",
+   "type": "basic",
+   "q": "Facteurs favorisants intrinsèques / généraux ?",
+   "a": "Troubles sensitifs/moteurs/vigilance, pathologie vasculaire, HTA, diabète ; âge, dénutrition (IMC < 18,5), déshydratation, hypoxie, fièvre, incontinence urinaire et anale.",
+   "src": "§3",
+   "freq": 6
+  },
+  {
+   "id": "c13",
+   "type": "basic",
+   "q": "Principes de prévention des escarres ?",
+   "a": "1) Changement de position toutes les 2–4 h + surveillance des points d’appui 2) Support adapté (matelas pression alternante) 3) Anti-macération 4) Nutrition 5) Mobilisations 6) Massages des zones à risque (cités en QCM mais seuls insuffisants).",
+   "src": "§3",
+   "freq": 8
+  },
+  {
+   "id": "c14",
+   "type": "basic",
+   "q": "Traitement d’une escarre constituée ?",
+   "a": "Suppression d’appui + correction des FDR. Soins locaux (détersion, pansements). Pas d’antiseptiques ni d’ATB locaux en routine. ATB systémique si infectée. Chirurgie (lambeaux) si échec. Stade 4 contact osseux → rechercher ostéite.",
+   "src": "§4",
+   "freq": 6
+  },
+  {
+   "id": "c15",
+   "type": "basic",
+   "q": "Complications propres de l’escarre ?",
+   "a": "Ostéite / ostéoarthrite (surtout stade 4), anémie, hypoprotidémie, septicémie. Principal risque = infection.",
+   "src": "§4",
+   "freq": 4
+  },
+  {
+   "id": "c16",
+   "type": "basic",
+   "q": "Complications cardiovasculaires du décubitus — lesquelles et quand ?",
+   "a": "Les plus précoces (dès J4) : TVP, EP, déconditionnement cardio-vasculaire (précoce, pas tardif), hypotension orthostatique à la verticalisation.",
+   "src": "§5",
+   "freq": 7
+  },
+  {
+   "id": "c17",
+   "type": "basic",
+   "q": "TVP : mécanismes et prévention ?",
+   "a": "Favorisée par stase veineuse + absence de contraction musculaire + modifications de viscosité. Peut être asymptomatique et se révéler par EP. Prévention = bas de contention + HBPM.",
+   "src": "§5",
+   "freq": 7
+  },
+  {
+   "id": "c18",
+   "type": "basic",
+   "q": "Complications respiratoires du décubitus ?",
+   "a": "Stase bronchique, micro-atélectasies (précoces), encombrement, pneumopathie de décubitus, hypoventilation / syndrome restrictif. L’immobilisation augmente stase et infection.",
+   "src": "§6",
+   "freq": 5
+  },
+  {
+   "id": "c19",
+   "type": "basic",
+   "q": "Ostéoporose d’immobilisation — points clés ?",
+   "a": "Hyper-résorption osseuse. Hypercalciurie dès J2 (max S7–S10). Favorise fractures et lithiase rénale. Radio : déminéralisation visible ≈ après 3 semaines. Prévention = verticalisation précoce et régulière.",
+   "src": "§7",
+   "freq": 4
+  },
+  {
+   "id": "c20",
+   "type": "basic",
+   "q": "Qu’est-ce que la PAON ?",
+   "a": "Paraostéoarthropathie neurogène = ossification ectopique au contact des grosses articulations → ankylose. Touche l’os ET l’articulation.",
+   "src": "§7",
+   "freq": 2
+  },
+  {
+   "id": "c21",
+   "type": "basic",
+   "q": "Complications musculaires / articulaires du décubitus ?",
+   "a": "Amyotrophie de non-utilisation, rétractions musculaires, perte de force maximale, raideurs (capsulo-ligamentaires, PAON, spasticité…). Prévention : orthèses de posture, mobilisations passives/actives.",
+   "src": "§7",
+   "freq": 4
+  },
+  {
+   "id": "c22",
+   "type": "basic",
+   "q": "Compressions nerveuses typiques du décubitus ?",
+   "a": "Ulnaire (gouttière épitrochléo-olécranienne), radial (gouttière humérale), sciatique (derrière extrémité sup. du fémur), fibulaire commun (col de la fibula).",
+   "src": "§8",
+   "freq": 2
+  },
+  {
+   "id": "c23",
+   "type": "basic",
+   "q": "Complications urinaires et digestives ?",
+   "a": "Urinaire : stase, infection, lithiase (liée à l’hypercalciurie), vessie neurologique. Prévention IU : sondage intermittent préférable au drainage continu. Digestif : constipation, fécalome, distension.",
+   "src": "§8",
+   "freq": 4
+  },
+  {
+   "id": "c24",
+   "type": "basic",
+   "q": "Chronologie : complications immédiates / 1er mois / tardives ?",
+   "a": "J1–J4 : TVP/EP, micro-atélectasies, début d’escarre si pression non relevée. 1er mois : hypotension orthostatique, amyotrophie, rétractions, ostéoporose, infections. Tardives : PAON, raideurs fixées, séquelles d’escarres (ostéite), psy.",
+   "src": "fiche",
+   "freq": 5
+  },
+  {
+   "id": "c25",
+   "type": "contrast",
+   "q": "Pièges QCM classiques sur l’escarre ?",
+   "a": "✗ Escarre toujours tardive (peut survenir en heures) · ✗ Seulement 2 stades (il y en a 4) · ✗ Toutes réversibles (3–4 non) · ✗ ATB locaux systématiques · ✗ Zone fréquente = deltoïde (c’est la zone rare).",
+   "src": "pièges",
+   "freq": 10
+  },
+  {
+   "id": "c26",
+   "type": "basic",
+   "q": "Causes principales menant au décubitus prolongé ?",
+   "a": "Coma / réanimation, polytraumatisés, neuro centrales (para/tétraplégie, TC, hémiplégie) et périphériques (SGB), maladies chroniques, défaillance cardiorespiratoire, néoplasie, vieillissement.",
+   "src": "§1",
+   "freq": 3
+  },
+  {
+   "id": "c27",
+   "type": "basic",
+   "q": "Prévention en une phrase ?",
+   "a": "Changer de position toutes les 2–4 h + support adapté + pas de macération + nutrition + mobilisations + bas de contention/HBPM + verticalisation précoce.",
+   "src": "fiche",
+   "freq": 8
+  },
+  {
+   "id": "c28",
+   "type": "basic",
+   "q": "Complications psychologiques du décubitus ?",
+   "a": "Anxiété, dépression, syndrome de glissement chez le sujet âgé, désorientation. Prise en charge précoce : écoute, mobilisation, environnement stimulant.",
+   "src": "§9",
+   "freq": 1
+  }
+ ],
+ "quiz": [
+  {
+   "id": "q1",
+   "q": "Complications du décubitus — propositions JUSTES ?",
+   "src": "§1",
+   "cards": [
+    "c1",
+    "c26"
+   ],
+   "explain": "Surviennent après immobilisation prolongée, plus fréquentes chez le sujet âgé, escarres liées à para/tétraplégie. Pas exclusives de l’adulte jeune.",
+   "opts": [
+    {
+     "t": "Elles surviennent après une immobilisation prolongée",
+     "ok": true,
+     "c": [
+      "c1"
+     ]
+    },
+    {
+     "t": "Elles sont plus fréquentes chez les personnes âgées",
+     "ok": true,
+     "c": [
+      "c1"
+     ]
+    },
+    {
+     "t": "Les escarres sont une complication de la paraplégie et de la tétraplégie",
+     "ok": true,
+     "c": [
+      "c26"
+     ]
+    },
+    {
+     "t": "Elles touchent exclusivement l’adulte jeune et les enfants",
+     "ok": false,
+     "c": [
+      "c1"
+     ]
+    },
+    {
+     "t": "Le traitement curatif suffit : la prévention est secondaire",
+     "ok": false,
+     "c": [
+      "c1"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q2",
+   "q": "Stades d’escarre (EPUAP/NPIAP) — JUSTES ?",
+   "src": "§2",
+   "cards": [
+    "c3",
+    "c4",
+    "c5",
+    "c7"
+   ],
+   "explain": "4 stades. Stade 1 = érythème ne blanchissant pas, réversible. Stade 2 = désépidermisation/phlyctène. Stade 4 = os/muscle exposé.",
+   "opts": [
+    {
+     "t": "Il existe 4 stades selon la profondeur",
+     "ok": true,
+     "c": [
+      "c3"
+     ]
+    },
+    {
+     "t": "Stade 1 = érythème ne s’effaçant pas à la vitropression (réversible)",
+     "ok": true,
+     "c": [
+      "c4"
+     ]
+    },
+    {
+     "t": "Stade 2 = désépidermisation / phlyctène (perte partielle d’épaisseur)",
+     "ok": true,
+     "c": [
+      "c5"
+     ]
+    },
+    {
+     "t": "On ne distingue que deux stades (érythème / perte profonde)",
+     "ok": false,
+     "c": [
+      "c3"
+     ]
+    },
+    {
+     "t": "Toutes les lésions sont réversibles quel que soit le stade",
+     "ok": false,
+     "c": [
+      "c4",
+      "c7"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q3",
+   "q": "Stade 4 et complications de l’escarre — JUSTES ?",
+   "src": "§2-4",
+   "cards": [
+    "c7",
+    "c14",
+    "c15"
+   ],
+   "explain": "Stade 4 expose os/muscles → chercher ostéite si contact osseux. Pas d’ATB locaux en routine.",
+   "opts": [
+    {
+     "t": "Stade 4 = exposition os/muscles/tendons",
+     "ok": true,
+     "c": [
+      "c7"
+     ]
+    },
+    {
+     "t": "Contact osseux au fond d’une escarre stade 4 → rechercher une ostéite",
+     "ok": true,
+     "c": [
+      "c14"
+     ]
+    },
+    {
+     "t": "Antiseptiques et antibiotiques locaux sont systématiques sur lésion ouverte",
+     "ok": false,
+     "c": [
+      "c14"
+     ]
+    },
+    {
+     "t": "Le principal risque des escarres est l’infection",
+     "ok": true,
+     "c": [
+      "c15"
+     ]
+    },
+    {
+     "t": "Stade 3 expose déjà l’os",
+     "ok": false,
+     "c": [
+      "c6"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q4",
+   "q": "Topographie des escarres — JUSTES ?",
+   "src": "§2",
+   "cards": [
+    "c8",
+    "c9",
+    "c10"
+   ],
+   "explain": "Sacrum+++ en dorsal. Ischions en assis. Deltoïde = zone rare (piège).",
+   "opts": [
+    {
+     "t": "En décubitus dorsal, le sacrum est une zone majeure",
+     "ok": true,
+     "c": [
+      "c8"
+     ]
+    },
+    {
+     "t": "En position assise, les ischions sont des zones d’appui",
+     "ok": true,
+     "c": [
+      "c9"
+     ]
+    },
+    {
+     "t": "La région deltoïdienne est rarement le siège d’escarres",
+     "ok": true,
+     "c": [
+      "c10"
+     ]
+    },
+    {
+     "t": "La région deltoïdienne est la zone d’appui la plus fréquente",
+     "ok": false,
+     "c": [
+      "c10"
+     ]
+    },
+    {
+     "t": "Trochanter = zone d’appui en décubitus latéral",
+     "ok": true,
+     "c": [
+      "c9"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q5",
+   "q": "Facteurs favorisants et prévention — JUSTES ?",
+   "src": "§3",
+   "cards": [
+    "c11",
+    "c12",
+    "c13"
+   ],
+   "explain": "Incontinence favorise. Extrinsèques = pression/cisaillement/macération. Retournements 2–4 h essentiels. Massages seuls insuffisants.",
+   "opts": [
+    {
+     "t": "L’incontinence urinaire ou anale favorise les escarres",
+     "ok": true,
+     "c": [
+      "c12"
+     ]
+    },
+    {
+     "t": "Facteurs extrinsèques = pression, cisaillement, macération",
+     "ok": true,
+     "c": [
+      "c11"
+     ]
+    },
+    {
+     "t": "Changements de position réguliers (toutes les 2–4 h) = mesure essentielle",
+     "ok": true,
+     "c": [
+      "c13"
+     ]
+    },
+    {
+     "t": "Les massages seuls suffisent à prévenir les escarres",
+     "ok": false,
+     "c": [
+      "c13"
+     ]
+    },
+    {
+     "t": "Les antibiotiques préventifs sont indiqués en routine",
+     "ok": false,
+     "c": [
+      "c13"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q6",
+   "q": "Traitement de l’escarre constituée — JUSTES ?",
+   "src": "§4",
+   "cards": [
+    "c14",
+    "c15"
+   ],
+   "explain": "Suppression d’appui + soins locaux. Pas d’ATB locaux systématiques. ATB systémique si infectée. Chirurgie si échec.",
+   "opts": [
+    {
+     "t": "Suppression de l’appui sur la zone est obligatoire",
+     "ok": true,
+     "c": [
+      "c14"
+     ]
+    },
+    {
+     "t": "Pas d’antibiotiques locaux en routine sur lésion ouverte",
+     "ok": true,
+     "c": [
+      "c14"
+     ]
+    },
+    {
+     "t": "Antibiothérapie systémique si escarre infectée",
+     "ok": true,
+     "c": [
+      "c14"
+     ]
+    },
+    {
+     "t": "Chirurgie (lambeaux) possible en cas d’évolution défavorable",
+     "ok": true,
+     "c": [
+      "c14"
+     ]
+    },
+    {
+     "t": "L’escarre est uniquement une complication tardive",
+     "ok": false,
+     "c": [
+      "c25"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q7",
+   "q": "Complications cardiovasculaires — JUSTES ?",
+   "src": "§5",
+   "cards": [
+    "c16",
+    "c17"
+   ],
+   "explain": "TVP/EP dès J4. TVP peut être asymptomatique → EP. Prévention bas + HBPM. Déconditionnement précoce. Hypotension orthostatique à la verticalisation.",
+   "opts": [
+    {
+     "t": "TVP / EP sont parmi les complications les plus précoces (dès J4)",
+     "ok": true,
+     "c": [
+      "c16"
+     ]
+    },
+    {
+     "t": "La TVP peut être asymptomatique et se révéler par une EP",
+     "ok": true,
+     "c": [
+      "c17"
+     ]
+    },
+    {
+     "t": "Prévention TVP = bas de contention + HBPM",
+     "ok": true,
+     "c": [
+      "c17"
+     ]
+    },
+    {
+     "t": "Le déconditionnement cardio-vasculaire est tardif",
+     "ok": false,
+     "c": [
+      "c16"
+     ]
+    },
+    {
+     "t": "La verticalisation progressive peut provoquer une hypotension orthostatique",
+     "ok": true,
+     "c": [
+      "c16"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q8",
+   "q": "Complications respiratoires et locomotrices — JUSTES ?",
+   "src": "§6-7",
+   "cards": [
+    "c18",
+    "c19",
+    "c20"
+   ],
+   "explain": "Immobilisation ↑ stase/encombrement/infection. PAON = ossification ectopique os+articulation. Ostéoporose → fractures et lithiase.",
+   "opts": [
+    {
+     "t": "L’immobilisation augmente la stase bronchique, l’encombrement et l’infection",
+     "ok": true,
+     "c": [
+      "c18"
+     ]
+    },
+    {
+     "t": "Pneumopathie de décubitus = complication respiratoire classique",
+     "ok": true,
+     "c": [
+      "c18"
+     ]
+    },
+    {
+     "t": "PAON = ossification ectopique touchant os et articulation",
+     "ok": true,
+     "c": [
+      "c20"
+     ]
+    },
+    {
+     "t": "Ostéoporose d’immobilisation favorise fractures et lithiase rénale",
+     "ok": true,
+     "c": [
+      "c19"
+     ]
+    },
+    {
+     "t": "L’hypercalciurie d’immobilisation n’apparaît qu’après 3 mois",
+     "ok": false,
+     "c": [
+      "c19"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q9",
+   "q": "Complications neurologiques, urinaires, digestives — JUSTES ?",
+   "src": "§8",
+   "cards": [
+    "c22",
+    "c23"
+   ],
+   "explain": "Compressions ulnaire/radial/sciatique/fibulaire. Sondage intermittent préférable. Vessie neurologique possible. TVP = veines.",
+   "opts": [
+    {
+     "t": "Le nerf fibulaire commun peut être comprimé au col de la fibula",
+     "ok": true,
+     "c": [
+      "c22"
+     ]
+    },
+    {
+     "t": "Prévention des IU : sondage intermittent souvent préféré au drainage continu",
+     "ok": true,
+     "c": [
+      "c23"
+     ]
+    },
+    {
+     "t": "La vessie neurologique est une complication urinaire possible",
+     "ok": true,
+     "c": [
+      "c23"
+     ]
+    },
+    {
+     "t": "La TVP touche les artères",
+     "ok": false,
+     "c": [
+      "c17"
+     ]
+    },
+    {
+     "t": "Constipation et fécalome sont des complications digestives de stase",
+     "ok": true,
+     "c": [
+      "c23"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q10",
+   "q": "Pièges QCM — lesquelles sont FAUSSES ?",
+   "src": "pièges",
+   "cards": [
+    "c25",
+    "c10",
+    "c16"
+   ],
+   "explain": "Toutes ces affirmations sont des pièges classiques (donc FAUSSES).",
+   "opts": [
+    {
+     "t": "L’escarre est toujours une complication tardive",
+     "ok": true,
+     "c": [
+      "c25"
+     ]
+    },
+    {
+     "t": "On ne distingue que 2 stades d’escarre",
+     "ok": true,
+     "c": [
+      "c3"
+     ]
+    },
+    {
+     "t": "La région deltoïdienne est une zone d’appui fréquente",
+     "ok": true,
+     "c": [
+      "c10"
+     ]
+    },
+    {
+     "t": "Le déconditionnement cardio-vasculaire est précoce",
+     "ok": false,
+     "c": [
+      "c16"
+     ]
+    },
+    {
+     "t": "Les ATB locaux sont systématiques sur escarre ouverte",
+     "ok": true,
+     "c": [
+      "c14"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q11",
+   "q": "Ostéoporose d’immobilisation — JUSTES ?",
+   "src": "§7",
+   "cards": [
+    "c19"
+   ],
+   "explain": "Hypercalciurie dès J2, max S7–S10. Radio déminéralisation ≈ 3 semaines. Verticalisation précoce préventive.",
+   "opts": [
+    {
+     "t": "Hypercalciurie dès J2, maximale entre S7 et S10",
+     "ok": true,
+     "c": [
+      "c19"
+     ]
+    },
+    {
+     "t": "Favorise fractures et lithiase rénale",
+     "ok": true,
+     "c": [
+      "c19"
+     ]
+    },
+    {
+     "t": "La déminéralisation radio est visible immédiatement dès J2",
+     "ok": false,
+     "c": [
+      "c19"
+     ]
+    },
+    {
+     "t": "Prévention = verticalisation précoce et régulière",
+     "ok": true,
+     "c": [
+      "c19"
+     ]
+    },
+    {
+     "t": "Elle ne touche que l’os cortical, jamais le trabéculaire",
+     "ok": false,
+     "c": [
+      "c19"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q12",
+   "q": "Prévention globale du décubitus — JUSTES ?",
+   "src": "fiche",
+   "cards": [
+    "c13",
+    "c17",
+    "c27"
+   ],
+   "explain": "Retournements 2–4 h, support, nutrition, mobilisations, bas+HBPM, verticalisation.",
+   "opts": [
+    {
+     "t": "Changement de position toutes les 2 à 4 heures",
+     "ok": true,
+     "c": [
+      "c13"
+     ]
+    },
+    {
+     "t": "Matelas à pression alternante / support adapté",
+     "ok": true,
+     "c": [
+      "c13"
+     ]
+    },
+    {
+     "t": "Bas de contention + HBPM pour la prévention thromboembolique",
+     "ok": true,
+     "c": [
+      "c17"
+     ]
+    },
+    {
+     "t": "Verticalisation précoce pour limiter ostéoporose et déconditionnement",
+     "ok": true,
+     "c": [
+      "c19",
+      "c16"
+     ]
+    },
+    {
+     "t": "AINS préventifs systématiques anti-escarre",
+     "ok": false,
+     "c": [
+      "c13"
+     ]
+    }
+   ]
+  }
+ ],
+ "vf": [
+  {
+   "id": "v1",
+   "s": "Les complications du décubitus surviennent après une immobilisation prolongée.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c1"
+   ]
+  },
+  {
+   "id": "v2",
+   "s": "Elles touchent exclusivement l’adulte jeune.",
+   "a": false,
+   "w": "Plus fréquentes chez le sujet âgé.",
+   "cards": [
+    "c1"
+   ]
+  },
+  {
+   "id": "v3",
+   "s": "L’escarre est la complication cutanée la plus redoutée du décubitus.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c2"
+   ]
+  },
+  {
+   "id": "v4",
+   "s": "La classification EPUAP/NPIAP comporte 4 stades.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c3"
+   ]
+  },
+  {
+   "id": "v5",
+   "s": "Stade 1 = érythème qui blanchit toujours à la vitropression.",
+   "a": false,
+   "w": "Érythème qui NE blanchit PAS ; peau intacte, réversible.",
+   "cards": [
+    "c4"
+   ]
+  },
+  {
+   "id": "v6",
+   "s": "Stade 2 = désépidermisation ou phlyctène (perte partielle d’épaisseur).",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c5"
+   ]
+  },
+  {
+   "id": "v7",
+   "s": "Stade 4 = exposition d’os, muscles ou tendons, avec risque d’ostéite.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c7"
+   ]
+  },
+  {
+   "id": "v8",
+   "s": "Toutes les lésions d’escarre sont réversibles quel que soit le stade.",
+   "a": false,
+   "w": "Stades 3–4 non simplement réversibles.",
+   "cards": [
+    "c25"
+   ]
+  },
+  {
+   "id": "v9",
+   "s": "En décubitus dorsal, le sacrum est une zone d’appui majeure.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c8"
+   ]
+  },
+  {
+   "id": "v10",
+   "s": "La région deltoïdienne est rarement le siège d’escarres.",
+   "a": true,
+   "w": "Piège classique.",
+   "cards": [
+    "c10"
+   ]
+  },
+  {
+   "id": "v11",
+   "s": "La région deltoïdienne est la zone d’escarre la plus fréquente.",
+   "a": false,
+   "w": "C’est au contraire la zone rare.",
+   "cards": [
+    "c10"
+   ]
+  },
+  {
+   "id": "v12",
+   "s": "Facteurs extrinsèques = pression, cisaillement, macération.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c11"
+   ]
+  },
+  {
+   "id": "v13",
+   "s": "L’incontinence urinaire ou anale favorise les escarres.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c12"
+   ]
+  },
+  {
+   "id": "v14",
+   "s": "Changement de position toutes les 2–4 h est une mesure essentielle de prévention.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c13"
+   ]
+  },
+  {
+   "id": "v15",
+   "s": "Les massages seuls suffisent à prévenir les escarres.",
+   "a": false,
+   "w": "Utiles mais insuffisants seuls.",
+   "cards": [
+    "c13"
+   ]
+  },
+  {
+   "id": "v16",
+   "s": "Sur escarre ouverte, antiseptiques et ATB locaux sont systématiques.",
+   "a": false,
+   "w": "Pas en routine.",
+   "cards": [
+    "c14"
+   ]
+  },
+  {
+   "id": "v17",
+   "s": "Contact osseux au stade 4 impose de rechercher une ostéite.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c14"
+   ]
+  },
+  {
+   "id": "v18",
+   "s": "TVP et EP sont des complications précoces (dès J4).",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c16"
+   ]
+  },
+  {
+   "id": "v19",
+   "s": "La TVP est toujours symptomatique.",
+   "a": false,
+   "w": "Peut être asymptomatique et se révéler par EP.",
+   "cards": [
+    "c17"
+   ]
+  },
+  {
+   "id": "v20",
+   "s": "Prévention TVP = bas de contention + HBPM.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c17"
+   ]
+  },
+  {
+   "id": "v21",
+   "s": "Le déconditionnement cardio-vasculaire est une complication tardive.",
+   "a": false,
+   "w": "Il est précoce.",
+   "cards": [
+    "c16"
+   ]
+  },
+  {
+   "id": "v22",
+   "s": "L’immobilisation augmente stase bronchique, encombrement et infection.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c18"
+   ]
+  },
+  {
+   "id": "v23",
+   "s": "Hypercalciurie d’immobilisation dès J2.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c19"
+   ]
+  },
+  {
+   "id": "v24",
+   "s": "PAON = ossification ectopique touchant os et articulation.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c20"
+   ]
+  },
+  {
+   "id": "v25",
+   "s": "La TVP touche les artères des membres inférieurs.",
+   "a": false,
+   "w": "Les veines.",
+   "cards": [
+    "c17"
+   ]
+  },
+  {
+   "id": "v26",
+   "s": "L’escarre est toujours une complication tardive.",
+   "a": false,
+   "w": "Peut apparaître en quelques heures si pression non relevée.",
+   "cards": [
+    "c25"
+   ]
+  },
+  {
+   "id": "v27",
+   "s": "Sondage intermittent est souvent préférable au drainage continu pour prévenir les IU.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c23"
+   ]
+  },
+  {
+   "id": "v28",
+   "s": "En position assise, les ischions sont des zones d’appui.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c9"
+   ]
+  }
+ ]
+}

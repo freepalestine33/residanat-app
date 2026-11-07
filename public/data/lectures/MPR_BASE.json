@@ -1,0 +1,567 @@
+{
+ "schema": 1,
+ "id": "MPR_BASE",
+ "progId": "MPR1",
+ "name": "MPR — Principes de base",
+ "keys": [
+  "MPR = spécialité médicale visant l'amélioration du fonctionnement physique et cognitif. Définie par LA FONCTION (ni population ni organe spécifique). Tous les âges.",
+  "Rééducation = réduit les déficiences et incapacités. Réadaptation = aide le patient à s'adapter (fonctionnel + psychique) pour vivre avec ses incapacités.",
+  "CIF : Déficience (organe/lésionnel) → Incapacité (fonctionnel/individu) → Handicap/désavantage (social). CIF 2001 = Classification internationale du Fonctionnement, du handicap et de la santé (4 notions dont facteurs environnementaux).",
+  "Prescription de rééducation = acte médical. Principes : précoce, continue, adaptée, prudente (infra-douloureuse), coordonnée, scientifique, avec participation active du patient.",
+  "Équipe : médecin MPR au centre (diagnostic, prescription, objectifs, coordination). Kinésithérapeute = mouvement ; Ergothérapeute = thérapie par le travail / autonomie / aides techniques / domicile.",
+  "Échelles : MIF 18 items score 18–126 (autonomie AVQ) ; FAC = marche (0–5) ; Enjalbert = préhension hémiplégique (0–6) ; Ashworth = spasticité ; EVA = douleur ; HAD = anxiété/dépression ; MMSE/BREF = cognition ; Ditrovie = incontinence ; NYHA = dyspnée/cœur.",
+  "Isocinétisme = force à vitesse constante. EMG = diagnostic, pronostic, évolution neuromusculaire.",
+  "Moyens : médicamenteux (toxine botulinique +++ spasticité) ; physiques (physiothérapie, MTP, ultrasons…) ; kiné ; balnéo ; ergothérapie ; appareillage (prescription + surveillance + entraînement) ; orthophonie ; psychomotricité ; éducation thérapeutique.",
+  "Massage : effleurage = sédatif + échauffement cutané ; pétrissage = détente musculaire ; MTP (Cyriax) = profond localisé musculo-tendineux (pas échauffement cutané) ; pincer-rouler = cellulalgies.",
+  "Rééducation traumatologique permet : soulager douleur, récupérer amplitude, force, équilibre/coordination/marche. PAS la consolidation osseuse ni la réduction des fractures."
+ ],
+ "contrasts": [
+  "Rééducation (réduit déficiences) ≠ réadaptation (aide à s'adapter)",
+  "MPR définie par la fonction ≠ définie par un organe ou une population",
+  "Kinésithérapie = thérapie par le mouvement ≠ ergothérapie = thérapie par le travail",
+  "Effleurage (échauffement cutané) ≠ MTP (profond, musculo-tendineux)",
+  "Rééducation traumatologique (douleur, amplitude, force) ≠ consolidation / réduction (orthopédie/chirurgie)",
+  "MIF (autonomie globale) ≠ FAC (marche seule) ≠ Enjalbert (préhension hémiplégique)"
+ ],
+ "cards": [
+  {
+   "id": "c1",
+   "type": "basic",
+   "q": "Définition de la MPR ?",
+   "a": "Spécialité médicale visant l'amélioration du fonctionnement physique et cognitif. Rôle : prévention, diagnostic et traitement des conditions responsables de handicap → autonomie et qualité de vie. Définie par LA FONCTION, ni par une population ni par un organe. Tous les âges.",
+   "src": "déf"
+  },
+  {
+   "id": "c2",
+   "type": "basic",
+   "q": "Médecine physique vs rééducation vs réadaptation ?",
+   "a": "Médecine physique : moyens physiques (courants, IR, ondes…) associés aux traitements médicamenteux. Rééducation fonctionnelle : diminue déficiences et incapacités (quand la fonction est altérée). Réadaptation : aide à s'adapter fonctionnellement et psychiquement pour vivre avec ses incapacités.",
+   "src": "déf"
+  },
+  {
+   "id": "c3",
+   "type": "basic",
+   "q": "CIF — les 3 niveaux classiques + révision 2001 ?",
+   "a": "Déficience (lésionnel : organe/système). Incapacité (fonctionnel : limitation d'activités). Handicap/désavantage (social : restriction de rôle). CIF 2001 renommée Classification internationale du Fonctionnement, du handicap et de la santé : ① Fonctions organiques ② Structures anatomiques ③ Activités et participation ④ Facteurs environnementaux.",
+   "src": "CIF"
+  },
+  {
+   "id": "c4",
+   "type": "basic",
+   "q": "Exemple CIF — traumatisme vertébro-médullaire ?",
+   "a": "Déficiences : déficit sensitivomoteur des 2 MI (paraplégie), troubles vésicosphinctériens. Incapacités : incapacité à marcher, rétention urinaire. Handicap : désavantage social (impossible de se rendre au travail).",
+   "src": "CIF"
+  },
+  {
+   "id": "c5",
+   "type": "basic",
+   "q": "Rôle du médecin MPR dans l'équipe ?",
+   "a": "Au centre : diagnostic médical ; évaluation déficiences/limitations/restrictions ; prescription de rééducation (acte médical) ; programmes et objectifs ; connaissances des mécanismes, indications et CI des moyens ; évaluation des résultats ; coordination de l'équipe.",
+   "src": "équipe"
+  },
+  {
+   "id": "c6",
+   "type": "basic",
+   "q": "Rôles kinésithérapeute et ergothérapeute ?",
+   "a": "Kinésithérapeute = thérapie par le mouvement (amplitudes, renforcement, marche…). Ergothérapeute = « thérapie par le travail » : optimise l'autonomie, aides techniques, aménagement du domicile, évaluation de l'environnement.",
+   "src": "équipe"
+  },
+  {
+   "id": "c7",
+   "type": "basic",
+   "q": "Principes généraux de la rééducation en MPR ?",
+   "a": "1) Prescription = acte médical. 2) Bilan préalable (objectifs précis, temps défini). 3) Évaluation régulière. 4) Orientée récupération / réinsertion / QdV / sécurité / autonomie + participation active. 5) Continue (lésion → réinsertion). 6) Coordonnée (médical, éducatif, social, pro). 7) Scientifique. Précoce, adaptée, prudente (infra-douloureuse).",
+   "src": "principes"
+  },
+  {
+   "id": "c8",
+   "type": "basic",
+   "q": "Échelles d'incapacité à connaître (MIF, FAC, Enjalbert) ?",
+   "a": "MIF (Mesure d'Indépendance Fonctionnelle) : 18 items AVQ, score 18 (min) à 126 (max). FAC (Functional Ambulation Classification) : marche 0 (impossible même avec aide) à 5 (normale). Enjalbert : préhension hémiplégique vasculaire 0 (nulle) à 6 (surnormale avec pince fine). Index de Barthel = autonomie AVQ.",
+   "src": "échelles"
+  },
+  {
+   "id": "c9",
+   "type": "basic",
+   "q": "Autres échelles fréquentes (déficiences) ?",
+   "a": "Douleur → EVA (0–10) / EN / DOLOPLUS. Spasticité → score d'Ashworth. Force → testing musculaire manuel. Raideur → goniométrie. Anxiété/dépression → HAD. Cognition → MMSE / BREF. Incontinence → Ditrovie. Dyspnée / IC → NYHA.",
+   "src": "échelles"
+  },
+  {
+   "id": "c10",
+   "type": "basic",
+   "q": "Explorations fonctionnelles instrumentales ?",
+   "a": "EMG (diagnostic, pronostic, évolution neuromusculaire). Plateformes dynamométriques/barométriques, tapis roulant. Isocinétisme = force à vitesse constante. Épreuves d'effort (VO2max). Urodynamique, manométrie rectale, débitmètre.",
+   "src": "bilan"
+  },
+  {
+   "id": "c11",
+   "type": "basic",
+   "q": "Moyens thérapeutiques — points QCM ?",
+   "a": "Toxine botulinique +++ dans la spasticité (+ blocs moteurs). MTP fait partie des moyens physiques. Ergothérapie ≠ kinésithérapie. Aides techniques (canne, fauteuil) ne remplacent PAS les aides humaines. Appareillage = prescription médicale + surveillance + entraînement (rééducation) + intégration vie quotidienne.",
+   "src": "moyens"
+  },
+  {
+   "id": "c12",
+   "type": "basic",
+   "q": "Manœuvres de massage — effets ?",
+   "a": "Effleurage (massage superficiel sédatif) : sédatif + échauffement cutané/sous-cutané. Pétrissage : détente musculaire (tonifiant si rythme rapide). MTP (Cyriax) : profond, localisé, pathologies musculo-tendineuses (« no pain no gain ») — PAS échauffement cutané. Pincer-rouler : cellulalgies (esthétique).",
+   "src": "massage"
+  },
+  {
+   "id": "c13",
+   "type": "basic",
+   "q": "Objectifs de la rééducation des pathologies traumatiques ?",
+   "a": "Soulager la douleur ; récupérer l'amplitude articulaire ; renforcer les muscles (force normale) ; retrouver équilibre, coordination, marche, proprioception. PAS la consolidation osseuse ni la réduction orthopédique des fractures (objectifs orthopédie/chirurgie).",
+   "src": "trauma"
+  }
+ ],
+ "quiz": [
+  {
+   "id": "q1",
+   "q": "Définition MPR — JUSTES ?",
+   "src": "déf",
+   "cards": [
+    "c1",
+    "c2"
+   ],
+   "explain": "Fonction, pas organe. Tous âges. Rééducation ≠ réadaptation.",
+   "opts": [
+    {
+     "t": "Spécialité visant l'amélioration du fonctionnement physique et cognitif",
+     "ok": true,
+     "c": [
+      "c1"
+     ]
+    },
+    {
+     "t": "Définie par la fonction, ni par une population ni par un organe",
+     "ok": true,
+     "c": [
+      "c1"
+     ]
+    },
+    {
+     "t": "Prend en charge tous les âges",
+     "ok": true,
+     "c": [
+      "c1"
+     ]
+    },
+    {
+     "t": "Son but est de traiter l'organe",
+     "ok": false,
+     "c": [
+      "c1"
+     ]
+    },
+    {
+     "t": "Rééducation réduit les déficiences ; réadaptation aide à s'adapter",
+     "ok": true,
+     "c": [
+      "c2"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q2",
+   "q": "CIF — JUSTES ?",
+   "src": "CIF",
+   "cards": [
+    "c3",
+    "c4"
+   ],
+   "explain": "Déficience → incapacité → handicap. CIF 2001 inclut facteurs environnementaux.",
+   "opts": [
+    {
+     "t": "Déficience = niveau organe/lésionnel",
+     "ok": true,
+     "c": [
+      "c3"
+     ]
+    },
+    {
+     "t": "Incapacité = limitation d'activités au niveau individu",
+     "ok": true,
+     "c": [
+      "c3"
+     ]
+    },
+    {
+     "t": "Handicap = désavantage social / restriction de rôle",
+     "ok": true,
+     "c": [
+      "c3"
+     ]
+    },
+    {
+     "t": "CIF 2001 intègre les facteurs environnementaux",
+     "ok": true,
+     "c": [
+      "c3"
+     ]
+    },
+    {
+     "t": "La déficience est le niveau social du handicap",
+     "ok": false,
+     "c": [
+      "c3"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q3",
+   "q": "Équipe et principes — JUSTES ?",
+   "src": "équipe-principes",
+   "cards": [
+    "c5",
+    "c6",
+    "c7"
+   ],
+   "explain": "Prescription = acte médical. Kiné = mouvement. Ergo = travail/autonomie.",
+   "opts": [
+    {
+     "t": "La prescription de rééducation est un acte médical",
+     "ok": true,
+     "c": [
+      "c7"
+     ]
+    },
+    {
+     "t": "Kinésithérapeute = thérapie par le mouvement",
+     "ok": true,
+     "c": [
+      "c6"
+     ]
+    },
+    {
+     "t": "Ergothérapeute = thérapie par le travail / aides techniques / domicile",
+     "ok": true,
+     "c": [
+      "c6"
+     ]
+    },
+    {
+     "t": "Rééducation précoce, continue, adaptée, prudente",
+     "ok": true,
+     "c": [
+      "c7"
+     ]
+    },
+    {
+     "t": "L'ergothérapeute prescrit seul la rééducation",
+     "ok": false,
+     "c": [
+      "c5"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q4",
+   "q": "Échelles — JUSTES ?",
+   "src": "échelles",
+   "cards": [
+    "c8",
+    "c9"
+   ],
+   "explain": "MIF 18–126. FAC marche. Enjalbert préhension. Ashworth spasticité.",
+   "opts": [
+    {
+     "t": "MIF : 18 items, score de 18 à 126",
+     "ok": true,
+     "c": [
+      "c8"
+     ]
+    },
+    {
+     "t": "FAC = échelle de marche (0 à 5)",
+     "ok": true,
+     "c": [
+      "c8"
+     ]
+    },
+    {
+     "t": "Enjalbert = préhension de l'hémiplégique (0 à 6)",
+     "ok": true,
+     "c": [
+      "c8"
+     ]
+    },
+    {
+     "t": "Ashworth = spasticité ; EVA = douleur ; HAD = anxiété/dépression",
+     "ok": true,
+     "c": [
+      "c9"
+     ]
+    },
+    {
+     "t": "MIF compte uniquement la marche",
+     "ok": false,
+     "c": [
+      "c8"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q5",
+   "q": "Moyens et massage — JUSTES ?",
+   "src": "moyens-massage",
+   "cards": [
+    "c11",
+    "c12"
+   ],
+   "explain": "Toxine botulinique spasticité. MTP ≠ échauffement. Aides techniques ≠ aides humaines.",
+   "opts": [
+    {
+     "t": "Toxine botulinique indiquée +++ dans la spasticité",
+     "ok": true,
+     "c": [
+      "c11"
+     ]
+    },
+    {
+     "t": "Effleurage = échauffement cutané sédatif",
+     "ok": true,
+     "c": [
+      "c12"
+     ]
+    },
+    {
+     "t": "MTP = profond localisé musculo-tendineux (pas échauffement cutané)",
+     "ok": true,
+     "c": [
+      "c12"
+     ]
+    },
+    {
+     "t": "Les aides techniques remplacent les aides humaines",
+     "ok": false,
+     "c": [
+      "c11"
+     ]
+    },
+    {
+     "t": "Appareillage implique prescription + surveillance + entraînement",
+     "ok": true,
+     "c": [
+      "c11"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q6",
+   "q": "Rééducation traumatologique — JUSTES ?",
+   "src": "trauma",
+   "cards": [
+    "c13"
+   ],
+   "explain": "Douleur, amplitude, force, équilibre. PAS consolidation ni réduction.",
+   "opts": [
+    {
+     "t": "Permet de soulager la douleur et récupérer l'amplitude",
+     "ok": true,
+     "c": [
+      "c13"
+     ]
+    },
+    {
+     "t": "Permet de récupérer une force musculaire normale",
+     "ok": true,
+     "c": [
+      "c13"
+     ]
+    },
+    {
+     "t": "Permet d'améliorer équilibre et coordination",
+     "ok": true,
+     "c": [
+      "c13"
+     ]
+    },
+    {
+     "t": "Permet la consolidation osseuse",
+     "ok": false,
+     "c": [
+      "c13"
+     ]
+    },
+    {
+     "t": "Permet la réduction orthopédique des fractures déplacées",
+     "ok": false,
+     "c": [
+      "c13"
+     ]
+    }
+   ]
+  }
+ ],
+ "vf": [
+  {
+   "id": "v1",
+   "s": "La MPR est définie par la fonction, ni par une population ni par un organe.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c1"
+   ]
+  },
+  {
+   "id": "v2",
+   "s": "Le but de la MPR est de traiter l'organe.",
+   "a": false,
+   "w": "But = fonction / autonomie.",
+   "cards": [
+    "c1"
+   ]
+  },
+  {
+   "id": "v3",
+   "s": "Rééducation = réduit les déficiences ; réadaptation = aide à s'adapter.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c2"
+   ]
+  },
+  {
+   "id": "v4",
+   "s": "CIF : Déficience (organe) → Incapacité (individu) → Handicap (société).",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c3"
+   ]
+  },
+  {
+   "id": "v5",
+   "s": "La prescription de rééducation est un acte médical.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c7"
+   ]
+  },
+  {
+   "id": "v6",
+   "s": "Kinésithérapie = thérapie par le mouvement ; ergothérapie = thérapie par le travail.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c6"
+   ]
+  },
+  {
+   "id": "v7",
+   "s": "MIF : 18 items, score 18 à 126.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c8"
+   ]
+  },
+  {
+   "id": "v8",
+   "s": "FAC = préhension ; Enjalbert = marche.",
+   "a": false,
+   "w": "FAC = marche ; Enjalbert = préhension hémiplégique.",
+   "cards": [
+    "c8"
+   ]
+  },
+  {
+   "id": "v9",
+   "s": "Ashworth = spasticité ; EVA = douleur ; HAD = anxiété/dépression.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c9"
+   ]
+  },
+  {
+   "id": "v10",
+   "s": "Isocinétisme = force à vitesse constante.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c10"
+   ]
+  },
+  {
+   "id": "v11",
+   "s": "Toxine botulinique indiquée +++ dans la spasticité.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c11"
+   ]
+  },
+  {
+   "id": "v12",
+   "s": "MTP permet l'échauffement des tissus cutanés.",
+   "a": false,
+   "w": "C'est l'effleurage ; MTP est profond localisé.",
+   "cards": [
+    "c12"
+   ]
+  },
+  {
+   "id": "v13",
+   "s": "Effleurage = sédatif + échauffement cutané.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c12"
+   ]
+  },
+  {
+   "id": "v14",
+   "s": "Rééducation traumatologique permet la consolidation osseuse.",
+   "a": false,
+   "w": "Objectif orthopédie/chirurgie, pas de la rééducation.",
+   "cards": [
+    "c13"
+   ]
+  },
+  {
+   "id": "v15",
+   "s": "Les aides techniques ne remplacent pas les aides humaines.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c11"
+   ]
+  },
+  {
+   "id": "v16",
+   "s": "Appareillage = prescription + surveillance + entraînement.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c11"
+   ]
+  },
+  {
+   "id": "v17",
+   "s": "Rééducation doit être précoce, continue, adaptée et prudente.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c7"
+   ]
+  },
+  {
+   "id": "v18",
+   "s": "MMSE / BREF évaluent la cognition ; Ditrovie l'incontinence.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c9"
+   ]
+  }
+ ]
+}

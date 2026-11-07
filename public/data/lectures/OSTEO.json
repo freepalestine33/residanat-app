@@ -1,0 +1,729 @@
+{
+ "schema": 1,
+ "id": "OSTEO",
+ "progId": "MOSTEO",
+ "name": "Ostéopathies déminéralisantes",
+ "keys": [
+  "Ostéopathies fragilisantes = ostéoporose, ostéomalacie, HPT primitive, ostéodystrophie rénale. Silencieuses jusqu'aux fractures.",
+  "Fractures de fragilité classiques : vertèbres + Pouteau-Colles (poignet) + extrémité supérieure du fémur (la plus grave). Sites exclus : cervical, T1–T4, crâne, mains/pieds.",
+  "Fracture vertébrale bénigne (radio) : sous T4, corticale continue (« puzzle »), mur postérieur et pédicules intacts, pas de géodes.",
+  "DMO (DXA) : T-score vs jeunes adultes (diagnostic) ; Z-score vs même âge (secondaire / jeune). Sites : rachis L1–L4 + ESF.",
+  "Classification OMS : Normal T > −1 ; Ostéopénie −2,5 < T ≤ −1 ; Ostéoporose T ≤ −2,5 ; Sévère = T ≤ −2,5 + ≥ 1 fracture.",
+  "FDR majeurs fracture : âge, ménopause précoce, ATCD fracture, corticothérapie, faible poids, tabac/alcool, carence Ca/VitD. Toujours écarter une ostéoporose secondaire.",
+  "Avant tout anti-ostéoporotique : normaliser Ca + Vit D. Ca 1200 mg/j (1500 si cortisonique), prises fractionnées ≤ 500 mg aux repas.",
+  "Anti-résorptifs : BP, dénosumab (OK si IRC), SERM (raloxifène), THS. Anabolique : tériparatide 18 mois max. BP CI : ostéomalacie, grossesse, IRC < 30, hypocalcémie.",
+  "Ostéomalacie = retard de minéralisation (tissu ostéoïde ↑). Bio carentielle : Ca N/↓, calciurie ↓ (constante), P ↓, PAL ↑, Vit D ↓.",
+  "Signe radio pathognomonique ostéomalacie = stries de Looser-Milkman. Aspect flou/délavé. DD HPT primitive : Ca ↑, P ↓, PTH ↑ (+ résorption houppes phalangiennes).",
+  "Ostéoporose : bio phosphocalcique souvent normale, silencieuse jusqu'à fracture. Ostéomalacie : douleurs osseuses, faiblesse, marche dandinante.",
+  "Traitement ostéomalacie : Vit D (± alfacalcidol selon contexte) + Ca (± P) + corriger la cause (cœliaque, IRC…)."
+ ],
+ "contrasts": [
+  "Ostéoporose (masse ↓ + microarchitecture) ≠ ostéomalacie (retard de minéralisation)",
+  "T-score (vs jeunes, diagnostic) ≠ Z-score (vs même âge, secondaire)",
+  "Sites fragilité (vertèbres, poignet, col fémur) ≠ sites exclus (C, T1–T4, crâne, mains/pieds)",
+  "Bio ostéoporose souvent normale ≠ bio ostéomalacie (calciurie ↓, PAL ↑, Vit D ↓)",
+  "Stries de Looser-Milkman (ostéomalacie) ≠ fractures vertébrales / Pouteau-Colles (ostéoporose)",
+  "BP CI si IRC sévère ≠ dénosumab utilisable si IRC",
+  "HPT primitive (Ca ↑, PTH ↑) ≠ ostéomalacie carentielle (Ca N/↓, Vit D ↓)"
+ ],
+ "cards": [
+  {
+   "id": "c1",
+   "type": "basic",
+   "q": "Quelles sont les 4 ostéopathies fragilisantes de l'adulte ?",
+   "a": "Ostéoporose (« os poreux »), ostéomalacie (« os mou »), hyperparathyroïdie primaire, ostéodystrophie rénale. Pathologies diffuses du squelette → fragilité accrue → fractures.",
+   "src": "intro"
+  },
+  {
+   "id": "c2",
+   "type": "basic",
+   "q": "Sites de fractures de fragilité classiques et sites exclus ?",
+   "a": "Classiques : vertèbres, radius distal (Pouteau-Colles = la plus précoce pour le dépistage), extrémité supérieure du fémur (col / pertrochantérienne = la plus grave, mortalité). Sites NON évocateurs : rachis cervical, thoracique au-dessus de T4, crâne, petits os des mains/pieds.",
+   "src": "découverte"
+  },
+  {
+   "id": "c3",
+   "type": "basic",
+   "q": "Critères radiographiques de fracture vertébrale bénigne (ostéoporotique) ?",
+   "a": "Localisation sous T4 ; corticale continue (« signe du puzzle ») ; respect du mur postérieur et de l'arc postérieur (pédicules) ; absence de géodes / d'ostéolyse. Diagnostic toujours radiologique. Types : cunéiforme, biconcave, en galette.",
+   "src": "vertèbres"
+  },
+  {
+   "id": "c4",
+   "type": "basic",
+   "q": "Bilan biologique devant une ostéopathie fragilisante ?",
+   "a": "Bilan phosphocalcique systématique : calcémie, phosphatémie, albuminémie (Ca corrigée), 25-OH Vit D. Selon contexte : calciurie/24h, phosphaturie, PTH. Marqueurs remodelage (non systématiques) : PAL, ostéocalcine, CTX. DD : VS, CRP, électrophorèse (myélome), dosages hormonaux.",
+   "src": "examens"
+  },
+  {
+   "id": "c5",
+   "type": "basic",
+   "q": "DMO — technique, sites, T-score vs Z-score ?",
+   "a": "DXA (absorptiométrie biphotonique à rayons X). Sites : rachis lombaire L1–L4 (trabéculaire) + extrémité supérieure du fémur (cortical) ; radius en secours. T-score = écart vs adultes jeunes même sexe → diagnostic densitométrique. Z-score = vs sujets même âge et sexe → utile jeune / ostéoporose secondaire.",
+   "src": "DMO"
+  },
+  {
+   "id": "c6",
+   "type": "basic",
+   "q": "Classification densitométrique OMS ?",
+   "a": "Normal : T > −1. Ostéopénie : −2,5 < T ≤ −1. Ostéoporose : T ≤ −2,5. Ostéoporose sévère : T ≤ −2,5 + ≥ 1 fracture de fragilité.",
+   "src": "DMO"
+  },
+  {
+   "id": "c7",
+   "type": "basic",
+   "q": "Quel site densitométrique privilégier selon l'âge ?",
+   "a": "< 65 ans : site vertébral idéal (retentissement précoce carence hormonale, corticoïdes, alcool-tabac). Sujet âgé : ESF idéal (arthrose rachidienne surestime la DMO vertébrale).",
+   "src": "DMO"
+  },
+  {
+   "id": "c8",
+   "type": "basic",
+   "q": "Définition OMS de l'ostéoporose ?",
+   "a": "Maladie généralisée du squelette : densité osseuse basse + altérations de la microarchitecture → fragilité osseuse exagérée et risque élevé de fracture. Les fractures constituent toute la gravité de la maladie. Maladie silencieuse jusqu'à la fracture.",
+   "src": "ostéoporose"
+  },
+  {
+   "id": "c9",
+   "type": "basic",
+   "q": "Facteurs de risque majeurs de fracture ostéoporotique ?",
+   "a": "Âge, origine caucasienne, ménopause précoce (< 40 ans), aménorrhée, ATCD familial/personnel de fracture de fragilité, faible poids, troubles visuels/neuromusculaires, immobilisation, sédentarité, tabac, alcool, corticothérapie, faible apport calcique, carence vit. D.",
+   "src": "FDR"
+  },
+  {
+   "id": "c10",
+   "type": "basic",
+   "q": "Ostéoporose primitive vs secondaire — exemples ?",
+   "a": "Primitives : post-ménopausique (type 1), sénile (type 2), idiopathique juvénile, primitive de l'homme. Secondaires : corticothérapie prolongée, Cushing, hypogonadisme, hyperthyroïdie, anorexie, PR, hypercalciurie, éthylisme, tabac, maladies digestives/hépatiques, anticonvulsivants, immobilisation… Toujours écarter une cause secondaire avant de traiter.",
+   "src": "étiologies"
+  },
+  {
+   "id": "c11",
+   "type": "basic",
+   "q": "Mesures non médicamenteuses et apports Ca/Vit D ?",
+   "a": "Activité physique en charge, arrêt tabac/alcool, régime équilibré, correction des FDR de chute. Calcium 1200 mg/j (1500 si cortisonique) — privilégier apports alimentaires (questionnaire de Fardellone), prises fractionnées ≤ 500 mg aux repas. Vit D : corriger carence/déficit. Tous les anti-ostéoporotiques ont été testés après normalisation Ca/Vit D. CI Ca : hypercalcémie, hypercalciurie, lithiase calcique.",
+   "src": "ttt"
+  },
+  {
+   "id": "c12",
+   "type": "basic",
+   "q": "Classes de médicaments anti-ostéoporotiques ?",
+   "a": "Anti-résorptifs : THS, SERM (raloxifène), bisphosphonates, dénosumab (Prolia® 60 mg SC / 6 mois). Ostéoformateurs : tériparatide (Forstéo®, analogue PTH 1-34, 20 µg SC/j, max 18 mois puis relais BP). Action mixte : ranélate de strontium (usage très restreint, risque CV).",
+   "src": "ttt"
+  },
+  {
+   "id": "c13",
+   "type": "basic",
+   "q": "Bisphosphonates — CI et effets indésirables ?",
+   "a": "Analogues du pyrophosphate (P-C-P). CI : ostéomalacie, grossesse, IRC sévère (CI si DFG < 30 ml/min), hypocalcémie. EI : digestifs (RGO), syndrome pseudo-grippal (IV), ostéonécrose de la mâchoire, fractures atypiques du fémur.",
+   "src": "BP"
+  },
+  {
+   "id": "c14",
+   "type": "basic",
+   "q": "Dénosumab, raloxifène, tériparatide — points clés ?",
+   "a": "Dénosumab : Ac anti-RANKL, 60 mg SC/6 mois, IRC non CI (contrairement aux BP). Raloxifène (SERM) : agoniste os / antagoniste sein-endomètre ; EI thromboemboliques, bouffées de chaleur ; CI ATCD TE, grossesse. Tériparatide : anabolique 18 mois max ; CI hypercalcémie, Paget, ATCD radiothérapie squelette, tumeurs osseuses.",
+   "src": "médicaments"
+  },
+  {
+   "id": "c15",
+   "type": "basic",
+   "q": "Définition et clinique de l'ostéomalacie ?",
+   "a": "Ostéopathie métabolique diffuse : retard de minéralisation de la matrice → accumulation de tissu ostéoïde → fragilisation. Clinique : douleurs osseuses diffuses mécaniques, marche dandinante, myalgies, faiblesse musculaire (pseudomyopathique), déformations évoluées, fractures/fissures.",
+   "src": "ostéomalacie"
+  },
+  {
+   "id": "c16",
+   "type": "basic",
+   "q": "Biologie de l'ostéomalacie carentielle ?",
+   "a": "Calcémie N ou ↓ ; calciurie basse (précoce et constante) ; phosphorémie ↓ ; PAL ↑ ; 25-OH Vit D et 1,25-(OH)₂ Vit D ↓. Différencier de l'HPT primitive (Ca ↑, P ↓, PTH ↑).",
+   "src": "ostéomalacie"
+  },
+  {
+   "id": "c17",
+   "type": "basic",
+   "q": "Signe radiographique pathognomonique de l'ostéomalacie ?",
+   "a": "Stries de Looser-Milkman : bande radiotransparente perpendiculaire à la corticale (bassin ilio/ischio-pubien, col fémoral, omoplates, clavicules, côtes). Autres : hypertransparence, aspect flou/délavé, corticales estompées, bassin en « cœur de carte à jouer », vertèbres biconcaves.",
+   "src": "ostéomalacie"
+  },
+  {
+   "id": "c18",
+   "type": "basic",
+   "q": "Étiologies de l'ostéomalacie ?",
+   "a": "Carentielle commune +++ (apport/soleil). Digestive : maladie cœliaque +++, insuffisance pancréatique, résections, Crohn. Hépatique : cirrhose. Rénale : IRC, tubulopathies. Iatrogène : anticonvulsivants, antiacides, étidronate 1ʳᵉ génération, fluor. Rares : hypophosphatasie, tumeurs mésenchymateuses, formes vitamino-résistantes.",
+   "src": "ostéomalacie"
+  },
+  {
+   "id": "c19",
+   "type": "basic",
+   "q": "Traitement de l'ostéomalacie ?",
+   "a": "Vitamine D (D2, 25-OH, 1,25-(OH)₂ / alfacalcidol selon contexte) + Calcium ± Phosphore. Corriger la cause sous-jacente (ex. régime sans gluten si cœliaque).",
+   "src": "ostéomalacie"
+  },
+  {
+   "id": "c20",
+   "type": "basic",
+   "q": "Tableau comparatif ostéoporose vs ostéomalacie (bio + radio) ?",
+   "a": "Ostéoporose : bio phosphocalcique le plus souvent normale ; fractures (vertèbres, poignet, col fémur). Ostéomalacie : Ca N/↓, P ↓, calciurie ↓, PAL ↑, Vit D ↓ ; stries de Looser-Milkman, aspect flou/délavé. DMO basse dans les deux.",
+   "src": "synthèse"
+  },
+  {
+   "id": "c21",
+   "type": "basic",
+   "q": "Signe radio évocateur d'hyperparathyroïdie primitive (DD) ?",
+   "a": "Résorption des houppes phalangiennes (signe radio classique en QCM). Bio : Ca ↑, P ↓, PTH ↑.",
+   "src": "DD"
+  }
+ ],
+ "quiz": [
+  {
+   "id": "q1",
+   "q": "Fractures de fragilité — JUSTES ?",
+   "src": "découverte",
+   "cards": [
+    "c2",
+    "c3"
+   ],
+   "explain": "Vertèbres + Pouteau-Colles + col fémur. Sites exclus C et T1–T4. Bénigne : sous T4, mur post intact.",
+   "opts": [
+    {
+     "t": "Sites classiques : vertèbres, Pouteau-Colles, extrémité supérieure du fémur",
+     "ok": true,
+     "c": [
+      "c2"
+     ]
+    },
+    {
+     "t": "Le col fémoral est la complication la plus grave (mortalité)",
+     "ok": true,
+     "c": [
+      "c2"
+     ]
+    },
+    {
+     "t": "Sites exclus : rachis cervical, T1–T4, crâne, mains/pieds",
+     "ok": true,
+     "c": [
+      "c2"
+     ]
+    },
+    {
+     "t": "Fracture vertébrale bénigne : localisation sous T4, mur postérieur intact",
+     "ok": true,
+     "c": [
+      "c3"
+     ]
+    },
+    {
+     "t": "Une fracture du crâne est typique d'ostéoporose",
+     "ok": false,
+     "c": [
+      "c2"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q2",
+   "q": "DMO et classification OMS — JUSTES ?",
+   "src": "DMO",
+   "cards": [
+    "c5",
+    "c6"
+   ],
+   "explain": "T-score vs jeunes. Ostéoporose T ≤ −2,5. Z-score vs même âge.",
+   "opts": [
+    {
+     "t": "T-score = écart vs adultes jeunes de même sexe",
+     "ok": true,
+     "c": [
+      "c5"
+     ]
+    },
+    {
+     "t": "Z-score = écart vs sujets de même âge et sexe",
+     "ok": true,
+     "c": [
+      "c5"
+     ]
+    },
+    {
+     "t": "Ostéoporose densitométrique si T ≤ −2,5",
+     "ok": true,
+     "c": [
+      "c6"
+     ]
+    },
+    {
+     "t": "Ostéoporose sévère = T ≤ −2,5 + ≥ 1 fracture",
+     "ok": true,
+     "c": [
+      "c6"
+     ]
+    },
+    {
+     "t": "T-score compare au même âge",
+     "ok": false,
+     "c": [
+      "c5"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q3",
+   "q": "Ostéoporose — FDR et secondaire — JUSTES ?",
+   "src": "FDR",
+   "cards": [
+    "c9",
+    "c10"
+   ],
+   "explain": "Corticothérapie, ménopause précoce, ATCD fracture. Toujours écarter secondaire.",
+   "opts": [
+    {
+     "t": "FDR majeurs : âge, ménopause précoce, ATCD fracture, corticothérapie, faible poids",
+     "ok": true,
+     "c": [
+      "c9"
+     ]
+    },
+    {
+     "t": "Corticothérapie prolongée est une cause d'ostéoporose secondaire",
+     "ok": true,
+     "c": [
+      "c10"
+     ]
+    },
+    {
+     "t": "Toujours écarter une cause secondaire avant de traiter",
+     "ok": true,
+     "c": [
+      "c10"
+     ]
+    },
+    {
+     "t": "Le tabac et l'alcool sont des FDR",
+     "ok": true,
+     "c": [
+      "c9"
+     ]
+    },
+    {
+     "t": "L'ostéoporose n'existe jamais chez l'homme",
+     "ok": false,
+     "c": [
+      "c10"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q4",
+   "q": "Traitement de l'ostéoporose — JUSTES ?",
+   "src": "ttt",
+   "cards": [
+    "c11",
+    "c12",
+    "c13"
+   ],
+   "explain": "Ca/VitD d'abord. BP CI ostéomalacie et IRC sévère. Dénosumab OK si IRC.",
+   "opts": [
+    {
+     "t": "Normaliser Ca et Vit D avant tout traitement anti-ostéoporotique",
+     "ok": true,
+     "c": [
+      "c11"
+     ]
+    },
+    {
+     "t": "Calcium 1200 mg/j (1500 si cortisonique), prises fractionnées",
+     "ok": true,
+     "c": [
+      "c11"
+     ]
+    },
+    {
+     "t": "Bisphosphonates : CI si ostéomalacie et IRC sévère (DFG < 30)",
+     "ok": true,
+     "c": [
+      "c13"
+     ]
+    },
+    {
+     "t": "Dénosumab utilisable en cas d'IRC (contrairement aux BP)",
+     "ok": true,
+     "c": [
+      "c14"
+     ]
+    },
+    {
+     "t": "On commence les BP sans corriger la Vit D",
+     "ok": false,
+     "c": [
+      "c11"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q5",
+   "q": "Médicaments — JUSTES ?",
+   "src": "médicaments",
+   "cards": [
+    "c14",
+    "c13"
+   ],
+   "explain": "Tériparatide anabolique 18 mois. Raloxifène SERM. EI BP : nécrose mâchoire, fractures atypiques.",
+   "opts": [
+    {
+     "t": "Tériparatide = anabolique, durée max 18 mois",
+     "ok": true,
+     "c": [
+      "c14"
+     ]
+    },
+    {
+     "t": "Raloxifène = SERM (agoniste os / antagoniste sein-endomètre)",
+     "ok": true,
+     "c": [
+      "c14"
+     ]
+    },
+    {
+     "t": "EI des BP : nécrose de la mâchoire, fractures atypiques du fémur",
+     "ok": true,
+     "c": [
+      "c13"
+     ]
+    },
+    {
+     "t": "Tériparatide est un anti-résorptif de 1ʳᵉ intention à vie",
+     "ok": false,
+     "c": [
+      "c14"
+     ]
+    },
+    {
+     "t": "Dénosumab = 60 mg SC tous les 6 mois",
+     "ok": true,
+     "c": [
+      "c12"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q6",
+   "q": "Ostéomalacie — clinique, bio, radio — JUSTES ?",
+   "src": "ostéomalacie",
+   "cards": [
+    "c15",
+    "c16",
+    "c17"
+   ],
+   "explain": "Retard minéralisation. Calciurie ↓, PAL ↑. Stries de Looser-Milkman.",
+   "opts": [
+    {
+     "t": "Ostéomalacie = retard de minéralisation avec accumulation de tissu ostéoïde",
+     "ok": true,
+     "c": [
+      "c15"
+     ]
+    },
+    {
+     "t": "Bio : calciurie basse (constante), P ↓, PAL ↑, Vit D ↓",
+     "ok": true,
+     "c": [
+      "c16"
+     ]
+    },
+    {
+     "t": "Signe radio pathognomonique = stries de Looser-Milkman",
+     "ok": true,
+     "c": [
+      "c17"
+     ]
+    },
+    {
+     "t": "Bio phosphocalcique toujours strictement normale",
+     "ok": false,
+     "c": [
+      "c16"
+     ]
+    },
+    {
+     "t": "Clinique : douleurs osseuses, faiblesse musculaire, marche dandinante",
+     "ok": true,
+     "c": [
+      "c15"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q7",
+   "q": "Comparaison ostéoporose / ostéomalacie et DD — JUSTES ?",
+   "src": "synthèse",
+   "cards": [
+    "c20",
+    "c21"
+   ],
+   "explain": "Ostéoporose bio souvent N. HPT : Ca ↑ PTH ↑ + houppes phalangiennes.",
+   "opts": [
+    {
+     "t": "Ostéoporose : bilan phosphocalcique le plus souvent normal",
+     "ok": true,
+     "c": [
+      "c20"
+     ]
+    },
+    {
+     "t": "Ostéomalacie : stries de Looser-Milkman et aspect flou/délavé",
+     "ok": true,
+     "c": [
+      "c17"
+     ]
+    },
+    {
+     "t": "HPT primitive : Ca ↑, P ↓, PTH ↑ ; résorption des houppes phalangiennes",
+     "ok": true,
+     "c": [
+      "c21"
+     ]
+    },
+    {
+     "t": "Les stries de Looser-Milkman sont typiques de l'ostéoporose pure",
+     "ok": false,
+     "c": [
+      "c17"
+     ]
+    },
+    {
+     "t": "Traitement ostéomalacie = Vit D + Calcium (± P)",
+     "ok": true,
+     "c": [
+      "c19"
+     ]
+    }
+   ]
+  }
+ ],
+ "vf": [
+  {
+   "id": "v1",
+   "s": "Les ostéopathies fragilisantes sont silencieuses en l'absence de fracture.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c1"
+   ]
+  },
+  {
+   "id": "v2",
+   "s": "Fractures de fragilité classiques : vertèbres, Pouteau-Colles, col du fémur.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c2"
+   ]
+  },
+  {
+   "id": "v3",
+   "s": "Une fracture du rachis cervical est typique d'ostéoporose.",
+   "a": false,
+   "w": "Site exclus (avec T1–T4, crâne, mains/pieds).",
+   "cards": [
+    "c2"
+   ]
+  },
+  {
+   "id": "v4",
+   "s": "Fracture vertébrale bénigne : sous T4, mur postérieur intact, pas de géodes.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c3"
+   ]
+  },
+  {
+   "id": "v5",
+   "s": "T-score compare au même âge ; Z-score aux jeunes adultes.",
+   "a": false,
+   "w": "T-score vs jeunes ; Z-score vs même âge.",
+   "cards": [
+    "c5"
+   ]
+  },
+  {
+   "id": "v6",
+   "s": "Ostéoporose densitométrique si T-score ≤ −2,5.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c6"
+   ]
+  },
+  {
+   "id": "v7",
+   "s": "Ostéoporose sévère = T ≤ −2,5 + au moins une fracture de fragilité.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c6"
+   ]
+  },
+  {
+   "id": "v8",
+   "s": "Chez le sujet âgé, le site ESF est souvent préféré (arthrose rachidienne).",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c7"
+   ]
+  },
+  {
+   "id": "v9",
+   "s": "Corticothérapie prolongée est une cause d'ostéoporose secondaire.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c10"
+   ]
+  },
+  {
+   "id": "v10",
+   "s": "On peut débuter les bisphosphonates sans corriger la vitamine D.",
+   "a": false,
+   "w": "Toujours normaliser Ca/Vit D d'abord.",
+   "cards": [
+    "c11"
+   ]
+  },
+  {
+   "id": "v11",
+   "s": "Calcium : 1200 mg/j, prises fractionnées ≤ 500 mg aux repas.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c11"
+   ]
+  },
+  {
+   "id": "v12",
+   "s": "Bisphosphonates : CI si ostéomalacie et IRC sévère (DFG < 30).",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c13"
+   ]
+  },
+  {
+   "id": "v13",
+   "s": "Dénosumab est contre-indiqué en cas d'insuffisance rénale.",
+   "a": false,
+   "w": "OK si IRC (contrairement aux BP).",
+   "cards": [
+    "c14"
+   ]
+  },
+  {
+   "id": "v14",
+   "s": "Tériparatide est un anabolique limité à 18 mois.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c14"
+   ]
+  },
+  {
+   "id": "v15",
+   "s": "Ostéomalacie = retard de minéralisation avec accumulation de tissu ostéoïde.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c15"
+   ]
+  },
+  {
+   "id": "v16",
+   "s": "Bio ostéomalacie carentielle : calciurie basse, P ↓, PAL ↑, Vit D ↓.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c16"
+   ]
+  },
+  {
+   "id": "v17",
+   "s": "Stries de Looser-Milkman = signe pathognomonique de l'ostéomalacie.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c17"
+   ]
+  },
+  {
+   "id": "v18",
+   "s": "Bilan phosphocalcique de l'ostéoporose est le plus souvent normal.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c20"
+   ]
+  },
+  {
+   "id": "v19",
+   "s": "HPT primitive : résorption des houppes phalangiennes (signe radio).",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c21"
+   ]
+  },
+  {
+   "id": "v20",
+   "s": "Maladie cœliaque est une cause digestive classique d'ostéomalacie.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c18"
+   ]
+  },
+  {
+   "id": "v21",
+   "s": "EI des BP : nécrose de la mâchoire et fractures atypiques du fémur.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c13"
+   ]
+  },
+  {
+   "id": "v22",
+   "s": "Raloxifène : CI si antécédents thromboemboliques.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c14"
+   ]
+  },
+  {
+   "id": "v23",
+   "s": "Le Pouteau-Colles est souvent la fracture de fragilité la plus précoce.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c2"
+   ]
+  },
+  {
+   "id": "v24",
+   "s": "Tous les anti-ostéoporotiques ont été validés après normalisation Ca/Vit D.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c11"
+   ]
+  }
+ ]
+}

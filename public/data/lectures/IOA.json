@@ -1,0 +1,868 @@
+{
+ "schema": 1,
+ "id": "IOA",
+ "progId": "CIOA",
+ "name": "Infections ostéoarticulaires de l'enfant",
+ "keys": [
+  "Âge moyen ≈ 6 ans ; prédominance masculine ; diagnostic précoce = meilleur pronostic (clinique + bio + imagerie).",
+  "Ostéomyélite = os + médullaire métaphysaire, voie hématogène. Arthrite septique = intra-articulaire. Ostéite = contiguïté/inoculation. Ostéoarthrite = OM + arthrite (NN/nourrisson).",
+  "Localisation classique : « près du genou, loin du coude ». Traumatisme associé dans 30–40 %.",
+  "Germes : S. aureus n°1 à tout âge (> 5 ans ≈ 90 %). NN : S. aureus + Strepto B + Gram−. < 5 ans : aussi Kingella kingae.",
+  "Ostéomyélite : douleur métaphysaire + articulation LIBRE (pas d'épanchement). Radio normale au début (retard 10–15 j).",
+  "Traitement OM = URGENCE : ATB IV double + immobilisation. Durée ≈ 6 semaines (3–10 j IV). Ne jamais retarder. Collection → drainage.",
+  "NN/nourrisson : ostéoarthrite (propagation ≈ 50 %), localisations multiples 40 %, hanche 55 %. Pronostic épiphysaire sombre si retard.",
+  "Hanche nourrisson = URGENCE : ponction articulaire indispensable (diagnostique + thérapeutique). Écho affirme l'épanchement mais PAS la nature du liquide.",
+  "Arthrite grand enfant = URGENCE : ponction au bloc sous AG ; liquide louche → arthrotomie-lavage-drainage + ATB.",
+  "Spondylodiscite : rachis lombaire, refus de la position assise ; IRM ; ATB + corset.",
+  "Toute douleur fébrile → palper TOUTES les métaphyses et TOUTES les articulations.",
+  "Séquelles = troubles de croissance (épiphysiodèse, raccourcissement, déviations) — redoutables sans traitement précoce. Germe retrouvé ≈ 50 % des cas."
+ ],
+ "contrasts": [
+  "Ostéomyélite (métaphyse, artic libre) ≠ arthrite septique (intra-articulaire, épanchement)",
+  "Ostéite (contiguïté) ≠ ostéomyélite (hématogène)",
+  "Radio normale au début d'OM ≠ radio qui montre déjà l'ostéolyse (retard 10–15 j)",
+  "Écho affirme l'épanchement ≠ écho qui précise la nature du liquide (elle ne le fait PAS)",
+  "S. aureus roi à tout âge ≠ Kingella surtout < 5 ans ≠ Strepto B / Gram− chez le NN",
+  "Abcès de Brodie (germe peu virulent + bon terrain) ≠ forme sévère multifocale / pandiaphysite",
+  "Ponction articulaire = urgent + diag + thérap ≠ « sans aucun intérêt »"
+ ],
+ "cards": [
+  {
+   "id": "c1",
+   "type": "basic",
+   "q": "Épidémiologie des infections ostéoarticulaires de l'enfant ?",
+   "a": "Pathologie classique de la période pédiatrique. Plus fréquente chez les garçons. Âge moyen ≈ 6 ans. Diagnostic précoce fondamental (clinique + biologie + imagerie).",
+   "src": "intro"
+  },
+  {
+   "id": "c2",
+   "type": "basic",
+   "q": "Définir ostéomyélite, arthrite septique, ostéite, ostéoarthrite.",
+   "a": "OM : infection os + médullaire métaphysaire par voie hématogène. Arthrite septique : infection intra-articulaire (synoviale + cavité). Ostéite : os par contiguïté ou inoculation directe. Ostéoarthrite : OM + arthrite (fréquente chez le nourrisson, métaphyse intracapsulaire).",
+   "src": "définitions"
+  },
+  {
+   "id": "c3",
+   "type": "basic",
+   "q": "Pourquoi le nourrisson fait-il plus d'ostéoarthrite ?",
+   "a": "Vascularisation transphysaire présente jusqu'à 12–18 mois → propagation métaphyse → épiphyse → articulation. Cortex fin + métaphyse intracapsulaire (hanche, épaule). Propagation ≈ 50 %.",
+   "src": "pathogénie"
+  },
+  {
+   "id": "c4",
+   "type": "basic",
+   "q": "Pathogénie de l'ostéomyélite hématogène ?",
+   "a": "Bactériémie → ralentissement du flux dans les sinusoïdes veineux métaphysaires → thrombose septique → œdème → décollement périosté par le pus → nécrose (séquestre).",
+   "src": "pathogénie"
+  },
+  {
+   "id": "c5",
+   "type": "basic",
+   "q": "Abcès de Brodie vs forme sévère ?",
+   "a": "Germe peu virulent + bon statut immunitaire → infection localisée (abcès de Brodie). Germe virulent / mauvais statut → abcès sous-périosté, ostéolyse, pandiaphysite.",
+   "src": "pathogénie"
+  },
+  {
+   "id": "c6",
+   "type": "basic",
+   "q": "Localisation classique et traumatisme associé ?",
+   "a": "« Près du genou, loin du coude » (zones de forte croissance = hypervascularisées). Traumatisme associé dans 30–40 % des cas (majore le ralentissement circulatoire).",
+   "src": "étiologie"
+  },
+  {
+   "id": "c7",
+   "type": "basic",
+   "q": "Facteurs favorisants ?",
+   "a": "Endothélium des vaisseaux en croissance discontinu, sans membrane basale, pauvre en phagocytes. Drépanocytose, diabète, déficit immunitaire. Traumatisme. Porte d'entrée : cutanée, ORL, digestive, urinaire (parfois iatrogène chez le NN).",
+   "src": "étiologie"
+  },
+  {
+   "id": "c8",
+   "type": "basic",
+   "q": "Germes selon l'âge ?",
+   "a": "NN : S. aureus, Strepto B, Gram− (E. coli) — souvent Méthi-R. < 5 ans : S. aureus, Strepto A, Pneumocoque, H. influenzae, Kingella kingae. > 5 ans : S. aureus ≈ 90 %, Strepto A, Kingella.",
+   "src": "germes"
+  },
+  {
+   "id": "c9",
+   "type": "basic",
+   "q": "S. aureus et Kingella — points QCM ?",
+   "a": "S. aureus = germe n°1 à tout âge (surtout > 5 ans ≈ 90 %). Kingella kingae très fréquent chez le jeune enfant (< 5 ans), souvent sous-diagnostiqué.",
+   "src": "germes"
+  },
+  {
+   "id": "c10",
+   "type": "basic",
+   "q": "Clinique et biologie générales ?",
+   "a": "Syndrome infectieux (parfois discret) + boiterie ou impotence. Bio : CRP↑, fibrinogène↑, GB↑ (PN), plaquettes↑ (surtout NN). Hémocultures + prélèvements de porte d'entrée. Toute douleur fébrile → palper TOUTES les métaphyses et articulations.",
+   "src": "clinique"
+  },
+  {
+   "id": "c11",
+   "type": "basic",
+   "q": "Clinique spécifique de l'ostéomyélite aiguë ?",
+   "a": "Signes inflammatoires locaux. Douleur à la palpation SUS ou SOUS articulaire (métaphysaire). Absence d'épanchement intra-articulaire ++++ (articulation libre, pas de choc rotulien).",
+   "src": "OM"
+  },
+  {
+   "id": "c12",
+   "type": "basic",
+   "q": "Imagerie de l'ostéomyélite aiguë ?",
+   "a": "Radio : normale au début puis ostéolyse / appositions (retard 10–15 j) — toujours à faire. Écho : absence d'épanchement articulaire +++ ; cherche abcès sous-périosté. Scinti 99mTc : hyperfixation précoce (peu spécifique, FN < 18 mois). IRM : très sensible (étendue, abcès) — plutôt bilan d'étendue.",
+   "src": "OM"
+  },
+  {
+   "id": "c13",
+   "type": "basic",
+   "q": "Ostéomyélite subaiguë — particularités ?",
+   "a": "Douleur modérée, pas de fièvre, boiterie depuis plusieurs jours. Radio normale ou abcès de Brodie. CRP peu élevée, GB souvent normaux, VS↑. Écho : abcès + œdème parties molles.",
+   "src": "OM"
+  },
+  {
+   "id": "c14",
+   "type": "basic",
+   "q": "Forme très sévère d'OM ?",
+   "a": "S. aureus sécréteur de toxine → infection multifocale + sepsis majeur. Bi-thérapie anti-staph Méthi-R (Vanco + Rifampicine).",
+   "src": "OM"
+  },
+  {
+   "id": "c15",
+   "type": "basic",
+   "q": "Traitement de l'ostéomyélite = URGENCE — modalités ?",
+   "a": "ATB IV après prélèvements et vérification absence de collection ponctionnable. ATB IV précoce, bactéricide, fortes doses, DOUBLE (β-lactamine + anti-staph), probabiliste puis adaptée, relais PO. Durée ≈ 6 semaines (dont 3–10 j IV) ; prolonger à 3 mois si signes radio. Immobilisation plâtrée ou traction. Collection → évacuation chirurgicale.",
+   "src": "ttt OM"
+  },
+  {
+   "id": "c16",
+   "type": "basic",
+   "q": "Surveillance et séquelles de l'OM ?",
+   "a": "Clinique (douleur, fièvre, locaux) ; bio J3, J8, J15, J45 ; radio hors plâtre J15. Si défavorable : abcédation → chirurgie ; diffusion articulaire ; chronicité → ablation des séquestres. Séquelles : troubles de croissance (épiphysiodèse, raccourcissement, déviations axiales).",
+   "src": "ttt OM"
+  },
+  {
+   "id": "c17",
+   "type": "basic",
+   "q": "Pourquoi l'ostéoarthrite du NN/nourrisson est plus grave ?",
+   "a": "Propagation métaphyse→épiphyse ≈ 50 %. Vascularisation transphysaire jusqu'à 12–18 mois. Défenses immatures. Localisations multiples 40 %. Germes souvent Méthi-R / Strepto B / E. coli. Porte d'entrée iatrogène ou maternelle. Pronostic épiphysaire redoutable.",
+   "src": "OA NN"
+  },
+  {
+   "id": "c18",
+   "type": "basic",
+   "q": "Clinique de l'ostéoarthrite du nourrisson ?",
+   "a": "Souvent atypique. Métaphyses des os longs (80 %). Limitation douloureuse, attitude antalgique / pseudo-paralytique, gonflement. Fièvre seulement 1/3 des cas. Bio peu fiable (plaquettes utiles).",
+   "src": "OA NN"
+  },
+  {
+   "id": "c19",
+   "type": "basic",
+   "q": "Ostéoarthrite de hanche du nourrisson — clinique et risques ?",
+   "a": "55 % des cas, souvent bilatérale. Clinique trompeuse : fièvre, douleur au change. Soulèvement par les aisselles → attitude pseudo-paralytique en semi-flexion. Risques : luxation septique, nécrose avasculaire de la tête fémorale. Ponction/drainage voie obturatrice sous scopie. Retard = drame.",
+   "src": "hanche"
+  },
+  {
+   "id": "c20",
+   "type": "basic",
+   "q": "Règle d'or hanche / arthrite de l'enfant ?",
+   "a": "Mouvements LIMITÉS (pas normaux). Attitude vicieuse, flessum possible. Abduction et rotation interne souvent les plus affectées. Ponction = geste URGENT, diagnostique ET thérapeutique. Écho affirme l'épanchement mais NE précise PAS la nature du liquide.",
+   "src": "hanche"
+  },
+  {
+   "id": "c21",
+   "type": "basic",
+   "q": "Arthrite aiguë bactérienne du grand enfant — conduite ?",
+   "a": "URGENCE. Atteinte articulaire + syndrome infectieux. Écho confirme épanchement. DD principal : arthrite rhumatismale. Destruction articulaire rapide. Ponction au bloc sous AG ; liquide louche → arthrotomie-lavage-drainage (ou ponction-lavage) + ATB + immobilisation discutée.",
+   "src": "arthrite"
+  },
+  {
+   "id": "c22",
+   "type": "basic",
+   "q": "Spondylodiscite de l'enfant ?",
+   "a": "Infection discale hématogène. Siège le plus fréquent : rachis lombaire. Tableau : boiterie fébrile atypique, côté mal défini, refus de la position assise ++. Radio : pincement discal (penser TB). Confirmation IRM. Ttt : ATB + corset ; ponction discale discutée ; évolution vers la fusion.",
+   "src": "spondylodiscite"
+  },
+  {
+   "id": "c23",
+   "type": "basic",
+   "q": "Diagnostics différentiels de l'OM ?",
+   "a": "CRMO (ostéomyélite chronique multifocale récidivante), SAPHO, hyperostose sterno-costo-claviculaire, tumeur / fracture → anatomopathologie si doute.",
+   "src": "OM"
+  },
+  {
+   "id": "c24",
+   "type": "basic",
+   "q": "Fiche express — 4 règles d'or ?",
+   "a": "1) Diagnostic avant tout clinique (+ bio). 2) Douleur fébrile → palper toutes métaphyses et articulations. 3) Douleur métaphysaire + syndrome infectieux = OM (radio normale au début). 4) Ttt = ATB IV double + immobilisation — ne jamais retarder.",
+   "src": "synthèse"
+  },
+  {
+   "id": "c25",
+   "type": "basic",
+   "q": "Germe retrouvé dans quel pourcentage des cas ?",
+   "a": "Le germe n'est retrouvé que dans ≈ 50 % des cas → ne pas retarder le traitement pour attendre le germe.",
+   "src": "conclusion"
+  }
+ ],
+ "quiz": [
+  {
+   "id": "q1",
+   "q": "Définitions — propositions JUSTES ?",
+   "src": "définitions",
+   "cards": [
+    "c2",
+    "c3"
+   ],
+   "explain": "OM hématogène métaphysaire. Arthrite = intra-articulaire. NN = ostéoarthrite fréquente.",
+   "opts": [
+    {
+     "t": "Ostéomyélite = infection os + médullaire métaphysaire par voie hématogène",
+     "ok": true,
+     "c": [
+      "c2"
+     ]
+    },
+    {
+     "t": "Arthrite septique = processus infectieux intra-articulaire",
+     "ok": true,
+     "c": [
+      "c2"
+     ]
+    },
+    {
+     "t": "Ostéite = atteinte osseuse par contiguïté ou inoculation directe",
+     "ok": true,
+     "c": [
+      "c2"
+     ]
+    },
+    {
+     "t": "Chez le NN on parle volontiers d'ostéo-arthrite",
+     "ok": true,
+     "c": [
+      "c2"
+     ]
+    },
+    {
+     "t": "L'ostéomyélite est toujours d'origine articulaire primitive",
+     "ok": false,
+     "c": [
+      "c2"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q2",
+   "q": "Épidémiologie et localisation — JUSTES ?",
+   "src": "intro-étiologie",
+   "cards": [
+    "c1",
+    "c6"
+   ],
+   "explain": "Âge moyen 6 ans, garçons, près du genou loin du coude, traumatisme 30–40 %.",
+   "opts": [
+    {
+     "t": "Âge moyen ≈ 6 ans, prédominance masculine",
+     "ok": true,
+     "c": [
+      "c1"
+     ]
+    },
+    {
+     "t": "Localisation classique « près du genou, loin du coude »",
+     "ok": true,
+     "c": [
+      "c6"
+     ]
+    },
+    {
+     "t": "Traumatisme associé dans 30–40 % des cas",
+     "ok": true,
+     "c": [
+      "c6"
+     ]
+    },
+    {
+     "t": "Pathologie rare après 2 ans",
+     "ok": false,
+     "c": [
+      "c1"
+     ]
+    },
+    {
+     "t": "Diagnostic précoce améliore le pronostic",
+     "ok": true,
+     "c": [
+      "c1"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q3",
+   "q": "Germes selon l'âge — JUSTES ?",
+   "src": "germes",
+   "cards": [
+    "c8",
+    "c9"
+   ],
+   "explain": "S. aureus roi. Kingella < 5 ans. NN : Strepto B + Gram−.",
+   "opts": [
+    {
+     "t": "S. aureus = germe n°1 à tout âge (≈ 90 % après 5 ans)",
+     "ok": true,
+     "c": [
+      "c9"
+     ]
+    },
+    {
+     "t": "Chez le NN : S. aureus, Strepto B, Gram négatifs (E. coli)",
+     "ok": true,
+     "c": [
+      "c8"
+     ]
+    },
+    {
+     "t": "Kingella kingae très fréquent chez le jeune enfant (< 5 ans)",
+     "ok": true,
+     "c": [
+      "c9"
+     ]
+    },
+    {
+     "t": "Après 5 ans le pneumocoque domine à 90 %",
+     "ok": false,
+     "c": [
+      "c8"
+     ]
+    },
+    {
+     "t": "H. influenzae fait partie des germes possibles avant 5 ans",
+     "ok": true,
+     "c": [
+      "c8"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q4",
+   "q": "Ostéomyélite aiguë — clinique et imagerie — JUSTES ?",
+   "src": "OM",
+   "cards": [
+    "c11",
+    "c12"
+   ],
+   "explain": "Articulation libre. Radio normale au début. Écho : pas d'épanchement + cherche abcès sous-périosté.",
+   "opts": [
+    {
+     "t": "Douleur métaphysaire + articulation libre (pas d'épanchement)",
+     "ok": true,
+     "c": [
+      "c11"
+     ]
+    },
+    {
+     "t": "Radiographies souvent normales au début (retard 10–15 jours)",
+     "ok": true,
+     "c": [
+      "c12"
+     ]
+    },
+    {
+     "t": "Échographie confirme l'absence d'épanchement et cherche l'abcès sous-périosté",
+     "ok": true,
+     "c": [
+      "c12"
+     ]
+    },
+    {
+     "t": "La radio est toujours pathologique dès J1",
+     "ok": false,
+     "c": [
+      "c12"
+     ]
+    },
+    {
+     "t": "Un choc rotulien est typique de l'ostéomyélite pure du genou",
+     "ok": false,
+     "c": [
+      "c11"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q5",
+   "q": "Traitement de l'ostéomyélite — JUSTES ?",
+   "src": "ttt OM",
+   "cards": [
+    "c15"
+   ],
+   "explain": "URGENCE. ATB IV double + immobilisation. 6 semaines. Collection → chirurgie.",
+   "opts": [
+    {
+     "t": "Antibiothérapie IV double (β-lactamine + anti-staph) probabiliste puis adaptée",
+     "ok": true,
+     "c": [
+      "c15"
+     ]
+    },
+    {
+     "t": "Durée totale ≈ 6 semaines (dont 3–10 jours IV)",
+     "ok": true,
+     "c": [
+      "c15"
+     ]
+    },
+    {
+     "t": "Immobilisation plâtrée ou traction collée",
+     "ok": true,
+     "c": [
+      "c15"
+     ]
+    },
+    {
+     "t": "On attend toujours le germe avant de débuter l'ATB",
+     "ok": false,
+     "c": [
+      "c15"
+     ]
+    },
+    {
+     "t": "Une collection (abcès sous-périosté) impose une évacuation chirurgicale",
+     "ok": true,
+     "c": [
+      "c15"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q6",
+   "q": "Ostéoarthrite du nourrisson — JUSTES ?",
+   "src": "OA NN",
+   "cards": [
+    "c17",
+    "c18",
+    "c19"
+   ],
+   "explain": "Multiples 40 %. Hanche 55 %. Propagation 50 %. Fièvre 1/3 seulement.",
+   "opts": [
+    {
+     "t": "Localisations multiples dans ≈ 40 % des cas",
+     "ok": true,
+     "c": [
+      "c17"
+     ]
+    },
+    {
+     "t": "Hanche = 55 % des cas, souvent bilatérale",
+     "ok": true,
+     "c": [
+      "c19"
+     ]
+    },
+    {
+     "t": "Propagation métaphyse → épiphyse dans ≈ 50 % des cas",
+     "ok": true,
+     "c": [
+      "c17"
+     ]
+    },
+    {
+     "t": "Fièvre présente dans 100 % des cas",
+     "ok": false,
+     "c": [
+      "c18"
+     ]
+    },
+    {
+     "t": "Pronostic épiphysaire sombre en cas de retard thérapeutique",
+     "ok": true,
+     "c": [
+      "c17"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q7",
+   "q": "Hanche et ponction — JUSTES ?",
+   "src": "hanche",
+   "cards": [
+    "c19",
+    "c20"
+   ],
+   "explain": "Mouvements LIMITÉS. Ponction urgente diag + thérap. Écho ≠ nature du liquide.",
+   "opts": [
+    {
+     "t": "Les mouvements de la hanche sont LIMITÉS (pas normaux)",
+     "ok": true,
+     "c": [
+      "c20"
+     ]
+    },
+    {
+     "t": "Abduction et rotation interne souvent les plus affectées",
+     "ok": true,
+     "c": [
+      "c20"
+     ]
+    },
+    {
+     "t": "Ponction articulaire = geste urgent + diagnostique + thérapeutique",
+     "ok": true,
+     "c": [
+      "c20"
+     ]
+    },
+    {
+     "t": "L'échographie précise toujours la nature septique du liquide",
+     "ok": false,
+     "c": [
+      "c20"
+     ]
+    },
+    {
+     "t": "Chez le nourrisson : attitude pseudo-paralytique, douleur au change",
+     "ok": true,
+     "c": [
+      "c19"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q8",
+   "q": "Arthrite du grand enfant et spondylodiscite — JUSTES ?",
+   "src": "arthrite-spondylo",
+   "cards": [
+    "c21",
+    "c22"
+   ],
+   "explain": "Ponction sous AG. Liquide louche → arthrotomie. Spondylodiscite lombaire + refus assise.",
+   "opts": [
+    {
+     "t": "Traitement de l'arthrite = URGENCE (ponction au bloc sous AG)",
+     "ok": true,
+     "c": [
+      "c21"
+     ]
+    },
+    {
+     "t": "Liquide louche → arthrotomie-lavage-drainage",
+     "ok": true,
+     "c": [
+      "c21"
+     ]
+    },
+    {
+     "t": "Spondylodiscite : siège le plus fréquent = rachis lombaire",
+     "ok": true,
+     "c": [
+      "c22"
+     ]
+    },
+    {
+     "t": "Refus de la position assise est un signe évocateur de spondylodiscite",
+     "ok": true,
+     "c": [
+      "c22"
+     ]
+    },
+    {
+     "t": "La spondylodiscite se traite uniquement par chirurgie d'emblée",
+     "ok": false,
+     "c": [
+      "c22"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q9",
+   "q": "Synthèse QCM — propositions JUSTES ?",
+   "src": "synthèse",
+   "cards": [
+    "c24",
+    "c25",
+    "c10"
+   ],
+   "explain": "Palper toutes les métaphyses. Germe ≈ 50 %. Ne jamais retarder.",
+   "opts": [
+    {
+     "t": "Toute douleur fébrile doit faire palper toutes les métaphyses et articulations",
+     "ok": true,
+     "c": [
+      "c10"
+     ]
+    },
+    {
+     "t": "Le germe n'est retrouvé que dans ≈ 50 % des cas",
+     "ok": true,
+     "c": [
+      "c25"
+     ]
+    },
+    {
+     "t": "Ne pas retarder le début du traitement en attendant le germe",
+     "ok": true,
+     "c": [
+      "c25"
+     ]
+    },
+    {
+     "t": "Les séquelles de croissance sont bénignes même sans traitement",
+     "ok": false,
+     "c": [
+      "c16"
+     ]
+    },
+    {
+     "t": "Diagnostic avant tout clinique (+ biologie)",
+     "ok": true,
+     "c": [
+      "c24"
+     ]
+    }
+   ]
+  }
+ ],
+ "vf": [
+  {
+   "id": "v1",
+   "s": "L'âge moyen des infections ostéoarticulaires de l'enfant est ≈ 6 ans.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c1"
+   ]
+  },
+  {
+   "id": "v2",
+   "s": "L'ostéomyélite atteint l'os par contiguïté uniquement.",
+   "a": false,
+   "w": "Voie hématogène, médullaire métaphysaire.",
+   "cards": [
+    "c2"
+   ]
+  },
+  {
+   "id": "v3",
+   "s": "Chez le nourrisson on parle volontiers d'ostéo-arthrite.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c2"
+   ]
+  },
+  {
+   "id": "v4",
+   "s": "Localisation classique : « près du genou, loin du coude ».",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c6"
+   ]
+  },
+  {
+   "id": "v5",
+   "s": "S. aureus est le germe n°1 à tout âge (≈ 90 % après 5 ans).",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c9"
+   ]
+  },
+  {
+   "id": "v6",
+   "s": "Kingella kingae est surtout important chez le > 10 ans.",
+   "a": false,
+   "w": "Surtout < 5 ans.",
+   "cards": [
+    "c9"
+   ]
+  },
+  {
+   "id": "v7",
+   "s": "Chez le NN : penser Strepto B et Gram négatifs (E. coli).",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c8"
+   ]
+  },
+  {
+   "id": "v8",
+   "s": "Ostéomyélite = douleur métaphysaire + articulation libre (pas d'épanchement).",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c11"
+   ]
+  },
+  {
+   "id": "v9",
+   "s": "La radiographie est toujours anormale dès le premier jour d'ostéomyélite.",
+   "a": false,
+   "w": "Normale au début (retard 10–15 jours).",
+   "cards": [
+    "c12"
+   ]
+  },
+  {
+   "id": "v10",
+   "s": "L'échographie confirme l'absence d'épanchement dans l'OM et cherche l'abcès sous-périosté.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c12"
+   ]
+  },
+  {
+   "id": "v11",
+   "s": "Traitement de l'OM = ATB IV double + immobilisation. Durée ≈ 6 semaines.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c15"
+   ]
+  },
+  {
+   "id": "v12",
+   "s": "On doit attendre le résultat des cultures avant de débuter l'ATB.",
+   "a": false,
+   "w": "Ne jamais retarder le traitement.",
+   "cards": [
+    "c15"
+   ]
+  },
+  {
+   "id": "v13",
+   "s": "Localisations multiples dans ≈ 40 % des ostéoarthrites du nourrisson.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c17"
+   ]
+  },
+  {
+   "id": "v14",
+   "s": "Hanche = 55 % des ostéoarthrites du nourrisson, souvent bilatérale.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c19"
+   ]
+  },
+  {
+   "id": "v15",
+   "s": "Les mouvements de la hanche septique sont normaux.",
+   "a": false,
+   "w": "LIMITÉS. Attitude vicieuse possible.",
+   "cards": [
+    "c20"
+   ]
+  },
+  {
+   "id": "v16",
+   "s": "La ponction articulaire est un geste urgent + diagnostique + thérapeutique.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c20"
+   ]
+  },
+  {
+   "id": "v17",
+   "s": "L'échographie précise la nature septique du liquide articulaire.",
+   "a": false,
+   "w": "Affirme l'épanchement mais PAS la nature du liquide.",
+   "cards": [
+    "c20"
+   ]
+  },
+  {
+   "id": "v18",
+   "s": "Arthrite du grand enfant : liquide louche → arthrotomie-lavage-drainage.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c21"
+   ]
+  },
+  {
+   "id": "v19",
+   "s": "Spondylodiscite : siège le plus fréquent = rachis lombaire ; refus de la position assise.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c22"
+   ]
+  },
+  {
+   "id": "v20",
+   "s": "Toute douleur fébrile doit faire palper toutes les métaphyses et articulations.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c10"
+   ]
+  },
+  {
+   "id": "v21",
+   "s": "Le germe est retrouvé dans ≈ 50 % des cas seulement.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c25"
+   ]
+  },
+  {
+   "id": "v22",
+   "s": "Les séquelles de croissance sont rares et bénignes sans traitement.",
+   "a": false,
+   "w": "Graves et redoutables sans prise en charge précoce.",
+   "cards": [
+    "c16"
+   ]
+  },
+  {
+   "id": "v23",
+   "s": "Traumatisme associé dans 30–40 % des ostéomyélites.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c6"
+   ]
+  },
+  {
+   "id": "v24",
+   "s": "Abcès de Brodie = forme localisée (germe peu virulent + bon terrain).",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c5"
+   ]
+  },
+  {
+   "id": "v25",
+   "s": "Vascularisation transphysaire présente jusqu'à 12–18 mois.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c3"
+   ]
+  },
+  {
+   "id": "v26",
+   "s": "Forme sévère d'OM à S. aureus toxinogène : bi-thérapie Vanco + Rifampicine.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c14"
+   ]
+  }
+ ]
+}

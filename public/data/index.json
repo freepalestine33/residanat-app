@@ -1,0 +1,92 @@
+{
+ "lectures": [
+  {
+   "id": "SA",
+   "progId": "MSA",
+   "name": "Spondylarthrite Ankylosante",
+   "cards": 28,
+   "quiz": 14,
+   "vf": 23
+  },
+  {
+   "id": "DECUB",
+   "progId": "MDECUB",
+   "name": "Complications du décubitus",
+   "cards": 28,
+   "quiz": 12,
+   "vf": 28
+  },
+  {
+   "id": "TRAUMA",
+   "progId": "MTRAUMA",
+   "name": "Lésions traumatiques en MPR",
+   "cards": 34,
+   "quiz": 11,
+   "vf": 28
+  },
+  {
+   "id": "IOA",
+   "progId": "CIOA",
+   "name": "Infections ostéoarticulaires de l'enfant",
+   "cards": 25,
+   "quiz": 9,
+   "vf": 26
+  },
+  {
+   "id": "FRX",
+   "progId": "CFRX",
+   "name": "Fractures de l'enfant & cartilage de croissance",
+   "cards": 24,
+   "quiz": 8,
+   "vf": 25
+  },
+  {
+   "id": "PR",
+   "progId": "MPR",
+   "name": "Polyarthrite rhumatoïde",
+   "cards": 23,
+   "quiz": 9,
+   "vf": 26
+  },
+  {
+   "id": "OSTEO",
+   "progId": "MOSTEO",
+   "name": "Ostéopathies déminéralisantes",
+   "cards": 21,
+   "quiz": 7,
+   "vf": 24
+  },
+  {
+   "id": "MPR_BASE",
+   "progId": "MPR1",
+   "name": "MPR — Principes de base",
+   "cards": 13,
+   "quiz": 6,
+   "vf": 18
+  },
+  {
+   "id": "HANDICAP",
+   "progId": "MPR2",
+   "name": "Situations de handicap & qualité de vie",
+   "cards": 13,
+   "quiz": 5,
+   "vf": 16
+  },
+  {
+   "id": "POIGNET",
+   "progId": "CPOIGNET",
+   "name": "Traumatisme du poignet",
+   "cards": 28,
+   "quiz": 10,
+   "vf": 30
+  },
+  {
+   "id": "PIED_BOT",
+   "progId": "CPIED",
+   "name": "Malformations du pied & PBVE",
+   "cards": 18,
+   "quiz": 10,
+   "vf": 25
+  }
+ ]
+}

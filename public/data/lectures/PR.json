@@ -1,0 +1,855 @@
+{
+ "schema": 1,
+ "id": "PR",
+ "progId": "MPR",
+ "name": "Polyarthrite rhumatoïde",
+ "keys": [
+  "PR = RIC le plus fréquent, inflammatoire auto-immune systémique à prédominance synoviale, destructeur. Femme 3–4/1, pic 40–60 ans. Diagnostic précoce +++.",
+  "Lésion élémentaire = synovite (PAS enthésite = SpA). Cascade : rupture de tolérance (muqueuses) → FR/ACPA → synovite → pannus → érosions + pincement.",
+  "Début typique (70–80 %) : oligo/polyarthrite distale, bilatérale, symétrique, fixe et additive, ≥ 6 semaines. Poignets, MCP 2–3, IPP, MTP. IPD respectées.",
+  "FR (IgM anti-IgG) 60–80 % sens, peu spécifique. ACPA 60–75 % sens, 90–95 % spécificité. Négativité n'élimine PAS le diagnostic.",
+  "Liquide synovial : > 2000 GB/mm³, stérile, SANS microcristaux. Radios souvent NORMALES au début ; érosion précoce évocatrice = tête du 5ᵉ métatarsien.",
+  "Critères ACR/EULAR 2010 : score ≥ 6 → PR (articulations + sérologie + durée ≥ 6 sem + inflammation).",
+  "Déformations PR : déviation ulnaire « coup de vent », col de cygne, boutonnière, maillet, pouce en Z, touche de piano, dos de chameau. PAS main de Jaccoud (lupus) ni Heberden (arthrose).",
+  "Respectés : IPD, rachis thoracolombaire, sacro-iliaques. Touché : rachis cervical (luxation atloïdo-axoïdienne).",
+  "Extra-articulaires : nodules, PID, péricardite, sclérite, vascularite, Felty. PAS d'uvéite antérieure aiguë ni sacro-iléite (SpA).",
+  "DAS28 : 28 articulations (PAS les pieds). Rémission < 2,6 ; faible 2,6–3,2 ; modérée 3,2–5,1 ; élevée > 5,1.",
+  "Ttt : Treat to Target. MTX 1ʳᵉ ligne (0,3 mg/kg/sem + folates + contraception). Corticoïdes appoint (~10 mg, sevrage 3–6 mois). Échec + mauvais pronostic → thérapies ciblées (anti-TNF, anti-IL-6R, JAKi…).",
+  "Pronostic : surmortalité CV (1ʳᵉ cause), infections, cancers (lymphome), ostéoporose. Facteurs de mauvais pronostic : DAS28 > 3,2, FR/ACPA forts, érosions, HAQ > 0,5, extra-articulaires."
+ ],
+ "contrasts": [
+  "Synovite (PR) ≠ enthésite (SpA)",
+  "IPD respectées (PR) ≠ IPD touchées (arthrose / rhumatisme psoriasique)",
+  "Main de Jaccoud (lupus) ≠ déformations PR (col de cygne, coup de vent…)",
+  "Uvéite antérieure / sacro-iléite (SpA) ≠ nodules / PID / sclérite (PR)",
+  "ACPA très spécifiques ≠ FR moins spécifique",
+  "Radio normale au début ≠ radio toujours pathologique d'emblée",
+  "MTX / anti-TNF = fond ≠ AINS / méthylprednisolone = symptomatique"
+ ],
+ "cards": [
+  {
+   "id": "c1",
+   "type": "basic",
+   "q": "Définition de la polyarthrite rhumatoïde ?",
+   "a": "Maladie inflammatoire auto-immune et systémique à prédominance synoviale, d'étiologie inconnue. RIC destructeur, déformant et invalidant. Diagnostic précoce +++.",
+   "src": "déf"
+  },
+  {
+   "id": "c2",
+   "type": "basic",
+   "q": "Épidémiologie de la PR ?",
+   "a": "RIC le plus fréquent. Prévalence 0,3–1 %, incidence 25–50/100 000. Prédominance féminine 3–4 F / 1 H (s'atténue après 60 ans). Pic 40–60 ans, possible à tout âge.",
+   "src": "épidémio"
+  },
+  {
+   "id": "c3",
+   "type": "basic",
+   "q": "Lésion élémentaire et cytokines clés ?",
+   "a": "Lésion élémentaire = synovite (PAS enthésite). Cytokines clés : TNFα, IL-6 → cibles thérapeutiques. Cellules : LT, LB, macrophages, fibroblastes, ostéoclastes.",
+   "src": "physio"
+  },
+  {
+   "id": "c4",
+   "type": "basic",
+   "q": "Cascade physiopathologique simplifiée ?",
+   "a": "Rupture de tolérance aux muqueuses (poumon, bouche, intestin) → citrullination → production FR et ACPA → réponse systémique → synovite / pannus → destruction (érosions osseuses + pincement = chondrolyse).",
+   "src": "physio"
+  },
+  {
+   "id": "c5",
+   "type": "basic",
+   "q": "Début typique de la PR (70–80 %) ?",
+   "a": "Oligoarthrite ou polyarthrite distale, BILATÉRALE et globalement SYMÉTRIQUE, fixe et additive, progressive, évolution ≥ 6 semaines, sans signes extra-articulaires au début. Poignets, MCP 2ᵉ–3ᵉ, IPP, MTP, chevilles. IPD respectées. Ténosynovites fréquentes.",
+   "src": "début"
+  },
+  {
+   "id": "c6",
+   "type": "basic",
+   "q": "Signes cliniques évocateurs au début ?",
+   "a": "Douleur d'horaire inflammatoire, raideur matinale. Gonflement (synovite ± épanchement). Doigts en fuseau (évocateur ++). Squeeze test douloureux (compression latérale MCP/MTP).",
+   "src": "début"
+  },
+  {
+   "id": "c7",
+   "type": "basic",
+   "q": "Modes de début atypiques ?",
+   "a": "Polyarthrite aiguë fébrile ; monoarthrite ; forme rhizomélique (épaules + hanches, > 65 ans) ; forme palindromique (poussées mono/oligo récidivantes régressives en 2–3 jours).",
+   "src": "début"
+  },
+  {
+   "id": "c8",
+   "type": "basic",
+   "q": "Facteur rhumatoïde et ACPA ?",
+   "a": "FR = IgM anti-IgG (Waaler-Rose, latex) : sens 60–80 %, spéc 65–85 %, non spécifique, négativité n'élimine pas. ACPA (anti-CCP) : sens 60–75 %, spéc 90–95 %, plus spécifiques, apparition précoce, négativité n'élimine pas. AAN le plus souvent négatifs (éliminer lupus).",
+   "src": "bio"
+  },
+  {
+   "id": "c9",
+   "type": "basic",
+   "q": "Liquide synovial de PR ?",
+   "a": "Inflammatoire : > 2000 leucocytes/mm³, stérile, NE CONTIENT PAS de microcristaux.",
+   "src": "bio"
+  },
+  {
+   "id": "c10",
+   "type": "basic",
+   "q": "Imagerie au début de la PR ?",
+   "a": "Radios standards systématiques (mains/poignets face, pieds face/3/4, thorax…). Le plus souvent NORMALES au début. Parfois tuméfaction, déminéralisation en bandes, érosions marginales précoces (tête du 5ᵉ métatarsien). Écho/IRM plus sensibles pour synovite/érosions précoces.",
+   "src": "imagerie"
+  },
+  {
+   "id": "c11",
+   "type": "basic",
+   "q": "Critères ACR/EULAR 2010 — score diagnostic ?",
+   "a": "Score ≥ 6 → PR. Domaines : atteinte articulaire (0–5), sérologie FR/ACPA (0–3), durée des symptômes ≥ 6 semaines (0–1), biologie inflammatoire VS/CRP (0–1).",
+   "src": "critères"
+  },
+  {
+   "id": "c12",
+   "type": "basic",
+   "q": "Déformations des mains de la PR ?",
+   "a": "Déviation ulnaire « coup de vent » ; col de cygne (flex MCP + hyperext IPP + flex IPD) ; boutonnière (flex IPP + hyperext IPD) ; maillet ; pouce en Z ; pouce adductus ; touche de piano (luxation styloïde ulnaire) ; dos de chameau (carpe).",
+   "src": "phase état"
+  },
+  {
+   "id": "c13",
+   "type": "basic",
+   "q": "Quelles déformations NE sont PAS de la PR ?",
+   "a": "Main de Jaccoud (lupus) ; nodosités d'Heberden (arthrose IPD) ; durillons plantaires (trouble statique).",
+   "src": "phase état"
+  },
+  {
+   "id": "c14",
+   "type": "basic",
+   "q": "Articulations / segments respectés vs touchés ?",
+   "a": "Respectés : IPD, rachis thoracolombaire, sacro-iliaques. Touchés : toutes les articulations périphériques + rachis cervical (luxation atloïdo-axoïdienne — clichés dynamiques).",
+   "src": "phase état"
+  },
+  {
+   "id": "c15",
+   "type": "basic",
+   "q": "Manifestations extra-articulaires de la PR ?",
+   "a": "Généraux (fièvre, asthénie, adénopathies, syndrome sec) ; nodules rhumatoïdes ; PID, pleurésie ; péricardite, myocardite ; vascularite ; sclérite, épisclérite, scléromalacie ; Felty, LGL. PAS d'uvéite antérieure aiguë ni sacro-iléite (SpA).",
+   "src": "extra"
+  },
+  {
+   "id": "c16",
+   "type": "basic",
+   "q": "Signes radiographiques de la PR à l'état ?",
+   "a": "Érosions périarticulaires, géodes juxta-articulaires, pincement global de l'interligne, désaxations, déminéralisation en bandes. PAS d'épaississement des corticales.",
+   "src": "imagerie"
+  },
+  {
+   "id": "c17",
+   "type": "basic",
+   "q": "Facteurs de mauvais pronostic ?",
+   "a": "DAS28 > 3,2 persistant ; syndrome inflammatoire marqué ; FR et/ou ACPA positifs forts (> 3 N) ; érosions radiographiques ; HAQ > 0,5 ; manifestations extra-articulaires ; comorbidités.",
+   "src": "pronostic"
+  },
+  {
+   "id": "c18",
+   "type": "basic",
+   "q": "Comorbidités et surmortalité ?",
+   "a": "Surmortalité cardiovasculaire (1ʳᵉ cause). Infections (maladie + iatrogénie). Cancers (surrisque lymphome si activité sévère, cancer pulmonaire). Ostéoporose (inflammation + corticoïdes).",
+   "src": "pronostic"
+  },
+  {
+   "id": "c19",
+   "type": "basic",
+   "q": "DAS28 — articulations et seuils ?",
+   "a": "28 articulations : 2 épaules, 2 coudes, 2 poignets, 10 MCP, 10 IPP, 2 genoux. Les PIEDS ne sont PAS comptés. Rémission < 2,6 ; faible 2,6–3,2 ; modérée 3,2–5,1 ; élevée > 5,1.",
+   "src": "DAS28"
+  },
+  {
+   "id": "c20",
+   "type": "basic",
+   "q": "Traitement de fond de 1ʳᵉ ligne ?",
+   "a": "Méthotrexate 0,3 mg/kg/semaine (PO ou SC), max usuel 25–30 mg, + folates ≥ 5 mg/sem, contraception obligatoire. Si CI : léflunomide 20 mg/j ou sulfasalazine 1–3 g/j. Corticoïdes d'appoint (prednisone ~10 mg/j, sevrage 3–6 mois).",
+   "src": "ttt"
+  },
+  {
+   "id": "c21",
+   "type": "basic",
+   "q": "Thérapies ciblées et stratégie ?",
+   "a": "Biologiques : anti-TNFα, anti-IL-6R, CTLA4-Ig, anti-CD20. Synthétiques ciblés : JAKi. Algorithme : MTX + corticoïdes → si échec à 3–6 mois + mauvais pronostic → thérapie ciblée ; si échec sans mauvais pronostic → autre fond conventionnel. Objectif = rémission ou faible activité (Treat to Target).",
+   "src": "ttt"
+  },
+  {
+   "id": "c22",
+   "type": "basic",
+   "q": "PR en poussée — mesures non médicamenteuses ?",
+   "a": "Repos articulaire, orthèse en position de fonction, travail musculaire isométrique. PAS balnéothérapie ni orthèse dynamique en poussée aiguë (piège QCM).",
+   "src": "ttt"
+  },
+  {
+   "id": "c23",
+   "type": "basic",
+   "q": "Suivi de la PR ?",
+   "a": "Clinique/biologique tous les 1–3 mois jusqu'à l'objectif, puis tous les 3–6 mois. Radio : tous les 6 mois la 1ʳᵉ année, puis 1/an (3 ans).",
+   "src": "suivi"
+  }
+ ],
+ "quiz": [
+  {
+   "id": "q1",
+   "q": "Définition et épidémiologie — JUSTES ?",
+   "src": "déf-épidémio",
+   "cards": [
+    "c1",
+    "c2"
+   ],
+   "explain": "RIC inflammatoire, femme 3–4/1, pic 40–60. Pas infectieuse ni dégénérative.",
+   "opts": [
+    {
+     "t": "PR = rhumatisme inflammatoire chronique destructeur",
+     "ok": true,
+     "c": [
+      "c1"
+     ]
+    },
+    {
+     "t": "Prédominance féminine 3–4 femmes pour 1 homme",
+     "ok": true,
+     "c": [
+      "c2"
+     ]
+    },
+    {
+     "t": "Pic de fréquence entre 40 et 60 ans",
+     "ok": true,
+     "c": [
+      "c2"
+     ]
+    },
+    {
+     "t": "Plus fréquente chez l'homme jeune",
+     "ok": false,
+     "c": [
+      "c2"
+     ]
+    },
+    {
+     "t": "Rhumatisme dégénératif d'origine infectieuse",
+     "ok": false,
+     "c": [
+      "c1"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q2",
+   "q": "Physiopathologie — JUSTES ?",
+   "src": "physio",
+   "cards": [
+    "c3",
+    "c4"
+   ],
+   "explain": "Synovite élémentaire. TNFα et IL-6. Enthésite = SpA.",
+   "opts": [
+    {
+     "t": "La synovite est la lésion élémentaire de la PR",
+     "ok": true,
+     "c": [
+      "c3"
+     ]
+    },
+    {
+     "t": "TNFα et IL-6 sont des cytokines clés (cibles thérapeutiques)",
+     "ok": true,
+     "c": [
+      "c3"
+     ]
+    },
+    {
+     "t": "L'enthésite est la lésion élémentaire de la PR",
+     "ok": false,
+     "c": [
+      "c3"
+     ]
+    },
+    {
+     "t": "Rupture de tolérance au niveau des muqueuses précède la synovite",
+     "ok": true,
+     "c": [
+      "c4"
+     ]
+    },
+    {
+     "t": "Pannus synovial → érosions et pincement de l'interligne",
+     "ok": true,
+     "c": [
+      "c4"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q3",
+   "q": "Début clinique typique — JUSTES ?",
+   "src": "début",
+   "cards": [
+    "c5",
+    "c6"
+   ],
+   "explain": "Distale bilatérale symétrique ≥ 6 sem. IPD respectées. Squeeze test.",
+   "opts": [
+    {
+     "t": "Oligo/polyarthrite distale bilatérale et symétrique ≥ 6 semaines",
+     "ok": true,
+     "c": [
+      "c5"
+     ]
+    },
+    {
+     "t": "Atteinte des poignets, MCP 2–3, IPP, MTP ; IPD respectées",
+     "ok": true,
+     "c": [
+      "c5"
+     ]
+    },
+    {
+     "t": "Squeeze test douloureux (MCP/MTP)",
+     "ok": true,
+     "c": [
+      "c6"
+     ]
+    },
+    {
+     "t": "Début typique par rachis lombaire et sacro-iliaques",
+     "ok": false,
+     "c": [
+      "c5"
+     ]
+    },
+    {
+     "t": "Doigts en fuseau évocateurs",
+     "ok": true,
+     "c": [
+      "c6"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q4",
+   "q": "Biologie et liquide synovial — JUSTES ?",
+   "src": "bio",
+   "cards": [
+    "c8",
+    "c9"
+   ],
+   "explain": "ACPA plus spécifiques. Négativité n'élimine pas. Liquide > 2000, stérile, sans cristaux.",
+   "opts": [
+    {
+     "t": "ACPA plus spécifiques que le FR (90–95 %)",
+     "ok": true,
+     "c": [
+      "c8"
+     ]
+    },
+    {
+     "t": "Négativité du FR ou des ACPA n'élimine pas le diagnostic",
+     "ok": true,
+     "c": [
+      "c8"
+     ]
+    },
+    {
+     "t": "Liquide synovial > 2000 GB/mm³, stérile, sans microcristaux",
+     "ok": true,
+     "c": [
+      "c9"
+     ]
+    },
+    {
+     "t": "Les AAN sont les principaux marqueurs de la PR",
+     "ok": false,
+     "c": [
+      "c8"
+     ]
+    },
+    {
+     "t": "FR = IgM anti-IgG",
+     "ok": true,
+     "c": [
+      "c8"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q5",
+   "q": "Imagerie et critères — JUSTES ?",
+   "src": "imagerie-critères",
+   "cards": [
+    "c10",
+    "c11"
+   ],
+   "explain": "Radios souvent normales au début. Score ≥ 6. Érosion 5ᵉ MTT.",
+   "opts": [
+    {
+     "t": "Radiographies souvent normales au début",
+     "ok": true,
+     "c": [
+      "c10"
+     ]
+    },
+    {
+     "t": "Érosion précoce évocatrice : tête du 5ᵉ métatarsien",
+     "ok": true,
+     "c": [
+      "c10"
+     ]
+    },
+    {
+     "t": "Critères ACR/EULAR 2010 : score ≥ 6 → PR",
+     "ok": true,
+     "c": [
+      "c11"
+     ]
+    },
+    {
+     "t": "Les radios sont toujours pathologiques dès le premier mois",
+     "ok": false,
+     "c": [
+      "c10"
+     ]
+    },
+    {
+     "t": "Durée des symptômes ≥ 6 semaines compte dans le score",
+     "ok": true,
+     "c": [
+      "c11"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q6",
+   "q": "Déformations et topographie — JUSTES ?",
+   "src": "phase état",
+   "cards": [
+    "c12",
+    "c13",
+    "c14"
+   ],
+   "explain": "Coup de vent, col de cygne, touche de piano. PAS Jaccoud/Heberden. IPD et SI respectées.",
+   "opts": [
+    {
+     "t": "Déviation ulnaire « coup de vent », col de cygne, touche de piano sont de la PR",
+     "ok": true,
+     "c": [
+      "c12"
+     ]
+    },
+    {
+     "t": "Main de Jaccoud est une déformation du lupus (pas de la PR)",
+     "ok": true,
+     "c": [
+      "c13"
+     ]
+    },
+    {
+     "t": "IPD, rachis thoracolombaire et sacro-iliaques habituellement respectés",
+     "ok": true,
+     "c": [
+      "c14"
+     ]
+    },
+    {
+     "t": "Nodosités d'Heberden sont typiques de la PR",
+     "ok": false,
+     "c": [
+      "c13"
+     ]
+    },
+    {
+     "t": "Rachis cervical peut être touché (luxation atloïdo-axoïdienne)",
+     "ok": true,
+     "c": [
+      "c14"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q7",
+   "q": "Extra-articulaires et différentiel SpA — JUSTES ?",
+   "src": "extra",
+   "cards": [
+    "c15"
+   ],
+   "explain": "Nodules, PID, sclérite = PR. Uvéite antérieure et sacro-iléite = SpA.",
+   "opts": [
+    {
+     "t": "Nodules rhumatoïdes, PID, péricardite, sclérite peuvent s'observer dans la PR",
+     "ok": true,
+     "c": [
+      "c15"
+     ]
+    },
+    {
+     "t": "Uvéite antérieure aiguë est typique de la SpA (pas de la PR)",
+     "ok": true,
+     "c": [
+      "c15"
+     ]
+    },
+    {
+     "t": "Sacro-iléite bilatérale est typique de la SpA (pas de la PR)",
+     "ok": true,
+     "c": [
+      "c15"
+     ]
+    },
+    {
+     "t": "Syndrome de Felty peut compliquer la PR",
+     "ok": true,
+     "c": [
+      "c15"
+     ]
+    },
+    {
+     "t": "Uvéite antérieure aiguë est le mode de début le plus fréquent de la PR",
+     "ok": false,
+     "c": [
+      "c15"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q8",
+   "q": "DAS28 et traitement — JUSTES ?",
+   "src": "DAS-ttt",
+   "cards": [
+    "c19",
+    "c20",
+    "c21"
+   ],
+   "explain": "Pieds exclus du DAS28. MTX 1ʳᵉ ligne. Anti-TNF = fond. Rémission < 2,6.",
+   "opts": [
+    {
+     "t": "DAS28 évalue 28 articulations (les pieds ne sont pas comptés)",
+     "ok": true,
+     "c": [
+      "c19"
+     ]
+    },
+    {
+     "t": "Rémission si DAS28 < 2,6",
+     "ok": true,
+     "c": [
+      "c19"
+     ]
+    },
+    {
+     "t": "Méthotrexate = traitement de fond de 1ʳᵉ ligne",
+     "ok": true,
+     "c": [
+      "c20"
+     ]
+    },
+    {
+     "t": "Anti-TNFα et léflunomide sont des traitements de fond",
+     "ok": true,
+     "c": [
+      "c21"
+     ]
+    },
+    {
+     "t": "Diclofénac et méthylprednisolone sont des traitements de fond",
+     "ok": false,
+     "c": [
+      "c21"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "q9",
+   "q": "PR en poussée et pronostic — JUSTES ?",
+   "src": "ttt-pronostic",
+   "cards": [
+    "c22",
+    "c17",
+    "c18"
+   ],
+   "explain": "Repos, orthèse de fonction, isométrique. Surmortalité CV. Mauvais pronostic si FR/ACPA forts + érosions.",
+   "opts": [
+    {
+     "t": "En poussée : repos, orthèse en position de fonction, travail isométrique",
+     "ok": true,
+     "c": [
+      "c22"
+     ]
+    },
+    {
+     "t": "FR/ACPA forts et érosions sont des facteurs de mauvais pronostic",
+     "ok": true,
+     "c": [
+      "c17"
+     ]
+    },
+    {
+     "t": "Surmortalité cardiovasculaire est la 1ʳᵉ cause de mortalité",
+     "ok": true,
+     "c": [
+      "c18"
+     ]
+    },
+    {
+     "t": "Balnéothérapie est recommandée en poussée aiguë",
+     "ok": false,
+     "c": [
+      "c22"
+     ]
+    },
+    {
+     "t": "Ostéoporose est une comorbidité de la PR",
+     "ok": true,
+     "c": [
+      "c18"
+     ]
+    }
+   ]
+  }
+ ],
+ "vf": [
+  {
+   "id": "v1",
+   "s": "La PR est le RIC le plus fréquent, avec prédominance féminine 3–4/1.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c2"
+   ]
+  },
+  {
+   "id": "v2",
+   "s": "La PR est un rhumatisme dégénératif d'origine infectieuse.",
+   "a": false,
+   "w": "Inflammatoire auto-immune, non infectieuse.",
+   "cards": [
+    "c1"
+   ]
+  },
+  {
+   "id": "v3",
+   "s": "La synovite est la lésion élémentaire de la PR.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c3"
+   ]
+  },
+  {
+   "id": "v4",
+   "s": "L'enthésite est la lésion élémentaire de la PR.",
+   "a": false,
+   "w": "C'est la SpA.",
+   "cards": [
+    "c3"
+   ]
+  },
+  {
+   "id": "v5",
+   "s": "Début typique : polyarthrite distale bilatérale symétrique ≥ 6 semaines.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c5"
+   ]
+  },
+  {
+   "id": "v6",
+   "s": "Les IPD sont typiquement touchées dans la PR.",
+   "a": false,
+   "w": "IPD respectées.",
+   "cards": [
+    "c5"
+   ]
+  },
+  {
+   "id": "v7",
+   "s": "ACPA sont plus spécifiques que le facteur rhumatoïde.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c8"
+   ]
+  },
+  {
+   "id": "v8",
+   "s": "La négativité du FR élimine le diagnostic de PR.",
+   "a": false,
+   "w": "Négativité n'élimine pas.",
+   "cards": [
+    "c8"
+   ]
+  },
+  {
+   "id": "v9",
+   "s": "Liquide synovial de PR : > 2000 GB, stérile, sans microcristaux.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c9"
+   ]
+  },
+  {
+   "id": "v10",
+   "s": "Les radiographies sont toujours anormales au début de la PR.",
+   "a": false,
+   "w": "Souvent normales au début.",
+   "cards": [
+    "c10"
+   ]
+  },
+  {
+   "id": "v11",
+   "s": "Score ACR/EULAR 2010 ≥ 6 → PR.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c11"
+   ]
+  },
+  {
+   "id": "v12",
+   "s": "Col de cygne, touche de piano et dos de chameau sont des déformations de la PR.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c12"
+   ]
+  },
+  {
+   "id": "v13",
+   "s": "La main de Jaccoud est une déformation typique de la PR.",
+   "a": false,
+   "w": "C'est le lupus.",
+   "cards": [
+    "c13"
+   ]
+  },
+  {
+   "id": "v14",
+   "s": "Le rachis thoracolombaire et les sacro-iliaques sont habituellement respectés.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c14"
+   ]
+  },
+  {
+   "id": "v15",
+   "s": "L'uvéite antérieure aiguë est une manifestation classique de la PR.",
+   "a": false,
+   "w": "Typique de la SpA.",
+   "cards": [
+    "c15"
+   ]
+  },
+  {
+   "id": "v16",
+   "s": "DAS28 ne compte pas les pieds.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c19"
+   ]
+  },
+  {
+   "id": "v17",
+   "s": "Rémission si DAS28 < 2,6.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c19"
+   ]
+  },
+  {
+   "id": "v18",
+   "s": "Méthotrexate est le traitement de fond de 1ʳᵉ ligne.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c20"
+   ]
+  },
+  {
+   "id": "v19",
+   "s": "Diclofénac et méthylprednisolone sont des traitements de fond de la PR.",
+   "a": false,
+   "w": "Symptomatiques (AINS / corticoïde).",
+   "cards": [
+    "c21"
+   ]
+  },
+  {
+   "id": "v20",
+   "s": "En poussée : orthèse de position de fonction et travail isométrique.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c22"
+   ]
+  },
+  {
+   "id": "v21",
+   "s": "Surmortalité cardiovasculaire = 1ʳᵉ cause de mortalité dans la PR.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c18"
+   ]
+  },
+  {
+   "id": "v22",
+   "s": "FR/ACPA forts et érosions sont des facteurs de mauvais pronostic.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c17"
+   ]
+  },
+  {
+   "id": "v23",
+   "s": "Érosion précoce évocatrice : tête du 5ᵉ métatarsien.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c10"
+   ]
+  },
+  {
+   "id": "v24",
+   "s": "Corticoïdes d'appoint : prednisone ~10 mg/j, sevrage visé en 3–6 mois.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c20"
+   ]
+  },
+  {
+   "id": "v25",
+   "s": "Les AAN sont les principaux auto-anticorps diagnostiques de la PR.",
+   "a": false,
+   "w": "FR et ACPA ; AAN surtout pour éliminer un lupus.",
+   "cards": [
+    "c8"
+   ]
+  },
+  {
+   "id": "v26",
+   "s": "Forme rhizomélique = épaules + hanches chez le sujet > 65 ans.",
+   "a": true,
+   "w": "",
+   "cards": [
+    "c7"
+   ]
+  }
+ ]
+}
