@@ -97,6 +97,16 @@
    "quiz": 10,
    "vf": 25,
    "pdfUrl": "pdfs/otr-14-malformations-pied-enfant.pdf"
+  },
+  {
+   "id": "goutte_qcm",
+   "progId": null,
+   "name": "La goutte — cours orienté QCM",
+   "cards": 16,
+   "quiz": 9,
+   "vf": 23,
+   "otrNumber": 28,
+   "pdfUrl": "pdfs/otr-28-goutte.pdf"
   }
  ]
 }

@@ -1,0 +1,698 @@
+{
+  "schema": 1,
+  "id": "goutte_qcm",
+  "otrNumber": 28,
+  "name": "La goutte — cours orienté QCM",
+  "keys": [
+    "La goutte est un rhumatisme microcristallin lié aux dépôts d’urate monosodique sur fond d’hyperuricémie chronique ; l’hyperuricémie seule ne suffit pas au diagnostic.",
+    "La crise typique est une monoarthrite aiguë, souvent nocturne et brutale, surtout à la première métatarsophalangienne ; l’uricémie peut être normale pendant la crise.",
+    "Le diagnostic de certitude repose sur la mise en évidence de cristaux d’urate dans le liquide synovial ou un tophus.",
+    "La colchicine, les AINS ou les corticoïdes traitent la crise selon le contexte ; allopurinol et febuxostat sont des traitements de fond.",
+    "Les tophus, l’arthropathie uratique et l’atteinte rénale caractérisent les formes chroniques."
+  ],
+  "contrasts": [
+    "Hyperuricémie : cause nécessaire mais non suffisante ; une uricémie normale pendant la crise n’exclut pas la goutte.",
+    "Crise aiguë : radiographies initialement souvent normales ; goutte chronique : érosions, géodes et tophus possibles.",
+    "Cristaux d’urate monosodique : fins, allongés, pointus et fortement biréfringents ; les cristaux de pyrophosphate correspondent à la chondrocalcinose.",
+    "Colchicine et anti-inflammatoires : traitement de crise ; allopurinol et febuxostat : traitement hypo-uricémiant de fond.",
+    "Le document source signale des divergences entre cours et corrigés pour certains seuils d’uricémie et formulations de QCM ; vérifier la formulation de chaque question."
+  ],
+  "cards": [
+    {
+      "id": "c1",
+      "type": "basic",
+      "q": "Comment définir la goutte ?",
+      "a": "Un rhumatisme microcristallin dû aux dépôts d’urate monosodique, associé à une hyperuricémie chronique. L’hyperuricémie est nécessaire mais non suffisante.",
+      "src": "p. 1–2, définition"
+    },
+    {
+      "id": "c2",
+      "type": "basic",
+      "q": "Quel terrain épidémiologique est décrit pour la goutte ?",
+      "a": "La prédominance est masculine, surtout entre 40 et 50 ans ; chez la femme, elle survient surtout après la ménopause.",
+      "src": "p. 2, définition et épidémiologie"
+    },
+    {
+      "id": "c3",
+      "type": "basic",
+      "q": "Quels mécanismes peuvent provoquer une hyperuricémie ?",
+      "a": "Une hyperproduction d’acide urique ou un défaut d’élimination rénale, ce dernier étant le mécanisme le plus fréquent.",
+      "src": "p. 2–3, physiopathologie"
+    },
+    {
+      "id": "c4",
+      "type": "basic",
+      "q": "Quel est le tableau typique d’une crise de goutte ?",
+      "a": "Une monoarthrite aiguë à début brutal, souvent nocturne, très douloureuse et inflammatoire, avec un maximum des symptômes en moins de 24 heures. Le membre inférieur est le plus souvent atteint.",
+      "src": "p. 3–4, clinique"
+    },
+    {
+      "id": "c5",
+      "type": "basic",
+      "q": "Quel est le siège articulaire le plus fréquent au début ?",
+      "a": "La première métatarsophalangienne de l’hallux ; le tarse, la cheville et le genou peuvent aussi être atteints. La crise n’est pas toujours limitée au gros orteil.",
+      "src": "p. 3–4, clinique"
+    },
+    {
+      "id": "c6",
+      "type": "basic",
+      "q": "Quelle est la valeur diagnostique de l’uricémie pendant une crise ?",
+      "a": "Elle peut être normale pendant la crise. Le document recommande de la contrôler à nouveau 14 à 20 jours après.",
+      "src": "p. 1, 4–5, examens complémentaires"
+    },
+    {
+      "id": "c7",
+      "type": "basic",
+      "q": "Quel examen apporte le diagnostic de certitude ?",
+      "a": "La mise en évidence de cristaux d’urate monosodique dans le liquide synovial ou dans un tophus.",
+      "src": "p. 5, examens complémentaires"
+    },
+    {
+      "id": "c8",
+      "type": "basic",
+      "q": "Comment décrire le liquide synovial goutteux ?",
+      "a": "Il est inflammatoire, stérile, riche en polynucléaires neutrophiles et contient des cristaux fins, allongés et pointus, fortement biréfringents en lumière polarisée.",
+      "src": "p. 5, examens complémentaires"
+    },
+    {
+      "id": "c9",
+      "type": "contrast",
+      "q": "Quelles différences d’imagerie le document décrit-il entre goutte aiguë et chronique ?",
+      "a": "Les radiographies sont souvent normales lors des premiers accès. À un stade chronique, elles peuvent montrer des géodes, érosions, constructions osseuses, opacité des tissus mous et un pincement articulaire tardif, souvent de façon asymétrique.",
+      "src": "p. 5, examens complémentaires"
+    },
+    {
+      "id": "c10",
+      "type": "basic",
+      "q": "Quels éléments évoquent une goutte chronique ?",
+      "a": "Des tophus, une arthropathie uratique et une atteinte rénale. Les tophus apparaissent après une évolution prolongée et peuvent contenir un liquide crayeux.",
+      "src": "p. 4–5, goutte chronique"
+    },
+    {
+      "id": "c11",
+      "type": "basic",
+      "q": "Quelles atteintes rénales sont décrites ?",
+      "a": "La lithiase urique, radiotransparente, et la néphropathie goutteuse, décrite comme une tubulopathie interstitielle pouvant s’accompagner de protéinurie, d’hématurie, d’insuffisance rénale et souvent d’hypertension.",
+      "src": "p. 4, goutte chronique"
+    },
+    {
+      "id": "c12",
+      "type": "basic",
+      "q": "Quels traitements le document cite-t-il pour la crise aiguë ?",
+      "a": "Repos et glaçage, colchicine, AINS ou corticoïdes selon le contexte ; les inhibiteurs de l’IL-1 sont réservés aux situations réfractaires, d’intolérance ou de contre-indication décrites.",
+      "src": "p. 6–7, traitement de la crise"
+    },
+    {
+      "id": "c13",
+      "type": "basic",
+      "q": "Quel est le premier signe de toxicité de la colchicine cité dans le cours ?",
+      "a": "La diarrhée ; le document indique qu’elle doit conduire à réduire ou arrêter le traitement.",
+      "src": "p. 1, 6, traitement de la crise"
+    },
+    {
+      "id": "c14",
+      "type": "contrast",
+      "q": "Quel est le rôle de l’allopurinol et du fébuxostat ?",
+      "a": "Ce sont des traitements hypo-uricémiants de fond qui inhibent la xanthine oxydase. Ils ne traitent pas l’accès aigu selon le document.",
+      "src": "p. 2, 6–8, physiopathologie et traitements"
+    },
+    {
+      "id": "c15",
+      "type": "basic",
+      "q": "Quelles mesures hygiéno-diététiques sont recommandées ?",
+      "a": "À vie : perte de poids en cas de surcharge pondérale, arrêt de l’alcool et des sodas sucrés, et limitation de la viande, des abats, des poissons gras et des crustacés.",
+      "src": "p. 1, 7–8, traitement de fond"
+    },
+    {
+      "id": "c16",
+      "type": "basic",
+      "q": "Quel diagnostic différentiel faut-il rechercher en priorité devant une monoarthrite aiguë ?",
+      "a": "L’arthrite septique, citée comme diagnostic différentiel prioritaire, avant notamment la chondrocalcinose et les rhumatismes inflammatoires.",
+      "src": "p. 1, 5–6, diagnostic différentiel"
+    }
+  ],
+  "quiz": [
+    {
+      "id": "q1",
+      "q": "À propos de la goutte, quelles propositions sont exactes ?",
+      "src": "p. 2, définition et épidémiologie",
+      "cards": [
+        "c1",
+        "c2"
+      ],
+      "explain": "Le document décrit un rhumatisme microcristallin dû aux dépôts d’urate, avec prédominance masculine. L’hyperuricémie seule ne suffit pas au diagnostic.",
+      "opts": [
+        {
+          "t": "C’est un rhumatisme microcristallin lié aux dépôts d’urate monosodique.",
+          "ok": true,
+          "c": [
+            "c1"
+          ]
+        },
+        {
+          "t": "Elle est plus fréquente chez la femme avant la ménopause.",
+          "ok": false,
+          "c": [
+            "c2"
+          ]
+        },
+        {
+          "t": "Une hyperuricémie suffit à poser le diagnostic.",
+          "ok": false,
+          "c": [
+            "c1"
+          ]
+        },
+        {
+          "t": "La goutte primitive est associée au syndrome métabolique.",
+          "ok": true,
+          "c": [
+            "c2"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "q2",
+      "q": "Quels éléments peuvent favoriser une hyperuricémie selon le document ?",
+      "src": "p. 2, physiopathologie",
+      "cards": [
+        "c3"
+      ],
+      "explain": "Le document cite notamment la charge en purines, l’alcool, certains médicaments comme les thiazidiques et l’insuffisance rénale chronique.",
+      "opts": [
+        {
+          "t": "Défaut d’élimination rénale.",
+          "ok": true,
+          "c": [
+            "c3"
+          ]
+        },
+        {
+          "t": "Diurétiques thiazidiques.",
+          "ok": true,
+          "c": [
+            "c3"
+          ]
+        },
+        {
+          "t": "Régime riche en purines.",
+          "ok": true,
+          "c": [
+            "c3"
+          ]
+        },
+        {
+          "t": "Dégradation de l’urate par une uricase humaine.",
+          "ok": false,
+          "c": [
+            "c3"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "q3",
+      "q": "Quel tableau correspond à une crise typique de goutte ?",
+      "src": "p. 3–4, clinique",
+      "cards": [
+        "c4",
+        "c5"
+      ],
+      "explain": "La crise est décrite comme brutale, souvent nocturne, très inflammatoire et touchant souvent le membre inférieur, particulièrement la première MTP.",
+      "opts": [
+        {
+          "t": "Monoarthrite aiguë à début brutal.",
+          "ok": true,
+          "c": [
+            "c4"
+          ]
+        },
+        {
+          "t": "Atteinte toujours limitée au gros orteil.",
+          "ok": false,
+          "c": [
+            "c5"
+          ]
+        },
+        {
+          "t": "Maximum des symptômes en moins de 24 heures.",
+          "ok": true,
+          "c": [
+            "c4"
+          ]
+        },
+        {
+          "t": "Atteinte fréquente des hanches et des épaules.",
+          "ok": false,
+          "c": [
+            "c5"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "q4",
+      "q": "Pendant une crise aiguë, quelles propositions sont exactes ?",
+      "src": "p. 4–5, clinique et examens",
+      "cards": [
+        "c6",
+        "c9"
+      ],
+      "explain": "Une uricémie normale est possible pendant la crise et les radiographies sont souvent normales aux premiers accès.",
+      "opts": [
+        {
+          "t": "L’uricémie peut être normale.",
+          "ok": true,
+          "c": [
+            "c6"
+          ]
+        },
+        {
+          "t": "L’uricémie normale exclut la goutte.",
+          "ok": false,
+          "c": [
+            "c6"
+          ]
+        },
+        {
+          "t": "Les radiographies sont souvent normales au début.",
+          "ok": true,
+          "c": [
+            "c9"
+          ]
+        },
+        {
+          "t": "Une radiographie simple confirme toujours la crise.",
+          "ok": false,
+          "c": [
+            "c9"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "q5",
+      "q": "Quels éléments caractérisent le liquide synovial goutteux décrit dans le cours ?",
+      "src": "p. 5, examens complémentaires",
+      "cards": [
+        "c7",
+        "c8"
+      ],
+      "explain": "Le liquide est inflammatoire et stérile ; la preuve de certitude est la présence des cristaux d’urate dans le liquide ou un tophus.",
+      "opts": [
+        {
+          "t": "Liquide inflammatoire, souvent riche en polynucléaires neutrophiles.",
+          "ok": true,
+          "c": [
+            "c8"
+          ]
+        },
+        {
+          "t": "Cristaux d’urate fins, allongés et pointus.",
+          "ok": true,
+          "c": [
+            "c8"
+          ]
+        },
+        {
+          "t": "Cristaux de pyrophosphate obligatoires.",
+          "ok": false,
+          "c": [
+            "c7"
+          ]
+        },
+        {
+          "t": "Liquide mécanique et stérile.",
+          "ok": false,
+          "c": [
+            "c8"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "q6",
+      "q": "Quels éléments sont associés à la goutte chronique ?",
+      "src": "p. 4, goutte chronique",
+      "cards": [
+        "c10",
+        "c11"
+      ],
+      "explain": "La forme chronique peut comporter des tophus, une arthropathie uratique et des manifestations rénales, notamment la lithiase urique.",
+      "opts": [
+        {
+          "t": "Tophus.",
+          "ok": true,
+          "c": [
+            "c10"
+          ]
+        },
+        {
+          "t": "Lithiase urique radiotransparente.",
+          "ok": true,
+          "c": [
+            "c11"
+          ]
+        },
+        {
+          "t": "Tophus comme manifestation typique de la première crise aiguë.",
+          "ok": false,
+          "c": [
+            "c10"
+          ]
+        },
+        {
+          "t": "Pincement articulaire précoce comme signe constant.",
+          "ok": false,
+          "c": [
+            "c9"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "q7",
+      "q": "Quels traitements le document distingue-t-il ?",
+      "src": "p. 6–8, traitements",
+      "cards": [
+        "c12",
+        "c13",
+        "c14"
+      ],
+      "explain": "La colchicine, les AINS ou les corticoïdes sont des options de traitement de crise. Allopurinol et fébuxostat sont des traitements de fond ; la diarrhée est le premier signe de toxicité de la colchicine cité.",
+      "opts": [
+        {
+          "t": "La colchicine peut traiter la crise.",
+          "ok": true,
+          "c": [
+            "c12"
+          ]
+        },
+        {
+          "t": "La diarrhée est le premier signe de toxicité de la colchicine cité.",
+          "ok": true,
+          "c": [
+            "c13"
+          ]
+        },
+        {
+          "t": "L’allopurinol est le traitement de l’accès aigu.",
+          "ok": false,
+          "c": [
+            "c14"
+          ]
+        },
+        {
+          "t": "Le fébuxostat inhibe la xanthine oxydase.",
+          "ok": true,
+          "c": [
+            "c14"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "q8",
+      "q": "Quelles mesures hygiéno-diététiques sont citées ?",
+      "src": "p. 7–8, traitement de fond",
+      "cards": [
+        "c15"
+      ],
+      "explain": "Le document recommande des mesures à vie, notamment perte de poids si nécessaire et arrêt de l’alcool et des sodas sucrés.",
+      "opts": [
+        {
+          "t": "Perte de poids en cas de surcharge pondérale.",
+          "ok": true,
+          "c": [
+            "c15"
+          ]
+        },
+        {
+          "t": "Arrêt des boissons alcoolisées et sodas sucrés.",
+          "ok": true,
+          "c": [
+            "c15"
+          ]
+        },
+        {
+          "t": "Régime hypercalorique et riche en purines.",
+          "ok": false,
+          "c": [
+            "c15"
+          ]
+        },
+        {
+          "t": "Mesures limitées à la durée d’une crise.",
+          "ok": false,
+          "c": [
+            "c15"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "q9",
+      "q": "Quel diagnostic différentiel faut-il rechercher en priorité devant une monoarthrite aiguë ?",
+      "src": "p. 6, diagnostic différentiel",
+      "cards": [
+        "c16"
+      ],
+      "explain": "Le document insiste sur l’arthrite septique comme diagnostic différentiel à rechercher en priorité.",
+      "opts": [
+        {
+          "t": "Arthrite septique.",
+          "ok": true,
+          "c": [
+            "c16"
+          ]
+        },
+        {
+          "t": "Arthrose chronique uniquement.",
+          "ok": false,
+          "c": [
+            "c16"
+          ]
+        },
+        {
+          "t": "Nodule rhumatoïde.",
+          "ok": false,
+          "c": [
+            "c16"
+          ]
+        }
+      ]
+    }
+  ],
+  "vf": [
+    {
+      "id": "vf1",
+      "s": "La goutte est plus fréquente chez la femme que chez l’homme.",
+      "a": false,
+      "w": "Le document décrit une prédominance masculine.",
+      "cards": [
+        "c2"
+      ]
+    },
+    {
+      "id": "vf2",
+      "s": "La goutte est liée à des dépôts d’urate monosodique.",
+      "a": true,
+      "w": "C’est la définition donnée dans le document.",
+      "cards": [
+        "c1"
+      ]
+    },
+    {
+      "id": "vf3",
+      "s": "Une hyperuricémie suffit à elle seule à établir le diagnostic de goutte.",
+      "a": false,
+      "w": "Le document précise que l’hyperuricémie est nécessaire mais non suffisante.",
+      "cards": [
+        "c1"
+      ]
+    },
+    {
+      "id": "vf4",
+      "s": "La goutte primitive est associée au syndrome métabolique.",
+      "a": true,
+      "w": "Cette association est citée dans la partie épidémiologie.",
+      "cards": [
+        "c2"
+      ]
+    },
+    {
+      "id": "vf5",
+      "s": "Le défaut d’élimination rénale est le mécanisme le plus fréquent d’hyperuricémie décrit.",
+      "a": true,
+      "w": "Le document oppose hyperproduction et défaut d’élimination, ce dernier étant le plus fréquent.",
+      "cards": [
+        "c3"
+      ]
+    },
+    {
+      "id": "vf6",
+      "s": "L’acide urique est le produit final du catabolisme des bases puriques.",
+      "a": true,
+      "w": "C’est le métabolisme décrit dans le document.",
+      "cards": [
+        "c3"
+      ]
+    },
+    {
+      "id": "vf7",
+      "s": "La crise de goutte typique débute progressivement et sans inflammation locale.",
+      "a": false,
+      "w": "Le début est brutal et les signes inflammatoires locaux sont intenses.",
+      "cards": [
+        "c4"
+      ]
+    },
+    {
+      "id": "vf8",
+      "s": "La première métatarsophalangienne est un siège fréquent de la crise.",
+      "a": true,
+      "w": "La première MTP de l’hallux est le siège le plus fréquent décrit.",
+      "cards": [
+        "c5"
+      ]
+    },
+    {
+      "id": "vf9",
+      "s": "La crise est toujours limitée au gros orteil.",
+      "a": false,
+      "w": "D’autres articulations du membre inférieur peuvent être atteintes.",
+      "cards": [
+        "c5"
+      ]
+    },
+    {
+      "id": "vf10",
+      "s": "L’uricémie peut être normale pendant une crise aiguë.",
+      "a": true,
+      "w": "Le document indique qu’elle peut se normaliser durant la crise et recommande un contrôle ultérieur.",
+      "cards": [
+        "c6"
+      ]
+    },
+    {
+      "id": "vf11",
+      "s": "Une radiographie normale aux premiers accès exclut la goutte.",
+      "a": false,
+      "w": "Les radiographies sont souvent normales au début.",
+      "cards": [
+        "c9"
+      ]
+    },
+    {
+      "id": "vf12",
+      "s": "Le liquide synovial goutteux est inflammatoire et stérile.",
+      "a": true,
+      "w": "Le document le décrit comme inflammatoire, riche en PNN et stérile.",
+      "cards": [
+        "c8"
+      ]
+    },
+    {
+      "id": "vf13",
+      "s": "Les cristaux d’urate décrits sont fins, allongés et pointus.",
+      "a": true,
+      "w": "Cette morphologie est décrite dans la section sur le liquide synovial.",
+      "cards": [
+        "c8"
+      ]
+    },
+    {
+      "id": "vf14",
+      "s": "La mise en évidence de cristaux d’urate apporte le diagnostic de certitude.",
+      "a": true,
+      "w": "Les cristaux dans le liquide synovial ou un tophus sont l’examen de référence décrit.",
+      "cards": [
+        "c7"
+      ]
+    },
+    {
+      "id": "vf15",
+      "s": "Les tophus caractérisent la goutte aiguë typique.",
+      "a": false,
+      "w": "Le document associe les tophus à la goutte chronique.",
+      "cards": [
+        "c10"
+      ]
+    },
+    {
+      "id": "vf16",
+      "s": "La lithiase urique est décrite comme radiotransparente.",
+      "a": true,
+      "w": "C’est la caractéristique radiologique indiquée dans le document.",
+      "cards": [
+        "c11"
+      ]
+    },
+    {
+      "id": "vf17",
+      "s": "Les hanches et les épaules sont fréquemment touchées par les crises goutteuses.",
+      "a": false,
+      "w": "Le document indique que ces atteintes sont exceptionnelles.",
+      "cards": [
+        "c5"
+      ]
+    },
+    {
+      "id": "vf18",
+      "s": "La diarrhée est le premier signe de toxicité de la colchicine cité.",
+      "a": true,
+      "w": "Le document indique de réduire ou arrêter la colchicine en cas de diarrhée.",
+      "cards": [
+        "c13"
+      ]
+    },
+    {
+      "id": "vf19",
+      "s": "L’allopurinol est le traitement de l’accès aigu de goutte.",
+      "a": false,
+      "w": "Le document le classe parmi les traitements hypo-uricémiants de fond.",
+      "cards": [
+        "c14"
+      ]
+    },
+    {
+      "id": "vf20",
+      "s": "L’allopurinol inhibe la xanthine oxydase.",
+      "a": true,
+      "w": "Le mécanisme est décrit dans la physiopathologie et le traitement de fond.",
+      "cards": [
+        "c14"
+      ]
+    },
+    {
+      "id": "vf21",
+      "s": "Les mesures hygiéno-diététiques sont recommandées à vie.",
+      "a": true,
+      "w": "Le document recommande ces mesures à vie.",
+      "cards": [
+        "c15"
+      ]
+    },
+    {
+      "id": "vf22",
+      "s": "Le régime antigoutteux recommandé est hypercalorique et hyperpurinique.",
+      "a": false,
+      "w": "Le document recommande une alimentation hypocalorique en cas de surcharge pondérale et la limitation de certains aliments et boissons.",
+      "cards": [
+        "c15"
+      ]
+    },
+    {
+      "id": "vf23",
+      "s": "L’arthrite septique est le diagnostic différentiel prioritaire d’une monoarthrite aiguë.",
+      "a": true,
+      "w": "Le document souligne qu’il faut la rechercher en premier.",
+      "cards": [
+        "c16"
+      ]
+    }
+  ],
+  "pdf": "Goutte_cours_QCM.pdf",
+  "pdfUrl": "pdfs/otr-28-goutte.pdf"
+}

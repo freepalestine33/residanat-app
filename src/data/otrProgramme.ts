@@ -32,7 +32,7 @@ export const otrProgramme: OTRProgrammeEntry[] = [
   { number: 25, title: 'Fracture diaphysaire des deux os de l’avant-bras' },
   { number: 26, title: 'Traumatisme du bassin : fracture, luxation traumatique de la hanche' },
   { number: 27, title: 'Fracture de l’anneau pelvien' },
-  { number: 28, title: 'Rhumatismes métaboliques (goutte)' },
+  { number: 28, title: 'Rhumatismes métaboliques (goutte)', lectureId: 'goutte_qcm' },
   { number: 29, title: 'Algoneurodystrophie' },
   { number: 30, title: 'Tumeurs osseuses (bénignes et malignes)' },
   { number: 31, title: 'Fracture du fémur proximal (col du fémur et massif trochantérien)' },
