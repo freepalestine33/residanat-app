@@ -1,6 +1,8 @@
 {
  "schema": 1,
  "id": "IOA",
+ "pdfUrl": "pdfs/otr-05-infections-osteoarticulaires-enfant.pdf",
+ "pdf": "4Cours_Infections_Osteoarticulaires_Enfant_QCM_261024_084641 (2).pdf",
  "progId": "CIOA",
  "name": "Infections ostéoarticulaires de l'enfant",
  "keys": [

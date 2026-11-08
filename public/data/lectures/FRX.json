@@ -1,6 +1,8 @@
 {
  "schema": 1,
  "id": "FRX",
+ "pdfUrl": "pdfs/otr-01-fractures-enfant.pdf",
+ "pdf": "1 Cours_Fractures_Enfant_QCM_261024_181908 (2).pdf",
  "progId": "CFRX",
  "name": "Fractures de l'enfant & cartilage de croissance",
  "keys": [

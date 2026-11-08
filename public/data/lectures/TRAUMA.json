@@ -1,6 +1,8 @@
 {
  "schema": 1,
  "id": "TRAUMA",
+ "pdfUrl": "pdfs/otr-40-lesions-traumatiques-mpr.pdf",
+ "pdf": "Cours_Lesions_Traumatiques_MPR_QCM_261029_145211 (2).pdf",
  "progId": "MTRAUMA",
  "name": "Lésions traumatiques en MPR",
  "keys": [

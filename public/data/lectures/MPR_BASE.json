@@ -1,6 +1,8 @@
 {
  "schema": 1,
  "id": "MPR_BASE",
+ "pdfUrl": "pdfs/otr-03-principes-mpr.pdf",
+ "pdf": "23MÉDECINE PHYSIQUE ET DE RÉADAPTATION _261026_170409 (2).pdf",
  "progId": "MPR1",
  "name": "MPR — Principes de base",
  "keys": [

@@ -11,6 +11,7 @@
     "validate:content": "tsx scripts/validate-content.ts",
     "lecture:check": "tsx scripts/check-lecture.ts",
     "lecture:draft": "tsx scripts/draft-lecture.ts",
+    "lecture:import": "node --env-file-if-exists=.env --env-file-if-exists=.env.local --import tsx scripts/import-lecture.ts",
     "lecture:publish": "tsx scripts/publish-lecture.ts",
     "test": "vitest run"
   },
@@ -31,6 +32,7 @@
     "@types/react-dom": "^19.3.0",
     "@vercel/node": "^30.0.0",
     "@vitejs/plugin-react": "^6.2.1",
+    "pdfjs-dist": "^5.4.149",
     "tsx": "^4.23.15",
     "typescript": "^7.0.2",
     "vite": "^8.3.6",

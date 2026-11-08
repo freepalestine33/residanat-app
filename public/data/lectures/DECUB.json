@@ -1,6 +1,8 @@
 {
  "schema": 1,
  "id": "DECUB",
+ "pdfUrl": "pdfs/otr-07-complications-decubitus.pdf",
+ "pdf": "Cours_Complications_Decubitus_QCM_261029_144745 (2).pdf",
  "progId": "MDECUB",
  "name": "Complications du décubitus",
  "keys": [

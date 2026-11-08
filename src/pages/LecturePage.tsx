@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
-import { BookOpenText, CheckCircle2, Layers3, ListChecks } from 'lucide-react';
+import { ArrowLeft, ArrowRight, BookOpenText, CheckCircle2, ChevronDown, Layers3, ListChecks } from 'lucide-react';
 import { Header } from '../components/layout/Header';
 import { TabBar } from '../components/layout/TabBar';
 import { coreTabs } from '../components/layout/tabs';
@@ -11,6 +11,7 @@ import { saveQuizResult } from '../lib/quizHistory';
 import { Rating, review } from '../lib/srs';
 import { CardWebSearchButton } from '../components/ui/CardWebSearchButton';
 import { CardNoteControl } from '../components/ui/CardNoteControl';
+import { CardSpeakButton } from '../components/ui/CardSpeakButton';
 import type { Lecture } from '../lib/schema';
 import { useCardStore, useProgressStore } from '../stores';
 
@@ -29,6 +30,7 @@ export default function LecturePage() {
   const [error, setError] = useState('');
   const [notFound, setNotFound] = useState(false);
   const [section, setSection] = useState<Section>('overview');
+  const [activeCardIndex, setActiveCardIndex] = useState(0);
   const [revealed, setRevealed] = useState<Record<string, boolean>>({});
   const [reviewed, setReviewed] = useState<Record<string, boolean>>({});
   const [selections, setSelections] = useState<Record<string, string[]>>({});
@@ -44,6 +46,9 @@ export default function LecturePage() {
     setLecture(null);
     setError('');
     setNotFound(false);
+    setActiveCardIndex(0);
+    setRevealed({});
+    setReviewed({});
     loadLecture(id)
       .then((data) => { if (active) setLecture(data); })
       .catch((reason: unknown) => {
@@ -111,7 +116,7 @@ export default function LecturePage() {
           <p className="eyebrow">Cours interactif · {lecture.id}</p>
           <h2>{lecture.name}</h2>
           <p className="muted">{lecture.cards.length} cartes · {lecture.quiz.length} quiz · {lecture.vf.length} vrai/faux</p>
-          {lecture.pdfUrl && <p style={{ marginTop: '0.5rem' }}><a className="text-link" href={lecture.pdfUrl} target="_blank" rel="noreferrer">Ouvrir le support PDF ↗</a></p>}
+          {lecture.pdfUrl && <p style={{ marginTop: '0.5rem' }}><a className="text-link" href={`${import.meta.env.BASE_URL}data/${lecture.pdfUrl}`} target="_blank" rel="noreferrer">Ouvrir le support PDF ↗</a></p>}
         </section>
 
         <div className="section-tabs" role="tablist" aria-label="Contenu du cours">
@@ -138,36 +143,65 @@ export default function LecturePage() {
           <section aria-label="Flashcards du cours">
             <p className="muted section-intro">Révélez la réponse, puis choisissez une difficulté pour la planifier avec FSRS.</p>
             {lecture.cards.length === 0 && <p className="panel muted">Aucune carte dans ce cours.</p>}
-            {lecture.cards.map((card) => (
-              <article key={card.id} className="card lecture-flashcard">
-                <div className="lecture-flashcard-topline">
-                  <p className="pill">{card.type === 'contrast' ? 'Contraste' : 'Carte'}{card.freq ? ` · ${card.freq} examens` : ''}</p>
-                  <div className="card-quick-actions">
-                    <CardWebSearchButton lectureName={lecture.name} question={card.q} answer={card.a} />
-                    <CardNoteControl relation={`card:${lecture.id}.${card.id}`} label={`Carte ${card.id}`} />
+            {lecture.cards.length > 0 && <div className="cards-study-layout">
+              <aside className="cards-progress-sidebar">
+                <h3 className="cards-progress-heading">Votre progression</h3>
+                <details className="cards-progress-panel">
+                  <summary>
+                    <span className="cards-progress-summary-copy">
+                      <span className="cards-progress-summary-count">{activeCardIndex + 1} cartes / {lecture.cards.length}</span>
+                      <span className="cards-progress-track" role="progressbar" aria-label="Progression des cartes" aria-valuemin={0} aria-valuemax={lecture.cards.length} aria-valuenow={activeCardIndex + 1}>
+                        <span style={{ width: ((activeCardIndex + 1) / lecture.cards.length) * 100 + '%' }} />
+                      </span>
+                    </span>
+                    <ChevronDown className="cards-progress-chevron" size={17} aria-hidden="true" />
+                  </summary>
+                  <div className="cards-progress-details">
+                    <div className="cards-progress-label"><span>Carte actuelle</span><strong>{activeCardIndex + 1} / {lecture.cards.length}</strong></div>
+                    <small>{lecture.cards.length - activeCardIndex - 1} carte{lecture.cards.length - activeCardIndex - 1 === 1 ? '' : 's'} restante{lecture.cards.length - activeCardIndex - 1 === 1 ? '' : 's'}</small>
                   </div>
-                </div>
-                <h3 className="question-text">{card.q}</h3>
-                {card.src && <p className="muted">Source : {card.src}</p>}
-                {!revealed[card.id] ? (
-                  <button className="btn ghost" type="button" onClick={() => setRevealed((state) => ({ ...state, [card.id]: true }))}>Afficher la réponse</button>
-                ) : (
-                  <div className="answer-block">
-                    <p>{card.a}</p>
-                    {reviewed[card.id] ? <p className="notice success" role="status">Réponse planifiée dans vos révisions.</p> : (
-                      <div className="rating-row" aria-label="Évaluer cette carte">
-                        {([
-                          ['Encore', Rating.Again],
-                          ['Difficile', Rating.Hard],
-                          ['Bien', Rating.Good],
-                          ['Facile', Rating.Easy],
-                        ] as const).map(([label, rating]) => <button key={label} type="button" className={`btn rating-${label.toLowerCase()}`} onClick={() => void rateCard(card.id, rating)}>{label}</button>)}
+                </details>
+              </aside>
+              <div className="cards-study-main">
+                {(() => {
+                  const card = lecture.cards[activeCardIndex];
+                  return <article key={card.id} className="card lecture-flashcard">
+                    <div className="lecture-flashcard-topline">
+                      <p className="pill">{card.type === 'contrast' ? 'Contraste' : 'Carte'}{card.freq ? ' - ' + card.freq + ' examens' : ''}</p>
+                      <div className="card-quick-actions">
+                        <CardWebSearchButton lectureName={lecture.name} question={card.q} answer={card.a} />
+                        <CardNoteControl relation={'card:' + lecture.id + '.' + card.id} label={'Carte ' + card.id} />
+                        <CardSpeakButton question={card.q} answer={card.a} />
+                      </div>
+                    </div>
+                    <h3 className="question-text">{card.q}</h3>
+                    {card.src && <p className="muted">Source : {card.src}</p>}
+                    {!revealed[card.id] ? (
+                      <button className="btn ghost" type="button" onClick={() => setRevealed((state) => ({ ...state, [card.id]: true }))}>Afficher la réponse</button>
+                    ) : (
+                      <div className="answer-block">
+                        <p>{card.a}</p>
+                        {reviewed[card.id] ? <p className="notice success" role="status">Réponse planifiée dans vos révisions.</p> : (
+                          <div className="rating-row" aria-label="Évaluer cette carte">
+                            {([
+                              ['Encore', Rating.Again],
+                              ['Difficile', Rating.Hard],
+                              ['Bien', Rating.Good],
+                              ['Facile', Rating.Easy],
+                            ] as const).map(([label, rating]) => <button key={label} type="button" className={'btn rating-' + label.toLowerCase()} onClick={() => void rateCard(card.id, rating)}>{label}</button>)}
+                          </div>
+                        )}
                       </div>
                     )}
-                  </div>
-                )}
-              </article>
-            ))}
+                    <nav className="cards-study-navigation" aria-label="Navigation des cartes">
+                      <button className="btn ghost" type="button" disabled={activeCardIndex === 0} onClick={() => setActiveCardIndex((index) => Math.max(0, index - 1))}><ArrowLeft size={16} aria-hidden="true" /> Précédente</button>
+                      <span>Carte {activeCardIndex + 1} sur {lecture.cards.length}</span>
+                      <button className="btn" type="button" disabled={activeCardIndex === lecture.cards.length - 1} onClick={() => setActiveCardIndex((index) => Math.min(lecture.cards.length - 1, index + 1))}>Suivante <ArrowRight size={16} aria-hidden="true" /></button>
+                    </nav>
+                  </article>;
+                })()}
+              </div>
+            </div>}
           </section>
         )}
 

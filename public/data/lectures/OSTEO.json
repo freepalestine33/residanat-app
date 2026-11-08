@@ -1,6 +1,8 @@
 {
  "schema": 1,
  "id": "OSTEO",
+ "pdfUrl": "pdfs/otr-10-osteopathies-demineralisantes.pdf",
+ "pdf": "Cours_Osteopathies_Demineralisantes_QCM_261027_191703 (2).pdf",
  "progId": "MOSTEO",
  "name": "Ostéopathies déminéralisantes",
  "keys": [

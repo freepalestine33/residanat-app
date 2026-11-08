@@ -6,7 +6,8 @@
    "name": "Spondylarthrite Ankylosante",
    "cards": 28,
    "quiz": 14,
-   "vf": 23
+   "vf": 23,
+   "pdfUrl": "pdfs/otr-09-spondylarthrite.pdf"
   },
   {
    "id": "DECUB",
@@ -14,7 +15,8 @@
    "name": "Complications du décubitus",
    "cards": 28,
    "quiz": 12,
-   "vf": 28
+   "vf": 28,
+   "pdfUrl": "pdfs/otr-07-complications-decubitus.pdf"
   },
   {
    "id": "TRAUMA",
@@ -22,7 +24,8 @@
    "name": "Lésions traumatiques en MPR",
    "cards": 34,
    "quiz": 11,
-   "vf": 28
+   "vf": 28,
+   "pdfUrl": "pdfs/otr-40-lesions-traumatiques-mpr.pdf"
   },
   {
    "id": "IOA",
@@ -30,7 +33,8 @@
    "name": "Infections ostéoarticulaires de l'enfant",
    "cards": 25,
    "quiz": 9,
-   "vf": 26
+   "vf": 26,
+   "pdfUrl": "pdfs/otr-05-infections-osteoarticulaires-enfant.pdf"
   },
   {
    "id": "FRX",
@@ -38,7 +42,8 @@
    "name": "Fractures de l'enfant & cartilage de croissance",
    "cards": 24,
    "quiz": 8,
-   "vf": 25
+   "vf": 25,
+   "pdfUrl": "pdfs/otr-01-fractures-enfant.pdf"
   },
   {
    "id": "PR",
@@ -46,7 +51,8 @@
    "name": "Polyarthrite rhumatoïde",
    "cards": 23,
    "quiz": 9,
-   "vf": 26
+   "vf": 26,
+   "pdfUrl": "pdfs/otr-02-polyarthrite-rhumatoide.pdf"
   },
   {
    "id": "OSTEO",
@@ -54,7 +60,8 @@
    "name": "Ostéopathies déminéralisantes",
    "cards": 21,
    "quiz": 7,
-   "vf": 24
+   "vf": 24,
+   "pdfUrl": "pdfs/otr-10-osteopathies-demineralisantes.pdf"
   },
   {
    "id": "MPR_BASE",
@@ -62,7 +69,8 @@
    "name": "MPR — Principes de base",
    "cards": 13,
    "quiz": 6,
-   "vf": 18
+   "vf": 18,
+   "pdfUrl": "pdfs/otr-03-principes-mpr.pdf"
   },
   {
    "id": "HANDICAP",
@@ -78,7 +86,8 @@
    "name": "Traumatisme du poignet",
    "cards": 28,
    "quiz": 10,
-   "vf": 30
+   "vf": 30,
+   "pdfUrl": "pdfs/otr-15-traumatismes-poignet.pdf"
   },
   {
    "id": "PIED_BOT",
@@ -86,7 +95,8 @@
    "name": "Malformations du pied & PBVE",
    "cards": 18,
    "quiz": 10,
-   "vf": 25
+   "vf": 25,
+   "pdfUrl": "pdfs/otr-14-malformations-pied-enfant.pdf"
   }
  ]
 }

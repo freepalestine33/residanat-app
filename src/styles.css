@@ -3698,6 +3698,215 @@ textarea::placeholder {
   gap: 0.45rem;
 }
 
+.card-speak-button {
+  display: inline-grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  flex: 0 0 auto;
+  color: var(--blue-700, #176b70);
+  background: color-mix(in srgb, var(--blue-500, #2a9a91) 10%, var(--card));
+  border: 1px solid color-mix(in srgb, var(--blue-500, #2a9a91) 22%, var(--border));
+  border-radius: 12px;
+  cursor: pointer;
+  transition: color var(--transition-fast), background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.card-speak-button:hover:not(:disabled),
+.card-speak-button.is-speaking {
+  color: #fff;
+  background: var(--blue-700, #176b70);
+  box-shadow: 0 5px 12px color-mix(in srgb, var(--blue-700, #176b70) 20%, transparent);
+  transform: translateY(-1px);
+}
+
+.card-speak-button:active:not(:disabled) {
+  transform: scale(0.96);
+}
+
+.card-speak-button:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--blue-500, #2a9a91) 35%, transparent);
+  outline-offset: 2px;
+}
+
+.card-speak-button:disabled {
+  color: var(--text-muted);
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.cards-study-layout {
+  display: grid;
+  grid-template-columns: minmax(190px, 240px) minmax(0, 1fr);
+  align-items: start;
+  gap: 1rem;
+}
+
+.cards-progress-sidebar {
+  position: sticky;
+  top: 1rem;
+}
+
+.cards-progress-heading {
+  margin: 0 0 0.55rem;
+  color: var(--text-secondary);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.cards-progress-panel {
+  overflow: hidden;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow-sm);
+}
+
+.cards-progress-panel summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem;
+  padding: 0.75rem 0.85rem;
+  cursor: pointer;
+  list-style: none;
+}
+
+.cards-progress-panel summary::-webkit-details-marker {
+  display: none;
+}
+
+.cards-progress-panel summary > span {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.cards-progress-details > small {
+  color: var(--text-secondary);
+  font-size: 0.72rem;
+}
+
+.cards-progress-summary-count {
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 720;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.cards-progress-chevron {
+  flex: 0 0 auto;
+  color: var(--text-secondary);
+  transition: transform var(--transition-fast);
+}
+
+.cards-progress-panel[open] .cards-progress-chevron {
+  transform: rotate(180deg);
+}
+
+.cards-progress-panel[open] summary {
+  border-bottom: 1px solid var(--border);
+}
+
+.cards-progress-details {
+  display: grid;
+  gap: 0.7rem;
+  padding: 0.9rem 1rem 1rem;
+}
+
+.cards-progress-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+  font-size: 0.76rem;
+}
+
+.cards-progress-label strong {
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.cards-progress-track {
+  height: 7px;
+  overflow: hidden;
+  background: var(--bg-elevated);
+  border-radius: 99px;
+}
+
+.cards-progress-track > span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--green, #61b69a));
+  border-radius: inherit;
+  transition: width 220ms ease;
+}
+
+.cards-study-main {
+  min-width: 0;
+}
+
+.cards-study-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem;
+  margin-top: 1.35rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.cards-study-navigation .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  margin: 0;
+}
+
+.cards-study-navigation .btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+}
+
+.cards-study-navigation > span {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+@media (max-width: 760px) {
+  .cards-study-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .cards-progress-panel {
+    position: static;
+  }
+
+  .cards-progress-sidebar {
+    position: static;
+  }
+}
+
+@media (max-width: 420px) {
+  .cards-study-navigation {
+    gap: 0.4rem;
+  }
+
+  .cards-study-navigation .btn {
+    padding-inline: 0.65rem;
+    font-size: 0.78rem;
+  }
+
+  .cards-study-navigation > span {
+    font-size: 0.72rem;
+  }
+}
+
 .study-session-actions-top {
   display: flex;
   align-items: center;
