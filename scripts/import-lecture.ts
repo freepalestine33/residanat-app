@@ -19,12 +19,13 @@ type CliOptions = {
   maxOutputTokens: number;
   promptPath: string;
   openPreview: boolean;
+  qcm: boolean;
 };
 
-const usage = 'Usage: npm run lecture:import -- <course.pdf> [--provider openai|anthropic|xai|gemini] [--id id] [--name title] [--otr 1-43] [--no-open]';
+const usage = 'Usage: npm run lecture:import -- <course.pdf> [--provider openai|anthropic|xai|gemini] [--id id] [--name title] [--otr 1-43] [--qcm] [--no-open]';
 
 if (process.argv.includes('--help') || process.argv.includes('-h')) {
-  console.log(`${usage}\n\nOptional: --model <name> --max-chars <count> --max-output-tokens <count> --prompt <path>`);
+  console.log(`${usage}\n\nOptional: --model <name> --max-chars <count> --max-output-tokens <count> --prompt <path> --qcm`);
   process.exit(0);
 }
 
@@ -32,10 +33,12 @@ function parseArgs(args: string[]): CliOptions {
   let pdfPath: string | undefined;
   const values: Record<string, string> = {};
   let openPreview = true;
+  let qcm = false;
   const valueFlags = new Set(['--provider', '--id', '--name', '--model', '--otr', '--max-chars', '--max-output-tokens', '--prompt']);
   for (let index = 0; index < args.length; index += 1) {
     const arg = args[index];
     if (arg === '--no-open') { openPreview = false; continue; }
+    if (arg === '--qcm') { qcm = true; continue; }
     if (valueFlags.has(arg)) {
       const value = args[index + 1];
       if (!value || value.startsWith('--')) throw new Error(`Missing value for ${arg}.\n${usage}`);
@@ -71,6 +74,7 @@ function parseArgs(args: string[]): CliOptions {
     maxOutputTokens,
     promptPath: resolve(values['--prompt'] ?? 'prompts/lecture-json.md'),
     openPreview,
+    qcm,
   };
 }
 
@@ -192,21 +196,40 @@ async function generateLecture(provider: Provider, apiKey: string, model: string
   }
 
   if (provider === 'openai') {
-    const response = await postJson('https://api.openai.com/v1/responses', { authorization: `Bearer ${apiKey}` }, {
-      model,
-      input: prompt,
-      max_output_tokens: maxOutputTokens,
-      store: false,
-      text: { format: { type: 'json_object' } },
-    });
-    if (response.status === 'incomplete') throw new Error('OpenAI returned an incomplete response. Increase --max-output-tokens or use a shorter PDF.');
-    const output = Array.isArray(response.output) ? response.output : [];
-    const text = output.flatMap((item) => {
-      const content = asRecord(item).content;
-      return Array.isArray(content) ? content : [];
-    }).map((item) => asRecord(item)).filter((item) => item.type === 'output_text').map((item) => String(item.text ?? '')).join('\n');
-    if (!text.trim()) throw new Error('OpenAI returned no text content.');
-    return text;
+    try {
+      const response = await postJson('https://api.openai.com/v1/chat/completions', { authorization: `Bearer ${apiKey}` }, {
+        model,
+        messages: [
+          { role: 'system', content: 'Tu es un assistant de préparation pédagogique médicale. Tu réponds obligatoirement avec un JSON valide.' },
+          { role: 'user', content: prompt },
+        ],
+        response_format: { type: 'json_object' },
+        max_tokens: Math.min(maxOutputTokens, 16384),
+        temperature: 0.2,
+      });
+      const choices = Array.isArray(response.choices) ? response.choices : [];
+      const firstChoice = asRecord(choices[0]);
+      const message = asRecord(firstChoice.message);
+      const text = String(message.content ?? '');
+      if (text.trim()) return text;
+    } catch {
+      // Fallback to /v1/responses if custom models or responses API is required
+      const response = await postJson('https://api.openai.com/v1/responses', { authorization: `Bearer ${apiKey}` }, {
+        model,
+        input: prompt,
+        max_output_tokens: maxOutputTokens,
+        store: false,
+        text: { format: { type: 'json_object' } },
+      });
+      if (response.status === 'incomplete') throw new Error('OpenAI returned an incomplete response. Increase --max-output-tokens or use a shorter PDF.');
+      const output = Array.isArray(response.output) ? response.output : [];
+      const text = output.flatMap((item) => {
+        const content = asRecord(item).content;
+        return Array.isArray(content) ? content : [];
+      }).map((item) => asRecord(item)).filter((item) => item.type === 'output_text').map((item) => String(item.text ?? '')).join('\n');
+      if (!text.trim()) throw new Error('OpenAI returned no text content.');
+      return text;
+    }
   }
 
   const response = await postJson('https://api.x.ai/v1/responses', { authorization: `Bearer ${apiKey}` }, {
@@ -265,11 +288,14 @@ async function main() {
     ? process.env.ANTHROPIC_MODEL ?? 'claude-sonnet-5'
     : provider === 'xai' ? process.env.XAI_MODEL ?? 'grok-4.7'
       : provider === 'gemini' ? process.env.GEMINI_MODEL ?? 'gemini-3.8-flash'
-        : process.env.OPENAI_MODEL ?? 'gpt-6.1-sol');
+        : process.env.OPENAI_MODEL ?? 'gpt-4o');
   const topic = options.otrNumber ? otrProgramme.find((item) => item.number === options.otrNumber) : undefined;
   const { text: pdfText, pages } = await extractPdfText(options.pdfPath, options.maxChars);
   const template = readFileSync(options.promptPath, 'utf8');
-  const prompt = `${template}\n\n<metadata>\nPDF: ${basename(options.pdfPath)}\nLecture ID: ${options.id}\n${options.name ? `Expected lecture title: ${options.name}\n` : ''}${topic ? `OTR topic ${topic.number}: ${topic.title}\n` : ''}</metadata>\n\n<source_pdf_text>\n${pdfText}\n</source_pdf_text>\n\nGenerate the lecture JSON now. Return only the JSON object.`;
+  const qcmDirective = options.qcm
+    ? '\n\nDIRECTIVE SPÉCIALE QCM / ANNALES : Le document fourni contient des questions de QCM ou d’annales. Extrais rigoureusement chaque QCM avec ses choix et explications détaillées, synthétise chaque concept clé sous forme de carte mémo dans "cards", et génère des affirmations vrai/faux dans "vf" pour travailler les pièges.'
+    : '';
+  const prompt = `${template}${qcmDirective}\n\n<metadata>\nPDF: ${basename(options.pdfPath)}\nLecture ID: ${options.id}\n${options.name ? `Expected lecture title: ${options.name}\n` : ''}${topic ? `OTR topic ${topic.number}: ${topic.title}\n` : ''}</metadata>\n\n<source_pdf_text>\n${pdfText}\n</source_pdf_text>\n\nGenerate the lecture JSON now. Return only the JSON object.`;
 
   console.log(`Extracted ${pdfText.length.toLocaleString()} characters from ${pages} PDF pages.`);
   console.log(`Generating lecture with ${provider} (${model}). The PDF text will be sent to that provider.`);

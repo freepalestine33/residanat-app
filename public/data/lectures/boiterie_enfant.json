@@ -1,0 +1,319 @@
+{
+  "schema": 1,
+  "id": "boiterie_enfant",
+  "progId": "CBOITERIE",
+  "otrNumber": 11,
+  "name": "Boiterie chez l’enfant — Diagnostic & Conduite à tenir",
+  "keys": [
+    "Toute boiterie fébrile chez l’enfant est une urgence médico-chirurgicale : éliminer en priorité une arthrite septique ou une ostéomyélite aiguë.",
+    "L’âge est l’élément clé d’orientation : traumatisme du tout-petit (1–3 ans), rhume de hanche et maladie de Legg-Calvé-Perthes (4–8 ans), épiphysiolyse fémorale supérieure (10–15 ans).",
+    "La synovite aiguë transitoire (rhume de hanche) est l'étiologie la plus fréquente de boiterie entre 3 et 8 ans ; elle est apyrétique, avec biologie normale et régression sous repos en 5 à 10 jours.",
+    "L’épiphysiolyse fémorale supérieure de l'adolescent se manifeste souvent par une douleur isolée du genou ; le membre se positionne en rotation externe et la limitation de la rotation interne est constante. Le vissage chirurgical in situ est une urgence.",
+    "L’ostéochondrite primitive de hanche (maladie de Legg-Calvé-Perthes) touche surtout le garçon de 4 à 8 ans avec une boiterie insidieuse mécanique et une nécrose ischémique du noyau épiphysaire visualisée au cliché de profil (Lauenstein).",
+    "Le bilan radiologique initial devant toute boiterie de hanche comprend impérativement un bassin de face et les deux hanches de profil (profil de Lauenstein)."
+  ],
+  "contrasts": [
+    "Arthrite septique vs Synovite aiguë transitoire : l’arthrite septique donne une fièvre élevée, une impotence fonctionnelle totale et un syndrome inflammatoire biologique franc ; la synovite est apyrétique ou subfébrile avec biologie normale.",
+    "Douleur projetée au genou : toute gonalgie chez un adolescent avec genou normal impose une radiographie systématique des deux hanches de face et de profil pour ne pas méconnaître une épiphysiolyse.",
+    "Legg-Calvé-Perthes vs Épiphysiolyse fémorale : Legg-Calvé-Perthes touche l’enfant de 4 à 8 ans (nécrose céphalique avasculaire) ; l'épiphysiolyse touche l'adolescent pubertaire de 10 à 15 ans (glissement mécanique au cartilage de croissance).",
+    "Fracture du trottineur (Toddler's fracture) : fracture spiroïde non déplacée du tiers inférieur du tibia de l’enfant apprenant à marcher ; souvent invisible sur la radiographie initiale, elle se révèle par le cal osseux à J10.",
+    "Ligne de Klein sur la radiographie de hanche de face : en situation normale, la ligne tangente au bord supérieur du col fémoral coupe le pôle supérieur de l’épiphyse ; dans l'épiphysiolyse, elle ne le coupe plus ou le croise anormalement bas."
+  ],
+  "cards": [
+    {
+      "id": "c1",
+      "type": "basic",
+      "q": "Quelle est la première urgence à éliminer devant une boiterie fébrile chez l’enfant ?",
+      "a": "Une arthrite septique (en particulier de la hanche) ou une ostéomyélite aiguë. L’impotence est majeure et le risque de nécrose chondrolytique rapide impose une prise en charge immédiate.",
+      "src": "Urgences pédiatriques, prise en charge de la boiterie fébrile"
+    },
+    {
+      "id": "c2",
+      "type": "basic",
+      "q": "Quelle est la cause la plus fréquente de boiterie aiguë non fébrile entre 3 et 8 ans ?",
+      "a": "La synovite aiguë transitoire de hanche (rhume de hanche). C’est une inflammation bénigne, apyrétique, survenant souvent après un épisode viral ORL.",
+      "src": "Pathologie de la hanche pédiatrique, synovite aiguë"
+    },
+    {
+      "id": "c3",
+      "type": "basic",
+      "q": "Comment évolue une synovite aiguë transitoire (rhume de hanche) et quel est son traitement ?",
+      "a": "Elle évolue favorablement en 5 à 10 jours sans séquelle. Le traitement repose sur le repos au lit (parfois traction douce) et les antalgiques/AINS. Un contrôle radioclinique à 6 semaines est préconisé pour éliminer une ostéochondrite débutante.",
+      "src": "Synovite aiguë transitoire, conduite à tenir"
+    },
+    {
+      "id": "c4",
+      "type": "basic",
+      "q": "Quels sont les signes cliniques cardinaux de l’épiphysiolyse fémorale supérieure chez l’adolescent ?",
+      "a": "Boiterie d’esquive, douleur de hanche ou douleur projetée isolée au genou, membre en rotation externe spontanée avec diminution nette de la rotation interne et de l'abduction.",
+      "src": "Épiphysiolyse fémorale supérieure, sémiologie"
+    },
+    {
+      "id": "c5",
+      "type": "contrast",
+      "q": "Quel piège diagnostique majeur doit être redouté devant une douleur du genou chez un adolescent ?",
+      "a": "Prendre une épiphysiolyse fémorale supérieure pour une pathologie du genou. Devant tout genou douloureux d'un adolescent avec genou anatomiquement normal, il faut radiographier les hanches (bassin face + profil de Lauenstein).",
+      "src": "Épiphysiolyse, pièges diagnostiques"
+    },
+    {
+      "id": "c6",
+      "type": "basic",
+      "q": "Qu’est-ce que la ligne de Klein et quelle est sa valeur radiologique ?",
+      "a": "C’est la ligne tangente au bord supérieur du col fémoral sur la radio de bassin de face. Normalement, elle coupe la partie supérieure de la tête fémorale. Dans l’épiphysiolyse fémorale, elle ne la coupe plus ou l'affleure à peine (signe de Trethowan).",
+      "src": "Radiographie du bassin, épiphysiolyse"
+    },
+    {
+      "id": "c7",
+      "type": "basic",
+      "q": "Quel est le traitement de référence de l’épiphysiolyse fémorale supérieure ?",
+      "a": "Le vissage percutané in situ de la tête fémorale (épiphysiodèse chirurgicale en urgence) pour stopper le glissement sans tentative de réduction forcée (risque d'ostéonécrose aseptique).",
+      "src": "Épiphysiolyse, prise en charge chirurgicale"
+    },
+    {
+      "id": "c8",
+      "type": "basic",
+      "q": "Qu’est-ce que la maladie de Legg-Calvé-Perthes (ostéochondrite primitive de hanche) ?",
+      "a": "Une nécrose ischémique avasculaire idiopathique du noyau épiphysaire fémoral supérieur, survenant préférentiellement chez le garçon entre 4 et 8 ans.",
+      "src": "Ostéochondrite primitive de hanche, définition"
+    },
+    {
+      "id": "c9",
+      "type": "basic",
+      "q": "Quels sont les signes radiologiques initiaux de la maladie de Legg-Calvé-Perthes ?",
+      "a": "Coup d’ongle sous-chondral (fracture sous-chondrale visible au profil de Lauenstein), aplatissement et densification du noyau fémoral supérieur, élargissement de l'interligne articulaire.",
+      "src": "Legg-Calvé-Perthes, imagerie"
+    },
+    {
+      "id": "c10",
+      "type": "basic",
+      "q": "Qu’est-ce que la fracture du trottineur (Toddler's fracture) ?",
+      "a": "Une fracture spiroïde non déplacée du tibia sans lésion de la fibula, fréquente chez l’enfant de 1 à 3 ans qui apprend à marcher, suite à une torsion mineure. La radiographie initiale peut être normale.",
+      "src": "Traumatismes du membre inférieur chez l'enfant"
+    },
+    {
+      "id": "c11",
+      "type": "basic",
+      "q": "Quels sont les 4 critères de Kocher orientant vers une arthrite septique de hanche chez l’enfant ?",
+      "a": "1) Fièvre > 38.5 °C, 2) Refus d’appui / impotence fonctionnelle complète, 3) Leucocytose > 12 000/mm³, 4) VS > 40 mm/h ou CRP > 20 mg/L. La présence de 3 ou 4 critères confère une probabilité > 90 % d'arthrite septique.",
+      "src": "Critères de Kocher, diagnostic d'arthrite septique"
+    },
+    {
+      "id": "c12",
+      "type": "basic",
+      "q": "Quel geste s'impose en urgence absolue si l'on suspecte une arthrite septique de hanche avec épanchement échographique ?",
+      "a": "La ponction articulaire de la hanche sous contrôle échographique ou radioscopique pour analyse cyto-bactériologique et mise en culture avant antibiothérapie.",
+      "src": "Arthrite septique, urgences chirurgicales pédiatriques"
+    },
+    {
+      "id": "c13",
+      "type": "basic",
+      "q": "Quel examen d'imagerie permet de confirmer un épanchement intra-articulaire de hanche en quelques minutes ?",
+      "a": "L’échographie de hanche bilatérale et comparative. Elle visualise l'épanchement et quantifie le bombement de la capsule antérieure.",
+      "src": "Imagerie ostéo-articulaire pédiatrique"
+    },
+    {
+      "id": "c14",
+      "type": "basic",
+      "q": "Quels clichés radiologiques indispensables doivent être réalisés devant toute boiterie sans étiologie évidente ?",
+      "a": "Bassin de face, hanches de profil (profil de Lauenstein) et radiographie des membres inférieurs (fémur, genou, jambe et pied selon la palpation).",
+      "src": "Bilan d'imagerie systématique de la boiterie"
+    },
+    {
+      "id": "c15",
+      "type": "contrast",
+      "q": "Qu'est-ce que la boiterie de Trendelenburg ?",
+      "a": "Une boiterie avec bascule du tronc du côté portant, témoignant d'une insuffisance du muscle moyen fessier (perte de soutien du bassin controlatéral).",
+      "src": "Examen clinique de la marche"
+    },
+    {
+      "id": "c16",
+      "type": "basic",
+      "q": "Pourquoi doit-on effectuer une radiographie de hanche de contrôle à 6 semaines après un rhume de hanche ?",
+      "a": "Pour dépister une ostéochondrite primitive de hanche débutante (Legg-Calvé-Perthes) dont les manifestations initiales peuvent mimer fidèlement un rhume de hanche.",
+      "src": "Suivi du rhume de hanche"
+    }
+  ],
+  "quiz": [
+    {
+      "id": "q1",
+      "q": "Parmi les propositions suivantes concernant la synovite aiguë transitoire (rhume de hanche), lesquelles sont exactes ?",
+      "src": "Annales résidanat, Rhume de hanche",
+      "cards": ["c2", "c3"],
+      "explain": "La synovite aiguë transitoire survient typiquement chez le garçon de 3 à 8 ans après une virose ORL. L'enfant est apyrétique ou subfébrile, la biologie est normale et la guérison survient spontanément sous repos.",
+      "opts": [
+        { "t": "Elle survient préférentiellement chez l'enfant entre 3 et 8 ans.", "ok": true, "c": ["c2"] },
+        { "t": "Elle est habituellement fébrile avec une température supérieure à 39 °C.", "ok": false },
+        { "t": "Le bilan biologique (NFS, CRP) est normal ou subnormal.", "ok": true, "c": ["c2"] },
+        { "t": "Elle guérit habituellement en quelques jours sous simple repos au lit.", "ok": true, "c": ["c3"] },
+        { "t": "Un traitement antibiotique par amoxicilline-acide clavulanique est systématiquement indiqué.", "ok": false }
+      ]
+    },
+    {
+      "id": "q2",
+      "q": "Devant un adolescent de 13 ans en surcharge pondérale consultant pour une boiterie avec douleur isolée du genou gauche depuis 3 semaines, quel diagnostic devez-vous évoquer en priorité ?",
+      "src": "Annales résidanat, Épiphysiolyse",
+      "cards": ["c4", "c5", "c6"],
+      "explain": "L'adolescent en surpoids avec douleur projetée au genou et boiterie présente le tableau clinique classique de l'épiphysiolyse fémorale supérieure. Une radiographie du bassin de face et des hanches de profil est obligatoire.",
+      "opts": [
+        { "t": "Maladie d'Osgood-Schlatter", "ok": false },
+        { "t": "Épiphysiolyse fémorale supérieure gauche", "ok": true, "c": ["c4", "c5"] },
+        { "t": "Synovite aiguë transitoire", "ok": false },
+        { "t": "Ostéochondrite disséquante du condyle fémoral", "ok": false },
+        { "t": "Arthrite juvénile idiopathique", "ok": false }
+      ]
+    },
+    {
+      "id": "q3",
+      "q": "Quels signes cliniques et radiologiques caractérisent l’épiphysiolyse fémorale supérieure ?",
+      "src": "Annales résidanat, Sémiologie épiphysiolyse",
+      "cards": ["c4", "c6", "c7"],
+      "explain": "L'épiphysiolyse s'accompagne d'une attitude spontanée en rotation externe du membre, d'une perte de rotation interne, de l'anomalie de la ligne de Klein (signe de Trethowan) et nécessite une fixation chirurgicale in situ.",
+      "opts": [
+        { "t": "Attitude spontanée du membre en rotation externe", "ok": true, "c": ["c4"] },
+        { "t": "Limitation élective de la rotation interne et de l'abduction", "ok": true, "c": ["c4"] },
+        { "t": "La ligne de Klein ne coupe plus le pôle supérieur de la tête fémorale", "ok": true, "c": ["c6"] },
+        { "t": "Le traitement d'urgence repose sur des tractions et réductions forcées en rotation interne", "ok": false },
+        { "t": "L'épiphysiodèse par vissage in situ est l'intervention de référence", "ok": true, "c": ["c7"] }
+      ]
+    },
+    {
+      "id": "q4",
+      "q": "Concernant la maladie de Legg-Calvé-Perthes (ostéochondrite primitive de hanche), quelles affirmations sont exactes ?",
+      "src": "Annales résidanat, Legg-Calvé-Perthes",
+      "cards": ["c8", "c9"],
+      "explain": "Legg-Calvé-Perthes est une ischémie avasculaire du noyau épiphysaire touchant 4 garçons pour 1 fille entre 4 et 8 ans. La radiographie de profil (Lauenstein) met en évidence l'image en coup d'ongle sous-chondral.",
+      "opts": [
+        { "t": "Elle touche avec prédilection le jeune garçon entre 4 et 8 ans.", "ok": true, "c": ["c8"] },
+        { "t": "Il s'agit d'une infection bactérienne subaiguë du cartilage de croissance.", "ok": false },
+        { "t": "Le profil radiologique de Lauenstein permet de détecter précocement la fracture sous-chondrale.", "ok": true, "c": ["c9"] },
+        { "t": "La boiterie est d'installation brutale, avec fièvre à 39 °C.", "ok": false },
+        { "t": "Elle se caractérise par des phases successives de nécrose, condensation, fragmentation puis reconstruction.", "ok": true, "c": ["c8", "c9"] }
+      ]
+    },
+    {
+      "id": "q5",
+      "q": "Quels sont les éléments des critères de Kocher utilisés pour évaluer le risque d’arthrite septique de hanche ?",
+      "src": "Annales résidanat, Critères de Kocher",
+      "cards": ["c11", "c12"],
+      "explain": "Les 4 critères de Kocher sont : fièvre > 38.5 °C, refus d'appui / incapacité de marcher, leucocytes > 12 000/mm³ et VS > 40 mm/h (ou CRP > 20 mg/L).",
+      "opts": [
+        { "t": "Fièvre supérieure à 38.5 °C", "ok": true, "c": ["c11"] },
+        { "t": "Refus d'appui complet (incapacité à porter le poids)", "ok": true, "c": ["c11"] },
+        { "t": "Hyperleucocytose > 12 000 / mm³", "ok": true, "c": ["c11"] },
+        { "t": "Vitesse de sédimentation (VS) > 40 mm/h ou CRP élevée", "ok": true, "c": ["c11"] },
+        { "t": "Calcification visible du tendon du psoas à la radiographie", "ok": false }
+      ]
+    },
+    {
+      "id": "q6",
+      "q": "Un enfant de 2 ans commence à refuser de marcher suite à un jeu habituel sans traumatisme violent évident. Il n'a pas de fièvre. Quelle lésion traumatique fréquente doit être suspectée ?",
+      "src": "Traumatologie pédiatrique, Toddler fracture",
+      "cards": ["c10"],
+      "explain": "La fracture du trottineur (Toddler's fracture) est une fracture spiroïde sous-périostée non déplacée du tibia chez le jeune enfant débutant la marche. Le trait peut être invisible à la radio initiale.",
+      "opts": [
+        { "t": "Fracture du trottineur (Toddler's fracture) du tibia", "ok": true, "c": ["c10"] },
+        { "t": "Épiphysiolyse fémorale supérieure", "ok": false },
+        { "t": "Luxation congénitale de hanche méconnue", "ok": false },
+        { "t": "Ostéochondrite disséquante", "ok": false }
+      ]
+    },
+    {
+      "id": "q7",
+      "q": "Quel examen d'imagerie de première intention est le plus sensible pour détecter un épanchement liquidien dans l'articulation de la hanche chez l'enfant ?",
+      "src": "Imagerie pédiatrique, Hanche",
+      "cards": ["c13"],
+      "explain": "L'échographie de hanche est l'examen de choix : non irradiante, rapide, bilatérale et comparative, elle confirme la présence d'un épanchement même minime.",
+      "opts": [
+        { "t": "Scanner hélicoïdal du bassin", "ok": false },
+        { "t": "Échographie de hanche bilatérale et comparative", "ok": true, "c": ["c13"] },
+        { "t": "Scintigraphie osseuse au technétium 99m", "ok": false },
+        { "t": "Arthrographie opaque d'emblée", "ok": false }
+      ]
+    },
+    {
+      "id": "q8",
+      "q": "Pourquoi une radiographie de contrôle à 6 semaines est-elle recommandée après une synovite aiguë transitoire de hanche ?",
+      "src": "Pédiatrie, Suivi hanche",
+      "cards": ["c16"],
+      "explain": "L'ostéochondrite primitive de hanche (Legg-Calvé-Perthes) peut débuter par un tableau clinique et échographique strictement identique au rhume de hanche. Le contrôle radiologique à 6 semaines élimine ce diagnostic.",
+      "opts": [
+        { "t": "Pour vérifier l'absence d'ostéochondrite primitive débutante", "ok": true, "c": ["c16"] },
+        { "t": "Pour surveiller l'apparition d'une nécrose liée aux AINS", "ok": false },
+        { "t": "Pour dépister une luxation secondaire", "ok": false },
+        { "t": "Pour confirmer la fusion de la ligne de Klein", "ok": false }
+      ]
+    }
+  ],
+  "vf": [
+    {
+      "id": "vf1",
+      "s": "Une boiterie fébrile chez l'enfant doit faire évoquer une arthrite septique en priorité absolue.",
+      "a": true,
+      "w": "L'arthrite septique est une urgence médico-chirurgicale menaçant la vitalité du cartilage fémoral en quelques heures.",
+      "cards": ["c1"]
+    },
+    {
+      "id": "vf2",
+      "s": "Dans l'épiphysiolyse fémorale supérieure de l'adolescent, la douleur peut siéger exclusivement au niveau du genou.",
+      "a": true,
+      "w": "C'est un piège classique : l'innervation conjointe par le nerf obturateur projette fréquemment la douleur de hanche à la face interne du genou.",
+      "cards": ["c4", "c5"]
+    },
+    {
+      "id": "vf3",
+      "s": "En cas d'épiphysiolyse fémorale supérieure aiguë, une réduction manuelle forcée par traction et rotation interne vigoureuse est indiquée.",
+      "a": false,
+      "w": "Absolument contre-indiqué : toute réduction forcée risque d'étirer ou de déchirer les vaisseaux rétinaculaires postérieurs et de provoquer une ostéonécrose céphalique massive.",
+      "cards": ["c7"]
+    },
+    {
+      "id": "vf4",
+      "s": "La synovite aiguë transitoire (rhume de hanche) s'accompagne constamment d'un syndrome inflammatoire biologique marqué (CRP > 50 mg/L).",
+      "a": false,
+      "w": "Faux : dans le rhume de hanche, la CRP et la NFS sont normales ou à peine modifiées.",
+      "cards": ["c2", "c3"]
+    },
+    {
+      "id": "vf5",
+      "s": "Sur un cliché de bassin de face normal, la ligne de Klein coupe le pôle supérieur de la tête fémorale.",
+      "a": true,
+      "w": "Vrai : dans l'épiphysiolyse fémorale, le glissement postérieur et inférieur de l'épiphyse fait que la ligne de Klein ne coupe plus la tête (signe de Trethowan).",
+      "cards": ["c6"]
+    },
+    {
+      "id": "vf6",
+      "s": "L'ostéochondrite primitive de hanche (Legg-Calvé-Perthes) est plus fréquente chez la fille que chez le garçon.",
+      "a": false,
+      "w": "Faux : elle touche préférentiellement les garçons (environ 4 garçons pour 1 fille).",
+      "cards": ["c8"]
+    },
+    {
+      "id": "vf7",
+      "s": "Le profil de Lauenstein est l'incidence radiologique de choix pour mettre en évidence la fracture sous-chondrale précoce dans la maladie de Legg-Calvé-Perthes.",
+      "a": true,
+      "w": "Vrai : le décollement en coup d'ongle sous-chondral se visualise le plus nettement sur le profil de hanche en abduction-rotation externe (Lauenstein).",
+      "cards": ["c9"]
+    },
+    {
+      "id": "vf8",
+      "s": "La fracture du trottineur (Toddler's fracture) peut être radiologiquement indétectable sur les radiographies initiales.",
+      "a": true,
+      "w": "Vrai : la fracture spiroïde tibiale sous-périostée non déplacée n'est souvent confirmée que lors du cliché de contrôle à 10-14 jours montrant le cal périosté.",
+      "cards": ["c10"]
+    },
+    {
+      "id": "vf9",
+      "s": "La boiterie de Trendelenburg est causée par une parésie ou faiblesse des muscles ischio-jambiers.",
+      "a": false,
+      "w": "Faux : la boiterie de Trendelenburg traduit une défaillance ou faiblesse du muscle moyen fessier (moyen glutéal).",
+      "cards": ["c15"]
+    },
+    {
+      "id": "vf10",
+      "s": "La ponction articulaire de hanche doit être réalisée sous guidage échographique ou scopique en cas de suspicion d'arthrite septique avec épanchement.",
+      "a": true,
+      "w": "Vrai : le guidage permet de certifier l'entrée intra-articulaire, d'évacuer le pus et d'adresser le liquide au laboratoire en urgence.",
+      "cards": ["c12"]
+    }
+  ]
+}

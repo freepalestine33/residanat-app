@@ -14,6 +14,17 @@ interface NoteState {
   clearError: () => void;
 }
 
+export function resolveNoteImage(
+  note: Pick<Note, 'image' | 'imagePath' | 'clearImage'>,
+  previous?: Pick<Note, 'image' | 'imagePath'>,
+) {
+  if (note.clearImage) return { image: undefined, imagePath: undefined };
+  return {
+    image: note.image ?? previous?.image,
+    imagePath: note.imagePath ?? previous?.imagePath,
+  };
+}
+
 export const useNoteStore = create<NoteState>((set, get) => ({
   notes: [],
   loading: false,
@@ -32,11 +43,12 @@ export const useNoteStore = create<NoteState>((set, get) => ({
   upsertNote: async (note) => {
     try {
       const previous = note.id === undefined ? undefined : await db.notes.get(note.id);
+      const image = resolveNoteImage(note, previous);
+      const { clearImage: _clearImage, ...noteValues } = note;
       const value = {
-        ...note,
+        ...noteValues,
         syncId: note.syncId ?? previous?.syncId ?? crypto.randomUUID(),
-        imagePath: note.imagePath ?? previous?.imagePath,
-        image: note.image ?? previous?.image,
+        ...image,
         updated: Date.now(),
       };
       await db.notes.put(value);

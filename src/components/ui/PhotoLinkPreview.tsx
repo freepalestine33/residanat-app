@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { getSafeExternalLinkProps } from './cardNoteAttachments';
 
 export function isPhotoLink(value: string) {
   try {
@@ -12,6 +13,15 @@ export function isPhotoLink(value: string) {
 
 export function PhotoLinkPreview({ url }: { url: string }) {
   const [failed, setFailed] = useState(false);
-  if (failed) return <p className="photo-preview-error">Cette adresse ne fournit pas directement une image. Téléversez la photo ou collez un lien direct vers le fichier image.</p>;
-  return <img className="card-note-image" src={url} alt="Photo jointe à la note" loading="lazy" onError={() => setFailed(true)} />;
+  const linkProps = getSafeExternalLinkProps(url);
+  return (
+    <div className="photo-link-preview">
+      {failed
+        ? <p className="photo-preview-error">Cette adresse ne fournit pas directement une image. Ouvrez-la pour consulter la page, ou téléversez la photo pour l’intégrer à la note.</p>
+        : <img className="card-note-image" src={url} alt="Aperçu de la photo liée" loading="lazy" onError={() => setFailed(true)} />}
+      {linkProps
+        ? <a className="photo-link-anchor" {...linkProps}>{url}</a>
+        : <span className="photo-preview-error">Cette adresse n’est pas un lien Web http ou https valide.</span>}
+    </div>
+  );
 }

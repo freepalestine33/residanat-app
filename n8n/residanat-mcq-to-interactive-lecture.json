@@ -1,0 +1,212 @@
+{
+  "name": "Résidanat - Conversion PDF/QCM en Cours Interactif (OpenAI GPT)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "residanat-lecture-upload",
+        "options": {
+          "binaryData": true
+        }
+      },
+      "id": "1",
+      "name": "Webhook Déclencheur (Upload PDF)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        240,
+        300
+      ],
+      "webhookId": "residanat-lecture-upload"
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "binaryPropertyName": "data",
+        "options": {}
+      },
+      "id": "2",
+      "name": "Extraction Texte PDF",
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        460,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extraire et nettoyer les métadonnées et le texte du cours\nconst item = $input.first();\nconst text = item.json.text || '';\nconst query = $('Webhook Déclencheur (Upload PDF)').first().json.query || {};\nconst headers = $('Webhook Déclencheur (Upload PDF)').first().json.headers || {};\n\nconst otrNumber = Number(query.otr || query.otrNumber || headers['x-otr-number']) || 11;\nconst lectureName = query.name || query.title || 'Boiterie chez l’enfant (QCM & Synthèse)';\nconst lectureId = query.id || ('otr_' + String(otrNumber).padStart(2, '0') + '_boiterie_enfant');\n\nconst prompt = `Tu es un professeur agrégé et assistant de préparation pédagogique pour le concours de Résidanat en médecine (programme officiel en français).\nTransforme ce document médical (cours ou recueil de QCM / annales) en un cours interactif hautement pédagogique, rigoureux et fidèle.\n\nDirectives strictes :\n- Rigueur médicale absolue : base-toi UNIQUEMENT sur le texte fourni. N'invente aucun chiffre ou seuil non mentionné.\n- Si le document est un recueil de QCM : extrais fidèlement chaque QCM avec ses choix (ok: true pour les réponses justes, ok: false pour les fausses) et une explication claire. Synthétise les notions clés en fiches mémo (flashcards) dans \"cards\", et formule des affirmations Vrai/Faux dans \"vf\".\n- Lie chaque question de quiz et chaque affirmation vf à au moins un identifiant de carte existant dans \"cards\".\n\nRetourne STRICTEMENT et UNIQUEMENT un objet JSON valide conforme à cette structure :\n{\n  \"schema\": 1,\n  \"id\": \"${lectureId}\",\n  \"name\": \"${lectureName}\",\n  \"otrNumber\": ${otrNumber},\n  \"keys\": [\"Point clé essentiel 1\", \"Point clé 2\"],\n  \"contrasts\": [\"Piège classique / Diagnostic différentiel majeur\"],\n  \"cards\": [\n    { \"id\": \"c1\", \"type\": \"basic\", \"q\": \"Question courte de révision\", \"a\": \"Réponse synthétique\", \"src\": \"Section / Page\" }\n  ],\n  \"quiz\": [\n    {\n      \"id\": \"q1\",\n      \"q\": \"Énoncé de la question QCM\",\n      \"src\": \"Source\",\n      \"cards\": [\"c1\"],\n      \"explain\": \"Explication détaillée\",\n      \"opts\": [\n        { \"t\": \"Proposition A\", \"ok\": true, \"c\": [\"c1\"] },\n        { \"t\": \"Proposition B\", \"ok\": false }\n      ]\n    }\n  ],\n  \"vf\": [\n    {\n      \"id\": \"vf1\",\n      \"s\": \"Affirmation clinique vérifiable\",\n      \"a\": true,\n      \"w\": \"Explication\",\n      \"cards\": [\"c1\"]\n    }\n  ]\n}\n\n<source_text>\n${text.slice(0, 180000)}\n</source_text>`;\n\nreturn {\n  json: {\n    prompt,\n    metadata: {\n      id: lectureId,\n      name: lectureName,\n      otrNumber\n    }\n  }\n};"
+      },
+      "id": "3",
+      "name": "Préparation Prompt Médical",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        680,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/chat/completions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"gpt-4o\",\n  \"messages\": [\n    {\n      \"role\": \"system\",\n      \"content\": \"Tu es un assistant de préparation pédagogique médicale. Tu réponds obligatoirement par un JSON valide conforme au schéma demandé.\"\n    },\n    {\n      \"role\": \"user\",\n      \"content\": $json.prompt\n    }\n  ],\n  \"response_format\": {\n    \"type\": \"json_object\"\n  },\n  \"temperature\": 0.2\n}",
+        "options": {
+          "timeout": 300000
+        }
+      },
+      "id": "4",
+      "name": "Appel OpenAI GPT-4o",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        900,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extraire et valider l'objet JSON retourné par OpenAI\nconst response = $input.first().json;\nconst rawContent = response.choices?.[0]?.message?.content || '{}';\n\nlet lecture;\ntry {\n  const start = rawContent.indexOf('{');\n  const end = rawContent.lastIndexOf('}');\n  lecture = JSON.parse(rawContent.substring(start, end + 1));\n} catch (err) {\n  throw new Error('Erreur de parsing JSON OpenAI: ' + err.message);\n}\n\n// Normalisation basique de sécurité\nlecture.schema = 1;\nif (!Array.isArray(lecture.keys)) lecture.keys = [];\nif (!Array.isArray(lecture.contrasts)) lecture.contrasts = [];\nif (!Array.isArray(lecture.cards)) lecture.cards = [];\nif (!Array.isArray(lecture.quiz)) lecture.quiz = [];\nif (!Array.isArray(lecture.vf)) lecture.vf = [];\n\nreturn {\n  json: {\n    lecture,\n    stats: {\n      cards: lecture.cards.length,\n      quiz: lecture.quiz.length,\n      vf: lecture.vf.length\n    }\n  }\n};"
+      },
+      "id": "5",
+      "name": "Parsing & Validation Schéma",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.RESIDANAT_APP_URL || 'http://localhost:5173' }}/api/webhooks/n8n-lecture",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "x-n8n-secret",
+              "value": "={{ $env.N8N_WEBHOOK_SECRET || 'residanat_secret_token' }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"lecture\": $json.lecture\n}",
+        "options": {}
+      },
+      "id": "6",
+      "name": "Envoi à l'App Résidanat",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1340,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"success\": true,\n  \"message\": \"Cours interactif généré et importé avec succès dans l'application Résidanat.\",\n  \"lectureId\": $json.lecture.id,\n  \"lectureName\": $json.lecture.name,\n  \"stats\": $('Parsing & Validation Schéma').first().json.stats\n}",
+        "options": {}
+      },
+      "id": "7",
+      "name": "Réponse Webhook (200 OK)",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1560,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook Déclencheur (Upload PDF)": {
+      "main": [
+        [
+          {
+            "node": "Extraction Texte PDF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extraction Texte PDF": {
+      "main": [
+        [
+          {
+            "node": "Préparation Prompt Médical",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Préparation Prompt Médical": {
+      "main": [
+        [
+          {
+            "node": "Appel OpenAI GPT-4o",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Appel OpenAI GPT-4o": {
+      "main": [
+        [
+          {
+            "node": "Parsing & Validation Schéma",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parsing & Validation Schéma": {
+      "main": [
+        [
+          {
+            "node": "Envoi à l'App Résidanat",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Envoi à l'App Résidanat": {
+      "main": [
+        [
+          {
+            "node": "Réponse Webhook (200 OK)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

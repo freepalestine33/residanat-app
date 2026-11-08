@@ -6,5 +6,6 @@ export interface Note {
   text: string;
   link?: string;
   image?: Blob | string;
+  clearImage?: boolean;
   updated: number; // Timestamp
 }

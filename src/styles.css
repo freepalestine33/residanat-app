@@ -3621,8 +3621,35 @@ textarea::placeholder {
 
 .photo-preview-error {
   margin-top: 0.45rem;
-  color: var(--muted);
-  font-size: 0.76rem;
+  margin-bottom: 0.35rem;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.photo-link-preview {
+  min-width: 0;
+  margin-top: 0.35rem;
+}
+
+.photo-link-preview .card-note-image {
+  margin-top: 0;
+}
+
+.photo-link-anchor {
+  display: block;
+  min-height: 44px;
+  padding: 0.55rem 0;
+  color: var(--accent);
+  font-size: 0.78rem;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.photo-link-anchor:focus-visible {
+  border-radius: 4px;
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 .card-note-saved-meta {
@@ -3637,6 +3664,8 @@ textarea::placeholder {
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
+  min-height: 44px;
+  padding-inline: 0.3rem;
   border: 0;
   background: transparent;
   cursor: pointer;
@@ -3652,7 +3681,8 @@ textarea::placeholder {
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
-  padding: 0;
+  min-height: 44px;
+  padding-inline: 0.3rem;
   color: var(--red);
   background: transparent;
   border: 0;
@@ -5141,5 +5171,642 @@ select:focus {
   .progress-stat-icon {
     width: 29px;
     height: 29px;
+  }
+}
+
+/* ===== AI lecture generator ===== */
+.ai-lecture-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  padding: clamp(0.65rem, 3vw, 1.5rem);
+  background: rgba(3, 8, 14, 0.78);
+  backdrop-filter: blur(7px);
+}
+
+.ai-lecture-modal {
+  width: min(100%, 930px);
+  max-height: min(92dvh, 960px);
+  overflow-y: auto;
+  margin: auto;
+  padding: clamp(1rem, 2.8vw, 1.75rem);
+  border: 1px solid var(--border-strong);
+  border-radius: 20px;
+  background:
+    radial-gradient(ellipse at 2% 0%, color-mix(in srgb, var(--green) 8%, transparent), transparent 34%),
+    var(--card);
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.58);
+}
+
+.ai-lecture-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.ai-lecture-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+  min-width: 0;
+}
+
+.ai-lecture-mark {
+  display: grid;
+  flex: 0 0 auto;
+  width: 46px;
+  height: 46px;
+  place-items: center;
+  color: var(--green);
+  background: var(--green-soft);
+  border: 1px solid color-mix(in srgb, var(--green) 25%, var(--border));
+  border-radius: 14px;
+}
+
+.ai-lecture-kicker {
+  padding: 0;
+  color: var(--green);
+  background: none;
+  border: 0;
+  font-size: 0.64rem;
+  font-weight: 750;
+  letter-spacing: 0.1em;
+}
+
+.ai-lecture-title {
+  margin: 0.15rem 0 0.35rem;
+  color: var(--text);
+  font-size: clamp(1.25rem, 2vw, 1.65rem);
+  font-weight: 720;
+  letter-spacing: -0.035em;
+  line-height: 1.2;
+}
+
+.ai-lecture-close {
+  flex: 0 0 auto;
+  min-width: 38px;
+  min-height: 38px;
+  padding: 0.35rem;
+  border-radius: 11px;
+}
+
+.ai-lecture-modal .ai-lecture-provider {
+  margin-bottom: 1.15rem;
+  padding: 0.9rem;
+  background: color-mix(in srgb, var(--card2) 75%, transparent);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+}
+
+.ai-lecture-modal .ai-lecture-provider > div:first-child {
+  flex-wrap: wrap;
+  gap: 0.45rem 0.8rem;
+}
+
+.ai-lecture-provider-options {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.45rem;
+  margin-bottom: 0.7rem;
+}
+
+.ai-lecture-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.15rem;
+}
+
+.ai-lecture-fields > div {
+  min-width: 0;
+}
+
+.ai-lecture-fields input:not([type="checkbox"]),
+.ai-lecture-fields select,
+.ai-lecture-source textarea {
+  width: 100%;
+}
+
+.ai-lecture-option {
+  line-height: 1.45;
+}
+
+.ai-lecture-option input {
+  accent-color: var(--green);
+}
+
+.ai-lecture-source {
+  margin-bottom: 1.1rem;
+}
+
+.ai-lecture-dropzone {
+  position: relative;
+  padding: 1.3rem 1rem;
+  color: var(--text);
+  text-align: center;
+  background: color-mix(in srgb, var(--card2) 66%, transparent);
+  border: 1px dashed var(--border-strong);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: background var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.ai-lecture-dropzone:hover,
+.ai-lecture-dropzone.is-dragging,
+.ai-lecture-dropzone.has-file {
+  background: color-mix(in srgb, var(--green-soft) 65%, var(--card2));
+  border-color: color-mix(in srgb, var(--green) 65%, var(--border-strong));
+}
+
+.ai-lecture-dropzone:focus-within {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.ai-lecture-preview {
+  max-height: 340px;
+  overflow-y: auto;
+  margin-bottom: 1.25rem;
+  padding: 1rem;
+  color: var(--text);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 13px;
+}
+
+.ai-lecture-progress {
+  position: sticky;
+  top: 0.45rem;
+  z-index: 2;
+  margin: 0.25rem 0 1.2rem;
+  padding: 1rem 1.05rem 0.9rem;
+  color: var(--text);
+  background: linear-gradient(115deg, color-mix(in srgb, var(--green) 10%, var(--card2)), var(--card2) 72%);
+  border: 1px solid color-mix(in srgb, var(--green) 28%, var(--border));
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.24);
+}
+
+.ai-lecture-progress-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+}
+
+.ai-lecture-progress-icon {
+  display: grid;
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  color: var(--green);
+  background: var(--green-soft);
+  border-radius: 10px;
+}
+
+.ai-lecture-progress-heading strong {
+  display: block;
+  color: var(--text);
+  font-size: 0.9rem;
+}
+
+.ai-lecture-progress-heading p {
+  margin: 0.2rem 0 0;
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.ai-lecture-steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.55rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ai-lecture-step {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-width: 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 560;
+  line-height: 1.4;
+}
+
+.ai-lecture-step-number {
+  display: grid;
+  flex: 0 0 auto;
+  width: 25px;
+  height: 25px;
+  place-items: center;
+  color: var(--muted);
+  background: var(--card);
+  border: 1px solid var(--border-strong);
+  border-radius: 50%;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.ai-lecture-step.is-active {
+  color: var(--text);
+  font-weight: 650;
+}
+
+.ai-lecture-step.is-active .ai-lecture-step-number {
+  color: var(--bg);
+  background: var(--green);
+  border-color: var(--green);
+}
+
+.ai-lecture-step.is-complete {
+  color: var(--green);
+}
+
+.ai-lecture-step.is-complete .ai-lecture-step-number {
+  color: var(--green);
+  background: var(--green-soft);
+  border-color: transparent;
+}
+
+.ai-lecture-step.is-upcoming {
+  color: var(--text-secondary);
+}
+
+.ai-lecture-step.is-upcoming .ai-lecture-step-number {
+  color: var(--text-secondary);
+  background: var(--card2);
+}
+
+.ai-lecture-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.35rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.ai-lecture-footer > div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.65rem;
+}
+
+.ai-lecture-modal .section-tabs {
+  margin-top: 0;
+}
+
+@media (max-width: 900px) {
+  .ai-lecture-provider-options {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 680px) {
+  .ai-lecture-backdrop {
+    align-items: flex-start;
+    padding: 0.55rem;
+  }
+
+  .ai-lecture-modal {
+    max-height: calc(100dvh - 1.1rem);
+    padding: 1rem;
+    border-radius: 16px;
+  }
+
+  .ai-lecture-fields {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .ai-lecture-footer {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .ai-lecture-footer > div {
+    justify-content: stretch;
+  }
+
+  .ai-lecture-footer > div > button {
+    flex: 1 1 auto;
+  }
+
+  .ai-lecture-steps {
+    grid-template-columns: 1fr;
+    gap: 0.45rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .ai-lecture-header {
+    gap: 0.45rem;
+  }
+
+  .ai-lecture-heading {
+    gap: 0.65rem;
+  }
+
+  .ai-lecture-mark {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+  }
+
+  .ai-lecture-provider-options {
+    grid-template-columns: 1fr;
+  }
+
+  .ai-lecture-modal .ai-lecture-provider .btn {
+    justify-content: flex-start !important;
+  }
+
+  .ai-lecture-preview {
+    padding: 0.75rem;
+  }
+}
+
+/* Card note attachment composer */
+.card-note-attachments {
+  display: grid;
+  gap: 0.65rem;
+  padding: 0.8rem;
+  background: color-mix(in srgb, var(--bg-elevated) 78%, transparent);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.card-note-attachment-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem;
+  color: var(--accent);
+}
+
+.card-note-attachment-heading .field-label {
+  margin: 0;
+  color: var(--text);
+  font-size: 0.8rem;
+  font-weight: 680;
+}
+
+.card-note-attachment-heading p,
+.card-note-attachment-help {
+  margin: 0.18rem 0 0;
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.card-note-paste-field {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: 44px;
+  padding: 0 0.65rem;
+  background: var(--card);
+  border: 1px solid var(--border-strong);
+  border-radius: 9px;
+}
+
+.card-note-paste-field:focus-within {
+  border-color: var(--accent);
+  outline: 2px solid color-mix(in srgb, var(--accent) 25%, transparent);
+  outline-offset: 1px;
+}
+
+.card-note-paste-icon {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  color: var(--accent);
+}
+
+.card-note-paste-field input {
+  width: 100%;
+  min-width: 0;
+  min-height: 42px;
+  padding: 0;
+  color: var(--text);
+  background: transparent;
+  border: 0;
+  outline: 0;
+  font: inherit;
+  font-size: 0.76rem;
+}
+
+.card-note-paste-field input::placeholder {
+  color: var(--muted);
+}
+
+.card-note-dropzone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  min-height: 50px;
+  padding: 0.55rem;
+  color: var(--text-secondary);
+  background: color-mix(in srgb, var(--card2) 60%, transparent);
+  border: 1px dashed var(--border-strong);
+  border-radius: 9px;
+  font-size: 0.78rem;
+}
+
+.card-note-file-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-height: 44px;
+  padding: 0.4rem 0.65rem;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border: 1px solid color-mix(in srgb, var(--accent) 25%, var(--border));
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.card-note-file-button input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.card-note-file-button:focus-within {
+  outline: 3px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  outline-offset: 2px;
+}
+
+.card-note-url-row {
+  display: flex;
+  align-items: stretch;
+  gap: 0.45rem;
+}
+
+.card-note-url-row input[type="url"] {
+  flex: 1 1 auto;
+  width: 0;
+}
+
+.card-note-import-button {
+  flex: 0 0 auto;
+  min-height: 44px;
+  white-space: nowrap;
+}
+
+.card-note-image-preview {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.35rem;
+  padding: 0.5rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+}
+
+.card-note-image-preview .card-note-image {
+  max-height: 9rem;
+  margin: 0 auto;
+}
+
+.card-note-image-preview-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+  font-size: 0.72rem;
+}
+
+.card-note-remove-image {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  min-height: 44px;
+  padding: 0.45rem 0.7rem;
+  color: var(--red);
+  background: transparent;
+  border: 1px solid color-mix(in srgb, var(--red) 28%, var(--border));
+  border-radius: 8px;
+  font: inherit;
+  cursor: pointer;
+}
+
+.card-note-attachment-status {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0;
+  color: var(--green);
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.card-note-attachment-status.is-busy {
+  color: var(--text-secondary);
+}
+
+.card-note-attachment-status.is-busy svg {
+  flex: 0 0 auto;
+  animation: card-note-spin 0.9s linear infinite;
+}
+
+.card-note-attachment-error {
+  margin: 0;
+  padding: 0.55rem 0.65rem;
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.card-note-form button:disabled,
+.card-note-paste-field input:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+@keyframes card-note-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 640px) {
+  .card-note-editor {
+    display: grid;
+    padding: 0.9rem;
+    overscroll-behavior: contain;
+  }
+
+  .card-note-editor-heading {
+    margin-bottom: 0.75rem;
+  }
+
+  .card-note-editor-heading strong {
+    max-width: calc(100vw - 5.5rem);
+  }
+
+  .card-note-editor > .card-note-form {
+    margin-top: 0.5rem;
+  }
+
+  .card-note-form {
+    gap: 0.65rem;
+  }
+
+  .card-note-attachments {
+    gap: 0.6rem;
+    padding: 0.7rem;
+  }
+
+  .card-note-url-row {
+    flex-direction: column;
+  }
+
+  .card-note-url-row input[type="url"] {
+    width: 100%;
+  }
+
+  .card-note-import-button {
+    width: 100%;
+  }
+
+  .card-note-form .btn-row > button {
+    min-height: 44px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-note-attachment-status.is-busy svg {
+    animation: none;
   }
 }

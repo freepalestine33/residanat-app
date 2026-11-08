@@ -1,9 +1,13 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { MessageCircle, Pencil, Plus, Trash2, X } from 'lucide-react';
+import React, { useEffect, useId, useMemo, useRef, useState } from 'react';
+import { ClipboardPaste, ImagePlus, Link2, LoaderCircle, MessageCircle, Pencil, Plus, Trash2, Upload, X } from 'lucide-react';
 import { useNoteStore } from '../../stores';
 import type { Note } from '../../types/note';
 import { compressNoteImage } from '../../lib/images';
 import { PhotoLinkPreview } from './PhotoLinkPreview';
+import { getHttpUrl, getImageImportFailure, getPastedAttachment } from './cardNoteAttachments';
+
+const MAX_SOURCE_IMAGE_BYTES = 8 * 1024 * 1024;
+const IMAGE_FETCH_TIMEOUT_MS = 15_000;
 
 function InlineNoteImage({ image }: { image: Blob | string }) {
   const [src, setSrc] = useState('');
@@ -24,13 +28,68 @@ interface CardNoteControlProps {
   label: string;
 }
 
+async function fetchImageFile(url: string, signal: AbortSignal) {
+  const response = await fetch(url, { signal, credentials: 'omit', cache: 'no-store' });
+  if (!response.ok) throw new Error(`Le serveur a répondu avec le code ${response.status}.`);
+  const contentType = response.headers.get('content-type')?.split(';')[0].trim().toLowerCase() ?? '';
+  if (!contentType.startsWith('image/')) {
+    throw new Error('Cette adresse renvoie une page ou un contenu qui n’est pas une image.');
+  }
+
+  const length = Number(response.headers.get('content-length'));
+  if (Number.isFinite(length) && length > MAX_SOURCE_IMAGE_BYTES) {
+    throw new Error('Cette image dépasse la limite de téléchargement de 8 Mo.');
+  }
+  if (!response.body) {
+    throw new Error('Le téléchargement ne peut pas être limité dans ce navigateur.');
+  }
+
+  const reader = response.body.getReader();
+  const chunks: Uint8Array[] = [];
+  let total = 0;
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      total += value.byteLength;
+      if (total > MAX_SOURCE_IMAGE_BYTES) {
+        await reader.cancel();
+        throw new Error('Cette image dépasse la limite de téléchargement de 8 Mo.');
+      }
+      chunks.push(value);
+    }
+  } finally {
+    reader.releaseLock();
+  }
+  if (!total) throw new Error('Le serveur n’a renvoyé aucune donnée image.');
+  const buffer = new ArrayBuffer(total);
+  const bytes = new Uint8Array(buffer);
+  let offset = 0;
+  for (const chunk of chunks) {
+    bytes.set(chunk, offset);
+    offset += chunk.byteLength;
+  }
+  const blob = new Blob([buffer], { type: contentType });
+  return new File([blob], 'photo-importee', { type: contentType });
+}
+
+function errorMessage(reason: unknown) {
+  return reason instanceof Error ? reason.message : String(reason);
+}
+
 export const CardNoteControl: React.FC<CardNoteControlProps> = ({ relation, label }) => {
   const [open, setOpen] = useState(false);
   const [draft, setDraft] = useState('');
   const [draftLink, setDraftLink] = useState('');
-  const [draftImage, setDraftImage] = useState<Blob | string | undefined>();
+  const [draftImage, setDraftImage] = useState<Blob | string | null>();
+  const [imagePasteValue, setImagePasteValue] = useState('');
   const [editingId, setEditingId] = useState<number>();
   const [formError, setFormError] = useState('');
+  const [attachmentError, setAttachmentError] = useState('');
+  const [attachmentStatus, setAttachmentStatus] = useState('');
+  const [attachmentBusy, setAttachmentBusy] = useState(false);
+  const busyRef = useRef(false);
+  const ids = useId();
   const notes = useNoteStore((state) => state.notes);
   const loading = useNoteStore((state) => state.loading);
   const error = useNoteStore((state) => state.error);
@@ -40,10 +99,116 @@ export const CardNoteControl: React.FC<CardNoteControlProps> = ({ relation, labe
   const clearError = useNoteStore((state) => state.clearError);
   const relatedNotes = useMemo(() => notes.filter((note) => note.rel === relation).sort((a, b) => b.updated - a.updated), [notes, relation]);
 
+  const resetAttachmentFeedback = () => {
+    setAttachmentError('');
+    setAttachmentStatus('');
+  };
+
+  const compressAndAttach = async (file: File) => {
+    if (busyRef.current) {
+      setAttachmentError('Une image est déjà en cours de traitement. Réessayez dans un instant.');
+      return;
+    }
+    if (!file.type.startsWith('image/')) {
+      setAttachmentError('Choisissez ou collez un fichier image.');
+      setAttachmentStatus('');
+      return;
+    }
+    if (file.size > MAX_SOURCE_IMAGE_BYTES) {
+      setAttachmentError('Cette image dépasse la limite de 8 Mo avant compression.');
+      setAttachmentStatus('');
+      return;
+    }
+    busyRef.current = true;
+    setAttachmentBusy(true);
+    setAttachmentError('');
+    setAttachmentStatus('Compression de la photo…');
+    try {
+      const compressed = await compressNoteImage(file);
+      setDraftImage(compressed);
+      setAttachmentError('');
+      setAttachmentStatus('Photo prête à être enregistrée.');
+      setFormError('');
+    } catch (reason) {
+      setAttachmentStatus('');
+      setAttachmentError(errorMessage(reason));
+    } finally {
+      busyRef.current = false;
+      setAttachmentBusy(false);
+    }
+  };
+
+  const importImageUrl = async (input: string) => {
+    const url = getHttpUrl(input);
+    if (!url) {
+      setAttachmentError('Collez une adresse Web valide commençant par http:// ou https://.');
+      setAttachmentStatus('');
+      return;
+    }
+    if (busyRef.current) {
+      setAttachmentError('Une image est déjà en cours de traitement. Réessayez dans un instant.');
+      return;
+    }
+    setDraftLink(url);
+    busyRef.current = true;
+    setAttachmentBusy(true);
+    setAttachmentError('');
+    setAttachmentStatus('Récupération de l’image depuis le lien…');
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), IMAGE_FETCH_TIMEOUT_MS);
+    try {
+      const file = await fetchImageFile(url, controller.signal);
+      setAttachmentStatus('Compression de la photo…');
+      const compressed = await compressNoteImage(file);
+      setDraftImage(compressed);
+      setDraftLink((current) => current.trim() === url ? '' : current);
+      setAttachmentError('');
+      setAttachmentStatus('Photo importée et prête à être enregistrée.');
+      setFormError('');
+    } catch (reason) {
+      const failure = getImageImportFailure(url, reason, controller.signal.aborted);
+      if (failure) setDraftLink(failure.link);
+      setAttachmentStatus('');
+      setAttachmentError(failure?.message ?? `Import impossible. L’adresse a été conservée comme lien.`);
+    } finally {
+      window.clearTimeout(timeout);
+      busyRef.current = false;
+      setAttachmentBusy(false);
+    }
+  };
+
+  const handleAttachmentPaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
+    const clipboard = event.clipboardData;
+    const pasted = getPastedAttachment(Array.from(clipboard.items), Array.from(clipboard.files), clipboard.getData('text/plain'));
+    if (pasted?.type === 'image') {
+      event.preventDefault();
+      setImagePasteValue('');
+      void compressAndAttach(pasted.file);
+      return;
+    }
+    if (pasted?.type === 'url') {
+      event.preventDefault();
+      setImagePasteValue('');
+      void importImageUrl(pasted.url);
+    }
+  };
+
+  const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    const file = Array.from(event.dataTransfer.files).find((item) => item.type.startsWith('image/'));
+    if (!file) {
+      setAttachmentError('Déposez un fichier image pour le joindre à la note.');
+      setAttachmentStatus('');
+      return;
+    }
+    void compressAndAttach(file);
+  };
+
   const toggle = () => {
     if (!open) void loadNotes();
     setOpen((value) => !value);
     setFormError('');
+    resetAttachmentFeedback();
   };
 
   const edit = (note: Note) => {
@@ -51,26 +216,37 @@ export const CardNoteControl: React.FC<CardNoteControlProps> = ({ relation, labe
     setDraft(note.text);
     setDraftLink(note.link ?? '');
     setDraftImage(note.image);
+    setImagePasteValue('');
     setFormError('');
+    resetAttachmentFeedback();
   };
 
   const save = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (attachmentBusy) {
+      setFormError('Attendez la fin du traitement de la photo avant d’enregistrer.');
+      return;
+    }
     if (draftLink.trim()) {
-      try {
-        const url = new URL(draftLink.trim());
-        if (!['https:', 'http:'].includes(url.protocol)) throw new Error('Lien non pris en charge.');
-      } catch {
+      if (!getHttpUrl(draftLink)) {
         setFormError('Ajoutez un lien Web valide commençant par http:// ou https://.');
         return;
       }
     }
-    if (!draft.trim() && !draftLink.trim() && !draftImage) {
+    if (!draft.trim() && !draftLink.trim() && !draftImage && !(editingId !== undefined && draftImage === null)) {
       setFormError('Ajoutez un commentaire, un lien ou une photo avant de l’enregistrer.');
       return;
     }
     clearError();
-    await upsertNote({ id: editingId, rel: relation, text: draft.trim(), link: draftLink.trim() || undefined, image: draftImage, updated: Date.now() });
+    await upsertNote({
+      id: editingId,
+      rel: relation,
+      text: draft.trim(),
+      link: draftLink.trim() || undefined,
+      image: draftImage ?? undefined,
+      clearImage: draftImage === null,
+      updated: Date.now(),
+    });
     const nextError = useNoteStore.getState().error;
     if (nextError) {
       setFormError(nextError);
@@ -79,8 +255,20 @@ export const CardNoteControl: React.FC<CardNoteControlProps> = ({ relation, labe
     setDraft('');
     setDraftLink('');
     setDraftImage(undefined);
+    setImagePasteValue('');
     setEditingId(undefined);
     setFormError('');
+    resetAttachmentFeedback();
+  };
+
+  const cancelEdit = () => {
+    setEditingId(undefined);
+    setDraft('');
+    setDraftLink('');
+    setDraftImage(undefined);
+    setImagePasteValue('');
+    setFormError('');
+    resetAttachmentFeedback();
   };
 
   const remove = async (note: Note) => {
@@ -92,12 +280,7 @@ export const CardNoteControl: React.FC<CardNoteControlProps> = ({ relation, labe
       setFormError(nextError);
       return;
     }
-    if (editingId === note.id) {
-      setEditingId(undefined);
-      setDraft('');
-      setDraftLink('');
-      setDraftImage(undefined);
-    }
+    if (editingId === note.id) cancelEdit();
     setFormError('');
   };
 
@@ -106,28 +289,110 @@ export const CardNoteControl: React.FC<CardNoteControlProps> = ({ relation, labe
       <span className="field-label">{editingId === undefined ? 'Ajouter une note' : 'Modifier la note'}</span>
       <textarea value={draft} onChange={(event) => setDraft(event.target.value)} rows={3} placeholder="Un rappel, une astuce ou un point à revoir…" />
     </label>
-    <label>
-      <span className="field-label">Lien direct vers une photo</span>
-      <input type="url" value={draftLink} onChange={(event) => setDraftLink(event.target.value)} placeholder="Collez l’adresse directe de l’image" />
-      <span className="muted">Les liens de partage Google Photos ouvrent une page d’album. Pour afficher la photo ici, téléversez-la ou utilisez son adresse directe.</span>
-    </label>
-    <label>
-      <span className="field-label">Ou joindre une photo</span>
-      <input type="file" accept="image/*" onChange={(event) => {
-        const file = event.target.files?.[0];
-        if (!file) return;
-        void compressNoteImage(file).then((blob) => {
-          setDraftImage(blob);
-          setFormError('');
-        }).catch((reason: unknown) => setFormError(reason instanceof Error ? reason.message : String(reason)));
-      }} />
-    </label>
-    {draftImage && <p className="muted">Une photo est jointe à cette note.</p>}
+
+    <div className="card-note-attachments">
+      <div className="card-note-attachment-heading">
+        <div>
+          <span className="field-label">Ajouter une photo</span>
+          <p>Collez, déposez ou choisissez une image.</p>
+        </div>
+        <ImagePlus size={19} aria-hidden="true" />
+      </div>
+
+      <label className="card-note-paste-field">
+        <span className="card-note-paste-icon"><ClipboardPaste size={16} aria-hidden="true" /></span>
+        <span className="visually-hidden">Coller une image ou une adresse de photo</span>
+        <input
+          type="text"
+          inputMode="url"
+          autoComplete="off"
+          value={imagePasteValue}
+          onChange={(event) => setImagePasteValue(event.target.value)}
+          onPaste={handleAttachmentPaste}
+          placeholder="Touchez ici, puis collez une image ou son URL"
+          aria-describedby={`${ids}-paste-help ${ids}-attachment-status`}
+          disabled={attachmentBusy}
+        />
+      </label>
+      <p className="card-note-attachment-help" id={`${ids}-paste-help`}>Le champ est activable au toucher pour recevoir une image copiée. Les liens directs sont importés si le site l’autorise.</p>
+
+      <div
+        className="card-note-dropzone"
+        onDragOver={(event) => event.preventDefault()}
+        onDrop={handleDrop}
+      >
+        <Upload size={17} aria-hidden="true" />
+        <span>ou déposez une image ici</span>
+        <label className="card-note-file-button">
+          <input
+            type="file"
+            accept="image/*"
+            aria-label="Choisir une image depuis cet appareil"
+            disabled={attachmentBusy}
+            onChange={(event) => {
+              const file = event.target.files?.[0];
+              if (file) void compressAndAttach(file);
+              event.target.value = '';
+            }}
+          />
+          <ImagePlus size={15} aria-hidden="true" />
+          Choisir un fichier
+        </label>
+      </div>
+
+      <label>
+        <span className="field-label">Importer depuis une URL</span>
+        <div className="card-note-url-row">
+          <input
+            type="url"
+            value={draftLink}
+            onChange={(event) => {
+              setDraftLink(event.target.value);
+              resetAttachmentFeedback();
+            }}
+            onPaste={handleAttachmentPaste}
+            placeholder="https://…"
+            aria-label="Lien Web ou adresse directe de la photo"
+            disabled={attachmentBusy}
+          />
+          <button
+            type="button"
+            className="btn ghost btn-sm card-note-import-button"
+            onClick={() => void importImageUrl(draftLink)}
+            disabled={attachmentBusy || !draftLink.trim()}
+          >
+            <Link2 size={15} aria-hidden="true" />
+            Importer
+          </button>
+        </div>
+        <span className="muted">Les pages de partage restent des liens ; une URL directe d’image est nécessaire pour l’intégrer.</span>
+      </label>
+
+      {draftImage && <div className="card-note-image-preview">
+        <InlineNoteImage image={draftImage} />
+        <div className="card-note-image-preview-meta">
+          <span>Photo jointe</span>
+          <button type="button" className="card-note-remove-image" onClick={() => {
+            setDraftImage(null);
+            setAttachmentError('');
+            setAttachmentStatus('Photo retirée. Enregistrez pour confirmer la modification.');
+          }} disabled={attachmentBusy}>
+            <Trash2 size={14} aria-hidden="true" />
+            Retirer
+          </button>
+        </div>
+      </div>}
+      {attachmentBusy && <p className="card-note-attachment-status is-busy" id={`${ids}-attachment-status`} role="status"><LoaderCircle size={15} aria-hidden="true" />{attachmentStatus}</p>}
+      {!attachmentBusy && attachmentStatus && <p className="card-note-attachment-status" id={`${ids}-attachment-status`} role="status">{attachmentStatus}</p>}
+      {!attachmentStatus && !attachmentBusy && <span className="visually-hidden" id={`${ids}-attachment-status`} />}
+      {attachmentError && <p className="notice error card-note-attachment-error" role="alert">{attachmentError}</p>}
+    </div>
+
     <p className="muted card-note-hint">Votre texte et sa photo sont enregistrés ensemble sur cette carte.</p>
     {(formError || error) && <p className="notice error" role="alert">{formError || error}</p>}
     <div className="btn-row">
-      <button className="btn btn-sm" type="submit">{editingId === undefined ? <><Plus size={15} /> Enregistrer</> : 'Mettre à jour'}</button>
-      {editingId !== undefined && <button className="btn ghost btn-sm" type="button" onClick={() => { setEditingId(undefined); setDraft(''); setDraftLink(''); setDraftImage(undefined); setFormError(''); }}>Annuler</button>}
+      <button className="btn btn-sm" type="submit" disabled={attachmentBusy}>{editingId === undefined ? <><Plus size={15} /> Enregistrer</> : 'Mettre à jour'}</button>
+      {editingId !== undefined && <button className="btn ghost btn-sm" type="button" onClick={cancelEdit}>Annuler</button>}
     </div>
   </form>;
 

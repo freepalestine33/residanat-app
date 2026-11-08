@@ -15,7 +15,7 @@ export const otrProgramme: OTRProgrammeEntry[] = [
   { number: 8, title: 'Généralités sur les fractures de l’adulte' },
   { number: 9, title: 'Spondylarthrites', lectureId: 'SA' },
   { number: 10, title: 'Ostéopathies reminéralisantes (ostéoporose, ostéomalacie)', lectureId: 'OSTEO' },
-  { number: 11, title: 'Boiterie chez l’enfant' },
+  { number: 11, title: 'Boiterie chez l’enfant', lectureId: 'boiterie_enfant' },
   { number: 12, title: 'Membre inférieur et locomotion' },
   { number: 13, title: 'Membre supérieur et préhension' },
   { number: 14, title: 'Malformations congénitales du pied chez l’enfant', lectureId: 'PIED_BOT' },

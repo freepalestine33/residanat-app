@@ -6,6 +6,7 @@ Offline-ready medical study app with Supabase email sign-in and cross-device syn
 
 - Email-and-password sign-in, account creation, and password recovery with Supabase Auth. Magic links are also available as an alternative.
 - Local-first flashcard scheduling (FSRS), notes, quiz results, errors, settings, and user-imported lecture JSON.
+- AI-generated and imported lectures sync with the signed-in user's account and appear on that user's other devices after the next sync.
 - Background sync after local changes, on reconnect/focus, and every 30 seconds while active.
 - Per-record last-write-wins merge; flashcard progress favors the higher review count, then the later due date.
 - Private note-image storage with signed URLs. Images are resized to at most 1200 px and compressed below 500 KB before upload.
@@ -60,6 +61,8 @@ npm run build
 2. On the first device sync, the app compares local and cloud data. If both have study data, the user chooses whether to upload this device's data or download cloud data; records are still merged according to the conflict rules.
 3. Local mutations are written to IndexedDB/localStorage and an IndexedDB retry queue. A debounced background sync pushes queued changes, then pulls records changed since the last successful sync.
 4. Failed requests stay queued and retry on the next change, reconnect, focus, manual sync, or polling interval. The cloud indicator shows offline, syncing, synced, conflict-choice, or error state.
+
+AI-generated courses are saved to the local course library and queued in the `lectures` table for the currently signed-in account. To make them available on another browser or device, deploy with the Supabase environment variables above, apply the initial schema migration, sign in with the same account on both devices, and confirm the sync indicator reports **Synchronisé**. If the second device has local data already, choose **Télécharger les données cloud** in Settings to initialize it from the account.
 
 ## API routes
 

@@ -4,7 +4,7 @@ import { ArrowLeft, ArrowRight, BookOpenText, CheckCircle2, ChevronDown, Layers3
 import { Header } from '../components/layout/Header';
 import { TabBar } from '../components/layout/TabBar';
 import { coreTabs } from '../components/layout/tabs';
-import { loadLecture } from '../lib/content';
+import { loadLectureById } from '../data/lectures';
 import { LectureNotFoundError } from '../lib/content';
 import { isCorrectSelection } from '../lib/answers';
 import { saveQuizResult } from '../lib/quizHistory';
@@ -49,7 +49,7 @@ export default function LecturePage() {
     setActiveCardIndex(0);
     setRevealed({});
     setReviewed({});
-    loadLecture(id)
+    loadLectureById(id)
       .then((data) => { if (active) setLecture(data); })
       .catch((reason: unknown) => {
         if (!active) return;
