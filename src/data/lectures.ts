@@ -10,10 +10,12 @@ export async function loadLectureIndex(): Promise<LectureMeta[]> {
     ...imported.map(({ content }) => ({
       id: content.id,
       progId: content.progId ?? null,
+      otrNumber: content.otrNumber,
       name: content.name,
       cards: content.cards.length,
       quiz: content.quiz.length,
       vf: content.vf.length,
+      ...(content.pdfUrl ? { pdfUrl: content.pdfUrl } : {}),
     })),
   ];
 }

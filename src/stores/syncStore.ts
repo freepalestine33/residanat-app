@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import type { User } from '@supabase/supabase-js';
-import { synchronize, type SyncOutcome, type SyncStatus } from '../lib/syncEngine';
+import type { SyncOutcome, SyncStatus } from '../lib/syncEngine';
 import { useToast } from '../hooks/useToast';
 
 interface SyncState {
@@ -31,6 +31,7 @@ export const useSyncStore = create<SyncState>((set) => ({
   syncNow: async (user) => {
     const firstSuccessfulSync = useSyncStore.getState().lastSyncedAt === null;
     set({ status: navigator.onLine ? 'syncing' : 'offline', error: null });
+    const { synchronize } = await import('../lib/syncEngine');
     const outcome = await synchronize(user);
     set(applyOutcome(outcome));
     if (outcome.status === 'synced' && firstSuccessfulSync) useToast.getState().showToast('Data synced across devices.', 'success');
@@ -38,6 +39,7 @@ export const useSyncStore = create<SyncState>((set) => ({
 
   chooseInitialSync: async (user, choice) => {
     set({ status: 'syncing', error: null });
+    const { synchronize } = await import('../lib/syncEngine');
     const outcome = await synchronize(user, choice);
     set(applyOutcome(outcome));
     if (outcome.status === 'synced') useToast.getState().showToast('Data synced across devices.', 'success');

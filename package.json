@@ -9,6 +9,9 @@
     "preview": "vite preview",
     "export:content": "node scripts/export-content.mjs",
     "validate:content": "tsx scripts/validate-content.ts",
+    "lecture:check": "tsx scripts/check-lecture.ts",
+    "lecture:draft": "tsx scripts/draft-lecture.ts",
+    "lecture:publish": "tsx scripts/publish-lecture.ts",
     "test": "vitest run"
   },
   "dependencies": {

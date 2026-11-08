@@ -1,10 +1,9 @@
 export const coreTabs = [
-  { path: '/', label: 'Accueil' },
+  { path: '/programme', label: 'Programme' },
   { path: '/study', label: 'Révision' },
+  { path: '/lectures', label: 'Cours' },
   { path: '/quiz', label: 'Quiz global' },
   { path: '/vf', label: 'Vrai / faux' },
-  { path: '/programme', label: 'Programme' },
-  { path: '/lectures', label: 'Cours' },
   { path: '/notes', label: 'Notes' },
   { path: '/progress', label: 'Progression' },
   { path: '/settings', label: 'Réglages' },

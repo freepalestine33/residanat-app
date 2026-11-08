@@ -29,7 +29,7 @@ const LOCAL_KEYS = [
 export function SettingsPage() {
   const { user, configured, loading: authLoading, error: authError, sendMagicLink, signOut, clearError } = useAuthStore();
   const { status, error: syncError, initialChoiceRequired, syncNow, chooseInitialSync } = useSyncStore();
-  const { theme, setTheme } = useSettingsStore();
+  const { theme, setTheme, studyTrack, setStudyTrack } = useSettingsStore();
   const [email, setEmail] = useState('');
   const [sent, setSent] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -168,6 +168,18 @@ export function SettingsPage() {
       <Header />
       <TabBar tabs={coreTabs} />
       <main className="wrap settings-wrap">
+        <section className="panel settings-section">
+          <p className="eyebrow">Votre cursus</p>
+          <h2>Quel programme souhaitez-vous suivre ?</h2>
+          <p className="muted">Le choix du cursus adapte les modules affichés dans le Programme.</p>
+          <label>
+            <span className="field-label">Niveau d’études</span>
+            <select value={studyTrack} onChange={(event) => setStudyTrack(event.target.value as 'residency' | 'fifth-year')}>
+              <option value="residency">Résidanat — programme officiel d’Oran (209 cours)</option>
+              <option value="fifth-year">5e année médecine — modules OTR, pédiatrie et psychiatrie</option>
+            </select>
+          </label>
+        </section>
         <section className="panel appearance-panel">
           <div>
             <p className="eyebrow">Apparence</p>

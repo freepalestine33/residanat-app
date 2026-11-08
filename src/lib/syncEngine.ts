@@ -315,6 +315,7 @@ async function applyRemote(payload: PullPayload, forceCloud = false) {
         speechEnabled: preferences.speechEnabled ?? false,
         theme: preferences.theme ?? 'light',
         headerCollapsed: preferences.headerCollapsed ?? false,
+        studyTrack: preferences.studyTrack === 'fifth-year' ? 'fifth-year' : 'residency',
       };
       localStorage.setItem('sa_settings_v1', JSON.stringify(settings));
       localStorage.setItem('sa_streak', String(preferences.streak ?? 0));

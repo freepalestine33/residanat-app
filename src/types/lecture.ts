@@ -6,6 +6,7 @@ export interface Lecture {
   schema: 1;
   id: string;
   progId?: string | null;
+  otrNumber?: number;
   name: string;
   keys: string[];
   contrasts: string[];
@@ -19,8 +20,10 @@ export interface Lecture {
 export interface LectureMeta {
   id: string;
   progId: string | null;
+  otrNumber?: number;
   name: string;
   cards: number;
   quiz: number;
   vf: number;
+  pdfUrl?: string;
 }

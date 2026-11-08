@@ -21,6 +21,7 @@ export const LectureSchema = z.object({
   schema: z.literal(1),
   id: z.string().regex(/^[A-Za-z0-9_-]{1,32}$/),
   progId: z.string().nullable().optional(),
+  otrNumber: z.number().int().min(1).max(43).optional(),
   name: z.string(),
   keys: z.array(z.string()),
   contrasts: z.array(z.string()),
@@ -33,6 +34,15 @@ export const LectureSchema = z.object({
 export type Lecture = z.infer<typeof LectureSchema>;
 export type Card = z.infer<typeof CardSchema>;
 
+export const LectureDraftSchema = z.object({
+  status: z.literal('draft'),
+  generatedAt: z.number(),
+  sourcePdfName: z.string().optional(),
+  sourcePdfPath: z.string().optional(),
+  lecture: LectureSchema,
+});
+export type LectureDraft = z.infer<typeof LectureDraftSchema>;
+
 export const IndexSchema = z.object({
-  lectures: z.array(z.object({ id: z.string(), progId: z.string().nullable(), name: z.string(), cards: z.number(), quiz: z.number(), vf: z.number() })),
+  lectures: z.array(z.object({ id: z.string(), progId: z.string().nullable(), otrNumber: z.number().int().min(1).max(43).optional(), name: z.string(), cards: z.number(), quiz: z.number(), vf: z.number(), pdfUrl: z.string().optional() })),
 });

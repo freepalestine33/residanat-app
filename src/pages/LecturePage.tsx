@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
+import { BookOpenText, CheckCircle2, Layers3, ListChecks } from 'lucide-react';
 import { Header } from '../components/layout/Header';
 import { TabBar } from '../components/layout/TabBar';
 import { coreTabs } from '../components/layout/tabs';
@@ -8,15 +9,17 @@ import { LectureNotFoundError } from '../lib/content';
 import { isCorrectSelection } from '../lib/answers';
 import { saveQuizResult } from '../lib/quizHistory';
 import { Rating, review } from '../lib/srs';
+import { CardWebSearchButton } from '../components/ui/CardWebSearchButton';
+import { CardNoteControl } from '../components/ui/CardNoteControl';
 import type { Lecture } from '../lib/schema';
 import { useCardStore, useProgressStore } from '../stores';
 
 type Section = 'overview' | 'cards' | 'quiz' | 'vf';
-const sections: Array<{ id: Section; label: string }> = [
-  { id: 'overview', label: 'Résumé' },
-  { id: 'cards', label: 'Cartes' },
-  { id: 'quiz', label: 'Quiz' },
-  { id: 'vf', label: 'Vrai / faux' },
+const sections: Array<{ id: Section; label: string; icon: typeof BookOpenText; count?: (lecture: Lecture) => number }> = [
+  { id: 'overview', label: 'Résumé', icon: BookOpenText },
+  { id: 'cards', label: 'Cartes', icon: Layers3, count: (lecture) => lecture.cards.length },
+  { id: 'quiz', label: 'Quiz', icon: ListChecks, count: (lecture) => lecture.quiz.length },
+  { id: 'vf', label: 'Vrai / faux', icon: CheckCircle2, count: (lecture) => lecture.vf.length },
 ];
 
 export default function LecturePage() {
@@ -112,9 +115,11 @@ export default function LecturePage() {
         </section>
 
         <div className="section-tabs" role="tablist" aria-label="Contenu du cours">
-          {sections.map((item) => (
+          {sections.map(({ icon: Icon, ...item }) => (
             <button key={item.id} type="button" role="tab" aria-selected={section === item.id} className={section === item.id ? 'section-tab active' : 'section-tab'} onClick={() => setSection(item.id)}>
-              {item.label}{item.id === 'cards' ? ` (${lecture.cards.length})` : item.id === 'quiz' ? ` (${lecture.quiz.length})` : item.id === 'vf' ? ` (${lecture.vf.length})` : ''}
+              <Icon className="section-tab-icon" size={17} strokeWidth={1.9} aria-hidden="true" />
+              <span className="section-tab-label">{item.label}</span>
+              {item.count && <span className="section-tab-count">{item.count(lecture)}</span>}
             </button>
           ))}
         </div>
@@ -123,7 +128,7 @@ export default function LecturePage() {
           <div className="panel">
             <h2>Points clés</h2>
             {lecture.keys.length ? <ol className="content-list">{lecture.keys.map((item, index) => <li key={`${index}-${item}`}>{item}</li>)}</ol> : <p className="muted">Aucun point clé disponible.</p>}
-            <Link className="btn ghost btn-sm" to={`/notes?rel=keys:${lecture.id}`}>Ajouter une note aux points clés</Link>
+            <CardNoteControl relation={`keys:${lecture.id}`} label="Points clés du cours" />
             <h2 style={{ marginTop: '1.2rem' }}>Contrastes à retenir</h2>
             {lecture.contrasts.length ? <ul className="content-list">{lecture.contrasts.map((item, index) => <li key={`${index}-${item}`}>{item}</li>)}</ul> : <p className="muted">Aucun contraste disponible.</p>}
           </div>
@@ -134,10 +139,15 @@ export default function LecturePage() {
             <p className="muted section-intro">Révélez la réponse, puis choisissez une difficulté pour la planifier avec FSRS.</p>
             {lecture.cards.length === 0 && <p className="panel muted">Aucune carte dans ce cours.</p>}
             {lecture.cards.map((card) => (
-              <article key={card.id} className="card">
-                <p className="pill">{card.type === 'contrast' ? 'Contraste' : 'Carte'}{card.freq ? ` · ${card.freq} examens` : ''}</p>
+              <article key={card.id} className="card lecture-flashcard">
+                <div className="lecture-flashcard-topline">
+                  <p className="pill">{card.type === 'contrast' ? 'Contraste' : 'Carte'}{card.freq ? ` · ${card.freq} examens` : ''}</p>
+                  <div className="card-quick-actions">
+                    <CardWebSearchButton lectureName={lecture.name} question={card.q} answer={card.a} />
+                    <CardNoteControl relation={`card:${lecture.id}.${card.id}`} label={`Carte ${card.id}`} />
+                  </div>
+                </div>
                 <h3 className="question-text">{card.q}</h3>
-                <Link className="text-link note-context-link" to={`/notes?rel=card:${lecture.id}.${card.id}`}>Ajouter / voir une note</Link>
                 {card.src && <p className="muted">Source : {card.src}</p>}
                 {!revealed[card.id] ? (
                   <button className="btn ghost" type="button" onClick={() => setRevealed((state) => ({ ...state, [card.id]: true }))}>Afficher la réponse</button>
@@ -172,16 +182,19 @@ export default function LecturePage() {
                 <article key={question.id} className="card quiz-question">
                   <p className="eyebrow">Question {index + 1} / {lecture.quiz.length}</p>
                   <h3 className="question-text">{question.q}</h3>
-                  <Link className="text-link note-context-link" to={`/notes?rel=quiz:${lecture.id}.${question.id}`}>Ajouter / voir une note</Link>
+                  <CardNoteControl relation={`quiz:${lecture.id}.${question.id}`} label={`Question ${index + 1}`} />
                   {question.src && <p className="muted">Source : {question.src}</p>}
                   <fieldset className="option-list" disabled={result !== undefined}>
                     <legend className="sr-only">Choix de réponse</legend>
                     {question.opts.map((option, optionIndex) => {
                       const optionId = `${lecture.id}-${question.id}-${optionIndex}`;
-                      return <label className="option-row" key={optionIndex}>
+                      const isSelected = selected.includes(String(optionIndex));
+                      const optionClass = result !== undefined && option.ok ? 'option-correct' : result !== undefined && isSelected && !option.ok ? 'option-incorrect' : '';
+                      return <label className={`option-row ${optionClass}`} key={optionIndex}>
                         <input type="checkbox" id={optionId} checked={selected.includes(String(optionIndex))} onChange={(event) => setSelections((state) => ({ ...state, [question.id]: event.target.checked ? [...selected, String(optionIndex)] : selected.filter((item) => item !== String(optionIndex)) }))} />
                         <span>{option.t}</span>
-                        {result !== undefined && option.ok && <strong className="correct-mark">✓</strong>}
+                        {result !== undefined && option.ok && <strong className="correct-mark" aria-label="Bonne réponse">✓</strong>}
+                        {result !== undefined && isSelected && !option.ok && <strong className="incorrect-mark" aria-label="Réponse incorrecte">×</strong>}
                       </label>;
                     })}
                   </fieldset>
@@ -208,7 +221,7 @@ export default function LecturePage() {
                 <article key={question.id} className="card">
                   <p className="eyebrow">Affirmation {index + 1} / {lecture.vf.length}</p>
                   <h3 className="question-text">{question.s}</h3>
-                  <Link className="text-link note-context-link" to={`/notes?rel=vf:${lecture.id}.${question.id}`}>Ajouter / voir une note</Link>
+                  <CardNoteControl relation={`vf:${lecture.id}.${question.id}`} label={`Affirmation ${index + 1}`} />
                   {result === undefined ? (
                     <>
                       <div className="rating-row">

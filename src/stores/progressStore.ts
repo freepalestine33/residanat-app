@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { db } from '../db/db';
 import { dueCount } from '../lib/srs';
-import { loadAllLectures } from '../data/lectures';
+import { loadLectureIndex } from '../data/lectures';
 
 interface ProgressState {
   dueCount: number;
@@ -28,7 +28,7 @@ export const useProgressStore = create<ProgressState>((set) => ({
       const [due, rows, lectures] = await Promise.all([
         dueCount(),
         db.cards.toArray(),
-        loadAllLectures(),
+        loadLectureIndex(),
       ]);
       const stateValues = rows.map((row) => row.state && typeof row.state === 'object' ? row.state as { reps?: unknown; stability?: unknown } : {});
       const reviewed = stateValues.filter((value) => Number(value.reps ?? 0) > 0).length;
@@ -39,7 +39,7 @@ export const useProgressStore = create<ProgressState>((set) => ({
       };
       const errors = legacyNumber('sa_error_count');
       const streak = legacyNumber('sa_streak');
-      const totalCards = lectures.reduce((sum, lecture) => sum + lecture.cards.length, 0);
+      const totalCards = lectures.reduce((sum, lecture) => sum + lecture.cards, 0);
       const progress = totalCards ? Math.round((reviewed / totalCards) * 100) : 0;
 
       set({

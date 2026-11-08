@@ -9,14 +9,16 @@ async function getJson(path: string): Promise<unknown> {
   return r.json();
 }
 
-let programmeCache: ProgrammeData | null = null;
+let programmePromise: Promise<ProgrammeData> | null = null;
 
 export async function loadProgramme(): Promise<ProgrammeData> {
-  if (programmeCache) return programmeCache;
-
-  const data = await getJson('programme.json');
-  programmeCache = data as ProgrammeData;
-  return programmeCache;
+  if (!programmePromise) {
+    programmePromise = getJson('programme.json').then((data) => data as ProgrammeData).catch((error: unknown) => {
+      programmePromise = null;
+      throw error;
+    });
+  }
+  return programmePromise;
 }
 
 export function getProgrammeCategory(data: ProgrammeData, code: ProgrammeCategoryCode): ProgrammeCategory | null {
