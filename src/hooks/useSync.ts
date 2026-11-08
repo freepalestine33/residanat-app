@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
-import { useAuthStore, useSyncStore } from '../stores';
+import { useAuthStore } from '../stores/authStore';
+import { useSyncStore } from '../stores/syncStore';
 
 export function useSync() {
   const user = useAuthStore((state) => state.user);

@@ -6,7 +6,9 @@ import { db, type UserLecture } from '../db/db';
 import { blobToBase64 } from '../lib/images';
 import { LectureSchema } from '../lib/schema';
 import { queueSyncChange } from '../lib/syncEvents';
-import { useAuthStore, useSettingsStore, useSyncStore } from '../stores';
+import { useAuthStore } from '../stores/authStore';
+import { useSettingsStore } from '../stores/settingsStore';
+import { useSyncStore } from '../stores/syncStore';
 
 const LOCAL_KEYS = [
   'sa_settings_v1',

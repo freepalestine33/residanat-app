@@ -3,7 +3,9 @@ import { Link } from 'react-router-dom';
 import { Header } from '../components/layout/Header';
 import { TabBar } from '../components/layout/TabBar';
 import { coreTabs } from '../components/layout/tabs';
-import { useLectureStore, useProgrammeStore, useSettingsStore } from '../stores';
+import { useLectureStore } from '../stores/lectureStore';
+import { useProgrammeStore } from '../stores/programmeStore';
+import { useSettingsStore } from '../stores/settingsStore';
 import type { ProgrammeCategoryCode, ProgrammeItem } from '../types/programme';
 import { otrProgramme } from '../data/otrProgramme';
 

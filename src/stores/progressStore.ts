@@ -1,7 +1,4 @@
 import { create } from 'zustand';
-import { db } from '../db/db';
-import { dueCount } from '../lib/srs';
-import { loadLectureIndex } from '../data/lectures';
 
 interface ProgressState {
   dueCount: number;
@@ -25,6 +22,11 @@ export const useProgressStore = create<ProgressState>((set) => ({
   loadStats: async () => {
     set({ loading: true });
     try {
+      const [{ db }, { dueCount }, { loadLectureIndex }] = await Promise.all([
+        import('../db/db'),
+        import('../lib/srs'),
+        import('../data/lectures'),
+      ]);
       const [due, rows, lectures] = await Promise.all([
         dueCount(),
         db.cards.toArray(),

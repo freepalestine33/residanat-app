@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Cloud, CloudOff, RefreshCw, CircleAlert } from 'lucide-react';
-import { useAuthStore, useSyncStore } from '../../stores';
+import { useAuthStore } from '../../stores/authStore';
+import { useSyncStore } from '../../stores/syncStore';
 
 const indicators = {
   local: { className: 'is-local', label: 'Données locales', Icon: CloudOff },

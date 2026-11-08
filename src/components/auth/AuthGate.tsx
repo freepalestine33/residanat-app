@@ -1,6 +1,6 @@
 import { LoginPage } from '../../pages/LoginPage';
 import { PasswordRecoveryPage } from '../../pages/PasswordRecoveryPage';
-import { useAuthStore } from '../../stores';
+import { useAuthStore } from '../../stores/authStore';
 
 export function AuthGate({ children }: { children: React.ReactNode }) {
   const configured = useAuthStore((state) => state.configured);

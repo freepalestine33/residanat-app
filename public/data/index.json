@@ -107,15 +107,6 @@
    "vf": 23,
    "otrNumber": 28,
    "pdfUrl": "pdfs/otr-28-goutte.pdf"
-  },
-  {
-   "id": "boiterie_enfant",
-   "progId": "CBOITERIE",
-   "name": "Boiterie chez l’enfant — Diagnostic & Conduite à tenir",
-   "cards": 16,
-   "quiz": 8,
-   "vf": 10,
-   "otrNumber": 11
   }
  ]
 }

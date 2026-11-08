@@ -4,7 +4,8 @@ import { lazy, Suspense } from 'react';
 import { ToastContainer } from './components/ui/Toast';
 import { useSync } from './hooks/useSync';
 import { AuthGate } from './components/auth/AuthGate';
-import { useProgressStore, useSettingsStore } from './stores';
+import { useProgressStore } from './stores/progressStore';
+import { useSettingsStore } from './stores/settingsStore';
 
 const StudyPage = lazy(() => import('./pages/StudyPage').then((module) => ({ default: module.StudyPage })));
 const ProgrammePage = lazy(() => import('./pages/ProgrammePage').then((module) => ({ default: module.ProgrammePage })));

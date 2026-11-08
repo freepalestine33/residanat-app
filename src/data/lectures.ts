@@ -30,6 +30,11 @@ export async function loadLectureById(id: string): Promise<Lecture> {
   }
 }
 
+export async function loadLecturePdf(id: string): Promise<{ blob: Blob; name?: string } | undefined> {
+  const imported = await db.userLectures.get(id);
+  return imported?.pdfBlob ? { blob: imported.pdfBlob, name: imported.pdfName } : undefined;
+}
+
 export async function loadAllLectures(): Promise<Lecture[]> {
   const index = await loadIndex();
   const [lectures, imported] = await Promise.all([

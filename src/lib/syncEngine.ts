@@ -363,7 +363,7 @@ async function pushQueue(token: string) {
 async function performSync(user: User, initialChoice?: 'upload' | 'download'): Promise<SyncOutcome> {
   if (!supabase) return { status: 'local' };
   if (!navigator.onLine) return { status: 'offline' };
-  const { data: { session }, error } = await supabase.auth.getSession();
+  const { data: { session }, error } = await supabase.getSession();
   if (error || !session) return { status: 'local', error: error?.message };
   const token = session.access_token;
   const firstSync = localStorage.getItem(initializedKey(user.id)) !== '1';

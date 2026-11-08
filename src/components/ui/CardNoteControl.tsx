@@ -1,6 +1,6 @@
 import React, { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { ClipboardPaste, ImagePlus, Link2, LoaderCircle, MessageCircle, Pencil, Plus, Trash2, Upload, X } from 'lucide-react';
-import { useNoteStore } from '../../stores';
+import { useNoteStore } from '../../stores/noteStore';
 import type { Note } from '../../types/note';
 import { compressNoteImage } from '../../lib/images';
 import { PhotoLinkPreview } from './PhotoLinkPreview';

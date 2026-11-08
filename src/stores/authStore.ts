@@ -37,7 +37,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       return () => undefined;
     }
     let active = true;
-    void supabase.auth.getSession()
+    void supabase.getSession()
       .then(({ data, error }) => {
         if (!active) return;
         if (error) set({ error: error.message, initialized: true });
@@ -46,7 +46,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       .catch((error: unknown) => {
         if (active) set({ error: error instanceof Error ? error.message : String(error), initialized: true });
       });
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+    const { data: { subscription } } = supabase.onAuthStateChange((event, session) => {
       set({
         session,
         user: session?.user ?? null,
@@ -68,7 +68,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     }
     set({ loading: true, error: null, success: null });
     try {
-      const { error } = await supabase.auth.signInWithOtp({
+      const { error } = await supabase.signInWithOtp({
         email: email.trim(),
         options: { emailRedirectTo: window.location.origin },
       });
@@ -85,7 +85,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     }
     set({ loading: true, error: null, success: null });
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
+      const { data, error } = await supabase.signInWithPassword({ email: email.trim(), password });
       if (error) throw error;
       set({ session: data.session, user: data.user, loading: false });
     } catch (error) {
@@ -100,7 +100,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     }
     set({ loading: true, error: null, success: null });
     try {
-      const { data, error } = await supabase.auth.signUp({
+      const { data, error } = await supabase.signUp({
         email: email.trim(),
         password,
         options: { emailRedirectTo: window.location.origin },
@@ -123,7 +123,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     }
     set({ loading: true, error: null, success: null });
     try {
-      const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+      const { error } = await supabase.resetPasswordForEmail(email.trim(), {
         redirectTo: window.location.origin,
       });
       if (error) throw error;
@@ -140,9 +140,9 @@ export const useAuthStore = create<AuthState>((set) => ({
     }
     set({ loading: true, error: null, success: null });
     try {
-      const { error } = await supabase.auth.updateUser({ password });
+      const { error } = await supabase.updateUser({ password });
       if (error) throw error;
-      const { error: signOutError } = await supabase.auth.signOut();
+      const { error: signOutError } = await supabase.signOut();
       if (signOutError) throw signOutError;
       set({
         loading: false,
@@ -160,7 +160,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     if (!supabase) return;
     set({ loading: true, error: null, success: null });
     try {
-      const { error } = await supabase.auth.signOut();
+      const { error } = await supabase.signOut();
       set({ loading: false, error: error?.message ?? null, passwordRecovery: false });
     } catch (error) {
       set({ loading: false, error: error instanceof Error ? error.message : String(error) });

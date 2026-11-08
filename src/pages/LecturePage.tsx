@@ -4,7 +4,7 @@ import { ArrowLeft, ArrowRight, BookOpenText, CheckCircle2, ChevronDown, Layers3
 import { Header } from '../components/layout/Header';
 import { TabBar } from '../components/layout/TabBar';
 import { coreTabs } from '../components/layout/tabs';
-import { loadLectureById } from '../data/lectures';
+import { loadLectureById, loadLecturePdf } from '../data/lectures';
 import { LectureNotFoundError } from '../lib/content';
 import { isCorrectSelection } from '../lib/answers';
 import { saveQuizResult } from '../lib/quizHistory';
@@ -13,7 +13,8 @@ import { CardWebSearchButton } from '../components/ui/CardWebSearchButton';
 import { CardNoteControl } from '../components/ui/CardNoteControl';
 import { CardSpeakButton } from '../components/ui/CardSpeakButton';
 import type { Lecture } from '../lib/schema';
-import { useCardStore, useProgressStore } from '../stores';
+import { useCardStore } from '../stores/cardStore';
+import { useProgressStore } from '../stores/progressStore';
 
 type Section = 'overview' | 'cards' | 'quiz' | 'vf';
 const sections: Array<{ id: Section; label: string; icon: typeof BookOpenText; count?: (lecture: Lecture) => number }> = [
@@ -27,6 +28,8 @@ export default function LecturePage() {
   const { id = '' } = useParams();
   const [searchParams] = useSearchParams();
   const [lecture, setLecture] = useState<Lecture | null>(null);
+  const [uploadedPdf, setUploadedPdf] = useState<{ url: string; name?: string } | null>(null);
+  const [pdfError, setPdfError] = useState('');
   const [error, setError] = useState('');
   const [notFound, setNotFound] = useState(false);
   const [section, setSection] = useState<Section>('overview');
@@ -44,6 +47,8 @@ export default function LecturePage() {
   useEffect(() => {
     let active = true;
     setLecture(null);
+    setUploadedPdf(null);
+    setPdfError('');
     setError('');
     setNotFound(false);
     setActiveCardIndex(0);
@@ -56,7 +61,20 @@ export default function LecturePage() {
         setNotFound(reason instanceof LectureNotFoundError);
         setError(reason instanceof Error ? reason.message : String(reason));
       });
-    return () => { active = false; };
+    let pdfUrl: string | undefined;
+    loadLecturePdf(id)
+      .then((pdf) => {
+        if (!active || !pdf) return;
+        pdfUrl = URL.createObjectURL(pdf.blob);
+        setUploadedPdf({ url: pdfUrl, name: pdf.name });
+      })
+      .catch((reason: unknown) => {
+        if (active) setPdfError(reason instanceof Error ? reason.message : String(reason));
+      });
+    return () => {
+      active = false;
+      if (pdfUrl) URL.revokeObjectURL(pdfUrl);
+    };
   }, [id]);
 
   useEffect(() => {
@@ -116,7 +134,12 @@ export default function LecturePage() {
           <p className="eyebrow">Cours interactif · {lecture.id}</p>
           <h2>{lecture.name}</h2>
           <p className="muted">{lecture.cards.length} cartes · {lecture.quiz.length} quiz · {lecture.vf.length} vrai/faux</p>
+          {uploadedPdf && <>
+            <p style={{ marginTop: '0.5rem' }}><a className="text-link" href={uploadedPdf.url} target="_blank" rel="noreferrer">Ouvrir le PDF source{uploadedPdf.name ? ` (${uploadedPdf.name})` : ''} ↗</a></p>
+            <p className="muted" style={{ fontSize: '0.8rem' }}>Le PDF importé est conservé sur cet appareil et n’est pas inclus dans la synchronisation du cours.</p>
+          </>}
           {lecture.pdfUrl && <p style={{ marginTop: '0.5rem' }}><a className="text-link" href={`${import.meta.env.BASE_URL}data/${lecture.pdfUrl}`} target="_blank" rel="noreferrer">Ouvrir le support PDF ↗</a></p>}
+          {pdfError && <p className="notice error" role="alert">Impossible d’ouvrir le PDF importé : {pdfError}</p>}
         </section>
 
         <div className="section-tabs" role="tablist" aria-label="Contenu du cours">

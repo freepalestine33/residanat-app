@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useAuthStore } from '../stores';
+import { useAuthStore } from '../stores/authStore';
 import { AuthBrandPanel } from '../components/auth/AuthBrandPanel';
 
 export function LoginPage({ configured }: { configured: boolean }) {

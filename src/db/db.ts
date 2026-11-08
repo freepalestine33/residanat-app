@@ -6,7 +6,7 @@ export interface McqAttempt { id?: number; qid: number; at: number; picked: stri
 export interface Note { id?: number; syncId?: string; imagePath?: string; rel: string; text: string; link?: string; image?: Blob | string; updated: number }
 export interface QuizResult { id: string; lectureId: string; questionId: string; score: number; details: Record<string, unknown>; updatedAt: number }
 export interface SyncQueueItem { key: string; collection: string; recordId: string; operation: 'upsert' | 'delete'; record?: Record<string, unknown>; updatedAt: number }
-export interface UserLecture { id: string; name: string; content: Lecture; updatedAt: number }
+export interface UserLecture { id: string; name: string; content: Lecture; updatedAt: number; pdfBlob?: Blob; pdfName?: string }
 
 class AppDB extends Dexie {
   cards!: Table<CardProgress, string>;

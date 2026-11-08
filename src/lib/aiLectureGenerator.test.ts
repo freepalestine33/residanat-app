@@ -35,7 +35,7 @@ describe('aiLectureGenerator', () => {
   describe('sanitizeLecturePayload', () => {
     it('sanitizes and fixes incomplete model outputs into valid LectureSchema', () => {
       const raw = {
-        name: 'Boiterie chez l’enfant',
+        name: 'Cours de test',
         keys: ['Point 1', 'Point 2'],
         contrasts: ['Piège 1'],
         cards: [
@@ -64,15 +64,15 @@ describe('aiLectureGenerator', () => {
       };
 
       const input = {
-        id: 'boiterie_enfant',
-        name: 'Boiterie chez l’enfant',
+        id: 'test_course',
+        name: 'Cours de test',
         otrNumber: 11,
         text: 'dummy text',
       };
 
       const lecture = sanitizeLecturePayload(raw, input);
       expect(lecture.schema).toBe(1);
-      expect(lecture.id).toBe('boiterie_enfant');
+      expect(lecture.id).toBe('test_course');
       expect(lecture.otrNumber).toBe(11);
       expect(lecture.cards.length).toBe(1);
       expect(lecture.quiz[0].cards).toContain('c1');

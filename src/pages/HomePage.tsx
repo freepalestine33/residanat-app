@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { ArrowRight, BookOpen, Check, Clock3, Layers3 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { useLectureStore, useProgressStore } from '../stores';
+import { useLectureStore } from '../stores/lectureStore';
+import { useProgressStore } from '../stores/progressStore';
 import { Header } from '../components/layout/Header';
 import { TabBar } from '../components/layout/TabBar';
 import { coreTabs } from '../components/layout/tabs';

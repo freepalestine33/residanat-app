@@ -1,7 +1,8 @@
 import React from 'react';
 import { BookOpen, ChevronDown, ChevronUp, Volume2, VolumeX } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { useProgressStore, useSettingsStore } from '../../stores';
+import { useProgressStore } from '../../stores/progressStore';
+import { useSettingsStore } from '../../stores/settingsStore';
 import { SyncStatus } from './SyncStatus';
 
 export const Header: React.FC = () => {

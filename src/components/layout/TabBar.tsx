@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { preloadRoute } from '../../lib/preloadRoute';
 import {
   BookOpenCheck,
   BookText,
@@ -38,12 +39,18 @@ export const TabBar: React.FC<TabBarProps> = ({ tabs }) => (
     <div className="nav-inner">
       {tabs.map((tab) => {
         const Icon = tabIcons[tab.path as keyof typeof tabIcons];
+        const preload = () => {
+          void preloadRoute(tab.path).catch((error: unknown) => console.error('Could not preload page.', error));
+        };
         return (
           <NavLink
             key={tab.path}
             to={tab.path}
             end={tab.path === '/'}
             className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}
+            onPointerEnter={preload}
+            onPointerDown={preload}
+            onFocus={preload}
           >
             {Icon && <Icon className="nav-icon" size={16} strokeWidth={1.8} aria-hidden="true" />}
             <span>{tab.label}</span>

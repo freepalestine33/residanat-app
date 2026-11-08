@@ -21,7 +21,7 @@ import { generateLecture, type AiProvider, type GenerateLectureInput } from '../
 import { otrProgramme } from '../../data/otrProgramme';
 import { db } from '../../db/db';
 import { queueSyncChange } from '../../lib/syncEvents';
-import { useLectureStore } from '../../stores';
+import { useLectureStore } from '../../stores/lectureStore';
 import type { Lecture } from '../../lib/schema';
 import { useNavigate } from 'react-router-dom';
 
@@ -45,6 +45,7 @@ export const AiLectureGeneratorModal: React.FC<AiLectureGeneratorModalProps> = (
   const [otrNumber, setOtrNumber] = useState<number | undefined>(initialOtrNumber ?? 11);
   const [customName, setCustomName] = useState('');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [generatedPdfFile, setGeneratedPdfFile] = useState<File | null>(null);
   const [manualText, setManualText] = useState('');
   const [useManualText, setUseManualText] = useState(false);
   const [isDraggingFile, setIsDraggingFile] = useState(false);
@@ -217,6 +218,7 @@ export const AiLectureGeneratorModal: React.FC<AiLectureGeneratorModalProps> = (
     setError(null);
     setWarnings([]);
     setGeneratedLecture(null);
+    setGeneratedPdfFile(null);
     setSaveSuccess(false);
 
     const pastedText = manualText.trim();
@@ -273,6 +275,7 @@ export const AiLectureGeneratorModal: React.FC<AiLectureGeneratorModalProps> = (
       });
 
       setGeneratedLecture(result.lecture);
+      setGeneratedPdfFile(preferPastedText ? null : selectedFile);
       setWarnings(result.warnings);
       setStepMessage('Génération terminée avec succès !');
     } catch (err) {
@@ -289,11 +292,17 @@ export const AiLectureGeneratorModal: React.FC<AiLectureGeneratorModalProps> = (
       setLoading(true);
       const id = generatedLecture.id;
       const updatedAt = Date.now();
+      const existing = await db.userLectures.get(id);
       const imported = {
         id,
         name: generatedLecture.name,
         content: generatedLecture,
         updatedAt,
+        ...(generatedPdfFile
+          ? { pdfBlob: generatedPdfFile, pdfName: generatedPdfFile.name }
+          : existing?.pdfBlob
+            ? { pdfBlob: existing.pdfBlob, pdfName: existing.pdfName }
+            : {}),
       };
 
       // 1. Save to local Dexie

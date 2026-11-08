@@ -3,7 +3,8 @@ import { ArrowRight, Check, Clock3, Flame, TriangleAlert } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Header } from '../components/layout/Header';
 import { TabBar } from '../components/layout/TabBar';
-import { useProgressStore, useErrorStore } from '../stores';
+import { useProgressStore } from '../stores/progressStore';
+import { useErrorStore } from '../stores/errorStore';
 import { coreTabs } from '../components/layout/tabs';
 
 export const ProgressPage: React.FC = () => {

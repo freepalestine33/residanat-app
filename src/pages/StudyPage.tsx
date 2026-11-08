@@ -11,7 +11,8 @@ import { saveQuizResult } from '../lib/quizHistory';
 import { loadAllLectures } from '../data/lectures';
 import { CardWebSearchButton } from '../components/ui/CardWebSearchButton';
 import { CardNoteControl } from '../components/ui/CardNoteControl';
-import { useCardStore, useProgressStore } from '../stores';
+import { useCardStore } from '../stores/cardStore';
+import { useProgressStore } from '../stores/progressStore';
 import type { Card } from '../types/card';
 import type { Lecture } from '../lib/schema';
 

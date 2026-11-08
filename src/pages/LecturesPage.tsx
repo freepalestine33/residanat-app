@@ -1,12 +1,13 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { lazy, Suspense, useEffect, useMemo, useState } from 'react';
 import { ArrowRight, BookOpen, BrainCircuit, Search } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Header } from '../components/layout/Header';
 import { TabBar } from '../components/layout/TabBar';
-import { useLectureStore } from '../stores';
+import { useLectureStore } from '../stores/lectureStore';
 import { coreTabs } from '../components/layout/tabs';
 import { otrProgramme } from '../data/otrProgramme';
-import { AiLectureGeneratorModal } from '../components/lecture/AiLectureGeneratorModal';
+
+const AiLectureGeneratorModal = lazy(() => import('../components/lecture/AiLectureGeneratorModal').then((module) => ({ default: module.AiLectureGeneratorModal })));
 
 export const LecturesPage: React.FC = () => {
   const { lectures, loadLectures, loading, error } = useLectureStore();
@@ -151,11 +152,15 @@ export const LecturesPage: React.FC = () => {
         </section>
       </main>
 
-      <AiLectureGeneratorModal
-        isOpen={isAiModalOpen}
-        onClose={() => setIsAiModalOpen(false)}
-        initialOtrNumber={aiModalOtr}
-      />
+      {isAiModalOpen && (
+        <Suspense fallback={null}>
+          <AiLectureGeneratorModal
+            isOpen
+            onClose={() => setIsAiModalOpen(false)}
+            initialOtrNumber={aiModalOtr}
+          />
+        </Suspense>
+      )}
     </>
   );
 };
