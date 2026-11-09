@@ -9,10 +9,12 @@ import { queueSyncChange } from '../lib/syncEvents';
 import { useAuthStore } from '../stores/authStore';
 import { useSettingsStore } from '../stores/settingsStore';
 import { useSyncStore } from '../stores/syncStore';
+import { createId } from '../lib/createId';
 
 const LOCAL_KEYS = [
   'sa_settings_v1',
   'sa_settings_updated_at',
+  'sa_active_study_session_v1',
   'sa_streak',
   'sa_error_count',
   'sa_errors_v3',
@@ -117,8 +119,8 @@ export function SettingsPage() {
     try {
       const source: unknown = JSON.parse(await file.text());
       const lecture = LectureSchema.parse(source);
-      const id = crypto.randomUUID();
-      const content = { ...lecture, id: crypto.randomUUID().replaceAll('-', ''), progId: null };
+      const id = createId();
+      const content = { ...lecture, id: createId().replaceAll('-', ''), progId: null };
       const updatedAt = Date.now();
       const imported = { id, name: content.name, content, updatedAt };
       await db.userLectures.put(imported);

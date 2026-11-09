@@ -2,8 +2,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Volume2, VolumeX } from 'lucide-react';
 
 interface CardSpeakButtonProps {
-  question: string;
-  answer: string;
+  question?: string;
+  answer?: string;
+  text?: string;
+  label?: string;
 }
 
 function selectFrenchVoice(voices: SpeechSynthesisVoice[]): SpeechSynthesisVoice | undefined {
@@ -13,17 +15,18 @@ function selectFrenchVoice(voices: SpeechSynthesisVoice[]): SpeechSynthesisVoice
     ?? frenchVoices[0];
 }
 
-export const CardSpeakButton: React.FC<CardSpeakButtonProps> = ({ question, answer }) => {
+export const CardSpeakButton: React.FC<CardSpeakButtonProps> = ({ question, answer, text, label = 'la carte' }) => {
   const [speaking, setSpeaking] = useState(false);
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
   const supported = typeof window !== 'undefined' && 'speechSynthesis' in window;
+  const content = (text ?? [question, answer].filter(Boolean).join('. ')).trim();
 
   useEffect(() => () => {
     if (utteranceRef.current && 'speechSynthesis' in window) window.speechSynthesis.cancel();
   }, []);
 
   const toggleSpeech = () => {
-    if (!supported) return;
+    if (!supported || !content) return;
     const speech = window.speechSynthesis;
     if (speaking) {
       speech.cancel();
@@ -33,7 +36,7 @@ export const CardSpeakButton: React.FC<CardSpeakButtonProps> = ({ question, answ
     }
 
     speech.cancel();
-    const utterance = new SpeechSynthesisUtterance(`${question}. ${answer}`);
+    const utterance = new SpeechSynthesisUtterance(content);
     const voice = selectFrenchVoice(speech.getVoices());
     utterance.lang = voice?.lang ?? 'fr-FR';
     if (voice) utterance.voice = voice;
@@ -54,10 +57,10 @@ export const CardSpeakButton: React.FC<CardSpeakButtonProps> = ({ question, answ
     <button
       type="button"
       className={`card-speak-button${speaking ? ' is-speaking' : ''}`}
-      aria-label={speaking ? 'Arrêter la lecture de la carte' : 'Écouter la question et la réponse'}
+      aria-label={speaking ? `Arrêter la lecture de ${label}` : `Écouter ${label}`}
       aria-pressed={speaking}
-      title={supported ? (speaking ? 'Arrêter la lecture' : 'Écouter la carte') : 'Synthèse vocale indisponible dans ce navigateur'}
-      disabled={!supported}
+      title={supported ? (speaking ? 'Arrêter la lecture' : `Écouter ${label}`) : 'Synthèse vocale indisponible dans ce navigateur'}
+      disabled={!supported || !content}
       onClick={toggleSpeech}
     >
       {speaking ? <VolumeX size={17} aria-hidden="true" /> : <Volume2 size={17} aria-hidden="true" />}

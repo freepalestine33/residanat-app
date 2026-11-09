@@ -2236,6 +2236,41 @@ textarea::placeholder {
   transform: translateX(2px);
 }
 
+.course-card-topline-right {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.course-progress-ring {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 auto;
+  place-items: center;
+  background: conic-gradient(var(--accent) var(--progress), var(--card2) 0);
+  border-radius: 50%;
+}
+
+.course-progress-ring > span {
+  display: flex;
+  width: 31px;
+  height: 31px;
+  align-items: baseline;
+  justify-content: center;
+  color: var(--text);
+  background: var(--card);
+  border-radius: 50%;
+  font-size: 0.62rem;
+  font-weight: 720;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.course-progress-ring > span > small {
+  font-size: 0.46rem;
+}
+
 .course-title-link h3 {
   font-size: 0.97rem;
   line-height: 1.4;
@@ -3765,6 +3800,13 @@ textarea::placeholder {
   opacity: 0.55;
 }
 
+.overview-heading-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
 .cards-study-layout {
   display: grid;
   grid-template-columns: minmax(190px, 240px) minmax(0, 1fr);
@@ -4182,7 +4224,9 @@ textarea::placeholder {
 }
 
 .revision-course-name {
+  min-width: 0;
   font-weight: 680;
+  overflow-wrap: anywhere;
 }
 
 .revision-course-counts {
@@ -4216,8 +4260,8 @@ textarea::placeholder {
   padding: 0.75rem 0;
 }
 
-.revision-course-action + .revision-question-actions,
-.revision-question-actions .revision-course-action + .revision-course-action {
+.revision-course-action + .revision-schedule-block,
+.revision-schedule-block + .revision-schedule-block {
   border-top: 1px solid var(--border);
 }
 
@@ -4225,8 +4269,92 @@ textarea::placeholder {
   margin-top: 0.1rem;
 }
 
-.revision-question-actions .revision-course-action {
-  padding-left: 0.8rem;
+/* ===== Agenda des reprises (question schedule) ===== */
+.revision-schedule-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: 0.9rem;
+  padding: 0.85rem 0.95rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.revision-schedule-status {
+  display: grid;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.revision-schedule-status strong {
+  font-size: 0.9rem;
+  font-weight: 660;
+  letter-spacing: -0.02em;
+}
+
+.revision-schedule-status .muted {
+  font-size: 0.75rem;
+}
+
+.revision-schedule-due {
+  color: var(--red);
+}
+
+.revision-course-counts > span.revision-count-due {
+  color: var(--red);
+  background: var(--red-soft);
+  border-color: color-mix(in srgb, var(--red) 25%, var(--border));
+}
+
+.revision-schedule-block {
+  padding: 0.75rem 0;
+}
+
+.revision-schedule-block-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.revision-schedule-block-head strong {
+  font-size: 0.85rem;
+  font-weight: 660;
+}
+
+.revision-due-block .revision-schedule-block-head strong {
+  color: var(--red);
+}
+
+.revision-upcoming-block .revision-schedule-block-head strong {
+  color: var(--text-secondary);
+}
+
+.revision-schedule-block > .muted {
+  margin-top: 0.2rem;
+}
+
+.revision-schedule-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 0.55rem;
+}
+
+.study-interval-choice {
+  margin-top: 0.2rem;
+}
+
+.study-interval-confirmed {
+  margin-top: 0.15rem;
+}
+
+.interval-selected {
+  box-shadow: 0 0 0 2px var(--text);
 }
 
 .study-question-session .study-prompt {
@@ -4338,6 +4466,20 @@ textarea::placeholder {
 
   .revision-course-counts {
     justify-content: flex-start;
+  }
+
+  .revision-schedule-summary {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .revision-schedule-summary .btn {
+    width: 100%;
+    min-height: 44px;
+  }
+
+  .revision-schedule-actions .btn {
+    min-height: 40px;
   }
 }
 

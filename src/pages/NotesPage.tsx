@@ -9,22 +9,9 @@ import { loadLegacyNotes, type LegacyNote } from '../lib/legacyNotes';
 import { compressNoteImage } from '../lib/images';
 import type { Note } from '../types/note';
 import { isPhotoLink, PhotoLinkPreview } from '../components/ui/PhotoLinkPreview';
+import { NoteImage } from '../components/ui/NoteImage';
 
 type NoteEntry = { key: string; note: Note | LegacyNote; legacy: boolean };
-
-function NoteImage({ image }: { image: Blob | string }) {
-  const [src, setSrc] = useState('');
-  useEffect(() => {
-    if (typeof image === 'string') {
-      setSrc(image);
-      return;
-    }
-    const url = URL.createObjectURL(image);
-    setSrc(url);
-    return () => URL.revokeObjectURL(url);
-  }, [image]);
-  return src ? <img className="note-image" src={src} alt="Image jointe à la note" /> : null;
-}
 
 export function NotesPage() {
   const [searchParams] = useSearchParams();
@@ -153,7 +140,7 @@ export function NotesPage() {
                 }).catch((reason: unknown) => setFormError(reason instanceof Error ? reason.message : String(reason)));
               }} />
             </label>
-            {image && <NoteImage image={image} />}
+            {image && <NoteImage image={image} className="note-image" alt="Image jointe à la note" />}
             {formError && <p className="notice error" role="alert">{formError}</p>}
             <div className="btn-row">
               <button className="btn" type="submit">{editing === undefined ? 'Enregistrer la note' : 'Mettre à jour'}</button>
@@ -181,7 +168,7 @@ export function NotesPage() {
                     {note.link && previewLink(note.link) && (isPhotoLink(note.link)
                       ? <PhotoLinkPreview url={note.link} />
                       : <a className="text-link" href={previewLink(note.link)} target="_blank" rel="noreferrer">{note.link}</a>)}
-                    {note.image && (!isLegacy || note.image !== '[idb]') && <NoteImage image={note.image} />}
+                    {note.image && (!isLegacy || note.image !== '[idb]') && <NoteImage image={note.image} imagePath={'imagePath' in note ? note.imagePath : undefined} className="note-image" alt="Image jointe à la note" />}
                     {isLegacy && note.image === '[idb]' && <p className="muted">Image conservée dans le stockage source historique.</p>}
                     {isLegacy ? <p className="muted">Conservée sans modification dans le stockage historique.</p> : <div className="btn-row">
                       <button className="btn ghost btn-sm" type="button" onClick={() => edit(note as Note)}>Modifier</button>

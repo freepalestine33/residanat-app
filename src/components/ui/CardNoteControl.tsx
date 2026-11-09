@@ -1,27 +1,14 @@
-import React, { useEffect, useId, useMemo, useRef, useState } from 'react';
+import React, { useId, useMemo, useRef, useState } from 'react';
 import { ClipboardPaste, ImagePlus, Link2, LoaderCircle, MessageCircle, Pencil, Plus, Trash2, Upload, X } from 'lucide-react';
 import { useNoteStore } from '../../stores/noteStore';
 import type { Note } from '../../types/note';
 import { compressNoteImage } from '../../lib/images';
 import { PhotoLinkPreview } from './PhotoLinkPreview';
 import { getHttpUrl, getImageImportFailure, getPastedAttachment } from './cardNoteAttachments';
+import { NoteImage } from './NoteImage';
 
 const MAX_SOURCE_IMAGE_BYTES = 8 * 1024 * 1024;
 const IMAGE_FETCH_TIMEOUT_MS = 15_000;
-
-function InlineNoteImage({ image }: { image: Blob | string }) {
-  const [src, setSrc] = useState('');
-  useEffect(() => {
-    if (typeof image === 'string') {
-      setSrc(image);
-      return;
-    }
-    const url = URL.createObjectURL(image);
-    setSrc(url);
-    return () => URL.revokeObjectURL(url);
-  }, [image]);
-  return src ? <img className="card-note-image" src={src} alt="Photo jointe à la note" /> : null;
-}
 
 interface CardNoteControlProps {
   relation: string;
@@ -369,7 +356,7 @@ export const CardNoteControl: React.FC<CardNoteControlProps> = ({ relation, labe
       </label>
 
       {draftImage && <div className="card-note-image-preview">
-        <InlineNoteImage image={draftImage} />
+        <NoteImage image={draftImage} className="card-note-image" alt="Photo jointe à la note" />
         <div className="card-note-image-preview-meta">
           <span>Photo jointe</span>
           <button type="button" className="card-note-remove-image" onClick={() => {
@@ -419,7 +406,7 @@ export const CardNoteControl: React.FC<CardNoteControlProps> = ({ relation, labe
           <article className="card-note-saved">
             {note.text && <p>{note.text}</p>}
             {note.link && <PhotoLinkPreview url={note.link} />}
-            {note.image && <InlineNoteImage image={note.image} />}
+            {note.image && <NoteImage image={note.image} imagePath={note.imagePath} className="card-note-image" alt="Photo jointe à la note" />}
             <div className="card-note-saved-meta"><span className="muted">{new Date(note.updated).toLocaleDateString('fr-FR')}</span>
               {note.id !== undefined && <div className="card-note-actions">
                 <button type="button" className="text-link" onClick={() => edit(note)}><Pencil size={13} /> Modifier</button>

@@ -19,10 +19,12 @@ export function useSync() {
       timer = setTimeout(sync, 5000);
     };
     const onFocus = () => { if (document.visibilityState === 'visible') sync(); };
+    const onVisibilityChange = () => sync();
     const onOnline = () => { setOffline(false); sync(); };
     const onOffline = () => setOffline(true);
     window.addEventListener('residanat:local-change', onLocalChange);
     window.addEventListener('focus', onFocus);
+    document.addEventListener('visibilitychange', onVisibilityChange);
     window.addEventListener('online', onOnline);
     window.addEventListener('offline', onOffline);
     const interval = window.setInterval(() => {
@@ -34,6 +36,7 @@ export function useSync() {
       window.clearInterval(interval);
       window.removeEventListener('residanat:local-change', onLocalChange);
       window.removeEventListener('focus', onFocus);
+      document.removeEventListener('visibilitychange', onVisibilityChange);
       window.removeEventListener('online', onOnline);
       window.removeEventListener('offline', onOffline);
     };

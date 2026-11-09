@@ -17,6 +17,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     const client = await authenticateRequest(req);
     if (req.method === 'GET') {
+      if (req.query.imagePath !== undefined) {
+        if (typeof req.query.imagePath !== 'string' || !req.query.imagePath) {
+          throw new ApiError(400, 'imagePath is invalid.');
+        }
+        const { data: row, error } = await client.supabase
+          .from('notes')
+          .select('image_path')
+          .eq('user_id', client.user.id)
+          .eq('image_path', req.query.imagePath)
+          .is('deleted_at', null)
+          .maybeSingle();
+        if (error) throw new ApiError(500, 'Could not find this note image.');
+        if (!row) throw new ApiError(404, 'This note image is no longer available.');
+        const imageUrl = await createImageUrl(client, req.query.imagePath);
+        if (!imageUrl) throw new ApiError(404, 'This note image is no longer available.');
+        return res.status(200).json({ imageUrl });
+      }
       const { data, error } = await client.supabase
         .from('notes')
         .select('*')

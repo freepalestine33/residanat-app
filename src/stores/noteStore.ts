@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import type { Note } from '../types/note';
 import { db } from '../db/db';
 import { queueSyncChange } from '../lib/syncEvents';
+import { createId } from '../lib/createId';
 
 interface NoteState {
   notes: Note[];
@@ -47,7 +48,7 @@ export const useNoteStore = create<NoteState>((set, get) => ({
       const { clearImage: _clearImage, ...noteValues } = note;
       const value = {
         ...noteValues,
-        syncId: note.syncId ?? previous?.syncId ?? crypto.randomUUID(),
+        syncId: note.syncId ?? previous?.syncId ?? createId(),
         ...image,
         updated: Date.now(),
       };

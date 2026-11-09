@@ -123,6 +123,12 @@ export default function LecturePage() {
     return <><Header /><TabBar tabs={coreTabs} /><main className="wrap"><p className="muted" role="status">Chargement du cours…</p></main></>;
   }
 
+  const overviewSpeech = [
+    lecture.name,
+    lecture.keys.length ? `Points clés. ${lecture.keys.join('. ')}` : '',
+    lecture.contrasts.length ? `Contrastes à retenir. ${lecture.contrasts.join('. ')}` : '',
+  ].filter(Boolean).join('. ');
+
   return (
     <>
       <Header />
@@ -154,7 +160,10 @@ export default function LecturePage() {
 
         {section === 'overview' && (
           <div className="panel">
-            <h2>Points clés</h2>
+            <div className="overview-heading-row">
+              <h2>Points clés</h2>
+              <CardSpeakButton text={overviewSpeech} label="le résumé du cours" />
+            </div>
             {lecture.keys.length ? <ol className="content-list">{lecture.keys.map((item, index) => <li key={`${index}-${item}`}>{item}</li>)}</ol> : <p className="muted">Aucun point clé disponible.</p>}
             <CardNoteControl relation={`keys:${lecture.id}`} label="Points clés du cours" />
             <h2 style={{ marginTop: '1.2rem' }}>Contrastes à retenir</h2>

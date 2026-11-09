@@ -1,0 +1,318 @@
+/* =====================================================================
+   theme-aesthetic.css  —  "Soft Indigo" (light) + "Midnight Glow" (dark)
+   Load AFTER styles.css. It only re-skins existing class names and
+   design tokens, so no JSX changes are needed.
+   Performance rules followed:
+   - zero new backdrop-filter / blur / filter / box-shadow animations
+   - gradients are static (no animated backgrounds)
+   - hover motion only on devices that really hover
+   - content-visibility on long, popover-free lists
+   - prefers-reduced-motion already handled by styles.css
+   ===================================================================== */
+
+/* ---------- 1. Tokens (the whole app re-colours from here) ---------- */
+:root {
+  color-scheme: light;
+  --bg: #f5f5fb;
+  --bg-elevated: #fafaff;
+  --card: #ffffff;
+  --card2: #eeeefa;
+  --accent: #4f46e5;
+  --accent-2: #8b5cf6;
+  --accent-soft: #ecebfd;
+  --accent-contrast: #ffffff;
+  --grad: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  --grad-soft: linear-gradient(135deg, #ecebfd 0%, #f5eeff 100%);
+  --glow: rgba(124, 92, 246, 0.13);
+  --text: #171a2e;
+  --text-secondary: #4a4f6b;
+  --muted: #666b8c;
+  --border: #e6e6f3;
+  --border-strong: #d3d4e8;
+  --green: #0f8a6a;
+  --green-soft: #e0f5ee;
+  --red: #c2415a;
+  --red-soft: #fdebef;
+  --orange: #a8641a;
+  --orange-soft: #fbf0de;
+  --rating-again: #c2415a;
+  --rating-hard: #b4690e;
+  --rating-good: #0f7d63;
+  --rating-easy: #4f46e5;
+  --shadow: 0 1px 2px rgba(30, 32, 80, 0.04), 0 6px 18px rgba(30, 32, 80, 0.06);
+  --shadow-lg: 0 18px 44px rgba(55, 48, 163, 0.14);
+  --radius: 20px;
+  --radius-sm: 16px;
+  --radius-xs: 10px;
+  --auth-brand-bg: #2b2680;
+  --auth-brand-glow: rgba(167, 139, 250, 0.35);
+  --auth-shell-glow: rgba(124, 92, 246, 0.14);
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #090c17;
+  --bg-elevated: #0f1424;
+  --card: #111830;
+  --card2: #1a2140;
+  --accent: #8d9bff;
+  --accent-2: #b79cff;
+  --accent-soft: #1d2450;
+  --accent-contrast: #0a0d1f;
+  --grad: linear-gradient(135deg, #8d9bff 0%, #b79cff 100%);
+  --grad-soft: linear-gradient(135deg, #1b2250 0%, #231d4a 100%);
+  --glow: rgba(99, 102, 241, 0.26);
+  --text: #eef0ff;
+  --text-secondary: #bcc2e0;
+  --muted: #939ac0;
+  --border: #222b4f;
+  --border-strong: #323d6b;
+  --green: #5fd3b0;
+  --green-soft: #12332f;
+  --red: #ff8fa3;
+  --red-soft: #3a1c28;
+  --orange: #f0bd6e;
+  --orange-soft: #3a2e18;
+  --rating-again: #8f2f47;
+  --rating-hard: #8a5a14;
+  --rating-good: #14695a;
+  --rating-easy: #3f4bd0;
+  --shadow: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 8px 22px rgba(0, 0, 0, 0.28);
+  --shadow-lg: 0 22px 54px rgba(0, 0, 0, 0.42);
+  --auth-brand-bg: #131a3d;
+  --auth-brand-glow: rgba(141, 155, 255, 0.28);
+  --auth-shell-glow: rgba(99, 102, 241, 0.2);
+}
+
+/* ---------- 2. Base ---------- */
+body {
+  background:
+    radial-gradient(62rem 26rem at 50% -11rem, var(--glow), transparent 72%),
+    var(--bg);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  letter-spacing: -0.011em;
+}
+::selection { background: color-mix(in srgb, var(--accent) 28%, transparent); }
+h1, h2, h3 { letter-spacing: -0.035em; }
+
+/* Gradient text for key headings (static, cheap) */
+.hero-copy h1 em,
+.study-heading-row h1 em,
+.auth-brand-copy h2 em {
+  font-style: normal;
+  color: transparent;
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* ---------- 3. Header & navigation ---------- */
+.app-header {
+  background: color-mix(in srgb, var(--card) 94%, transparent);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 1px 0 var(--border), 0 8px 24px -16px rgba(55, 48, 163, 0.25);
+}
+.brand-mark {
+  color: #fff;
+  background: var(--grad);
+  border: 0;
+  box-shadow: 0 6px 14px -4px color-mix(in srgb, var(--accent) 55%, transparent);
+}
+:root[data-theme="dark"] .brand-mark { color: var(--accent-contrast); }
+.header-progress .progress-fill,
+.progress-fill { background: var(--grad); }
+
+.nav { background: transparent; border-bottom: 0; }
+.nav-inner { padding-block: 0.35rem; }
+.nav-link { border-radius: 999px; padding-inline: 0.95rem; }
+.nav-link:hover { background: var(--accent-soft); color: var(--accent); }
+.nav-link.active {
+  color: var(--accent-contrast);
+  background: var(--grad);
+  box-shadow: 0 6px 14px -6px color-mix(in srgb, var(--accent) 70%, transparent);
+}
+.nav-link.active .nav-icon { opacity: 1; }
+.icon-button { border-radius: 12px; background: var(--card); }
+.icon-button:hover { background: var(--accent-soft); border-color: color-mix(in srgb, var(--accent) 30%, var(--border)); }
+
+/* ---------- 4. Surfaces ---------- */
+.panel, .card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+.card { border-radius: var(--radius-sm); }
+.eyebrow { color: var(--accent); letter-spacing: 0.12em; }
+
+/* ---------- 5. Buttons ---------- */
+.btn {
+  color: var(--accent-contrast);
+  background: var(--grad);
+  border: 0;
+  border-radius: 999px;
+  box-shadow: 0 8px 18px -8px color-mix(in srgb, var(--accent) 80%, transparent);
+  font-weight: 650;
+}
+.btn:hover:not(:disabled) {
+  background: var(--grad);
+  box-shadow: 0 12px 24px -8px color-mix(in srgb, var(--accent) 85%, transparent);
+}
+.btn.ghost {
+  color: var(--text);
+  background: var(--card);
+  border: 1px solid var(--border-strong);
+  box-shadow: none;
+}
+.btn.ghost:hover:not(:disabled) {
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
+  box-shadow: none;
+}
+.btn.green { background: var(--green); color: #fff; box-shadow: none; }
+:root[data-theme="dark"] .btn.green { color: #07241d; }
+.rating-row .btn { border-radius: 14px; box-shadow: none; }
+
+/* ---------- 6. Home: hero, metrics, course cards ---------- */
+.home-hero {
+  background:
+    radial-gradient(34rem 18rem at 100% 0%, var(--glow), transparent 70%),
+    var(--card);
+  border-radius: 28px;
+  border-color: color-mix(in srgb, var(--accent) 14%, var(--border));
+  box-shadow: var(--shadow-lg);
+}
+/* the decorative ring becomes a soft static "planet" glow */
+.home-hero::after {
+  border: 0;
+  background: radial-gradient(circle at 35% 35%, color-mix(in srgb, var(--accent-2) 38%, transparent), transparent 66%);
+  opacity: 0.55;
+}
+.hero-progress-ring { background: conic-gradient(var(--accent-2), var(--accent) var(--progress), var(--card2) 0); }
+.progress-summary-ring { background: conic-gradient(var(--accent-2), var(--accent) var(--progress), var(--card2) 0); }
+.home-metrics { border-radius: 20px; }
+.metric-icon { border-radius: 12px; }
+.metric-icon-blue { background: var(--grad-soft); }
+
+.course-card {
+  background: linear-gradient(160deg, var(--card) 55%, color-mix(in srgb, var(--accent-soft) 55%, var(--card)));
+  border-radius: 22px;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 190px;
+}
+.course-open { color: #fff; background: var(--grad); border-radius: 12px; }
+:root[data-theme="dark"] .course-open { color: var(--accent-contrast); }
+.course-actions a { border-radius: 999px; background: var(--card2); }
+.course-actions a:hover { color: var(--accent-contrast); background: var(--grad); }
+.course-coming-soon { border-radius: 999px; }
+.section-more:hover { text-decoration: underline; text-underline-offset: 0.2em; }
+.programme-promo {
+  background: var(--grad-soft);
+  border-color: color-mix(in srgb, var(--accent) 18%, var(--border));
+  border-radius: 22px;
+}
+.programme-promo-mark { color: #fff; background: var(--grad); }
+:root[data-theme="dark"] .programme-promo-mark { color: var(--accent-contrast); }
+
+/* ---------- 7. Pills, tabs, segmented controls ---------- */
+.pill { border-radius: 999px; background: var(--card2); }
+.pill.due { background: var(--orange-soft); }
+.pill.err { background: var(--red-soft); }
+
+.section-tabs {
+  background: var(--card2);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+}
+.section-tab { border-radius: 13px; }
+.section-tab.active {
+  color: var(--accent-contrast);
+  background: var(--grad);
+  border-color: transparent;
+  box-shadow: 0 8px 16px -8px color-mix(in srgb, var(--accent) 80%, transparent);
+}
+.section-tab.active .section-tab-count { color: var(--accent); background: var(--card); }
+.category-tab { border-radius: 14px; }
+.category-tab.active {
+  background: var(--grad-soft);
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+}
+.theme-switch { border-radius: 999px; background: var(--card2); }
+.theme-choice { border-radius: 999px; }
+.theme-choice.active { color: var(--accent-contrast); background: var(--grad); box-shadow: none; }
+
+/* ---------- 8. Study session (cards / quiz / V-F) ---------- */
+.study-active-session {
+  background:
+    radial-gradient(30rem 14rem at 100% 0%, var(--glow), transparent 70%),
+    var(--card);
+  border-radius: 26px;
+  border-color: color-mix(in srgb, var(--accent) 20%, var(--border));
+}
+.study-active-session::before { inset: 0 28px auto; height: 4px; background: var(--grad); border-radius: 0 0 6px 6px; }
+.study-session-track > span,
+.cards-progress-track > span { background: var(--grad); }
+.study-step-count, .practice-step-count { color: var(--accent); }
+.study-prompt { letter-spacing: -0.03em; }
+
+.answer-block > p:first-child {
+  background: color-mix(in srgb, var(--accent-soft) 70%, var(--card));
+  border-color: color-mix(in srgb, var(--accent) 18%, var(--border));
+  border-radius: 16px;
+}
+
+.option-row {
+  border-radius: 14px;
+  background: var(--card);
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+@media (hover: hover) {
+  .option-row:hover { border-color: color-mix(in srgb, var(--accent) 45%, var(--border)); background: var(--accent-soft); }
+}
+.practice-question .option-row:has(input:checked):not(.option-correct):not(.option-incorrect),
+.selected-answer { border-color: var(--accent); background: var(--accent-soft); box-shadow: 0 0 0 1px var(--accent) inset; }
+.option-row.option-correct { border-color: var(--green); background: var(--green-soft); }
+.option-row.option-incorrect { border-color: var(--red); background: var(--red-soft); }
+
+.star-button { border-radius: 999px; }
+.card-web-search-button,
+.card-speak-button { border-radius: 14px; }
+
+/* ---------- 9. Forms ---------- */
+input:not([type="checkbox"]):not([type="radio"]),
+textarea, select { border-radius: 14px; background: var(--bg-elevated); }
+input:not([type="checkbox"]):not([type="radio"]):focus,
+textarea:focus, select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+.library-search { border-radius: 999px; background: var(--card); padding-inline: 1rem; }
+
+/* ---------- 10. Programme / notes / revision lists ---------- */
+.programme-module { border-radius: 20px; }
+.programme-module > summary {
+  background: linear-gradient(90deg, color-mix(in srgb, var(--accent-soft) 80%, var(--card)), var(--card) 75%);
+}
+.notes-course-group, .revision-course {
+  border-radius: 18px;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 56px;
+}
+.notice { border-radius: 14px; }
+
+/* ---------- 11. Auth screen ---------- */
+.auth-brand-panel {
+  background:
+    radial-gradient(ellipse at 78% 12%, var(--auth-brand-glow), transparent 50%),
+    var(--auth-brand-bg);
+}
+
+/* ---------- 12. Scrollbars & hover motion ---------- */
+@media (hover: hover) {
+  .course-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); border-color: color-mix(in srgb, var(--accent) 40%, var(--border)); }
+}
+@media (hover: none) {
+  .course-card:hover, .btn:hover:not(:disabled) { transform: none; }
+}
+* { scrollbar-color: var(--border-strong) transparent; }

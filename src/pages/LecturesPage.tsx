@@ -6,8 +6,20 @@ import { TabBar } from '../components/layout/TabBar';
 import { useLectureStore } from '../stores/lectureStore';
 import { coreTabs } from '../components/layout/tabs';
 import { otrProgramme } from '../data/otrProgramme';
+import { reviewedCountByLecture } from '../lib/srs';
 
 const AiLectureGeneratorModal = lazy(() => import('../components/lecture/AiLectureGeneratorModal').then((module) => ({ default: module.AiLectureGeneratorModal })));
+
+const CourseProgressRing: React.FC<{ percent: number }> = ({ percent }) => (
+  <span
+    className="course-progress-ring"
+    style={{ '--progress': `${percent}%` } as React.CSSProperties}
+    role="img"
+    aria-label={`Progression : ${percent} %`}
+  >
+    <span>{percent}<small>%</small></span>
+  </span>
+);
 
 export const LecturesPage: React.FC = () => {
   const { lectures, loadLectures, loading, error } = useLectureStore();
@@ -15,8 +27,23 @@ export const LecturesPage: React.FC = () => {
   const [interactiveOnly, setInteractiveOnly] = useState(false);
   const [isAiModalOpen, setIsAiModalOpen] = useState(false);
   const [aiModalOtr, setAiModalOtr] = useState<number | undefined>(undefined);
+  const [reviewedByLecture, setReviewedByLecture] = useState<Map<string, number>>(new Map());
 
   useEffect(() => { void loadLectures(); }, [loadLectures]);
+
+  useEffect(() => {
+    let active = true;
+    reviewedCountByLecture()
+      .then((counts) => { if (active) setReviewedByLecture(counts); })
+      .catch(() => { /* progression stays empty when local storage is unavailable */ });
+    return () => { active = false; };
+  }, [lectures]);
+
+  const progressPercent = (lectureId: string, totalCards: number) => {
+    if (!totalCards) return 0;
+    const reviewed = reviewedByLecture.get(lectureId) ?? 0;
+    return Math.min(100, Math.round((reviewed / totalCards) * 100));
+  };
 
   const visible = useMemo(() => {
     const term = query.trim().toLocaleLowerCase('fr');
@@ -75,13 +102,16 @@ export const LecturesPage: React.FC = () => {
               return <article key={topic.number} className={lecture ? 'course-card' : 'course-card course-card-coming-soon'}>
                 <div className="course-card-topline">
                   <span className="course-index">{String(topic.number).padStart(2, '0')}</span>
-                  {lecture ? (
-                    <Link className="course-open" to={`/lecture/${lecture.id}`} aria-label={`Ouvrir ${topic.title}`}>
-                      <ArrowRight size={16} aria-hidden="true" />
-                    </Link>
-                  ) : (
-                    <span className="course-coming-soon">Bientôt</span>
-                  )}
+                  <div className="course-card-topline-right">
+                    {lecture && <CourseProgressRing percent={progressPercent(lecture.id, lecture.cards)} />}
+                    {lecture ? (
+                      <Link className="course-open" to={`/lecture/${lecture.id}`} aria-label={`Ouvrir ${topic.title}`}>
+                        <ArrowRight size={16} aria-hidden="true" />
+                      </Link>
+                    ) : (
+                      <span className="course-coming-soon">Bientôt</span>
+                    )}
+                  </div>
                 </div>
                 <h2 className="course-title">{topic.title}</h2>
                 {lecture ? (
@@ -132,9 +162,12 @@ export const LecturesPage: React.FC = () => {
                   <article key={lecture.id} className="course-card">
                     <div className="course-card-topline">
                       <span className="course-index">OTR</span>
-                      <Link className="course-open" to={`/lecture/${lecture.id}`} aria-label={`Ouvrir ${lecture.name}`}>
-                        <ArrowRight size={16} aria-hidden="true" />
-                      </Link>
+                      <div className="course-card-topline-right">
+                        <CourseProgressRing percent={progressPercent(lecture.id, lecture.cards)} />
+                        <Link className="course-open" to={`/lecture/${lecture.id}`} aria-label={`Ouvrir ${lecture.name}`}>
+                          <ArrowRight size={16} aria-hidden="true" />
+                        </Link>
+                      </div>
                     </div>
                     <Link className="text-link course-title-link" to={`/lecture/${lecture.id}`}>
                       <h2>{lecture.name}</h2>

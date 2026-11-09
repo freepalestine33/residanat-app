@@ -6,6 +6,8 @@ import { supabase } from './supabase';
 import { useSettingsStore } from '../stores/settingsStore';
 import { loadLegacyNotes } from './legacyNotes';
 import { LectureSchema } from './schema';
+import { createId } from './createId';
+import { parseStudySession } from './studySession';
 
 export type SyncStatus = 'local' | 'offline' | 'syncing' | 'synced' | 'error' | 'conflict';
 type Collection = 'lectures' | 'cards' | 'quizResults' | 'errors' | 'notes';
@@ -35,7 +37,7 @@ let currentSync: Promise<SyncOutcome> | null = null;
 function deviceId() {
   let id = localStorage.getItem(DEVICE_KEY);
   if (!id) {
-    id = crypto.randomUUID();
+    id = createId();
     localStorage.setItem(DEVICE_KEY, id);
   }
   return id;
@@ -81,6 +83,12 @@ function readSettings() {
     preferences = objectValue(JSON.parse(localStorage.getItem('sa_settings_v1') || '{}'));
   } catch (error) {
     console.error('Could not read local settings for sync.', error);
+  }
+  try {
+    const storedSession = localStorage.getItem('sa_active_study_session_v1');
+    if (storedSession !== null) preferences.activeStudySession = JSON.parse(storedSession) as unknown;
+  } catch (error) {
+    console.error('Could not read the saved study session for sync.', error);
   }
   preferences.streak = Number(localStorage.getItem('sa_streak') || '0');
   preferences.errorCount = Number(localStorage.getItem('sa_error_count') || '0');
@@ -158,7 +166,7 @@ async function queueFullLocalSnapshot() {
 }
 
 async function queueNote(note: Note) {
-  const syncId = note.syncId || (note.id === undefined ? crypto.randomUUID() : `legacy-${note.id}`);
+  const syncId = note.syncId || (note.id === undefined ? createId() : `legacy-${note.id}`);
   if (note.syncId !== syncId && note.id !== undefined) await db.notes.update(note.id, { syncId });
   await queueSyncChange('notes', syncId, 'upsert', {
     id: syncId,
@@ -317,6 +325,11 @@ async function applyRemote(payload: PullPayload, forceCloud = false) {
         headerCollapsed: preferences.headerCollapsed ?? false,
         studyTrack: preferences.studyTrack === 'fifth-year' ? 'fifth-year' : 'residency',
       };
+      if (Object.hasOwn(preferences, 'activeStudySession')) {
+        const studySession = parseStudySession(preferences.activeStudySession);
+        localStorage.setItem('sa_active_study_session_v1', JSON.stringify(studySession));
+        window.dispatchEvent(new Event('residanat:study-session-updated'));
+      }
       localStorage.setItem('sa_settings_v1', JSON.stringify(settings));
       localStorage.setItem('sa_streak', String(preferences.streak ?? 0));
       localStorage.setItem('sa_error_count', String(preferences.errorCount ?? 0));
