@@ -1,5 +1,5 @@
 import React, { lazy, Suspense, useEffect, useId, useMemo, useState } from 'react';
-import { ArrowRight, BookOpen, BrainCircuit, Check, Search } from 'lucide-react';
+import { ArrowRight, BookOpen, BrainCircuit, Check, Search, Trash2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Header } from '../components/layout/Header';
 import { TabBar } from '../components/layout/TabBar';
@@ -7,6 +7,8 @@ import { useLectureStore } from '../stores/lectureStore';
 import { coreTabs } from '../components/layout/tabs';
 import { otrProgramme } from '../data/otrProgramme';
 import { reviewedCountByLecture } from '../lib/srs';
+import { deleteUserLecture } from '../lib/userLectureActions';
+import type { LectureMeta } from '../types/lecture';
 
 const AiLectureGeneratorModal = lazy(() => import('../components/lecture/AiLectureGeneratorModal').then((module) => ({ default: module.AiLectureGeneratorModal })));
 
@@ -56,8 +58,25 @@ export const LecturesPage: React.FC = () => {
   const [isAiModalOpen, setIsAiModalOpen] = useState(false);
   const [aiModalOtr, setAiModalOtr] = useState<number | undefined>(undefined);
   const [reviewedByLecture, setReviewedByLecture] = useState<Map<string, number>>(new Map());
+  const [deletingLectureId, setDeletingLectureId] = useState<string | null>(null);
+  const [deleteError, setDeleteError] = useState('');
 
   useEffect(() => { void loadLectures(); }, [loadLectures]);
+
+  const removeLecture = async (lecture: LectureMeta) => {
+    if (!lecture.isUserCreated || !lecture.userLectureId || deletingLectureId) return;
+    if (!window.confirm(`Supprimer « ${lecture.name} » ? Ce cours sera supprimé de vos appareils synchronisés.`)) return;
+    setDeleteError('');
+    setDeletingLectureId(lecture.userLectureId);
+    try {
+      await deleteUserLecture(lecture.userLectureId);
+      await loadLectures();
+    } catch (reason) {
+      setDeleteError(reason instanceof Error ? reason.message : String(reason));
+    } finally {
+      setDeletingLectureId(null);
+    }
+  };
 
   useEffect(() => {
     let active = true;
@@ -82,7 +101,7 @@ export const LecturesPage: React.FC = () => {
   }, [interactiveOnly, lectures, query]);
 
   const interactiveCount = otrProgramme.filter((topic) => lectures.some((lecture) => (lecture.id === topic.lectureId || lecture.otrNumber === topic.number) && lecture.cards > 0)).length;
-  const otherLectures = lectures.filter((lecture) => !otrProgramme.some((topic) => topic.lectureId === lecture.id));
+  const otherLectures = lectures.filter((lecture) => !otrProgramme.some((topic) => topic.lectureId === lecture.id || topic.number === lecture.otrNumber));
 
   return (
     <>
@@ -121,6 +140,7 @@ export const LecturesPage: React.FC = () => {
         <section className="library-results" aria-label="Programme des cours OTR">
           {loading && <p className="muted" role="status">Chargement des cours interactifs…</p>}
           {error && <p className="notice error" role="alert">Impossible de charger les cours : {error}</p>}
+          {deleteError && <p className="notice error" role="alert">Impossible de supprimer ce cours : {deleteError}</p>}
           {!loading && !error && visible.length === 0 && (
             <p className="library-empty"><BookOpen size={20} aria-hidden="true" />Aucun cours ne correspond à cette recherche.</p>
           )}
@@ -153,6 +173,17 @@ export const LecturesPage: React.FC = () => {
                       <Link to={`/lecture/${lecture.id}?tab=cards`}>Cartes</Link>
                       <Link to={`/lecture/${lecture.id}?tab=quiz`}>Quiz</Link>
                       <Link to={`/lecture/${lecture.id}?tab=vf`}>Vrai / faux</Link>
+                      {lecture.isUserCreated && (
+                        <button
+                          type="button"
+                          className="course-delete"
+                          disabled={deletingLectureId === lecture.userLectureId}
+                          onClick={() => void removeLecture(lecture)}
+                        >
+                          <Trash2 size={14} aria-hidden="true" />
+                          {deletingLectureId === lecture.userLectureId ? 'Suppression…' : 'Supprimer'}
+                        </button>
+                      )}
                     </div>
                   </>
                 ) : (
@@ -205,6 +236,19 @@ export const LecturesPage: React.FC = () => {
                       <span>{lecture.quiz} quiz</span><span aria-hidden="true">·</span>
                       <span>{lecture.vf} vrai / faux</span>
                     </p>
+                    {lecture.isUserCreated && (
+                      <div className="course-actions">
+                        <button
+                          type="button"
+                          className="course-delete"
+                          disabled={deletingLectureId === lecture.userLectureId}
+                          onClick={() => void removeLecture(lecture)}
+                        >
+                          <Trash2 size={14} aria-hidden="true" />
+                          {deletingLectureId === lecture.userLectureId ? 'Suppression…' : 'Supprimer'}
+                        </button>
+                      </div>
+                    )}
                   </article>
                 ))}
               </div>

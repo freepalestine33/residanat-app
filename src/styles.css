@@ -2347,6 +2347,30 @@ textarea::placeholder {
   background: var(--accent-soft);
 }
 
+.course-delete {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  min-height: 44px;
+  padding: 0.35rem 0.45rem;
+  color: var(--red);
+  background: transparent;
+  border: 0;
+  border-radius: 7px;
+  font: inherit;
+  font-size: 0.72rem;
+  cursor: pointer;
+}
+
+.course-delete:hover:not(:disabled) {
+  text-decoration: underline;
+}
+
+.course-delete:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
 .empty-library {
   margin-top: 1rem;
   padding: 1.2rem;

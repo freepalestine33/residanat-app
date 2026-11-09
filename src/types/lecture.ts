@@ -26,4 +26,6 @@ export interface LectureMeta {
   quiz: number;
   vf: number;
   pdfUrl?: string;
+  isUserCreated?: boolean;
+  userLectureId?: string;
 }

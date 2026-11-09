@@ -10,6 +10,7 @@ import { useAuthStore } from '../stores/authStore';
 import { useSettingsStore } from '../stores/settingsStore';
 import { useSyncStore } from '../stores/syncStore';
 import { createId } from '../lib/createId';
+import { deleteUserLecture as deleteUserLectureRecord } from '../lib/userLectureActions';
 
 const LOCAL_KEYS = [
   'sa_settings_v1',
@@ -139,14 +140,8 @@ export function SettingsPage() {
   };
 
   const deleteLecture = async (lecture: UserLecture) => {
-    const deletedAt = new Date().toISOString();
     try {
-      await queueSyncChange('lectures', lecture.id, 'delete', {
-        id: lecture.id,
-        updated_at: deletedAt,
-        deleted_at: deletedAt,
-      });
-      await db.userLectures.delete(lecture.id);
+      await deleteUserLectureRecord(lecture.id);
       await refreshImported();
     } catch (reason) {
       setExportError(reason instanceof Error ? reason.message : String(reason));

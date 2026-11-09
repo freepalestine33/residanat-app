@@ -5,9 +5,9 @@ import { db } from '../db/db';
 export async function loadLectureIndex(): Promise<LectureMeta[]> {
   const index = await loadIndex();
   const imported = await db.userLectures.toArray();
-  return [
-    ...index.lectures,
-    ...imported.map(({ content }) => ({
+  const lecturesById = new Map<string, LectureMeta>(index.lectures.map((lecture) => [lecture.id, lecture]));
+  for (const { id: userLectureId, content } of imported) {
+    lecturesById.set(content.id, {
       id: content.id,
       progId: content.progId ?? null,
       otrNumber: content.otrNumber,
@@ -16,8 +16,11 @@ export async function loadLectureIndex(): Promise<LectureMeta[]> {
       quiz: content.quiz.length,
       vf: content.vf.length,
       ...(content.pdfUrl ? { pdfUrl: content.pdfUrl } : {}),
-    })),
-  ];
+      isUserCreated: true,
+      userLectureId,
+    });
+  }
+  return [...lecturesById.values()];
 }
 
 export async function loadLectureById(id: string): Promise<Lecture> {
