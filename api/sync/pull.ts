@@ -13,7 +13,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (since && !Number.isFinite(Date.parse(since))) return res.status(400).json({ error: 'since is invalid.' });
     const client = await authenticateRequest(req);
     const [lectures, cards, quizResults, errors, noteRows, settings] = await Promise.all([
-      readSince(client, 'lectures', since),
+      readSince(client, 'lectures', null),
       readSince(client, 'flashcard_progress', since),
       readSince(client, 'quiz_results', since),
       readSince(client, 'errors', since),

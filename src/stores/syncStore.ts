@@ -22,6 +22,12 @@ function applyOutcome(outcome: SyncOutcome) {
   };
 }
 
+async function refreshSyncedLectures(outcome: SyncOutcome) {
+  if (outcome.status !== 'synced') return;
+  const { useLectureStore } = await import('./lectureStore');
+  await useLectureStore.getState().loadLectures();
+}
+
 export const useSyncStore = create<SyncState>((set) => ({
   status: navigator.onLine ? 'local' : 'offline',
   error: null,
@@ -34,6 +40,7 @@ export const useSyncStore = create<SyncState>((set) => ({
     const { synchronize } = await import('../lib/syncEngine');
     const outcome = await synchronize(user);
     set(applyOutcome(outcome));
+    await refreshSyncedLectures(outcome);
     if (outcome.status === 'synced' && firstSuccessfulSync) useToast.getState().showToast('Data synced across devices.', 'success');
   },
 
@@ -42,6 +49,7 @@ export const useSyncStore = create<SyncState>((set) => ({
     const { synchronize } = await import('../lib/syncEngine');
     const outcome = await synchronize(user, choice);
     set(applyOutcome(outcome));
+    await refreshSyncedLectures(outcome);
     if (outcome.status === 'synced') useToast.getState().showToast('Data synced across devices.', 'success');
   },
 
