@@ -1,5 +1,5 @@
-import React, { lazy, Suspense, useEffect, useMemo, useState } from 'react';
-import { ArrowRight, BookOpen, BrainCircuit, Search } from 'lucide-react';
+import React, { lazy, Suspense, useEffect, useId, useMemo, useState } from 'react';
+import { ArrowRight, BookOpen, BrainCircuit, Check, Search } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Header } from '../components/layout/Header';
 import { TabBar } from '../components/layout/TabBar';
@@ -10,16 +10,44 @@ import { reviewedCountByLecture } from '../lib/srs';
 
 const AiLectureGeneratorModal = lazy(() => import('../components/lecture/AiLectureGeneratorModal').then((module) => ({ default: module.AiLectureGeneratorModal })));
 
-const CourseProgressRing: React.FC<{ percent: number }> = ({ percent }) => (
-  <span
-    className="course-progress-ring"
-    style={{ '--progress': `${percent}%` } as React.CSSProperties}
-    role="img"
-    aria-label={`Progression : ${percent} %`}
-  >
-    <span>{percent}<small>%</small></span>
-  </span>
-);
+const CourseProgressRing: React.FC<{ percent: number }> = ({ percent }) => {
+  const gradientId = useId();
+  const value = Math.max(0, Math.min(100, Math.round(percent)));
+  const radius = 19;
+  const circumference = 2 * Math.PI * radius;
+  const complete = value >= 100;
+
+  return (
+    <span
+      className={complete ? 'course-progress-ring is-complete' : 'course-progress-ring'}
+      role="img"
+      aria-label={`Progression : ${value} %`}
+      title={`${value} % terminé`}
+    >
+      <svg viewBox="0 0 44 44" aria-hidden="true">
+        <defs>
+          <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="var(--accent)" />
+            <stop offset="100%" stopColor="var(--accent-2, var(--accent))" />
+          </linearGradient>
+        </defs>
+        <circle className="course-progress-ring-track" cx="22" cy="22" r={radius} />
+        <circle
+          className="course-progress-ring-value"
+          cx="22"
+          cy="22"
+          r={radius}
+          stroke={`url(#${gradientId})`}
+          strokeDasharray={circumference}
+          strokeDashoffset={circumference * (1 - value / 100)}
+        />
+      </svg>
+      <span className="course-progress-ring-label">
+        {complete ? <Check size={15} strokeWidth={3} aria-hidden="true" /> : <>{value}<small>%</small></>}
+      </span>
+    </span>
+  );
+};
 
 export const LecturesPage: React.FC = () => {
   const { lectures, loadLectures, loading, error } = useLectureStore();

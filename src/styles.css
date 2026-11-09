@@ -2243,32 +2243,69 @@ textarea::placeholder {
 }
 
 .course-progress-ring {
+  position: relative;
   display: grid;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   flex: 0 0 auto;
   place-items: center;
-  background: conic-gradient(var(--accent) var(--progress), var(--card2) 0);
   border-radius: 50%;
+  background: var(--card2);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
 }
 
-.course-progress-ring > span {
-  display: flex;
-  width: 31px;
-  height: 31px;
+.course-progress-ring svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  transform: rotate(-90deg);
+}
+
+.course-progress-ring-track {
+  fill: none;
+  stroke: var(--border);
+  stroke-width: 3.5;
+}
+
+.course-progress-ring-value {
+  fill: none;
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.course-progress-ring-label {
+  position: relative;
+  display: inline-flex;
   align-items: baseline;
   justify-content: center;
   color: var(--text);
-  background: var(--card);
-  border-radius: 50%;
-  font-size: 0.62rem;
-  font-weight: 720;
+  font-size: 0.68rem;
+  font-weight: 730;
   font-variant-numeric: tabular-nums;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
+  line-height: 1;
 }
 
-.course-progress-ring > span > small {
+.course-progress-ring-label small {
+  margin-left: 0.5px;
   font-size: 0.46rem;
+}
+
+.course-progress-ring.is-complete {
+  color: var(--accent-contrast, #fff);
+  background: var(--grad, var(--accent));
+  box-shadow: var(--shadow);
+}
+
+.course-progress-ring.is-complete .course-progress-ring-label {
+  color: var(--accent-contrast, #fff);
+}
+
+.course-card:hover .course-progress-ring {
+  transform: translateY(-1px);
 }
 
 .course-title-link h3 {
@@ -5367,7 +5404,7 @@ select:focus {
   place-items: center;
   color: var(--green);
   background: var(--green-soft);
-  border: 1px solid color-mix(in srgb, var(--green) 25%, var(--border));
+  border: 1px solid var(--green-border, #b0cfd1);
   border-radius: 14px;
 }
 
