@@ -44,13 +44,19 @@ export async function upsertIfNewer(
   record: Record<string, unknown> & { id: string; updated_at: string },
   merge?: (local: SyncRecord, remote: SyncRecord) => Record<string, unknown>,
 ) {
+  const columns = merge ? 'id,updated_at,state,reps,due_date' : 'id,updated_at';
   const { data: existing, error: readError } = await client.supabase
     .from(table)
-    .select('*')
+    .select(columns)
     .eq('user_id', client.user.id)
     .eq('id', record.id)
     .maybeSingle();
-  if (readError) throw new ApiError(500, `Could not check the existing ${table} record.`);
+  if (readError) {
+    const reason = [readError.code, readError.message, readError.details, readError.hint]
+      .filter(Boolean)
+      .join(': ');
+    throw new ApiError(500, `Could not check the existing ${table} record: ${reason}`);
+  }
   const previous = existing as SyncRecord | null;
   let value: Record<string, unknown> = record;
   if (previous) {
