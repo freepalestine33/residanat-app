@@ -8,6 +8,7 @@ import { loadLegacyNotes } from './legacyNotes';
 import { LectureSchema } from './schema';
 import { createId } from './createId';
 import { parseStudySession } from './studySession';
+import { preserveLocalLecturePdf } from './userLectureSync';
 
 export type SyncStatus = 'local' | 'offline' | 'syncing' | 'synced' | 'error' | 'conflict';
 type Collection = 'lectures' | 'cards' | 'quizResults' | 'errors' | 'notes';
@@ -276,12 +277,12 @@ async function applyRemote(payload: PullPayload, forceCloud = false) {
       continue;
     }
     if (local && !forceCloud && local.updatedAt > updatedAt) continue;
-    await db.userLectures.put({
+    await db.userLectures.put(preserveLocalLecturePdf({
       id: record.id,
       name: String(record.name),
       content: LectureSchema.parse(record.content),
       updatedAt,
-    });
+    }, local));
   }
   await applyCards(payload.cards ?? []);
   for (const record of payload.quizResults ?? []) {
