@@ -24,6 +24,9 @@ import {
 import { loadAllLectures } from '../data/lectures';
 import { CardWebSearchButton } from '../components/ui/CardWebSearchButton';
 import { CardNoteControl } from '../components/ui/CardNoteControl';
+import { CardSpeakButton } from '../components/ui/CardSpeakButton';
+import { CardAddControl } from '../components/ui/CardAddControl';
+import { CARDS_UPDATED_EVENT } from '../lib/customCards';
 import { useCardStore } from '../stores/cardStore';
 import { useProgressStore } from '../stores/progressStore';
 import type { Card } from '../types/card';
@@ -114,7 +117,7 @@ export const StudyPage: React.FC = () => {
 
   useEffect(() => {
     let active = true;
-    void loadCards().then(async () => {
+    const loadCardsAndProgress = () => loadCards().then(async () => {
       if (!active) return;
       try {
         setProgressRows(await db.cards.toArray());
@@ -124,7 +127,7 @@ export const StudyPage: React.FC = () => {
         setCardsReady(true);
       }
     });
-    void loadAllLectures().then(async (loaded) => {
+    const loadQuestions = () => loadAllLectures().then(async (loaded) => {
       if (!active) return;
       setLectures(loaded);
       await refreshQuestionErrors(loaded);
@@ -134,7 +137,14 @@ export const StudyPage: React.FC = () => {
         setQuestionsLoading(false);
       }
     });
-    return () => { active = false; };
+    void loadCardsAndProgress();
+    void loadQuestions();
+    const onCardsUpdated = () => { void loadCardsAndProgress(); void loadQuestions(); };
+    window.addEventListener(CARDS_UPDATED_EVENT, onCardsUpdated);
+    return () => {
+      active = false;
+      window.removeEventListener(CARDS_UPDATED_EVENT, onCardsUpdated);
+    };
   }, [loadCards]);
 
   useEffect(() => {
@@ -452,6 +462,8 @@ export const StudyPage: React.FC = () => {
               <div className="study-session-actions-top">
                 <CardWebSearchButton lectureName={current.lectureName} question={current.card.q} answer={current.card.a} />
                 <CardNoteControl relation={`card:${current.lectureId}.${current.card.id}`} label={`Carte · ${current.lectureName}`} />
+                <CardSpeakButton question={current.card.q} answer={current.card.a} />
+                <CardAddControl lectureId={current.lectureId} label={current.lectureName} />
                 <span className="study-step-count">{String(index + 1).padStart(2, '0')} <span>/ {String(queue.length).padStart(2, '0')}</span></span>
               </div>
             </div>

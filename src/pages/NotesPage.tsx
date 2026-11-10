@@ -97,6 +97,21 @@ export function NotesPage() {
     const typeLabel = type === 'keys' ? 'Points clés' : type === 'card' ? 'Carte' : type === 'quiz' ? 'Quiz' : type === 'vf' ? 'Vrai / faux' : type;
     return `${typeLabel} · ${subject}`;
   };
+  const noteSourceLink = (value: string): string | null => {
+    if (!value || value === 'libre') return null;
+    const [type, ...rest] = value.split(':');
+    const subject = rest.join(':');
+    if (!subject) return null;
+    const dot = subject.indexOf('.');
+    const lectureRef = dot === -1 ? subject : subject.slice(0, dot);
+    const itemId = dot === -1 ? '' : subject.slice(dot + 1);
+    const lecture = lectures.find((item) => item.id === lectureRef || item.progId === lectureRef);
+    if (!lecture) return null;
+    const tab = type === 'card' ? 'cards' : type === 'quiz' ? 'quiz' : type === 'vf' ? 'vf' : 'overview';
+    const params = new URLSearchParams({ tab });
+    if (itemId) params.set('focus', itemId);
+    return `/lecture/${encodeURIComponent(lecture.id)}?${params.toString()}`;
+  };
   const previewLink = (value: string) => {
     try {
       const url = new URL(value);
@@ -161,7 +176,9 @@ export function NotesPage() {
             <details className="notes-course-group" key={group.key}>
               <summary><span>{group.title}</span><small>{group.entries.length} note{group.entries.length === 1 ? '' : 's'}</small></summary>
               <div className="notes-course-content">
-                {group.entries.map(({ key, note, legacy: isLegacy }) => (
+                {group.entries.map(({ key, note, legacy: isLegacy }) => {
+                  const sourceLink = noteSourceLink(note.rel);
+                  return (
                   <article key={key} className="card note-card">
                     <div className="question-meta"><span className="pill">{isLegacy ? `Ancienne note · ${relationLabel(note.rel)}` : relationLabel(note.rel)}</span><span className="muted">{'updated' in note ? new Date(note.updated).toLocaleDateString('fr-FR') : note.timestamp ? new Date(note.timestamp).toLocaleDateString('fr-FR') : 'Date inconnue'}</span></div>
                     {note.text && <p className="note-text">{note.text}</p>}
@@ -170,12 +187,17 @@ export function NotesPage() {
                       : <a className="text-link" href={previewLink(note.link)} target="_blank" rel="noreferrer">{note.link}</a>)}
                     {note.image && (!isLegacy || note.image !== '[idb]') && <NoteImage image={note.image} imagePath={'imagePath' in note ? note.imagePath : undefined} className="note-image" alt="Image jointe à la note" />}
                     {isLegacy && note.image === '[idb]' && <p className="muted">Image conservée dans le stockage source historique.</p>}
-                    {isLegacy ? <p className="muted">Conservée sans modification dans le stockage historique.</p> : <div className="btn-row">
+                    {isLegacy ? <div className="btn-row">
+                      <p className="muted">Conservée sans modification dans le stockage historique.</p>
+                      {sourceLink && <Link className="btn ghost btn-sm" to={sourceLink}>Voir la source</Link>}
+                    </div> : <div className="btn-row">
+                      {sourceLink && <Link className="btn ghost btn-sm" to={sourceLink}>Voir la source</Link>}
                       <button className="btn ghost btn-sm" type="button" onClick={() => edit(note as Note)}>Modifier</button>
                       {(note as Note).id !== undefined && <button className="btn ghost btn-sm" type="button" onClick={() => void deleteNote((note as Note).id!)}>Supprimer</button>}
                     </div>}
                   </article>
-                ))}
+                  );
+                })}
               </div>
             </details>
           ))}

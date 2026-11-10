@@ -23,19 +23,47 @@ export interface GenerateLectureResult {
   warnings: string[];
 }
 
-export const MEDICAL_AI_PROMPT_TEMPLATE = `Tu es un professeur agrégé et assistant de préparation pédagogique pour le concours de Résidanat en médecine (programme officiel ECN / résidanat en français).
-Transforme le document fourni en un cours interactif hautement pédagogique, rigoureux et fidèle à la source médicale.
+export const MEDICAL_AI_PROMPT_TEMPLATE = `Tu es un expert en pédagogie médicale et en QCM de résidanat (programme officiel ECN, en français).
+Transforme le document fourni en un cours interactif (cards + quiz + vrai/faux) rigoureux, fidèle à la source et optimisé pour le concours.
+OBJECTIF : après révision des "cards" + "quiz" + "vf", l'étudiant doit pouvoir répondre à ~95 % des QCM du sujet. Priorité absolue à ce qui TOMBE en QCM : pièges, définitions discriminantes, chiffres, classifications, traitements de 1re intention, faux classiques.
 
-Directives médicales et de fidélité :
-- Rigueur absolue : base-toi UNIQUEMENT sur les faits cliniques, diagnostiques et thérapeutiques du texte fourni. N'invente aucun chiffre, dose, seuil, contre-indication ou piège non justifié.
-- Si le document est un recueil de QCM / annales d'examens :
-  1. Extrais chaque QCM fidèlement avec ses propositions (options vraies et fausses), une explication claire et détaillée pour chaque proposition.
-  2. Synthétise les notions clés testées sous forme de fiches mémo (flashcards) dans "cards".
-  3. Crée des affirmations Vrai/Faux stimulantes dans "vf" pour cibler les pièges classiques du concours.
-- Si le texte est ambigu ou incomplet, omets l'item douteux plutôt que d'extrapoler.
-- Veille à lier chaque question de quiz et chaque affirmation vrai/faux à au moins un identifiant de carte ("cards") existant dans la liste "cards".
-- Chaque QCM dans "quiz" doit contenir au minimum 2 propositions (idéalement 4 à 5) et au moins une proposition correcte ("ok": true).
-- Fournis une explication didactique ("explain" / "w") pour chaque question et cite la section ou la page dans "src".
+Règle 1 — Langue : français médical précis, terminologie exacte, orthographe soignée.
+
+Règle 2 — Fidélité absolue : base-toi UNIQUEMENT sur le texte fourni. N'invente AUCUN seuil, dose, pourcentage, classification ou indication absent de la source. Si une donnée est absente ou ambiguë, omets-la plutôt que d'extrapoler. Si le document est un recueil de QCM / annales, extrais chaque question fidèlement (propositions vraies et fausses, explication détaillée).
+
+Règle 3 — Focus QCM : privilégie ce qui est répété, les items « sauf une » et les pièges de formulation. Mets en avant : définitions discriminantes, critères diagnostiques, traitement de 1re intention, complications classiques, diagnostics différentiels, signes radio/cliniques discriminants.
+
+Règle 4 — "cards" (EXIGENCE DE COMPLÉTUDE — la plus importante) :
+- Après UNE SEULE lecture attentive de l'ensemble des "cards", l'étudiant doit pouvoir répondre à au moins 95 % des QCM et vrai/faux du cours.
+- Une idée testable par carte ; chaque carte est autosuffisante (compréhensible sans le texte source ni une autre carte).
+- Formule les questions en rappel actif (« Définition / critère / traitement de… ? »), jamais de simples titres vagues.
+- Nombre flexible selon la richesse du sujet : souvent 15 à 30 cartes, davantage si la banque est riche ; au moins 12 pour un court extrait.
+- Couvre toutes les notions testables : définitions, épidémiologie, physiopathologie, clinique (signes, sémiologie), paraclinique, diagnostic positif et différentiel, critères/scores, traitement (posologies exactes si présentes), complications, pronostic, étiologies, facteurs de risque, chiffres et pièges clés.
+- Utilise "type": "contrast" pour les cartes qui opposent deux entités ou démasquent un piège.
+
+Règle 5 — "quiz" (QCM OBLIGATOIRES) :
+- Vraie multi-sélection : le nombre de bonnes réponses varie d'une question à l'autre (souvent 1 à 3). NE PAS mettre systématiquement le même nombre de "ok": true ; au moins une proposition correcte par question.
+- 4 à 5 propositions par question (5 de préférence) ; distracteurs plausibles (formulations inversées, confusions de classement), jamais absurdes.
+- Chaque question DOIT référencer "cards": [ids existants] ; chaque proposition peut préciser "c": [ids].
+- Justification didactique centrée sur le piège dans "explain".
+
+Règle 6 — "vf" (Vrai/Faux — OBLIGATOIRE, TOUJOURS généré, même hors QCM) :
+- Produis TOUJOURS une liste "vf" non vide (au minimum 5 affirmations, idéalement 8 à 12), quel que soit le type de document (même cours narratif ou théorique).
+- Affirmations nettes, cliniquement vérifiables et sans ambiguïté, style banque d'examen ; mélange vraies et fausses à parts à peu près égales.
+- Vise les pièges du concours : exceptions, seuils, chiffres, contre-indications, « toujours / jamais », diagnostics différentiels.
+- Chaque item DOIT référencer "cards": [ids existants].
+- Si "a": false, "w" donne la correction ; sinon "w" justifie brièvement la réponse.
+
+Règle 7 — "contrasts" : confusions typiques du concours, du type A ≠ B, fréquent ≠ rare, 1re intention ≠ 2e recours.
+
+Règle 8 — "keys" : l'essentiel à savoir « avant tout », formulé pour coller directement aux QCM.
+
+Méthode interne (à suivre avant de rédiger) :
+1. Repérer les thèmes à forte densité QCM.
+2. Lister les pièges et faux classiques.
+3. Créer les cartes prioritaires sur ces thèmes.
+4. Construire "quiz" et "vf" qui retravaillent explicitement ces cartes.
+5. Vérifier la couverture : un étudiant maîtrisant cards + quiz + vf doit réussir l'essentiel de la banque.
 
 Retourne STRICTEMENT et UNIQUEMENT un objet JSON valide conforme à la structure suivante (aucun bloc markdown, aucun texte avant ou après) :
 {
@@ -66,18 +94,27 @@ Retourne STRICTEMENT et UNIQUEMENT un objet JSON valide conforme à la structure
       "cards": ["c1"],
       "explain": "Justification médicale détaillée de la ou des bonnes réponses.",
       "opts": [
-        { "t": "Proposition A", "ok": true, "c": ["c1"] },
-        { "t": "Proposition B", "ok": false },
-        { "t": "Proposition C", "ok": false }
+        { "t": "Proposition A (correcte)", "ok": true, "c": ["c1"] },
+        { "t": "Proposition B (fausse mais plausible)", "ok": false },
+        { "t": "Proposition C (fausse mais plausible)", "ok": false },
+        { "t": "Proposition D (fausse mais plausible)", "ok": false },
+        { "t": "Proposition E (correcte)", "ok": true }
       ]
     }
   ],
   "vf": [
     {
       "id": "vf1",
-      "s": "Affirmation clinique vérifiable dans le cours",
+      "s": "Affirmation clinique vraie et vérifiable dans le cours",
       "a": true,
       "w": "Explication médicale de la réponse.",
+      "cards": ["c1"]
+    },
+    {
+      "id": "vf2",
+      "s": "Affirmation clinique fausse (piège classique du concours)",
+      "a": false,
+      "w": "Explication médicale de pourquoi c'est faux.",
       "cards": ["c1"]
     }
   ]
@@ -313,7 +350,7 @@ export async function generateLectureWithGemini(
 export const GROQ_ON_DEMAND_TPM = 8000;
 
 const GROQ_SYSTEM_PROMPT =
-  'Tu es un assistant expert en pédagogie médicale pour le concours de résidanat. Tu réponds obligatoirement par un JSON valide.';
+  'Tu es un expert en pédagogie médicale et en QCM de résidanat. Priorité aux pièges et aux notions qui tombent en examen. Tu réponds obligatoirement par un JSON valide.';
 
 /**
  * Conservative token estimate. Groq bills prompt tokens plus the reserved max_tokens,
@@ -390,7 +427,9 @@ ${isMcqFocused ? 'Attention : Le document source contient des QCM / questions d�
     after: `
 </texte_source>
 
-Reste concis pour tenir dans la réponse : au plus 8 cartes, 8 QCM et 8 vrai/faux pour ce passage.
+Reste dans la limite de la réponse pour ce passage : jusqu'à 12 cartes, 6 QCM (chacun avec 4 à 5 propositions) et 8 affirmations vrai/faux.
+Le champ "vf" est OBLIGATOIRE et doit contenir AU MINIMUM 5 affirmations (mélange de vraies et de fausses). Ne le laisse jamais vide.
+Varie le nombre de bonnes réponses d'un QCM à l'autre (ne mets pas toujours le même nombre de "ok": true) et lie chaque question/VF à des "cards" existantes.
 Génère dès maintenant l'objet JSON du cours interactif. Réponds uniquement par l'objet JSON :`,
   };
 }

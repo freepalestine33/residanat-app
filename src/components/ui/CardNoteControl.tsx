@@ -1,5 +1,5 @@
 import React, { useId, useMemo, useRef, useState } from 'react';
-import { ClipboardPaste, ImagePlus, Link2, LoaderCircle, MessageCircle, Pencil, Plus, Trash2, Upload, X } from 'lucide-react';
+import { ClipboardPaste, ImagePlus, LoaderCircle, MessageCircle, Pencil, Plus, Trash2, Upload, X } from 'lucide-react';
 import { useNoteStore } from '../../stores/noteStore';
 import type { Note } from '../../types/note';
 import { compressNoteImage } from '../../lib/images';
@@ -327,34 +327,6 @@ export const CardNoteControl: React.FC<CardNoteControlProps> = ({ relation, labe
         </label>
       </div>
 
-      <label>
-        <span className="field-label">Importer depuis une URL</span>
-        <div className="card-note-url-row">
-          <input
-            type="url"
-            value={draftLink}
-            onChange={(event) => {
-              setDraftLink(event.target.value);
-              resetAttachmentFeedback();
-            }}
-            onPaste={handleAttachmentPaste}
-            placeholder="https://…"
-            aria-label="Lien Web ou adresse directe de la photo"
-            disabled={attachmentBusy}
-          />
-          <button
-            type="button"
-            className="btn ghost btn-sm card-note-import-button"
-            onClick={() => void importImageUrl(draftLink)}
-            disabled={attachmentBusy || !draftLink.trim()}
-          >
-            <Link2 size={15} aria-hidden="true" />
-            Importer
-          </button>
-        </div>
-        <span className="muted">Les pages de partage restent des liens ; une URL directe d’image est nécessaire pour l’intégrer.</span>
-      </label>
-
       {draftImage && <div className="card-note-image-preview">
         <NoteImage image={draftImage} className="card-note-image" alt="Photo jointe à la note" />
         <div className="card-note-image-preview-meta">
@@ -402,6 +374,7 @@ export const CardNoteControl: React.FC<CardNoteControlProps> = ({ relation, labe
           <button className="icon-button" type="button" aria-label="Fermer les notes" onClick={() => setOpen(false)}><X size={16} /></button>
         </div>
         {loading && <p className="muted" role="status">Chargement des notes…</p>}
+        {editingId === undefined && renderEditor()}
         {relatedNotes.map((note) => <div className="card-note-entry" key={note.id ?? note.syncId}>
           <article className="card-note-saved">
             {note.text && <p>{note.text}</p>}
@@ -416,7 +389,6 @@ export const CardNoteControl: React.FC<CardNoteControlProps> = ({ relation, labe
           </article>
           {editingId !== undefined && editingId === note.id && renderEditor()}
         </div>)}
-        {editingId === undefined && renderEditor()}
       </section>}
     </div>
   );

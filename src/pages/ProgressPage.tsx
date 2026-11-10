@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ArrowRight, Check, Clock3, Flame, TriangleAlert } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Header } from '../components/layout/Header';
@@ -8,8 +8,13 @@ import { useErrorStore } from '../stores/errorStore';
 import { coreTabs } from '../components/layout/tabs';
 
 export const ProgressPage: React.FC = () => {
-  const { dueCount, matureCount, errorCount, streak, progressPercent } = useProgressStore();
-  const { errors } = useErrorStore();
+  const { dueCount, matureCount, errorCount, streak, progressPercent, loadStats } = useProgressStore();
+  const { errors, loadErrors } = useErrorStore();
+
+  useEffect(() => {
+    void loadStats();
+    void loadErrors();
+  }, [loadStats, loadErrors]);
 
   return (
     <>

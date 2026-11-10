@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, BookOpenText, CheckCircle2, ChevronDown, Layers3, ListChecks } from 'lucide-react';
+import { ArrowLeft, ArrowRight, BookOpenText, CheckCircle2, Layers3, ListChecks } from 'lucide-react';
 import { Header } from '../components/layout/Header';
 import { TabBar } from '../components/layout/TabBar';
 import { coreTabs } from '../components/layout/tabs';
@@ -12,9 +12,20 @@ import { Rating, review } from '../lib/srs';
 import { CardWebSearchButton } from '../components/ui/CardWebSearchButton';
 import { CardNoteControl } from '../components/ui/CardNoteControl';
 import { CardSpeakButton } from '../components/ui/CardSpeakButton';
+import { CardAddControl } from '../components/ui/CardAddControl';
+import { CARDS_UPDATED_EVENT } from '../lib/customCards';
+import { readLecturePosition, readLectureSection, saveLecturePosition, saveLectureSection } from '../lib/lectureProgress';
 import type { Lecture } from '../lib/schema';
 import { useCardStore } from '../stores/cardStore';
 import { useProgressStore } from '../stores/progressStore';
+
+function persistLecturePosition(lectureId: string, index: number) {
+  void saveLecturePosition(lectureId, index).catch((reason: unknown) => console.error('Could not save the card position.', reason));
+}
+
+function persistLectureSection(lectureId: string, section: Section) {
+  void saveLectureSection(lectureId, section).catch((reason: unknown) => console.error('Could not save the lecture section.', reason));
+}
 
 type Section = 'overview' | 'cards' | 'quiz' | 'vf';
 const sections: Array<{ id: Section; label: string; icon: typeof BookOpenText; count?: (lecture: Lecture) => number }> = [
@@ -41,6 +52,8 @@ export default function LecturePage() {
   const [vfAnswers, setVfAnswers] = useState<Record<string, boolean>>({});
   const [vfResults, setVfResults] = useState<Record<string, boolean>>({});
   const [resultError, setResultError] = useState('');
+  const userNavigatedRef = useRef(false);
+  const userSectionRef = useRef(false);
   const { refreshDueCount } = useCardStore();
   const { loadStats } = useProgressStore();
 
@@ -52,6 +65,8 @@ export default function LecturePage() {
     setError('');
     setNotFound(false);
     setActiveCardIndex(0);
+    userNavigatedRef.current = false;
+    userSectionRef.current = false;
     setRevealed({});
     setReviewed({});
     loadLectureById(id)
@@ -78,9 +93,83 @@ export default function LecturePage() {
   }, [id]);
 
   useEffect(() => {
+    const onCardsUpdated = () => {
+      void loadLectureById(id)
+        .then((data) => setLecture(data))
+        .catch(() => undefined);
+    };
+    window.addEventListener(CARDS_UPDATED_EVENT, onCardsUpdated);
+    return () => window.removeEventListener(CARDS_UPDATED_EVENT, onCardsUpdated);
+  }, [id]);
+
+  // Resume the lecture at the card reached last time (locally, or synced from another device).
+  useEffect(() => {
+    if (!lecture || userNavigatedRef.current) return;
+    const saved = readLecturePosition(lecture.id);
+    if (saved === null) return;
+    setActiveCardIndex(Math.max(0, Math.min(saved, lecture.cards.length - 1)));
+  }, [lecture]);
+
+  useEffect(() => {
+    if (!lecture) return;
+    const onProgressUpdated = () => {
+      if (!userNavigatedRef.current) {
+        const savedIndex = readLecturePosition(lecture.id);
+        if (savedIndex !== null) setActiveCardIndex(Math.max(0, Math.min(savedIndex, lecture.cards.length - 1)));
+      }
+      if (!userSectionRef.current) {
+        const savedSection = readLectureSection(lecture.id);
+        if (savedSection) setSection(savedSection);
+      }
+    };
+    window.addEventListener('residanat:lecture-progress-updated', onProgressUpdated);
+    return () => window.removeEventListener('residanat:lecture-progress-updated', onProgressUpdated);
+  }, [lecture]);
+
+  useEffect(() => {
     const requested = searchParams.get('tab');
-    setSection(sections.some((item) => item.id === requested) ? requested as Section : 'overview');
+    if (sections.some((item) => item.id === requested)) {
+      userSectionRef.current = true;
+      setSection(requested as Section);
+      return;
+    }
+    setSection(readLectureSection(id) ?? 'overview');
   }, [id, searchParams]);
+
+  const focusId = searchParams.get('focus');
+
+  useEffect(() => {
+    if (!lecture || !focusId) return;
+    if (section === 'cards') {
+      const index = lecture.cards.findIndex((card) => card.id === focusId);
+      if (index >= 0) {
+        userNavigatedRef.current = true;
+        setActiveCardIndex(index);
+        persistLecturePosition(lecture.id, index);
+      }
+      return;
+    }
+    const target = document.getElementById(`focus-${focusId}`);
+    if (!target) return;
+    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    target.classList.add('focus-highlight');
+    const timer = window.setTimeout(() => target.classList.remove('focus-highlight'), 2200);
+    return () => window.clearTimeout(timer);
+  }, [lecture, focusId, section]);
+
+  const goToCard = (index: number) => {
+    if (!lecture) return;
+    userNavigatedRef.current = true;
+    const clamped = Math.max(0, Math.min(index, lecture.cards.length - 1));
+    setActiveCardIndex(clamped);
+    persistLecturePosition(lecture.id, clamped);
+  };
+
+  const selectSection = (next: Section) => {
+    userSectionRef.current = true;
+    setSection(next);
+    persistLectureSection(id, next);
+  };
 
   const rateCard = async (cardId: string, rating: Exclude<Rating, Rating.Manual>) => {
     if (!lecture) return;
@@ -135,7 +224,12 @@ export default function LecturePage() {
       <TabBar tabs={coreTabs} />
       <main className="wrap">
         {resultError && <p className="notice error" role="alert">Impossible d’enregistrer le résultat localement : {resultError}</p>}
-        <p><Link className="text-link" to="/lectures">← Tous les cours</Link></p>
+        <nav className="lecture-topbar" aria-label="Retour à la liste des cours">
+          <Link className="back-link" to="/lectures">
+            <span className="back-link-icon"><ArrowLeft size={16} strokeWidth={2.4} aria-hidden="true" /></span>
+            <span className="back-link-label">Tous les cours</span>
+          </Link>
+        </nav>
         <section className="panel">
           <p className="eyebrow">Cours interactif · {lecture.id}</p>
           <h2>{lecture.name}</h2>
@@ -150,7 +244,7 @@ export default function LecturePage() {
 
         <div className="section-tabs" role="tablist" aria-label="Contenu du cours">
           {sections.map(({ icon: Icon, ...item }) => (
-            <button key={item.id} type="button" role="tab" aria-selected={section === item.id} className={section === item.id ? 'section-tab active' : 'section-tab'} onClick={() => setSection(item.id)}>
+            <button key={item.id} type="button" role="tab" aria-selected={section === item.id} className={section === item.id ? 'section-tab active' : 'section-tab'} onClick={() => selectSection(item.id)}>
               <Icon className="section-tab-icon" size={17} strokeWidth={1.9} aria-hidden="true" />
               <span className="section-tab-label">{item.label}</span>
               {item.count && <span className="section-tab-count">{item.count(lecture)}</span>}
@@ -174,36 +268,29 @@ export default function LecturePage() {
         {section === 'cards' && (
           <section aria-label="Flashcards du cours">
             <p className="muted section-intro">Révélez la réponse, puis choisissez une difficulté pour la planifier avec FSRS.</p>
-            {lecture.cards.length === 0 && <p className="panel muted">Aucune carte dans ce cours.</p>}
-            {lecture.cards.length > 0 && <div className="cards-study-layout">
-              <aside className="cards-progress-sidebar">
-                <h3 className="cards-progress-heading">Votre progression</h3>
-                <details className="cards-progress-panel">
-                  <summary>
-                    <span className="cards-progress-summary-copy">
-                      <span className="cards-progress-summary-count">{activeCardIndex + 1} cartes / {lecture.cards.length}</span>
-                      <span className="cards-progress-track" role="progressbar" aria-label="Progression des cartes" aria-valuemin={0} aria-valuemax={lecture.cards.length} aria-valuenow={activeCardIndex + 1}>
-                        <span style={{ width: ((activeCardIndex + 1) / lecture.cards.length) * 100 + '%' }} />
-                      </span>
-                    </span>
-                    <ChevronDown className="cards-progress-chevron" size={17} aria-hidden="true" />
-                  </summary>
-                  <div className="cards-progress-details">
-                    <div className="cards-progress-label"><span>Carte actuelle</span><strong>{activeCardIndex + 1} / {lecture.cards.length}</strong></div>
-                    <small>{lecture.cards.length - activeCardIndex - 1} carte{lecture.cards.length - activeCardIndex - 1 === 1 ? '' : 's'} restante{lecture.cards.length - activeCardIndex - 1 === 1 ? '' : 's'}</small>
-                  </div>
-                </details>
-              </aside>
-              <div className="cards-study-main">
+            {lecture.cards.length === 0 && <>
+              <p className="panel muted">Aucune carte dans ce cours. Ajoutez votre première carte avec le bouton de création.</p>
+              <CardAddControl lectureId={lecture.id} label={lecture.name} />
+            </>}
+            {lecture.cards.length > 0 && <div className="cards-study-main">
                 {(() => {
                   const card = lecture.cards[activeCardIndex];
                   return <article key={card.id} className="card lecture-flashcard">
                     <div className="lecture-flashcard-topline">
-                      <p className="pill">{card.type === 'contrast' ? 'Contraste' : 'Carte'}{card.freq ? ' - ' + card.freq + ' examens' : ''}</p>
+                      <div className="lecture-flashcard-meta">
+                        <p className="pill">{card.type === 'contrast' ? 'Contraste' : 'Carte'}{card.freq ? ' - ' + card.freq + ' examens' : ''}</p>
+                        <span className="lecture-card-progress" role="progressbar" aria-label="Progression des cartes" aria-valuemin={0} aria-valuemax={lecture.cards.length} aria-valuenow={activeCardIndex + 1}>
+                          <span className="lecture-card-progress-count">{activeCardIndex + 1}/{lecture.cards.length}</span>
+                          <span className="lecture-card-progress-track">
+                            <span style={{ width: ((activeCardIndex + 1) / lecture.cards.length) * 100 + '%' }} />
+                          </span>
+                        </span>
+                      </div>
                       <div className="card-quick-actions">
                         <CardWebSearchButton lectureName={lecture.name} question={card.q} answer={card.a} />
                         <CardNoteControl relation={'card:' + lecture.id + '.' + card.id} label={'Carte ' + card.id} />
                         <CardSpeakButton question={card.q} answer={card.a} />
+                        <CardAddControl lectureId={lecture.id} label={lecture.name} />
                       </div>
                     </div>
                     <h3 className="question-text">{card.q}</h3>
@@ -226,13 +313,12 @@ export default function LecturePage() {
                       </div>
                     )}
                     <nav className="cards-study-navigation" aria-label="Navigation des cartes">
-                      <button className="btn ghost" type="button" disabled={activeCardIndex === 0} onClick={() => setActiveCardIndex((index) => Math.max(0, index - 1))}><ArrowLeft size={16} aria-hidden="true" /> Précédente</button>
+                      <button className="btn ghost" type="button" disabled={activeCardIndex === 0} onClick={() => goToCard(activeCardIndex - 1)}><ArrowLeft size={16} aria-hidden="true" /> Précédente</button>
                       <span>Carte {activeCardIndex + 1} sur {lecture.cards.length}</span>
-                      <button className="btn" type="button" disabled={activeCardIndex === lecture.cards.length - 1} onClick={() => setActiveCardIndex((index) => Math.min(lecture.cards.length - 1, index + 1))}>Suivante <ArrowRight size={16} aria-hidden="true" /></button>
+                      <button className="btn" type="button" disabled={activeCardIndex === lecture.cards.length - 1} onClick={() => goToCard(activeCardIndex + 1)}>Suivante <ArrowRight size={16} aria-hidden="true" /></button>
                     </nav>
                   </article>;
                 })()}
-              </div>
             </div>}
           </section>
         )}
@@ -245,7 +331,7 @@ export default function LecturePage() {
               const selected = selections[question.id] ?? [];
               const result = quizResults[question.id];
               return (
-                <article key={question.id} className="card quiz-question">
+                <article key={question.id} id={`focus-${question.id}`} className="card quiz-question">
                   <p className="eyebrow">Question {index + 1} / {lecture.quiz.length}</p>
                   <h3 className="question-text">{question.q}</h3>
                   <CardNoteControl relation={`quiz:${lecture.id}.${question.id}`} label={`Question ${index + 1}`} />
@@ -284,7 +370,7 @@ export default function LecturePage() {
               const answer = vfAnswers[question.id];
               const result = vfResults[question.id];
               return (
-                <article key={question.id} className="card">
+                <article key={question.id} id={`focus-${question.id}`} className="card">
                   <p className="eyebrow">Affirmation {index + 1} / {lecture.vf.length}</p>
                   <h3 className="question-text">{question.s}</h3>
                   <CardNoteControl relation={`vf:${lecture.id}.${question.id}`} label={`Affirmation ${index + 1}`} />

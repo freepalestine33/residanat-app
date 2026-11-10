@@ -4,10 +4,18 @@ import { blobToBase64, compressNoteImage } from './images';
 import { queueSyncChange } from './syncEvents';
 import { supabase } from './supabase';
 import { useSettingsStore } from '../stores/settingsStore';
+import { useProgressStore } from '../stores/progressStore';
+import { useErrorStore } from '../stores/errorStore';
 import { loadLegacyNotes } from './legacyNotes';
 import { LectureSchema } from './schema';
 import { createId } from './createId';
 import { parseStudySession } from './studySession';
+import {
+  readLecturePositions,
+  readLectureSections,
+  sanitizeLecturePositions,
+  sanitizeLectureSections,
+} from './lectureProgress';
 import { preserveLocalLecturePdf } from './userLectureSync';
 
 export type SyncStatus = 'local' | 'offline' | 'syncing' | 'synced' | 'error' | 'conflict';
@@ -93,6 +101,8 @@ function readSettings() {
   }
   preferences.streak = Number(localStorage.getItem('sa_streak') || '0');
   preferences.errorCount = Number(localStorage.getItem('sa_error_count') || '0');
+  preferences.lecturePositions = readLecturePositions();
+  preferences.lectureSections = readLectureSections();
   let updatedAt = localStorage.getItem('sa_settings_updated_at');
   if (!updatedAt) {
     updatedAt = new Date().toISOString();
@@ -331,6 +341,15 @@ async function applyRemote(payload: PullPayload, forceCloud = false) {
         localStorage.setItem('sa_active_study_session_v1', JSON.stringify(studySession));
         window.dispatchEvent(new Event('residanat:study-session-updated'));
       }
+      if (Object.hasOwn(preferences, 'lecturePositions') || Object.hasOwn(preferences, 'lectureSections')) {
+        if (Object.hasOwn(preferences, 'lecturePositions')) {
+          localStorage.setItem('sa_lecture_positions_v1', JSON.stringify(sanitizeLecturePositions(preferences.lecturePositions)));
+        }
+        if (Object.hasOwn(preferences, 'lectureSections')) {
+          localStorage.setItem('sa_lecture_sections_v1', JSON.stringify(sanitizeLectureSections(preferences.lectureSections)));
+        }
+        window.dispatchEvent(new Event('residanat:lecture-progress-updated'));
+      }
       localStorage.setItem('sa_settings_v1', JSON.stringify(settings));
       localStorage.setItem('sa_streak', String(preferences.streak ?? 0));
       localStorage.setItem('sa_error_count', String(preferences.errorCount ?? 0));
@@ -338,6 +357,9 @@ async function applyRemote(payload: PullPayload, forceCloud = false) {
       useSettingsStore.getState().loadSettings();
     }
   }
+  // Recompute derived statistics so the Progression page reflects freshly synced data.
+  void useProgressStore.getState().loadStats();
+  void useErrorStore.getState().loadErrors();
 }
 
 function recordCount(payload: PullPayload) {
