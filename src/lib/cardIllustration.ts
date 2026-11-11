@@ -29,6 +29,10 @@ export function isInvalidGeminiApiKeyResponse(status: number, body: string): boo
   }
 }
 
+export function isSuspendedGeminiProjectResponse(status: number, body: string): boolean {
+  return status === 403 && /project.{0,100}has been suspended|project.{0,100}suspended/i.test(body);
+}
+
 const MAX_FIELD_CHARS = 1200;
 
 function clean(value: string): string {

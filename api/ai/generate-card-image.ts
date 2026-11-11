@@ -6,6 +6,7 @@ import {
   buildIllustrationPrompt,
   isFaceFreeIllustrationReview,
   isInvalidGeminiApiKeyResponse,
+  isSuspendedGeminiProjectResponse,
 } from '../../src/lib/cardIllustration';
 
 const ID_PATTERN = /^[A-Za-z0-9_-]{1,64}$/;
@@ -27,6 +28,9 @@ async function throwGeminiError(response: Response, stage: string): Promise<neve
   const detail = await response.text();
   if (isInvalidGeminiApiKeyResponse(response.status, detail)) {
     throw new ApiError(400, 'Clé API Gemini refusée. Vérifiez-la dans le champ de la carte ou créez une clé valide sur Google AI Studio.');
+  }
+  if (isSuspendedGeminiProjectResponse(response.status, detail)) {
+    throw new ApiError(403, 'Le projet Google associé à cette clé API Gemini est suspendu. Créez une clé dans un nouveau projet Google AI Studio, puis remplacez la clé enregistrée dans le panneau d’illustration.');
   }
   throw new ApiError(502, `${stage} (${response.status}). ${detail.slice(0, 200)}`);
 }

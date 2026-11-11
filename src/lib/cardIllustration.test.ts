@@ -3,6 +3,7 @@ import {
   buildIllustrationPrompt,
   isFaceFreeIllustrationReview,
   isInvalidGeminiApiKeyResponse,
+  isSuspendedGeminiProjectResponse,
 } from './cardIllustration';
 
 describe('buildIllustrationPrompt', () => {
@@ -63,5 +64,12 @@ describe('buildIllustrationPrompt', () => {
     expect(isInvalidGeminiApiKeyResponse(400, 'API_KEY_INVALID')).toBe(true);
     expect(isInvalidGeminiApiKeyResponse(403, response)).toBe(false);
     expect(isInvalidGeminiApiKeyResponse(400, '{"error":{"message":"Quota exceeded"}}')).toBe(false);
+  });
+
+  it('recognizes suspended Gemini projects without misclassifying other permission errors', () => {
+    const response = '{"error":{"code":403,"message":"Permission denied: Consumer project has been suspended.","status":"PERMISSION_DENIED"}}';
+    expect(isSuspendedGeminiProjectResponse(403, response)).toBe(true);
+    expect(isSuspendedGeminiProjectResponse(403, '{"error":{"message":"Permission denied"}}')).toBe(false);
+    expect(isSuspendedGeminiProjectResponse(400, response)).toBe(false);
   });
 });
