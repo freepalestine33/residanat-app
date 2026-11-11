@@ -19,6 +19,11 @@
   status = 200
 
 [[redirects]]
+  from = "/api/ai/generate-card-image"
+  to = "/.netlify/functions/ai-generate-card-image"
+  status = 200
+
+[[redirects]]
   from = "/api/webhooks/n8n-lecture"
   to = "/.netlify/functions/n8n-lecture"
   status = 200

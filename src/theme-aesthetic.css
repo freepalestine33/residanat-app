@@ -279,6 +279,7 @@ h1, h2, h3 { letter-spacing: -0.035em; }
 
 .star-button { border-radius: 999px; }
 .card-web-search-button,
+.card-image-button,
 .card-speak-button { border-radius: 14px; }
 
 /* ---------- 9. Forms ---------- */

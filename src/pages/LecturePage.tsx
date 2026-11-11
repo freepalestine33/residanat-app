@@ -7,12 +7,14 @@ import { coreTabs } from '../components/layout/tabs';
 import { loadLectureById, loadLecturePdf } from '../data/lectures';
 import { LectureNotFoundError } from '../lib/content';
 import { isCorrectSelection } from '../lib/answers';
-import { saveQuizResult } from '../lib/quizHistory';
+import { loadLectureAnswers, saveQuizResult } from '../lib/quizHistory';
 import { Rating, review } from '../lib/srs';
 import { CardWebSearchButton } from '../components/ui/CardWebSearchButton';
+import { CardImageButton } from '../components/ui/CardImageButton';
 import { CardNoteControl } from '../components/ui/CardNoteControl';
 import { CardSpeakButton } from '../components/ui/CardSpeakButton';
 import { CardAddControl } from '../components/ui/CardAddControl';
+import { CardEditControl } from '../components/ui/CardEditControl';
 import { CARDS_UPDATED_EVENT } from '../lib/customCards';
 import { readLecturePosition, readLectureSection, saveLecturePosition, saveLectureSection } from '../lib/lectureProgress';
 import type { Lecture } from '../lib/schema';
@@ -69,12 +71,28 @@ export default function LecturePage() {
     userSectionRef.current = false;
     setRevealed({});
     setReviewed({});
+    setSelections({});
+    setQuizResults({});
+    setVfAnswers({});
+    setVfResults({});
     loadLectureById(id)
       .then((data) => { if (active) setLecture(data); })
       .catch((reason: unknown) => {
         if (!active) return;
         setNotFound(reason instanceof LectureNotFoundError);
         setError(reason instanceof Error ? reason.message : String(reason));
+      });
+    // Restore the quiz and vrai/faux answers already validated for this lecture.
+    loadLectureAnswers(id)
+      .then((saved) => {
+        if (!active) return;
+        setSelections(saved.selections);
+        setQuizResults(saved.quizResults);
+        setVfAnswers(saved.vfAnswers);
+        setVfResults(saved.vfResults);
+      })
+      .catch((reason: unknown) => {
+        if (active) console.error('Could not restore the saved quiz answers.', reason);
       });
     let pdfUrl: string | undefined;
     loadLecturePdf(id)
@@ -287,9 +305,11 @@ export default function LecturePage() {
                         </span>
                       </div>
                       <div className="card-quick-actions">
+                        <CardImageButton lectureId={lecture.id} lectureName={lecture.name} cardId={card.id} question={card.q} answer={card.a} />
                         <CardWebSearchButton lectureName={lecture.name} question={card.q} answer={card.a} />
                         <CardNoteControl relation={'card:' + lecture.id + '.' + card.id} label={'Carte ' + card.id} />
                         <CardSpeakButton question={card.q} answer={card.a} />
+                        <CardEditControl lectureId={lecture.id} card={card} label={lecture.name} />
                         <CardAddControl lectureId={lecture.id} label={lecture.name} />
                       </div>
                     </div>
