@@ -1,5 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import { buildIllustrationPrompt, isFaceFreeIllustrationReview } from './cardIllustration';
+import {
+  buildIllustrationPrompt,
+  isFaceFreeIllustrationReview,
+  isInvalidGeminiApiKeyResponse,
+} from './cardIllustration';
 
 describe('buildIllustrationPrompt', () => {
   const input = {
@@ -45,5 +49,19 @@ describe('buildIllustrationPrompt', () => {
     expect(isFaceFreeIllustrationReview({})).toBe(false);
     expect(isFaceFreeIllustrationReview(null)).toBe(false);
     expect(isFaceFreeIllustrationReview('{"containsHumanFace":false}')).toBe(false);
+  });
+
+  it('recognizes Gemini invalid API key responses without misclassifying other errors', () => {
+    const response = JSON.stringify({
+      error: {
+        status: 'INVALID_ARGUMENT',
+        message: 'API key not valid. Please pass a valid API key.',
+        details: [{ reason: 'API_KEY_INVALID' }],
+      },
+    });
+    expect(isInvalidGeminiApiKeyResponse(400, response)).toBe(true);
+    expect(isInvalidGeminiApiKeyResponse(400, 'API_KEY_INVALID')).toBe(true);
+    expect(isInvalidGeminiApiKeyResponse(403, response)).toBe(false);
+    expect(isInvalidGeminiApiKeyResponse(400, '{"error":{"message":"Quota exceeded"}}')).toBe(false);
   });
 });

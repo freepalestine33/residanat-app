@@ -2,7 +2,11 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { getBody, requireString, sendError, ApiError } from '../_lib/http';
 import { authenticateRequest } from '../_lib/supabase';
 import { createCardImageUrl, uploadCardImage } from '../_lib/cardImages';
-import { buildIllustrationPrompt, isFaceFreeIllustrationReview } from '../../src/lib/cardIllustration';
+import {
+  buildIllustrationPrompt,
+  isFaceFreeIllustrationReview,
+  isInvalidGeminiApiKeyResponse,
+} from '../../src/lib/cardIllustration';
 
 const ID_PATTERN = /^[A-Za-z0-9_-]{1,64}$/;
 
@@ -16,9 +20,17 @@ function requireId(value: unknown, label: string): string {
  * On-demand card illustrations. Deliberately separate from /api/ai/generate-lecture
  * so the lecture, quiz and vrai-faux generation prompts and latency are untouched.
  *
- * GET  ?lectureId&cardId  -> signed URL of an existing illustration (404 if none)
+ * GET  ?lectureId&cardId  -> signed URL of an existing illustration (null if none)
  * POST { lectureId, cardId, lectureName, question, answer, apiKey? } -> generates via Gemini image
  */
+async function throwGeminiError(response: Response, stage: string): Promise<never> {
+  const detail = await response.text();
+  if (isInvalidGeminiApiKeyResponse(response.status, detail)) {
+    throw new ApiError(400, 'Clé API Gemini refusée. Vérifiez-la dans le champ de la carte ou créez une clé valide sur Google AI Studio.');
+  }
+  throw new ApiError(502, `${stage} (${response.status}). ${detail.slice(0, 200)}`);
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'GET' && req.method !== 'POST') {
     res.setHeader('Allow', 'GET, POST');
@@ -32,7 +44,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const lectureId = requireId(req.query.lectureId, 'lectureId');
       const cardId = requireId(req.query.cardId, 'cardId');
       const imageUrl = await createCardImageUrl(client, lectureId, cardId);
-      if (!imageUrl) return res.status(404).json({ error: 'Aucune illustration pour cette carte.' });
+      if (!imageUrl) return res.status(200).json({ imageUrl: null });
       return res.status(200).json({ imageUrl });
     }
 
@@ -65,8 +77,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     );
 
     if (!geminiRes.ok) {
-      const detail = await geminiRes.text();
-      throw new ApiError(502, `Le modèle d’image a renvoyé une erreur (${geminiRes.status}). ${detail.slice(0, 200)}`);
+      await throwGeminiError(geminiRes, `Le modèle d’image a renvoyé une erreur`);
     }
 
     const payload = await geminiRes.json() as {
@@ -107,8 +118,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     );
 
     if (!reviewRes.ok) {
-      const detail = await reviewRes.text();
-      throw new ApiError(502, `Impossible de vérifier l’absence de visage dans l’illustration (${reviewRes.status}). ${detail.slice(0, 200)}`);
+      await throwGeminiError(reviewRes, `Impossible de vérifier l’absence de visage dans l’illustration`);
     }
 
     const reviewPayload = await reviewRes.json() as {

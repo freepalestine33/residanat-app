@@ -9,6 +9,26 @@ export function isFaceFreeIllustrationReview(value: unknown): boolean {
   return (value as { containsHumanFace?: unknown }).containsHumanFace === false;
 }
 
+export function isInvalidGeminiApiKeyResponse(status: number, body: string): boolean {
+  if (status !== 400) return false;
+  if (/API key not valid|API_KEY_INVALID/i.test(body)) return true;
+
+  try {
+    const payload: unknown = JSON.parse(body);
+    if (!payload || typeof payload !== 'object') return false;
+    const error = (payload as { error?: unknown }).error;
+    if (!error || typeof error !== 'object') return false;
+    const details = (error as { details?: unknown }).details;
+    return Array.isArray(details) && details.some((detail) => (
+      Boolean(detail)
+      && typeof detail === 'object'
+      && (detail as { reason?: unknown }).reason === 'API_KEY_INVALID'
+    ));
+  } catch {
+    return false;
+  }
+}
+
 const MAX_FIELD_CHARS = 1200;
 
 function clean(value: string): string {

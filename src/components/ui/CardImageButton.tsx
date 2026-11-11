@@ -94,10 +94,7 @@ export function CardImageButton({ lectureId, lectureName, cardId, question, answ
       .then(async (response) => {
         if (requestId !== requestRef.current) return;
         const type = response.headers.get('content-type') ?? '';
-        if (!type.includes('application/json') || response.status === 404) {
-          setImageUrl('');
-          return;
-        }
+        if (!type.includes('application/json')) throw new Error(await readError(response));
         if (!response.ok) throw new Error(await readError(response));
         const result = await readJson<{ imageUrl?: unknown }>(response);
         if (requestId === requestRef.current && typeof result.imageUrl === 'string') setImageUrl(result.imageUrl);
