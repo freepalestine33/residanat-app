@@ -6,6 +6,8 @@ import { TabBar } from '../components/layout/TabBar';
 import { useLectureStore } from '../stores/lectureStore';
 import { coreTabs } from '../components/layout/tabs';
 import { otrProgramme } from '../data/otrProgramme';
+import { db, type QuizResult } from '../db/db';
+import { lectureCompletionPercent } from '../lib/lectureCompletion';
 import { reviewedCountByLecture } from '../lib/srs';
 import { deleteUserLecture } from '../lib/userLectureActions';
 import type { LectureMeta } from '../types/lecture';
@@ -58,6 +60,7 @@ export const LecturesPage: React.FC = () => {
   const [isAiModalOpen, setIsAiModalOpen] = useState(false);
   const [aiModalOtr, setAiModalOtr] = useState<number | undefined>(undefined);
   const [reviewedByLecture, setReviewedByLecture] = useState<Map<string, number>>(new Map());
+  const [quizResults, setQuizResults] = useState<QuizResult[]>([]);
   const [deletingLectureId, setDeletingLectureId] = useState<string | null>(null);
   const [deleteError, setDeleteError] = useState('');
 
@@ -80,17 +83,23 @@ export const LecturesPage: React.FC = () => {
 
   useEffect(() => {
     let active = true;
-    reviewedCountByLecture()
-      .then((counts) => { if (active) setReviewedByLecture(counts); })
-      .catch(() => { /* progression stays empty when local storage is unavailable */ });
+    Promise.all([reviewedCountByLecture(), db.quizResults.toArray()])
+      .then(([counts, results]) => {
+        if (!active) return;
+        setReviewedByLecture(counts);
+        setQuizResults(results);
+      })
+      .catch((reason: unknown) => {
+        console.error('Could not load course completion progress.', reason);
+      });
     return () => { active = false; };
   }, [lectures]);
 
-  const progressPercent = (lectureId: string, totalCards: number) => {
-    if (!totalCards) return 0;
-    const reviewed = reviewedByLecture.get(lectureId) ?? 0;
-    return Math.min(100, Math.round((reviewed / totalCards) * 100));
-  };
+  const progressPercent = (lecture: LectureMeta) => lectureCompletionPercent(
+    lecture,
+    reviewedByLecture.get(lecture.id) ?? 0,
+    quizResults,
+  );
 
   const visible = useMemo(() => {
     const term = query.trim().toLocaleLowerCase('fr');
@@ -151,7 +160,7 @@ export const LecturesPage: React.FC = () => {
                 <div className="course-card-topline">
                   <span className="course-index">{String(topic.number).padStart(2, '0')}</span>
                   <div className="course-card-topline-right">
-                    {lecture && <CourseProgressRing percent={progressPercent(lecture.id, lecture.cards)} />}
+                    {lecture && <CourseProgressRing percent={progressPercent(lecture)} />}
                     {lecture ? (
                       <Link className="course-open" to={`/lecture/${lecture.id}`} aria-label={`Ouvrir ${topic.title}`}>
                         <ArrowRight size={16} aria-hidden="true" />
@@ -222,7 +231,7 @@ export const LecturesPage: React.FC = () => {
                     <div className="course-card-topline">
                       <span className="course-index">OTR</span>
                       <div className="course-card-topline-right">
-                        <CourseProgressRing percent={progressPercent(lecture.id, lecture.cards)} />
+                        <CourseProgressRing percent={progressPercent(lecture)} />
                         <Link className="course-open" to={`/lecture/${lecture.id}`} aria-label={`Ouvrir ${lecture.name}`}>
                           <ArrowRight size={16} aria-hidden="true" />
                         </Link>

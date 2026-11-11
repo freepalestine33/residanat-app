@@ -8,9 +8,9 @@ import { loadLectureById, loadLecturePdf } from '../data/lectures';
 import { LectureNotFoundError } from '../lib/content';
 import { isCorrectSelection } from '../lib/answers';
 import { loadLectureAnswers, saveQuizResult } from '../lib/quizHistory';
+import { summarizeQuiz } from '../lib/quizSummary';
 import { Rating, review } from '../lib/srs';
 import { CardWebSearchButton } from '../components/ui/CardWebSearchButton';
-import { CardImageButton } from '../components/ui/CardImageButton';
 import { CardNoteControl } from '../components/ui/CardNoteControl';
 import { CardSpeakButton } from '../components/ui/CardSpeakButton';
 import { CardAddControl } from '../components/ui/CardAddControl';
@@ -51,6 +51,7 @@ export default function LecturePage() {
   const [reviewed, setReviewed] = useState<Record<string, boolean>>({});
   const [selections, setSelections] = useState<Record<string, string[]>>({});
   const [quizResults, setQuizResults] = useState<Record<string, boolean>>({});
+  const [quizSummaryOpen, setQuizSummaryOpen] = useState(false);
   const [vfAnswers, setVfAnswers] = useState<Record<string, boolean>>({});
   const [vfResults, setVfResults] = useState<Record<string, boolean>>({});
   const [resultError, setResultError] = useState('');
@@ -73,6 +74,7 @@ export default function LecturePage() {
     setReviewed({});
     setSelections({});
     setQuizResults({});
+    setQuizSummaryOpen(false);
     setVfAnswers({});
     setVfResults({});
     loadLectureById(id)
@@ -235,6 +237,7 @@ export default function LecturePage() {
     lecture.keys.length ? `Points clés. ${lecture.keys.join('. ')}` : '',
     lecture.contrasts.length ? `Contrastes à retenir. ${lecture.contrasts.join('. ')}` : '',
   ].filter(Boolean).join('. ');
+  const quizSummary = summarizeQuiz(lecture.quiz.map((question) => question.id), quizResults);
 
   return (
     <>
@@ -305,7 +308,6 @@ export default function LecturePage() {
                         </span>
                       </div>
                       <div className="card-quick-actions">
-                        <CardImageButton lectureId={lecture.id} lectureName={lecture.name} cardId={card.id} question={card.q} answer={card.a} />
                         <CardWebSearchButton lectureName={lecture.name} question={card.q} answer={card.a} />
                         <CardNoteControl relation={'card:' + lecture.id + '.' + card.id} label={'Carte ' + card.id} />
                         <CardSpeakButton question={card.q} answer={card.a} />
@@ -379,6 +381,77 @@ export default function LecturePage() {
                 </article>
               );
             })}
+            {quizSummary.isComplete && (
+              <div className="quiz-summary-trigger">
+                <button
+                  type="button"
+                  className="btn"
+                  aria-expanded={quizSummaryOpen}
+                  aria-controls={`quiz-summary-${lecture.id}`}
+                  onClick={() => setQuizSummaryOpen((open) => !open)}
+                >
+                  {quizSummaryOpen ? 'Masquer le bilan du quiz' : 'Voir le bilan et les explications'}
+                </button>
+              </div>
+            )}
+            {quizSummaryOpen && quizSummary.isComplete && (
+              <section className="panel quiz-summary" id={`quiz-summary-${lecture.id}`} aria-labelledby={`quiz-summary-title-${lecture.id}`}>
+                <div className="section-heading">
+                  <div>
+                    <p className="eyebrow">Quiz terminé</p>
+                    <h2 id={`quiz-summary-title-${lecture.id}`}>Votre bilan</h2>
+                  </div>
+                </div>
+                <div className="quiz-summary-stats" aria-label="Statistiques du quiz">
+                  <article className="quiz-summary-stat">
+                    <strong>{quizSummary.correct}<span> / {quizSummary.total}</span></strong>
+                    <small>Bonnes réponses</small>
+                  </article>
+                  <article className="quiz-summary-stat">
+                    <strong>{quizSummary.percentage}<span>%</span></strong>
+                    <small>Score</small>
+                  </article>
+                  <article className="quiz-summary-stat">
+                    <strong>{quizSummary.total - quizSummary.correct}</strong>
+                    <small>À revoir</small>
+                  </article>
+                </div>
+                <div className="quiz-summary-review">
+                  {lecture.quiz.map((question, index) => {
+                    const correct = quizResults[question.id] === true;
+                    const selected = selections[question.id] ?? [];
+                    return (
+                      <article key={question.id} className={correct ? 'quiz-review-item is-correct' : 'quiz-review-item is-incorrect'}>
+                        <div className="quiz-review-heading">
+                          <p className="eyebrow">Question {index + 1}</p>
+                          <span className="quiz-review-status">{correct ? 'Correcte' : 'À revoir'}</span>
+                        </div>
+                        <h3 className="question-text">{question.q}</h3>
+                        <ul className="quiz-review-options">
+                          {question.opts.map((option, optionIndex) => {
+                            const wasSelected = selected.includes(String(optionIndex));
+                            const optionClass = option.ok
+                              ? 'option-row option-correct'
+                              : wasSelected ? 'option-row option-incorrect' : 'option-row';
+                            return (
+                              <li key={optionIndex} className={optionClass}>
+                                <span>{option.t}</span>
+                                {option.ok && <strong>Bonne réponse</strong>}
+                                {!option.ok && wasSelected && <strong>Votre choix</strong>}
+                              </li>
+                            );
+                          })}
+                        </ul>
+                        <p className={correct ? 'notice success quiz-review-explanation' : 'notice error quiz-review-explanation'}>
+                          <strong>{correct ? 'Explication' : 'Correction'}</strong>
+                          {' '}{question.explain || 'Aucune explication détaillée n’est disponible pour cette question.'}
+                        </p>
+                      </article>
+                    );
+                  })}
+                </div>
+              </section>
+            )}
           </section>
         )}
 

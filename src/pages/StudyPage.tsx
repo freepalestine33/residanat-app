@@ -23,7 +23,6 @@ import {
 } from '../lib/errorSchedule';
 import { loadAllLectures } from '../data/lectures';
 import { CardWebSearchButton } from '../components/ui/CardWebSearchButton';
-import { CardImageButton } from '../components/ui/CardImageButton';
 import { CardNoteControl } from '../components/ui/CardNoteControl';
 import { CardSpeakButton } from '../components/ui/CardSpeakButton';
 import { CardAddControl } from '../components/ui/CardAddControl';
@@ -462,7 +461,6 @@ export const StudyPage: React.FC = () => {
             <div className="study-session-topline">
               <div><p className="eyebrow">Carte en cours</p><p className="muted"><Link className="text-link" to={`/lecture/${current.lectureId}`}>{current.lectureName}</Link></p></div>
               <div className="study-session-actions-top">
-                <CardImageButton lectureId={current.lectureId} lectureName={current.lectureName} cardId={current.card.id} question={current.card.q} answer={current.card.a} />
                 <CardWebSearchButton lectureName={current.lectureName} question={current.card.q} answer={current.card.a} />
                 <CardNoteControl relation={`card:${current.lectureId}.${current.card.id}`} label={`Carte · ${current.lectureName}`} />
                 <CardSpeakButton question={current.card.q} answer={current.card.a} />
