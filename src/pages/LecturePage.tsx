@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, BookOpenText, CheckCircle2, Layers3, ListChecks } from 'lucide-react';
+import { ArrowLeft, ArrowRight, BookOpenText, Check, CheckCircle2, Clipboard, Layers3, ListChecks } from 'lucide-react';
 import { Header } from '../components/layout/Header';
 import { TabBar } from '../components/layout/TabBar';
 import { coreTabs } from '../components/layout/tabs';
@@ -8,7 +8,7 @@ import { loadLectureById, loadLecturePdf } from '../data/lectures';
 import { LectureNotFoundError } from '../lib/content';
 import { isCorrectSelection } from '../lib/answers';
 import { loadLectureAnswers, saveQuizResult } from '../lib/quizHistory';
-import { summarizeQuiz } from '../lib/quizSummary';
+import { filterQuizQuestions, summarizeQuiz } from '../lib/quizSummary';
 import { Rating, review } from '../lib/srs';
 import { CardWebSearchButton } from '../components/ui/CardWebSearchButton';
 import { CardNoteControl } from '../components/ui/CardNoteControl';
@@ -52,6 +52,11 @@ export default function LecturePage() {
   const [selections, setSelections] = useState<Record<string, string[]>>({});
   const [quizResults, setQuizResults] = useState<Record<string, boolean>>({});
   const [quizSummaryOpen, setQuizSummaryOpen] = useState(false);
+  const [quizIncorrectOnly, setQuizIncorrectOnly] = useState(false);
+  const [retryingQuizIds, setRetryingQuizIds] = useState<Record<string, boolean>>({});
+  const [sourceCardId, setSourceCardId] = useState<string | null>(null);
+  const [copiedCardId, setCopiedCardId] = useState<string | null>(null);
+  const [copyError, setCopyError] = useState('');
   const [vfAnswers, setVfAnswers] = useState<Record<string, boolean>>({});
   const [vfResults, setVfResults] = useState<Record<string, boolean>>({});
   const [resultError, setResultError] = useState('');
@@ -75,6 +80,11 @@ export default function LecturePage() {
     setSelections({});
     setQuizResults({});
     setQuizSummaryOpen(false);
+    setQuizIncorrectOnly(false);
+    setRetryingQuizIds({});
+    setSourceCardId(null);
+    setCopiedCardId(null);
+    setCopyError('');
     setVfAnswers({});
     setVfResults({});
     loadLectureById(id)
@@ -185,10 +195,26 @@ export default function LecturePage() {
     persistLecturePosition(lecture.id, clamped);
   };
 
+  useEffect(() => {
+    if (!lecture || !sourceCardId || section !== 'cards') return;
+    if (lecture.cards[activeCardIndex]?.id !== sourceCardId) return;
+    document.getElementById('lecture-source-card')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setSourceCardId(null);
+  }, [lecture, section, activeCardIndex, sourceCardId]);
+
   const selectSection = (next: Section) => {
     userSectionRef.current = true;
     setSection(next);
     persistLectureSection(id, next);
+  };
+
+  const openSourceCard = (cardId: string) => {
+    if (!lecture) return;
+    const index = lecture.cards.findIndex((card) => card.id === cardId);
+    if (index < 0) return;
+    setSourceCardId(cardId);
+    selectSection('cards');
+    goToCard(index);
   };
 
   const rateCard = async (cardId: string, rating: Exclude<Rating, Rating.Manual>) => {
@@ -202,11 +228,26 @@ export default function LecturePage() {
     }
   };
 
+  const copyCardText = async (cardId: string, question: string, answer: string) => {
+    setCopyError('');
+    if (!navigator.clipboard?.writeText) {
+      setCopyError('La copie dans le presse-papiers n’est pas disponible dans ce navigateur.');
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(`${question}\n${answer}`);
+      setCopiedCardId(cardId);
+    } catch (reason) {
+      setCopyError(`Impossible de copier cette carte : ${reason instanceof Error ? reason.message : String(reason)}`);
+    }
+  };
+
   const verifyQuiz = async (questionId: string, correct: boolean, selected: string[]) => {
     if (!lecture) return;
     try {
       await saveQuizResult(lecture.id, questionId, 'quiz', correct, selected);
       setQuizResults((state) => ({ ...state, [questionId]: correct }));
+      setRetryingQuizIds((state) => ({ ...state, [questionId]: false }));
       setResultError('');
     } catch (reason) {
       setResultError(reason instanceof Error ? reason.message : String(reason));
@@ -238,6 +279,43 @@ export default function LecturePage() {
     lecture.contrasts.length ? `Contrastes à retenir. ${lecture.contrasts.join('. ')}` : '',
   ].filter(Boolean).join('. ');
   const quizSummary = summarizeQuiz(lecture.quiz.map((question) => question.id), quizResults);
+  const quizReviewQuestions = filterQuizQuestions(lecture.quiz, quizResults, quizIncorrectOnly);
+  const renderQuizSources = (cardIds: string[]) => {
+    const linkedCards = cardIds.filter((cardId) => lecture.cards.some((card) => card.id === cardId));
+    if (!linkedCards.length) return null;
+    return (
+      <div className="quiz-source-links" aria-label="Cartes sources">
+        {linkedCards.map((cardId) => (
+          <button key={cardId} className="btn ghost btn-sm" type="button" onClick={() => openSourceCard(cardId)}>
+            Voir la source · Carte {cardId}
+          </button>
+        ))}
+      </div>
+    );
+  };
+
+  const toggleIncorrectQuizFilter = () => {
+    const showOnlyIncorrect = !quizIncorrectOnly;
+    setQuizIncorrectOnly(showOnlyIncorrect);
+    if (showOnlyIncorrect) {
+      setSelections((current) => {
+        const next = { ...current };
+        for (const question of lecture.quiz) {
+          if (quizResults[question.id] !== true) next[question.id] = [];
+        }
+        return next;
+      });
+      setRetryingQuizIds((current) => {
+        const next = { ...current };
+        for (const question of lecture.quiz) {
+          if (quizResults[question.id] !== true) next[question.id] = true;
+        }
+        return next;
+      });
+    } else {
+      setRetryingQuizIds({});
+    }
+  };
 
   return (
     <>
@@ -245,6 +323,7 @@ export default function LecturePage() {
       <TabBar tabs={coreTabs} />
       <main className="wrap">
         {resultError && <p className="notice error" role="alert">Impossible d’enregistrer le résultat localement : {resultError}</p>}
+        {copyError && <p className="notice error" role="alert">{copyError}</p>}
         <nav className="lecture-topbar" aria-label="Retour à la liste des cours">
           <Link className="back-link" to="/lectures">
             <span className="back-link-icon"><ArrowLeft size={16} strokeWidth={2.4} aria-hidden="true" /></span>
@@ -296,7 +375,7 @@ export default function LecturePage() {
             {lecture.cards.length > 0 && <div className="cards-study-main">
                 {(() => {
                   const card = lecture.cards[activeCardIndex];
-                  return <article key={card.id} className="card lecture-flashcard">
+                  return <article key={card.id} id="lecture-source-card" className="card lecture-flashcard">
                     <div className="lecture-flashcard-topline">
                       <div className="lecture-flashcard-meta">
                         <p className="pill">{card.type === 'contrast' ? 'Contraste' : 'Carte'}{card.freq ? ' - ' + card.freq + ' examens' : ''}</p>
@@ -308,6 +387,15 @@ export default function LecturePage() {
                         </span>
                       </div>
                       <div className="card-quick-actions">
+                        <button
+                          className="icon-button"
+                          type="button"
+                          aria-label={copiedCardId === card.id ? 'Question et réponse copiées' : 'Copier la question et la réponse'}
+                          title={copiedCardId === card.id ? 'Copié' : 'Copier la question et la réponse'}
+                          onClick={() => void copyCardText(card.id, card.q, card.a)}
+                        >
+                          {copiedCardId === card.id ? <Check size={17} aria-hidden="true" /> : <Clipboard size={17} aria-hidden="true" />}
+                        </button>
                         <CardWebSearchButton lectureName={lecture.name} question={card.q} answer={card.a} />
                         <CardNoteControl relation={'card:' + lecture.id + '.' + card.id} label={'Carte ' + card.id} />
                         <CardSpeakButton question={card.q} answer={card.a} />
@@ -356,6 +444,7 @@ export default function LecturePage() {
                 <article key={question.id} id={`focus-${question.id}`} className="card quiz-question">
                   <p className="eyebrow">Question {index + 1} / {lecture.quiz.length}</p>
                   <h3 className="question-text">{question.q}</h3>
+                  {renderQuizSources(question.cards)}
                   <CardNoteControl relation={`quiz:${lecture.id}.${question.id}`} label={`Question ${index + 1}`} />
                   {question.src && <p className="muted">Source : {question.src}</p>}
                   <fieldset className="option-list" disabled={result !== undefined}>
@@ -411,15 +500,24 @@ export default function LecturePage() {
                     <strong>{quizSummary.percentage}<span>%</span></strong>
                     <small>Score</small>
                   </article>
-                  <article className="quiz-summary-stat">
+                  <button
+                    className={quizIncorrectOnly ? 'quiz-summary-stat quiz-summary-filter is-active' : 'quiz-summary-stat quiz-summary-filter'}
+                    type="button"
+                    aria-pressed={quizIncorrectOnly}
+                    disabled={quizSummary.total === quizSummary.correct && !quizIncorrectOnly}
+                    onClick={toggleIncorrectQuizFilter}
+                  >
                     <strong>{quizSummary.total - quizSummary.correct}</strong>
-                    <small>À revoir</small>
-                  </article>
+                    <small>{quizIncorrectOnly ? 'Afficher tout' : 'À revoir · réessayer'}</small>
+                  </button>
                 </div>
                 <div className="quiz-summary-review">
-                  {lecture.quiz.map((question, index) => {
+                  {quizReviewQuestions.map((question) => {
+                    const index = lecture.quiz.findIndex((item) => item.id === question.id);
                     const correct = quizResults[question.id] === true;
+                    const retrying = quizIncorrectOnly && retryingQuizIds[question.id] === true;
                     const selected = selections[question.id] ?? [];
+                    const correctOptions = question.opts.flatMap((option, optionIndex) => option.ok ? [String(optionIndex)] : []);
                     return (
                       <article key={question.id} className={correct ? 'quiz-review-item is-correct' : 'quiz-review-item is-incorrect'}>
                         <div className="quiz-review-heading">
@@ -427,28 +525,70 @@ export default function LecturePage() {
                           <span className="quiz-review-status">{correct ? 'Correcte' : 'À revoir'}</span>
                         </div>
                         <h3 className="question-text">{question.q}</h3>
-                        <ul className="quiz-review-options">
-                          {question.opts.map((option, optionIndex) => {
-                            const wasSelected = selected.includes(String(optionIndex));
-                            const optionClass = option.ok
-                              ? 'option-row option-correct'
-                              : wasSelected ? 'option-row option-incorrect' : 'option-row';
-                            return (
-                              <li key={optionIndex} className={optionClass}>
-                                <span>{option.t}</span>
-                                {option.ok && <strong>Bonne réponse</strong>}
-                                {!option.ok && wasSelected && <strong>Votre choix</strong>}
-                              </li>
-                            );
-                          })}
-                        </ul>
-                        <p className={correct ? 'notice success quiz-review-explanation' : 'notice error quiz-review-explanation'}>
-                          <strong>{correct ? 'Explication' : 'Correction'}</strong>
-                          {' '}{question.explain || 'Aucune explication détaillée n’est disponible pour cette question.'}
-                        </p>
+                        {renderQuizSources(question.cards)}
+                        {retrying ? (
+                          <>
+                            <fieldset className="option-list quiz-retry-options">
+                              <legend className="sr-only">Choisissez à nouveau les bonnes propositions</legend>
+                              {question.opts.map((option, optionIndex) => {
+                                const optionId = `${lecture.id}-${question.id}-retry-${optionIndex}`;
+                                const value = String(optionIndex);
+                                return (
+                                  <label className="option-row" key={optionIndex} htmlFor={optionId}>
+                                    <input
+                                      id={optionId}
+                                      type="checkbox"
+                                      checked={selected.includes(value)}
+                                      onChange={(event) => setSelections((state) => ({
+                                        ...state,
+                                        [question.id]: event.target.checked
+                                          ? [...selected, value]
+                                          : selected.filter((item) => item !== value),
+                                      }))}
+                                    />
+                                    <span>{option.t}</span>
+                                  </label>
+                                );
+                              })}
+                            </fieldset>
+                            <button
+                              className="btn"
+                              type="button"
+                              disabled={!selected.length}
+                              onClick={() => void verifyQuiz(question.id, isCorrectSelection(correctOptions, selected), selected)}
+                            >
+                              Vérifier ma réponse
+                            </button>
+                          </>
+                        ) : (
+                          <>
+                            <ul className="quiz-review-options">
+                              {question.opts.map((option, optionIndex) => {
+                                const wasSelected = selected.includes(String(optionIndex));
+                                const optionClass = option.ok
+                                  ? 'option-row option-correct'
+                                  : wasSelected ? 'option-row option-incorrect' : 'option-row';
+                                return (
+                                  <li key={optionIndex} className={optionClass}>
+                                    <span>{option.t}</span>
+                                    {option.ok && <strong>Bonne réponse</strong>}
+                                    {!option.ok && wasSelected && <strong>Votre choix</strong>}
+                                  </li>
+                                );
+                              })}
+                            </ul>
+                            <p className={correct ? 'notice success quiz-review-explanation' : 'notice error quiz-review-explanation'}>
+                              <strong>{correct ? 'Explication' : 'Correction'}</strong>
+                              {' '}{question.explain || 'Aucune explication détaillée n’est disponible pour cette question.'}
+                            </p>
+                          </>
+                        )}
                       </article>
                     );
                   })}
+                  {quizIncorrectOnly && quizReviewQuestions.length === 0 && (
+                    <p className="notice success" role="status">Toutes les questions à revoir ont été corrigées. Bravo !</p>
+                  )}
                 </div>
               </section>
             )}

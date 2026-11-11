@@ -1,6 +1,6 @@
 import React, { useId, useState } from 'react';
 import { Check, Pencil, X } from 'lucide-react';
-import { isCustomCardId, updateCustomCard } from '../../lib/customCards';
+import { updateLectureCard } from '../../lib/customCards';
 import type { Card } from '../../types/card';
 
 interface CardEditControlProps {
@@ -9,7 +9,7 @@ interface CardEditControlProps {
   label: string;
 }
 
-/** Pen button that lets the learner fix a personal card's question and answer. */
+/** Pen button for editing a learner-created or built-in lecture card. */
 export const CardEditControl: React.FC<CardEditControlProps> = ({ lectureId, card, label }) => {
   const [open, setOpen] = useState(false);
   const [question, setQuestion] = useState(card.q);
@@ -17,9 +17,6 @@ export const CardEditControl: React.FC<CardEditControlProps> = ({ lectureId, car
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
   const ids = useId();
-
-  // Only personal cards can be edited; generated lecture cards stay read-only.
-  if (!isCustomCardId(card.id)) return null;
 
   const close = () => {
     setOpen(false);
@@ -47,7 +44,7 @@ export const CardEditControl: React.FC<CardEditControlProps> = ({ lectureId, car
     setBusy(true);
     setError('');
     try {
-      await updateCustomCard(`${lectureId}.${card.id}`, { q: question, a: answer });
+      await updateLectureCard(lectureId, card, { q: question, a: answer });
       close();
     } catch (reason) {
       setError(reason instanceof Error ? reason.message : String(reason));
@@ -83,7 +80,7 @@ export const CardEditControl: React.FC<CardEditControlProps> = ({ lectureId, car
             <textarea id={`${ids}-answer`} value={answer} onChange={(event) => setAnswer(event.target.value)} rows={3} placeholder="Réponse attendue…" />
           </label>
           {error && <p className="notice error" role="alert">{error}</p>}
-          <p className="muted card-note-hint">Les modifications sont enregistrées dans ce cours.</p>
+          <p className="muted card-note-hint">La version modifiée est enregistrée sur cet appareil sans changer le cours d’origine.</p>
           <div className="btn-row">
             <button className="btn btn-sm" type="submit" disabled={busy}><Check size={15} /> Enregistrer</button>
           </div>

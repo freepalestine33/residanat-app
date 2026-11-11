@@ -6,6 +6,14 @@ export interface QuizSummary {
   isComplete: boolean;
 }
 
+export function filterQuizQuestions<T extends { id: string }>(
+  questions: T[],
+  results: Record<string, boolean>,
+  incorrectOnly: boolean,
+): T[] {
+  return incorrectOnly ? questions.filter((question) => results[question.id] !== true) : questions;
+}
+
 export function summarizeQuiz(
   questionIds: string[],
   results: Record<string, boolean>,

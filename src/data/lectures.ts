@@ -1,7 +1,7 @@
 import type { Lecture, LectureMeta } from '../types/lecture';
 import { loadIndex, loadLecture } from '../lib/content';
 import { db } from '../db/db';
-import { listAllCustomCards, listCustomCards } from '../lib/customCards';
+import { listAllCustomCards, listCustomCards, mergeLectureCards } from '../lib/customCards';
 
 export async function loadLectureIndex(): Promise<LectureMeta[]> {
   const index = await loadIndex();
@@ -42,7 +42,7 @@ export async function loadLectureById(id: string): Promise<Lecture> {
     lecture = imported.content;
   }
   const custom = await listCustomCards(id);
-  return custom.length ? { ...lecture, cards: [...lecture.cards, ...custom] } : lecture;
+  return custom.length ? { ...lecture, cards: mergeLectureCards(lecture.cards, custom) } : lecture;
 }
 
 export async function loadLecturePdf(id: string): Promise<{ blob: Blob; name?: string } | undefined> {
@@ -58,7 +58,7 @@ export async function loadAllLectures(): Promise<Lecture[]> {
   ]);
   const importedLectures = await Promise.all(imported.map(async ({ content }) => {
     const custom = await listCustomCards(content.id);
-    return custom.length ? { ...content, cards: [...content.cards, ...custom] } : content;
+    return custom.length ? { ...content, cards: mergeLectureCards(content.cards, custom) } : content;
   }));
   return [...lectures, ...importedLectures];
 }

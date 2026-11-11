@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { summarizeQuiz } from './quizSummary';
+import { filterQuizQuestions, summarizeQuiz } from './quizSummary';
 
 describe('summarizeQuiz', () => {
   it('counts correct answers and the score percentage after all questions are resolved', () => {
@@ -24,6 +24,21 @@ describe('summarizeQuiz', () => {
       total: 2,
       percentage: 50,
       isComplete: false,
+    });
+  });
+
+  describe('filterQuizQuestions', () => {
+    const questions = [{ id: 'q1' }, { id: 'q2' }, { id: 'q3' }];
+
+    it('returns only unanswered or incorrect questions when review filtering is active', () => {
+      expect(filterQuizQuestions(questions, { q1: true, q2: false }, true)).toEqual([
+        { id: 'q2' },
+        { id: 'q3' },
+      ]);
+    });
+
+    it('returns every question when review filtering is inactive', () => {
+      expect(filterQuizQuestions(questions, { q1: true, q2: false }, false)).toEqual(questions);
     });
   });
 
