@@ -18,6 +18,7 @@ import {
 } from './lectureProgress';
 import { preserveLocalLecturePdf } from './userLectureSync';
 import { notifyCustomCardsUpdated, queueCustomCardSnapshot } from './customCards';
+import { readSyncResponse } from './syncResponse';
 
 export type SyncStatus = 'local' | 'offline' | 'syncing' | 'synced' | 'error' | 'conflict';
 type Collection = 'lectures' | 'modules' | 'customCards' | 'cards' | 'quizResults' | 'errors' | 'notes';
@@ -61,9 +62,7 @@ async function requestApi<T>(path: string, method: 'GET' | 'POST' | 'DELETE', to
     headers: { Authorization: `Bearer ${token}`, ...(body ? { 'Content-Type': 'application/json' } : {}) },
     ...(body ? { body: JSON.stringify(body) } : {}),
   });
-  const result = await response.json() as T & { error?: string };
-  if (!response.ok) throw new Error(result.error || `Sync request failed (${response.status}).`);
-  return result;
+  return readSyncResponse<T>(response, path);
 }
 
 async function pull(token: string, since: string | null) {
