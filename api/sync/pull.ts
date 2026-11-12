@@ -12,9 +12,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const since = body.since == null ? null : requireString(body.since, 'since', 40);
     if (since && !Number.isFinite(Date.parse(since))) return res.status(400).json({ error: 'since is invalid.' });
     const client = await authenticateRequest(req);
-    const [lectures, modules, cards, quizResults, errors, noteRows, settings] = await Promise.all([
+    const [lectures, modules, customCards, cards, quizResults, errors, noteRows, settings] = await Promise.all([
       readSince(client, 'lectures', null),
       readSince(client, 'modules', since),
+      readSince(client, 'custom_cards', since),
       readSince(client, 'flashcard_progress', since),
       readSince(client, 'quiz_results', since),
       readSince(client, 'errors', since),
@@ -33,7 +34,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       updated_at: syncedAt,
     });
     if (error) throw new Error('Could not update sync state.');
-    return res.status(200).json({ syncedAt, lectures, modules, cards, quizResults, errors, notes, settings });
+    return res.status(200).json({ syncedAt, lectures, modules, customCards, cards, quizResults, errors, notes, settings });
   } catch (error) {
     return sendError(res, error);
   }

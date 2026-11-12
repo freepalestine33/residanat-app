@@ -11,6 +11,7 @@ import { isCustomModuleComplete, lectureCompletionPercent } from '../lib/lecture
 import { reviewedCountByLecture } from '../lib/srs';
 import { deleteUserLecture } from '../lib/userLectureActions';
 import { createUserModule, moveUserLecture } from '../lib/userModules';
+import { CARDS_UPDATED_EVENT } from '../lib/customCards';
 import type { LectureMeta } from '../types/lecture';
 
 const AiLectureGeneratorModal = lazy(() => import('../components/lecture/AiLectureGeneratorModal').then((module) => ({ default: module.AiLectureGeneratorModal })));
@@ -81,7 +82,12 @@ export const LecturesPage: React.FC = () => {
     void refreshModules().catch((reason: unknown) => setOperationError(reason instanceof Error ? reason.message : String(reason)));
     const onModulesUpdated = () => { void refreshModules(); };
     window.addEventListener('residanat:modules-updated', onModulesUpdated);
-    return () => window.removeEventListener('residanat:modules-updated', onModulesUpdated);
+    const onCardsUpdated = () => { void loadLectures(); };
+    window.addEventListener(CARDS_UPDATED_EVENT, onCardsUpdated);
+    return () => {
+      window.removeEventListener('residanat:modules-updated', onModulesUpdated);
+      window.removeEventListener(CARDS_UPDATED_EVENT, onCardsUpdated);
+    };
   }, [loadLectures]);
 
   const removeLecture = async (lecture: LectureMeta) => {

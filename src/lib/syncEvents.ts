@@ -1,6 +1,6 @@
 import { db, type SyncQueueItem } from '../db/db';
 
-export type SyncCollection = 'lectures' | 'modules' | 'cards' | 'quizResults' | 'errors' | 'notes' | 'settings';
+export type SyncCollection = 'lectures' | 'modules' | 'customCards' | 'cards' | 'quizResults' | 'errors' | 'notes' | 'settings';
 
 export async function queueSyncChange(
   collection: SyncCollection,

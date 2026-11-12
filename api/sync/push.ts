@@ -7,6 +7,7 @@ import { authenticateRequest } from '../_lib/supabase';
 const tables = {
   lectures: 'lectures',
   modules: 'modules',
+  customCards: 'custom_cards',
   cards: 'flashcard_progress',
   quizResults: 'quiz_results',
   errors: 'errors',
@@ -34,6 +35,14 @@ function parseRecord(value: unknown, collection: Collection | 'settings'): Recor
       updated_at,
       deleted_at: record.deleted_at ?? null,
     };
+  }
+  if (collection === 'customCards') {
+    const lecture_id = requireString(record.lecture_id, 'lecture_id', 300);
+    const card = requireObject(record.card, 'card');
+    if (typeof card.id !== 'string' || `${lecture_id}.${card.id}` !== id) {
+      throw new ApiError(400, 'Custom card identifiers are invalid.');
+    }
+    return { id, lecture_id, card, updated_at, deleted_at: record.deleted_at ?? null };
   }
   if (collection === 'cards') {
     const due_date = requireTimestamp(record.due_date, 'due_date');

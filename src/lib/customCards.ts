@@ -1,6 +1,7 @@
 import { db } from '../db/db';
 import type { Card } from '../types/card';
 import { createId } from './createId';
+import { queueSyncChange } from './syncEvents';
 
 /** Fired whenever the user adds or edits a card, so open views can refresh. */
 export const CARDS_UPDATED_EVENT = 'residanat:cards-updated';
@@ -8,6 +9,37 @@ export const CARDS_UPDATED_EVENT = 'residanat:cards-updated';
 /** Personal cards created by the learner use ids prefixed with `u-`. */
 export function isCustomCardId(cardId: string): boolean {
   return cardId.startsWith('u-');
+}
+
+export function notifyCustomCardsUpdated() {
+  if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent(CARDS_UPDATED_EVENT));
+}
+
+function syncRecord(gid: string, lectureId: string, card: Card, updatedAt: number) {
+  return {
+    id: gid,
+    lecture_id: lectureId,
+    card,
+    updated_at: new Date(updatedAt).toISOString(),
+    deleted_at: null,
+  };
+}
+
+export async function queueCustomCardSnapshot() {
+  const rows = await db.customCards.toArray();
+  for (const row of rows) {
+    await queueSyncChange('customCards', row.gid, 'upsert', syncRecord(row.gid, row.lectureId, row.card, row.updatedAt));
+  }
+}
+
+async function saveCustomCard(lectureId: string, card: Card) {
+  const gid = `${lectureId}.${card.id}`;
+  const updatedAt = Date.now();
+  await db.transaction('rw', db.customCards, db.syncQueue, async () => {
+    await db.customCards.put({ gid, lectureId, card, updatedAt });
+    await queueSyncChange('customCards', gid, 'upsert', syncRecord(gid, lectureId, card, updatedAt));
+  });
+  notifyCustomCardsUpdated();
 }
 
 export async function listCustomCards(lectureId: string): Promise<Card[]> {
@@ -36,8 +68,7 @@ export async function addCustomCard(lectureId: string, input: { q: string; a: st
   const a = input.a.trim();
   if (!q || !a) throw new Error('La question et la réponse sont obligatoires.');
   const card: Card = { id: `u-${createId().slice(0, 8)}`, type: 'basic', q, a };
-  await db.customCards.put({ gid: `${lectureId}.${card.id}`, lectureId, card, updatedAt: Date.now() });
-  window.dispatchEvent(new CustomEvent(CARDS_UPDATED_EVENT));
+  await saveCustomCard(lectureId, card);
   return card;
 }
 
@@ -49,12 +80,14 @@ export async function updateLectureCard(lectureId: string, sourceCard: Card, inp
   const existing = await db.customCards.get(gid);
   if (isCustomCardId(sourceCard.id) && !existing) throw new Error('Cette carte personnelle est introuvable.');
   const card: Card = { ...(existing?.card ?? sourceCard), q, a };
-  await db.customCards.put({ gid, lectureId, card, updatedAt: Date.now() });
-  window.dispatchEvent(new CustomEvent(CARDS_UPDATED_EVENT));
+  await saveCustomCard(lectureId, card);
   return card;
 }
 
 export async function deleteCustomCard(gid: string): Promise<void> {
-  await db.customCards.delete(gid);
-  window.dispatchEvent(new CustomEvent(CARDS_UPDATED_EVENT));
+  await db.transaction('rw', db.customCards, db.syncQueue, async () => {
+    await db.customCards.delete(gid);
+    await queueSyncChange('customCards', gid, 'delete');
+  });
+  notifyCustomCardsUpdated();
 }

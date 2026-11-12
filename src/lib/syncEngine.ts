@@ -7,7 +7,7 @@ import { useSettingsStore } from '../stores/settingsStore';
 import { useProgressStore } from '../stores/progressStore';
 import { useErrorStore } from '../stores/errorStore';
 import { loadLegacyNotes } from './legacyNotes';
-import { LectureSchema } from './schema';
+import { CardSchema, LectureSchema } from './schema';
 import { createId } from './createId';
 import { parseStudySession } from './studySession';
 import {
@@ -17,14 +17,16 @@ import {
   sanitizeLectureSections,
 } from './lectureProgress';
 import { preserveLocalLecturePdf } from './userLectureSync';
+import { notifyCustomCardsUpdated, queueCustomCardSnapshot } from './customCards';
 
 export type SyncStatus = 'local' | 'offline' | 'syncing' | 'synced' | 'error' | 'conflict';
-type Collection = 'lectures' | 'modules' | 'cards' | 'quizResults' | 'errors' | 'notes';
+type Collection = 'lectures' | 'modules' | 'customCards' | 'cards' | 'quizResults' | 'errors' | 'notes';
 type CloudRecord = Record<string, unknown> & { id: string; updated_at: string };
 type PullPayload = {
   syncedAt: string;
   lectures: CloudRecord[];
   modules: CloudRecord[];
+  customCards: CloudRecord[];
   cards: CloudRecord[];
   quizResults: CloudRecord[];
   errors: CloudRecord[];
@@ -41,6 +43,7 @@ export interface SyncOutcome {
 const LAST_SYNC_KEY = 'sa_sync_last_at';
 const DEVICE_KEY = 'sa_sync_device_id';
 const initializedKey = (userId: string) => `sa_sync_initialized_${userId}`;
+const customCardsBackfillKey = (userId: string) => `sa_custom_cards_backfilled_v1_${userId}`;
 let currentSync: Promise<SyncOutcome> | null = null;
 
 function deviceId() {
@@ -138,6 +141,7 @@ async function queueFullLocalSnapshot() {
       deleted_at: null,
     });
   }
+  await queueCustomCardSnapshot();
   for (const card of cards) {
     const state = objectValue(card.state);
     const record = {
@@ -211,7 +215,7 @@ async function imageFields(image: unknown) {
 }
 
 async function prepareChanges(items: SyncQueueItem[]): Promise<PushChanges> {
-  const changes: PushChanges = { lectures: [], modules: [], cards: [], quizResults: [], errors: [], notes: [] };
+  const changes: PushChanges = { lectures: [], modules: [], customCards: [], cards: [], quizResults: [], errors: [], notes: [] };
   for (const item of items) {
     if (item.collection === 'settings') {
       if (item.operation === 'upsert' && item.record) changes.settings = item.record;
@@ -310,6 +314,36 @@ async function applyRemote(payload: PullPayload, forceCloud = false) {
     modulesChanged = true;
   }
   if (modulesChanged) notifyModulesUpdated();
+  let customCardsChanged = false;
+  for (const record of payload.customCards ?? []) {
+    const local = await db.customCards.get(record.id);
+    const updatedAt = Date.parse(record.updated_at);
+    if (typeof record.deleted_at === 'string') {
+      if (local && Date.parse(String(record.deleted_at)) >= local.updatedAt) {
+        await db.customCards.delete(record.id);
+        customCardsChanged = true;
+      }
+      continue;
+    }
+    if (local && !forceCloud && local.updatedAt > updatedAt) {
+      await queueSyncChange('customCards', local.gid, 'upsert', {
+        id: local.gid,
+        lecture_id: local.lectureId,
+        card: local.card,
+        updated_at: iso(local.updatedAt),
+        deleted_at: null,
+      });
+      continue;
+    }
+    await db.customCards.put({
+      gid: record.id,
+      lectureId: String(record.lecture_id),
+      card: CardSchema.parse(record.card),
+      updatedAt,
+    });
+    customCardsChanged = true;
+  }
+  if (customCardsChanged) notifyCustomCardsUpdated();
   for (const record of payload.lectures ?? []) {
     const local = await db.userLectures.get(record.id);
     const updatedAt = Date.parse(record.updated_at);
@@ -394,19 +428,20 @@ async function applyRemote(payload: PullPayload, forceCloud = false) {
 }
 
 function recordCount(payload: PullPayload) {
-  return payload.lectures.length + payload.modules.length + payload.cards.length + payload.quizResults.length + payload.errors.length + payload.notes.length + Number(!!payload.settings);
+  return payload.lectures.length + payload.modules.length + payload.customCards.length + payload.cards.length + payload.quizResults.length + payload.errors.length + payload.notes.length + Number(!!payload.settings);
 }
 
 async function localDataCount() {
-  const [cards, quizzes, notes, legacyNotes, lectures, modules] = await Promise.all([
+  const [cards, quizzes, notes, legacyNotes, lectures, modules, customCards] = await Promise.all([
     db.cards.count(),
     db.quizResults.count(),
     db.notes.count(),
     loadLegacyNotes(),
     db.userLectures.count(),
     db.modules.count(),
+    db.customCards.count(),
   ]);
-  return cards + quizzes + notes + legacyNotes.length + lectures + modules + readErrors().length + Number(!!localStorage.getItem('sa_settings_v1'));
+  return cards + quizzes + notes + legacyNotes.length + lectures + modules + customCards + readErrors().length + Number(!!localStorage.getItem('sa_settings_v1'));
 }
 
 async function pushQueue(token: string) {
@@ -435,6 +470,11 @@ async function performSync(user: User, initialChoice?: 'upload' | 'download'): P
   if (error || !session) return { status: 'local', error: error?.message };
   const token = session.access_token;
   const firstSync = localStorage.getItem(initializedKey(user.id)) !== '1';
+  const customCardsBackfilled = localStorage.getItem(customCardsBackfillKey(user.id)) === '1';
+  if (!firstSync && !customCardsBackfilled) {
+    await queueCustomCardSnapshot();
+    localStorage.setItem(customCardsBackfillKey(user.id), '1');
+  }
 
   if (firstSync && !initialChoice) {
     const [remote, localCount] = await Promise.all([pull(token, null), localDataCount()]);
@@ -457,6 +497,7 @@ async function performSync(user: User, initialChoice?: 'upload' | 'download'): P
     localStorage.setItem(LAST_SYNC_KEY, remote.syncedAt);
   }
 
+  if (firstSync) localStorage.setItem(customCardsBackfillKey(user.id), '1');
   await pushQueue(token);
   const since = localStorage.getItem(LAST_SYNC_KEY);
   const remote = await pull(token, since);

@@ -17,7 +17,7 @@ Offline-ready medical study app with Supabase email sign-in and cross-device syn
 ## Supabase setup
 
 1. Create a Supabase project.
-2. In **SQL Editor**, run the migrations in order: [`202611070001_initial_schema.sql`](./supabase/migrations/202611070001_initial_schema.sql), then [`202611120001_user_modules.sql`](./supabase/migrations/202611120001_user_modules.sql). The first migration creates the per-user study tables and private note-image bucket; the second adds the per-user modules table, index, grants, and RLS policy.
+2. In **SQL Editor**, run the migrations in order: [`202611070001_initial_schema.sql`](./supabase/migrations/202611070001_initial_schema.sql), [`202611120001_user_modules.sql`](./supabase/migrations/202611120001_user_modules.sql), then [`202611120002_custom_cards.sql`](./supabase/migrations/202611120002_custom_cards.sql). The first migration creates the per-user study tables and private note-image bucket; the next two add personal modules and synchronized custom-card content with their indexes, grants, and RLS policies.
 3. In **Authentication → URL Configuration**, set the production site URL and add your local URL (for example `http://localhost:5173`) and deployed site URL (for example `https://your-site.netlify.app/**`) to the allowed redirect URLs. Enable email magic links and configure the email provider.
 4. Copy `.env.example` to `.env.local` for local frontend configuration:
 
@@ -63,7 +63,7 @@ npm run build
 3. Local mutations are written to IndexedDB/localStorage and an IndexedDB retry queue. A debounced background sync pushes queued changes, then pulls records changed since the last successful sync.
 4. Failed requests stay queued and retry on the next change, reconnect, focus, manual sync, or polling interval. The cloud indicator shows offline, syncing, synced, conflict-choice, or error state.
 
-AI-generated courses are saved to the local course library and queued in the `lectures` table for the currently signed-in account. Personal module metadata syncs through the `modules` table; lecture module assignments are stored in the synchronized lecture content. To make them available on another browser or device, deploy with the Supabase environment variables above, apply both migrations in order, sign in with the same account on both devices, and confirm the sync indicator reports **Synchronisé**. If the second device has local data already, choose **Télécharger les données cloud** in Settings to initialize it from the account.
+AI-generated courses are saved to the local course library and queued in the `lectures` table for the currently signed-in account. Personal module metadata syncs through the `modules` table; lecture module assignments are stored in the synchronized lecture content. Added or edited personal cards sync through `custom_cards`. To make them available on another browser or device, deploy with the Supabase environment variables above, apply all migrations in order, sign in with the same account on both devices, and confirm the sync indicator reports **Synchronisé**. If the second device has local data already, choose **Télécharger les données cloud** in Settings to initialize it from the account.
 
 ## API routes
 
