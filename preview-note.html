@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="fr" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <title>Aperçu notes</title>
+  <link rel="stylesheet" href="./src/styles.css" />
+  <link rel="stylesheet" href="./src/theme-aesthetic.css" />
+  <style>
+    body { padding: 2rem; }
+    .preview-toggle { display: flex; gap: .5rem; margin-bottom: 1.5rem; }
+    .card-note-editor { position: static; margin-top: 1rem; }
+    .card-note-editor-tools { display: flex; gap: .4rem; align-items: center; }
+    .card-note-attach-toggle { display: inline-flex; align-items: center; gap: .4rem; width: fit-content; min-height: 34px; padding: .4rem .75rem; border: 1px dashed currentColor; border-radius: 9px; }
+  </style>
+</head>
+<body>
+  <div class="preview-toggle">
+    <button class="btn btn-sm" onclick="document.documentElement.dataset.theme='light'">Clair</button>
+    <button class="btn btn-sm" onclick="document.documentElement.dataset.theme='dark'">Sombre</button>
+  </div>
+
+  <section class="panel" style="max-width: 640px;">
+    <div style="display:flex; gap:.5rem; align-items:center;">
+      <button type="button" class="card-web-search-button card-note-trigger" aria-expanded="true">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22z"/></svg>
+        <span class="card-note-count">2</span>
+      </button>
+      <button class="icon-button" type="button" aria-label="Rechercher">R</button>
+    </div>
+
+    <section class="card-note-editor">
+      <div class="card-note-editor-heading">
+        <div><p class="eyebrow">Note liée à cette carte</p><strong>Carte · Spondylarthrite</strong></div>
+        <div class="card-note-editor-tools">
+          <button class="icon-button card-note-add" type="button" aria-label="Ajouter une note" title="Ajouter une note">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+          </button>
+          <button class="icon-button" type="button" aria-label="Fermer les notes">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <button type="button" class="card-note-new">
+        <span class="card-note-new-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="M12 5v14"/></svg></span>
+        Ajouter une note
+      </button>
+
+      <div class="card-note-entry">
+        <article class="card-note-saved">
+          <p>Une atteinte axiale inflammatoire avec sacro-iliite bilatérale.</p>
+          <div class="card-note-saved-meta"><span class="muted">12/11/2026</span>
+            <div class="card-note-actions">
+              <button type="button" class="text-link">Modifier</button>
+              <button type="button" class="card-note-delete">Supprimer</button>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <form class="card-note-form" onsubmit="return false">
+        <label>
+          <span class="field-label">Ajouter une note</span>
+          <textarea rows="3" placeholder="Un rappel, une astuce ou un point à revoir…"></textarea>
+        </label>
+
+        <div class="btn-row card-note-submit">
+          <button class="btn btn-sm" type="submit">Enregistrer</button>
+          <button class="btn ghost btn-sm" type="button">Annuler</button>
+        </div>
+
+        <button type="button" class="card-note-attach-toggle" aria-expanded="false">Ajouter une photo</button>
+
+        <p class="muted card-note-hint">Votre texte et sa photo sont enregistrés ensemble sur cette carte.</p>
+      </form>
+    </section>
+  </section>
+</body>
+</html>

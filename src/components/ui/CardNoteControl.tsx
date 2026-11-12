@@ -1,5 +1,5 @@
 import React, { useId, useMemo, useRef, useState } from 'react';
-import { ClipboardPaste, ImagePlus, LoaderCircle, MessageCircle, Pencil, Plus, Trash2, Upload, X } from 'lucide-react';
+import { ArrowLeft, ClipboardPaste, ImagePlus, LoaderCircle, MessageCircle, Pencil, Plus, Trash2, Upload, X } from 'lucide-react';
 import { useNoteStore } from '../../stores/noteStore';
 import type { Note } from '../../types/note';
 import { compressNoteImage } from '../../lib/images';
@@ -66,6 +66,8 @@ function errorMessage(reason: unknown) {
 
 export const CardNoteControl: React.FC<CardNoteControlProps> = ({ relation, label }) => {
   const [open, setOpen] = useState(false);
+  const [composerOpen, setComposerOpen] = useState(false);
+  const [attachmentsOpen, setAttachmentsOpen] = useState(false);
   const [draft, setDraft] = useState('');
   const [draftLink, setDraftLink] = useState('');
   const [draftImage, setDraftImage] = useState<Blob | string | null>();
@@ -191,15 +193,32 @@ export const CardNoteControl: React.FC<CardNoteControlProps> = ({ relation, labe
     void compressAndAttach(file);
   };
 
-  const toggle = () => {
-    if (!open) void loadNotes();
-    setOpen((value) => !value);
+  const resetComposer = () => {
+    setComposerOpen(false);
+    setEditingId(undefined);
+    setAttachmentsOpen(false);
+    setDraft('');
+    setDraftLink('');
+    setDraftImage(undefined);
+    setImagePasteValue('');
     setFormError('');
     resetAttachmentFeedback();
   };
 
+  const toggle = () => {
+    if (!open) {
+      void loadNotes();
+      resetComposer();
+    } else {
+      resetComposer();
+    }
+    setOpen((value) => !value);
+  };
+
   const edit = (note: Note) => {
+    setComposerOpen(true);
     setEditingId(note.id);
+    setAttachmentsOpen(Boolean(note.image));
     setDraft(note.text);
     setDraftLink(note.link ?? '');
     setDraftImage(note.image);
@@ -239,23 +258,7 @@ export const CardNoteControl: React.FC<CardNoteControlProps> = ({ relation, labe
       setFormError(nextError);
       return;
     }
-    setDraft('');
-    setDraftLink('');
-    setDraftImage(undefined);
-    setImagePasteValue('');
-    setEditingId(undefined);
-    setFormError('');
-    resetAttachmentFeedback();
-  };
-
-  const cancelEdit = () => {
-    setEditingId(undefined);
-    setDraft('');
-    setDraftLink('');
-    setDraftImage(undefined);
-    setImagePasteValue('');
-    setFormError('');
-    resetAttachmentFeedback();
+    resetComposer();
   };
 
   const remove = async (note: Note) => {
@@ -267,20 +270,53 @@ export const CardNoteControl: React.FC<CardNoteControlProps> = ({ relation, labe
       setFormError(nextError);
       return;
     }
-    if (editingId === note.id) cancelEdit();
+    if (editingId === note.id) resetComposer();
     setFormError('');
   };
 
-  const renderEditor = () => <form className="card-note-form" onSubmit={(event) => void save(event)}>
+  const startNewNote = () => {
+    if (editingId !== undefined) {
+      setDraft('');
+      setDraftLink('');
+      setDraftImage(undefined);
+      setImagePasteValue('');
+      setFormError('');
+      resetAttachmentFeedback();
+    }
+    setEditingId(undefined);
+    setAttachmentsOpen(false);
+    setComposerOpen(true);
+  };
+const renderEditor = () => <form className="card-note-form" onSubmit={(event) => void save(event)}>
     <label>
       <span className="field-label">{editingId === undefined ? 'Ajouter une note' : 'Modifier la note'}</span>
       <textarea value={draft} onChange={(event) => setDraft(event.target.value)} rows={3} placeholder="Un rappel, une astuce ou un point à revoir…" />
     </label>
 
-    <div className="card-note-attachments">
+    {(formError || error) && <p className="notice error" role="alert">{formError || error}</p>}
+
+    <div className="btn-row card-note-submit">
+      <button className="btn btn-sm" type="submit" disabled={attachmentBusy}>
+        {editingId === undefined ? <><Plus size={15} aria-hidden="true" /> Enregistrer</> : <>Enregistrer la modification</>}
+      </button>
+      <button className="btn ghost btn-sm" type="button" onClick={resetComposer}>Annuler</button>
+    </div>
+
+    <button
+      type="button"
+      className="card-note-attach-toggle"
+      aria-expanded={attachmentsOpen}
+      aria-controls={`${ids}-attachments`}
+      onClick={() => setAttachmentsOpen((value) => !value)}
+    >
+      <ImagePlus size={15} aria-hidden="true" />
+      {attachmentsOpen ? 'Masquer l’ajout de photo' : 'Ajouter une photo'}
+    </button>
+
+    {attachmentsOpen && <div className="card-note-attachments" id={`${ids}-attachments`}>
       <div className="card-note-attachment-heading">
         <div>
-          <span className="field-label">Ajouter une photo</span>
+          <span className="field-label">Photo de la note</span>
           <p>Collez, déposez ou choisissez une image.</p>
         </div>
         <ImagePlus size={19} aria-hidden="true" />
@@ -326,36 +362,30 @@ export const CardNoteControl: React.FC<CardNoteControlProps> = ({ relation, labe
           Choisir un fichier
         </label>
       </div>
+    </div>}
 
-      {draftImage && <div className="card-note-image-preview">
-        <NoteImage image={draftImage} className="card-note-image" alt="Photo jointe à la note" />
-        <div className="card-note-image-preview-meta">
-          <span>Photo jointe</span>
-          <button type="button" className="card-note-remove-image" onClick={() => {
-            setDraftImage(null);
-            setAttachmentError('');
-            setAttachmentStatus('Photo retirée. Enregistrez pour confirmer la modification.');
-          }} disabled={attachmentBusy}>
-            <Trash2 size={14} aria-hidden="true" />
-            Retirer
-          </button>
-        </div>
-      </div>}
-      {attachmentBusy && <p className="card-note-attachment-status is-busy" id={`${ids}-attachment-status`} role="status"><LoaderCircle size={15} aria-hidden="true" />{attachmentStatus}</p>}
-      {!attachmentBusy && attachmentStatus && <p className="card-note-attachment-status" id={`${ids}-attachment-status`} role="status">{attachmentStatus}</p>}
-      {!attachmentStatus && !attachmentBusy && <span className="visually-hidden" id={`${ids}-attachment-status`} />}
-      {attachmentError && <p className="notice error card-note-attachment-error" role="alert">{attachmentError}</p>}
-    </div>
+    {draftImage && <div className="card-note-image-preview">
+      <NoteImage image={draftImage} className="card-note-image" alt="Photo jointe à la note" />
+      <div className="card-note-image-preview-meta">
+        <span>Photo jointe</span>
+        <button type="button" className="card-note-remove-image" onClick={() => {
+          setDraftImage(null);
+          setAttachmentError('');
+          setAttachmentStatus('Photo retirée. Enregistrez pour confirmer la modification.');
+        }} disabled={attachmentBusy}>
+          <Trash2 size={14} aria-hidden="true" />
+          Retirer
+        </button>
+      </div>
+    </div>}
+    {attachmentBusy && <p className="card-note-attachment-status is-busy" id={`${ids}-attachment-status`} role="status"><LoaderCircle size={15} aria-hidden="true" />{attachmentStatus}</p>}
+    {!attachmentBusy && attachmentStatus && <p className="card-note-attachment-status" id={`${ids}-attachment-status`} role="status">{attachmentStatus}</p>}
+    {!attachmentStatus && !attachmentBusy && <span className="visually-hidden" id={`${ids}-attachment-status`} />}
+    {attachmentError && <p className="notice error card-note-attachment-error" role="alert">{attachmentError}</p>}
 
     <p className="muted card-note-hint">Votre texte et sa photo sont enregistrés ensemble sur cette carte.</p>
-    {(formError || error) && <p className="notice error" role="alert">{formError || error}</p>}
-    <div className="btn-row">
-      <button className="btn btn-sm" type="submit" disabled={attachmentBusy}>{editingId === undefined ? <><Plus size={15} /> Enregistrer</> : 'Mettre à jour'}</button>
-      {editingId !== undefined && <button className="btn ghost btn-sm" type="button" onClick={cancelEdit}>Annuler</button>}
-    </div>
   </form>;
-
-  return (
+return (
     <div className="card-note-widget">
       <button
         type="button"
@@ -371,10 +401,23 @@ export const CardNoteControl: React.FC<CardNoteControlProps> = ({ relation, labe
       {open && <section className="card-note-editor" aria-label={`Notes · ${label}`}>
         <div className="card-note-editor-heading">
           <div><p className="eyebrow">Note liée à cette carte</p><strong>{label}</strong></div>
-          <button className="icon-button" type="button" aria-label="Fermer les notes" onClick={() => setOpen(false)}><X size={16} /></button>
+          <div className="card-note-editor-tools">
+            {composerOpen && <button className="icon-button card-note-back" type="button" aria-label="Retour aux notes" title="Retour aux notes" onClick={resetComposer}>
+              <ArrowLeft size={16} aria-hidden="true" />
+            </button>}
+            <button className="icon-button" type="button" aria-label="Fermer les notes" onClick={() => {
+              resetComposer();
+              setOpen(false);
+            }}><X size={16} /></button>
+          </div>
         </div>
         {loading && <p className="muted" role="status">Chargement des notes…</p>}
-        {editingId === undefined && renderEditor()}
+        {!composerOpen && (formError || error) && <p className="notice error" role="alert">{formError || error}</p>}
+        {!composerOpen && <button className="card-note-new" type="button" aria-label={`Ajouter une note · ${label}`} onClick={startNewNote}>
+          <span className="card-note-new-icon"><Plus size={16} aria-hidden="true" /></span>
+          Ajouter une note
+        </button>}
+        {composerOpen && editingId === undefined && renderEditor()}
         {relatedNotes.map((note) => <div className="card-note-entry" key={note.id ?? note.syncId}>
           <article className="card-note-saved">
             {note.text && <p>{note.text}</p>}
@@ -387,8 +430,9 @@ export const CardNoteControl: React.FC<CardNoteControlProps> = ({ relation, labe
               </div>}
             </div>
           </article>
-          {editingId !== undefined && editingId === note.id && renderEditor()}
+          {composerOpen && editingId !== undefined && editingId === note.id && renderEditor()}
         </div>)}
+        {!loading && !composerOpen && relatedNotes.length === 0 && <p className="muted">Aucune note pour le moment, ajoutez la première.</p>}
       </section>}
     </div>
   );

@@ -3912,6 +3912,94 @@ textarea::placeholder {
   white-space: nowrap;
 }
 
+.card-note-editor-tools {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  gap: 0.4rem;
+}
+
+/* "Ajouter une note" row, shown above the saved notes. */
+.card-note-new {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  min-height: 46px;
+  padding: 0.5rem 0.7rem;
+  color: var(--text);
+  background: var(--bg-elevated);
+  border: 1px dashed var(--border-strong);
+  border-radius: 11px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: color var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast);
+}
+
+.card-note-new-icon {
+  display: grid;
+  width: 1.75rem;
+  height: 1.75rem;
+  flex: 0 0 auto;
+  place-items: center;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-radius: 999px;
+}
+
+.card-note-new:hover {
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-style: solid;
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+}
+
+.card-note-new:hover .card-note-new-icon {
+  color: var(--accent-contrast);
+  background: var(--accent);
+}
+
+/* Save/cancel stay pinned at the bottom of the scrollable note panel. */
+.card-note-form .card-note-submit {
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+  margin-top: 0.1rem;
+  padding: 0.5rem 0 0.3rem;
+  background: var(--card);
+}
+
+.card-note-attach-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  width: fit-content;
+  min-height: 34px;
+  padding: 0.4rem 0.75rem;
+  color: var(--text-secondary);
+  background: var(--bg-elevated);
+  border: 1px dashed var(--border-strong);
+  border-radius: 9px;
+  font-size: 0.76rem;
+  font-weight: 580;
+  cursor: pointer;
+}
+
+.card-note-attach-toggle:hover {
+  color: var(--accent);
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
+}
+
+.card-note-attach-toggle[aria-expanded="true"] {
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-style: solid;
+  border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
+}
+
+
 .card-note-saved {
   padding: 0.7rem 0.75rem;
   background: var(--bg-elevated);
