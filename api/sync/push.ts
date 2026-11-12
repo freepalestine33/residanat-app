@@ -6,6 +6,7 @@ import { authenticateRequest } from '../_lib/supabase';
 
 const tables = {
   lectures: 'lectures',
+  modules: 'modules',
   cards: 'flashcard_progress',
   quizResults: 'quiz_results',
   errors: 'errors',
@@ -22,6 +23,17 @@ function parseRecord(value: unknown, collection: Collection | 'settings'): Recor
   const id = requireString(record.id, `${collection}.id`, 300);
   if (collection === 'lectures') {
     return { id, name: requireString(record.name, 'name', 200), content: requireObject(record.content, 'content'), updated_at, deleted_at: record.deleted_at ?? null };
+  }
+  if (collection === 'modules') {
+    const name = requireString(record.name, 'name', 60).trim();
+    if (!name) throw new ApiError(400, 'Module name is invalid.');
+    return {
+      id,
+      name,
+      created_at: requireTimestamp(record.created_at, 'created_at'),
+      updated_at,
+      deleted_at: record.deleted_at ?? null,
+    };
   }
   if (collection === 'cards') {
     const due_date = requireTimestamp(record.due_date, 'due_date');

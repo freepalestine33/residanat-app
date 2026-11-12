@@ -7,6 +7,7 @@ export interface Lecture {
   id: string;
   progId?: string | null;
   otrNumber?: number;
+  moduleId?: string | null;
   name: string;
   keys: string[];
   contrasts: string[];
@@ -21,6 +22,7 @@ export interface LectureMeta {
   id: string;
   progId: string | null;
   otrNumber?: number;
+  moduleId?: string | null;
   name: string;
   cards: number;
   quiz: number;

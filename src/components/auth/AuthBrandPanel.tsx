@@ -2,10 +2,10 @@ import { ArrowDownRight, BookOpenCheck, BrainCircuit, RotateCcw } from 'lucide-r
 
 export function AuthBrandPanel() {
   return (
-    <aside className="auth-brand-panel" aria-label="La méthode Résidanat">
+    <aside className="auth-brand-panel" aria-label="La méthode EasyMed">
       <div className="auth-brand-lockup">
         <span className="auth-brand-mark"><BookOpenCheck size={21} strokeWidth={1.8} /></span>
-        <span><strong>Résidanat</strong><small>Smart Learning</small></span>
+        <span><strong>EasyMed</strong><small>Révisions médicales</small></span>
       </div>
       <div className="auth-brand-copy">
         <p className="auth-brand-kicker">La régularité fait la différence</p>

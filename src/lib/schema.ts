@@ -22,6 +22,7 @@ export const LectureSchema = z.object({
   id: z.string().regex(/^[A-Za-z0-9_-]{1,32}$/),
   progId: z.string().nullable().optional(),
   otrNumber: z.number().int().min(1).max(43).optional(),
+  moduleId: z.string().min(1).nullable().optional(),
   name: z.string(),
   keys: z.array(z.string()),
   contrasts: z.array(z.string()),

@@ -8,6 +8,7 @@ import { useProgressStore } from './stores/progressStore';
 import { useSettingsStore } from './stores/settingsStore';
 
 const StudyPage = lazy(() => import('./pages/StudyPage').then((module) => ({ default: module.StudyPage })));
+const HomePage = lazy(() => import('./pages/HomePage').then((module) => ({ default: module.HomePage })));
 const ProgrammePage = lazy(() => import('./pages/ProgrammePage').then((module) => ({ default: module.ProgrammePage })));
 const LecturesPage = lazy(() => import('./pages/LecturesPage').then((module) => ({ default: module.LecturesPage })));
 const DraftPreviewPage = lazy(() => import('./pages/DraftPreviewPage').then((module) => ({ default: module.DraftPreviewPage })));
@@ -33,7 +34,7 @@ function SignedInApp() {
   return (
     <Suspense fallback={<main className="auth-shell" role="status">Chargement de la page…</main>}>
     <Routes>
-      <Route path="/" element={<Navigate to="/programme" replace />} />
+      <Route path="/" element={<HomePage />} />
       <Route path="/study" element={<StudyPage />} />
       <Route path="/programme" element={<ProgrammePage />} />
       <Route path="/lectures" element={<LecturesPage />} />
@@ -52,7 +53,7 @@ function SignedInApp() {
 
 export default function App() {
   useSync();
-  useEffect(() => { document.title = 'Résidanat · Smart Learning'; }, []);
+  useEffect(() => { document.title = 'EasyMed'; }, []);
   if (import.meta.env.DEV && window.location.hash === '#/__design-preview') {
     return <Suspense fallback={<main className="auth-shell" role="status">Chargement de la page…</main>}><DesignPreviewPage /></Suspense>;
   }

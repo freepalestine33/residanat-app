@@ -10,6 +10,7 @@ import { coreTabs } from '../components/layout/tabs';
 export const HomePage: React.FC = () => {
   const { lectures, loadLectures, loading, error } = useLectureStore();
   const { dueCount, matureCount, progressPercent, loading: statsLoading } = useProgressStore();
+  const suggestedLectures = lectures.slice(0, 3);
 
   useEffect(() => {
     loadLectures();
@@ -72,23 +73,23 @@ export const HomePage: React.FC = () => {
         <section className="home-section course-section">
           <div className="section-heading">
             <div>
-              <p className="eyebrow">Votre bibliothèque</p>
-              <h2>Cours interactifs OTR</h2>
+              <p className="eyebrow">Pour vos prochaines révisions</p>
+              <h2>Quelques cours pour commencer</h2>
             </div>
             <Link className="text-link section-more" to="/lectures">
               Tous les cours <ArrowRight size={15} aria-hidden="true" />
             </Link>
           </div>
-          <p className="section-description">
-            {loading ? 'Chargement des cours…' : `${lectures.length} cours · flashcards, quiz et vrai / faux`}
+          <p className="section-description" role={loading ? 'status' : undefined}>
+            {loading ? 'Chargement des cours…' : `${lectures.length} cours disponibles · flashcards, quiz et vrai / faux`}
           </p>
           {error && <p className="notice error" role="alert">Impossible de charger les cours : {error}</p>}
           {!loading && !error && lectures.length === 0 && (
             <p className="empty-library">Aucun cours disponible pour le moment.</p>
           )}
-          <div className="course-grid">
-            {lectures.map((lecture, index) => (
-              <article key={lecture.id} className="course-card">
+          <div className="course-grid" role="list" aria-label="Cours suggérés">
+            {suggestedLectures.map((lecture, index) => (
+              <article key={lecture.id} className="course-card" role="listitem">
                 <div className="course-card-topline">
                   <span className="course-index">{String(index + 1).padStart(2, '0')}</span>
                   <Link className="course-open" to={`/lecture/${lecture.id}`} aria-label={`Ouvrir ${lecture.name}`}>
@@ -113,17 +114,6 @@ export const HomePage: React.FC = () => {
           </div>
         </section>
 
-        <section className="programme-promo">
-          <div className="programme-promo-mark"><Layers3 size={20} aria-hidden="true" /></div>
-          <div className="programme-promo-copy">
-            <p className="eyebrow">Pour aller plus loin</p>
-            <h2>Le programme du résidanat</h2>
-            <p>Explorez les 209 cours et leurs références par spécialité.</p>
-          </div>
-          <Link className="btn ghost programme-promo-link" to="/programme">
-            Explorer <ArrowRight size={15} aria-hidden="true" />
-          </Link>
-        </section>
       </main>
     </>
   );

@@ -10,6 +10,23 @@ export interface LectureAnswers {
   vfResults: Record<string, boolean>;
 }
 
+/**
+ * Removes this lecture's quiz/vrai-faux attempts and queues synced tombstones.
+ * The transaction keeps local deletion and synchronization intent atomic.
+ */
+export async function restartLectureAnswers(lectureId: string): Promise<number> {
+  return db.transaction('rw', db.quizResults, db.syncQueue, async () => {
+    const results = await db.quizResults.where('lectureId').equals(lectureId).toArray();
+    const answerResults = results.filter((result) => result.details.kind === 'quiz' || result.details.kind === 'vf');
+    const resultIds = answerResults.map((result) => result.id);
+    if (resultIds.length) await db.quizResults.bulkDelete(resultIds);
+    for (const result of answerResults) {
+      await queueSyncChange('quizResults', result.id, 'delete');
+    }
+    return resultIds.length;
+  });
+}
+
 /** Validated answers of the lecture's quiz (checkbox indices) and vrai/faux. */
 interface StoredAnswer {
   questionId: string;

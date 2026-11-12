@@ -1,7 +1,7 @@
 import type { User } from '@supabase/supabase-js';
 import { db, type Note, type SyncQueueItem } from '../db/db';
 import { blobToBase64, compressNoteImage } from './images';
-import { queueSyncChange } from './syncEvents';
+import { notifyModulesUpdated, queueSyncChange } from './syncEvents';
 import { supabase } from './supabase';
 import { useSettingsStore } from '../stores/settingsStore';
 import { useProgressStore } from '../stores/progressStore';
@@ -19,11 +19,12 @@ import {
 import { preserveLocalLecturePdf } from './userLectureSync';
 
 export type SyncStatus = 'local' | 'offline' | 'syncing' | 'synced' | 'error' | 'conflict';
-type Collection = 'lectures' | 'cards' | 'quizResults' | 'errors' | 'notes';
+type Collection = 'lectures' | 'modules' | 'cards' | 'quizResults' | 'errors' | 'notes';
 type CloudRecord = Record<string, unknown> & { id: string; updated_at: string };
 type PullPayload = {
   syncedAt: string;
   lectures: CloudRecord[];
+  modules: CloudRecord[];
   cards: CloudRecord[];
   quizResults: CloudRecord[];
   errors: CloudRecord[];
@@ -37,7 +38,6 @@ export interface SyncOutcome {
   error?: string;
   initialChoiceRequired?: boolean;
 }
-
 const LAST_SYNC_KEY = 'sa_sync_last_at';
 const DEVICE_KEY = 'sa_sync_device_id';
 const initializedKey = (userId: string) => `sa_sync_initialized_${userId}`;
@@ -112,11 +112,12 @@ function readSettings() {
 }
 
 async function queueFullLocalSnapshot() {
-  const [cards, quizResults, notes, lectures] = await Promise.all([
+  const [cards, quizResults, notes, lectures, modules] = await Promise.all([
     db.cards.toArray(),
     db.quizResults.toArray(),
     db.notes.toArray(),
     db.userLectures.toArray(),
+    db.modules.toArray(),
   ]);
   const legacyNotes = await loadLegacyNotes();
   for (const lecture of lectures) {
@@ -125,6 +126,15 @@ async function queueFullLocalSnapshot() {
       name: lecture.name,
       content: { ...lecture.content },
       updated_at: iso(lecture.updatedAt),
+      deleted_at: null,
+    });
+  }
+  for (const module of modules) {
+    await queueSyncChange('modules', module.id, 'upsert', {
+      id: module.id,
+      name: module.name,
+      created_at: iso(module.createdAt),
+      updated_at: iso(module.updatedAt),
       deleted_at: null,
     });
   }
@@ -201,7 +211,7 @@ async function imageFields(image: unknown) {
 }
 
 async function prepareChanges(items: SyncQueueItem[]): Promise<PushChanges> {
-  const changes: PushChanges = { lectures: [], cards: [], quizResults: [], errors: [], notes: [] };
+  const changes: PushChanges = { lectures: [], modules: [], cards: [], quizResults: [], errors: [], notes: [] };
   for (const item of items) {
     if (item.collection === 'settings') {
       if (item.operation === 'upsert' && item.record) changes.settings = item.record;
@@ -279,6 +289,27 @@ async function applyNotes(records: CloudRecord[], forceCloud = false) {
 }
 
 async function applyRemote(payload: PullPayload, forceCloud = false) {
+  let modulesChanged = false;
+  for (const record of payload.modules ?? []) {
+    const local = await db.modules.get(record.id);
+    const updatedAt = Date.parse(record.updated_at);
+    if (typeof record.deleted_at === 'string') {
+      if (local && Date.parse(String(record.deleted_at)) >= local.updatedAt) {
+        await db.modules.delete(record.id);
+        modulesChanged = true;
+      }
+      continue;
+    }
+    if (local && !forceCloud && local.updatedAt > updatedAt) continue;
+    await db.modules.put({
+      id: record.id,
+      name: String(record.name),
+      createdAt: Date.parse(String(record.created_at ?? record.updated_at)),
+      updatedAt,
+    });
+    modulesChanged = true;
+  }
+  if (modulesChanged) notifyModulesUpdated();
   for (const record of payload.lectures ?? []) {
     const local = await db.userLectures.get(record.id);
     const updatedAt = Date.parse(record.updated_at);
@@ -363,18 +394,19 @@ async function applyRemote(payload: PullPayload, forceCloud = false) {
 }
 
 function recordCount(payload: PullPayload) {
-  return payload.lectures.length + payload.cards.length + payload.quizResults.length + payload.errors.length + payload.notes.length + Number(!!payload.settings);
+  return payload.lectures.length + payload.modules.length + payload.cards.length + payload.quizResults.length + payload.errors.length + payload.notes.length + Number(!!payload.settings);
 }
 
 async function localDataCount() {
-  const [cards, quizzes, notes, legacyNotes, lectures] = await Promise.all([
+  const [cards, quizzes, notes, legacyNotes, lectures, modules] = await Promise.all([
     db.cards.count(),
     db.quizResults.count(),
     db.notes.count(),
     loadLegacyNotes(),
     db.userLectures.count(),
+    db.modules.count(),
   ]);
-  return cards + quizzes + notes + legacyNotes.length + lectures + readErrors().length + Number(!!localStorage.getItem('sa_settings_v1'));
+  return cards + quizzes + notes + legacyNotes.length + lectures + modules + readErrors().length + Number(!!localStorage.getItem('sa_settings_v1'));
 }
 
 async function pushQueue(token: string) {

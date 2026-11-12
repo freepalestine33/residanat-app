@@ -11,9 +11,9 @@ export function DesignPreviewPage() {
     <div className="design-preview">
       <header className="app-header">
         <div className="app-header-inner preview-header-inner">
-          <div className="brand-lockup" aria-label="Résidanat, aperçu de design">
+          <div className="brand-lockup" aria-label="EasyMed, aperçu de design">
             <span className="brand-mark"><BookOpen size={19} strokeWidth={1.8} /></span>
-            <span><span className="brand-name">Résidanat</span><span className="brand-caption">Smart Learning</span></span>
+            <span><span className="brand-name">EasyMed</span><span className="brand-caption">Révisions médicales</span></span>
           </div>
           <div className="preview-label"><span /> Aperçu design · données fictives</div>
         </div>
@@ -53,8 +53,8 @@ export function DesignPreviewPage() {
             <div className="metric-item"><span className="metric-icon metric-icon-neutral"><Layers3 size={17} /></span><span className="metric-copy"><strong>11</strong><span>Cours disponibles</span></span></div>
           </section>
           <section className="home-section course-section">
-            <div className="section-heading"><div><p className="eyebrow">Votre bibliothèque</p><h2>Cours interactifs OTR</h2></div><span className="text-link section-more">Tous les cours <ArrowRight size={15} /></span></div>
-            <p className="section-description">Aperçu de la bibliothèque · données non liées à un compte</p>
+            <div className="section-heading"><div><p className="eyebrow">Pour vos prochaines révisions</p><h2>Quelques cours pour commencer</h2></div><span className="text-link section-more">Tous les cours <ArrowRight size={15} /></span></div>
+            <p className="section-description">Une sélection pour commencer · données de démonstration</p>
             <div className="course-grid">
               {['Exemple de cours — Flashcards', 'Exemple de cours — Quiz'].map((name, index) => (
                 <article key={name} className="course-card">

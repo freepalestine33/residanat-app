@@ -21,6 +21,7 @@ import { generateLecture, type AiProvider, type GenerateLectureInput } from '../
 import { otrProgramme } from '../../data/otrProgramme';
 import { db } from '../../db/db';
 import { queueSyncChange } from '../../lib/syncEvents';
+import { createGeneratedLectureId } from '../../lib/lectureIds';
 import { useLectureStore } from '../../stores/lectureStore';
 import type { Lecture } from '../../lib/schema';
 import { useNavigate } from 'react-router-dom';
@@ -29,6 +30,7 @@ interface AiLectureGeneratorModalProps {
   isOpen: boolean;
   onClose: () => void;
   initialOtrNumber?: number;
+  initialModuleId?: string;
 }
 
 type TabType = 'overview' | 'cards' | 'quiz' | 'vf';
@@ -37,12 +39,15 @@ export const AiLectureGeneratorModal: React.FC<AiLectureGeneratorModalProps> = (
   isOpen,
   onClose,
   initialOtrNumber,
+  initialModuleId,
 }) => {
   const navigate = useNavigate();
   const loadLectures = useLectureStore((state) => state.loadLectures);
 
   // Form State
-  const [otrNumber, setOtrNumber] = useState<number | undefined>(initialOtrNumber ?? 11);
+  const [modules, setModules] = useState<Array<{ id: string; name: string }>>([]);
+  const [selectedModuleId, setSelectedModuleId] = useState<string | null>(initialModuleId ?? null);
+  const [otrNumber, setOtrNumber] = useState<number | undefined>(initialModuleId ? undefined : initialOtrNumber ?? 11);
   const [customName, setCustomName] = useState('');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [generatedPdfFile, setGeneratedPdfFile] = useState<File | null>(null);
@@ -89,12 +94,20 @@ export const AiLectureGeneratorModal: React.FC<AiLectureGeneratorModalProps> = (
     }
   }, [provider]);
 
-  // Update selected OTR topic when prop changes
+  // Keep the requested destination in sync when reopened from a library section.
   useEffect(() => {
-    if (initialOtrNumber) {
-      setOtrNumber(initialOtrNumber);
-    }
-  }, [initialOtrNumber]);
+    if (!isOpen) return;
+    setSelectedModuleId(initialModuleId ?? null);
+    setOtrNumber(initialModuleId ? undefined : initialOtrNumber ?? 11);
+    const refreshModules = () => {
+      void db.modules.toArray().then(setModules).catch((reason: unknown) => {
+        setError(reason instanceof Error ? reason.message : String(reason));
+      });
+    };
+    refreshModules();
+    window.addEventListener('residanat:modules-updated', refreshModules);
+    return () => window.removeEventListener('residanat:modules-updated', refreshModules);
+  }, [initialModuleId, initialOtrNumber, isOpen]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -173,16 +186,7 @@ export const AiLectureGeneratorModal: React.FC<AiLectureGeneratorModalProps> = (
 
   if (!isOpen) return null;
 
-  const currentTopic = otrProgramme.find((t) => t.number === otrNumber);
-  const resolvedName = customName.trim() || currentTopic?.title || 'Cours interactif';
-  const resolvedId = currentTopic?.lectureId
-    ? currentTopic.lectureId
-    : `otr_${String(otrNumber || 'cours').padStart(2, '0')}_${resolvedName
-        .toLowerCase()
-        .normalize('NFKD')
-        .replace(/[\u0300-\u036f]/g, '')
-        .replace(/[^a-z0-9_-]+/g, '_')
-        .slice(0, 20)}`;
+  const currentTopic = selectedModuleId ? undefined : otrProgramme.find((t) => t.number === otrNumber);
 
   const acceptPdfFile = (file: File | undefined | null) => {
     if (!file) return;
@@ -231,6 +235,11 @@ export const AiLectureGeneratorModal: React.FC<AiLectureGeneratorModalProps> = (
       setError(`Veuillez saisir votre clé API pour ${provider.toUpperCase()}.`);
       return;
     }
+    const resolvedName = customName.trim() || currentTopic?.title || '';
+    if (!resolvedName) {
+      setError('Saisissez un titre pour ce cours.');
+      return;
+    }
 
     if (saveKey) {
       localStorage.setItem(`sa_${provider}_api_key`, apiKey.trim());
@@ -261,9 +270,9 @@ export const AiLectureGeneratorModal: React.FC<AiLectureGeneratorModalProps> = (
 
       const input: GenerateLectureInput = {
         text: textContent,
-        id: resolvedId,
+        id: createGeneratedLectureId(currentTopic?.lectureId),
         name: resolvedName,
-        otrNumber,
+        ...(selectedModuleId ? {} : otrNumber ? { otrNumber } : {}),
       };
 
       const result = await generateLecture(input, {
@@ -274,7 +283,7 @@ export const AiLectureGeneratorModal: React.FC<AiLectureGeneratorModalProps> = (
         onProgress: setStepMessage,
       });
 
-      setGeneratedLecture(result.lecture);
+      setGeneratedLecture({ ...result.lecture, id: input.id, moduleId: selectedModuleId });
       setGeneratedPdfFile(preferPastedText ? null : selectedFile);
       setWarnings(result.warnings);
       setStepMessage('Génération terminée avec succès !');
@@ -675,8 +684,24 @@ export const AiLectureGeneratorModal: React.FC<AiLectureGeneratorModalProps> = (
             )}
 
             <div className="ai-lecture-fields ai-lecture-fields--two">
-              {/* OTR Lecture Selection */}
               <div>
+                <label className="field-label" htmlFor="ai-module-select">Enregistrer dans</label>
+                <select
+                  id="ai-module-select"
+                  value={selectedModuleId ?? ''}
+                  onChange={(event) => {
+                    const moduleId = event.target.value || null;
+                    setSelectedModuleId(moduleId);
+                    setOtrNumber(moduleId ? undefined : initialOtrNumber ?? 11);
+                  }}
+                  style={{ width: '100%', padding: '0.55rem', borderRadius: '8px' }}
+                >
+                  <option value="">OTR · programme officiel</option>
+                  {modules.map((module) => <option key={module.id} value={module.id}>{module.name}</option>)}
+                </select>
+              </div>
+
+              {!selectedModuleId && <div>
                 <label className="field-label" htmlFor="ai-otr-select">
                   Associer à un cours du programme OTR
                 </label>
@@ -700,7 +725,7 @@ export const AiLectureGeneratorModal: React.FC<AiLectureGeneratorModalProps> = (
                     </option>
                   ))}
                 </select>
-              </div>
+              </div>}
 
               {/* Custom Title */}
               <div>

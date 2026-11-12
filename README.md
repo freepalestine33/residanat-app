@@ -1,4 +1,4 @@
-# Résidanat · Smart Learning
+# EasyMed
 
 Offline-ready medical study app with Supabase email sign-in and cross-device sync. The app requires an account to open; after signing in, study data remains available locally and changes sync when the device is online. Netlify is the recommended hosting target; Vercel handlers are retained for existing deployments.
 
@@ -7,6 +7,7 @@ Offline-ready medical study app with Supabase email sign-in and cross-device syn
 - Email-and-password sign-in, account creation, and password recovery with Supabase Auth. Magic links are also available as an alternative.
 - Local-first flashcard scheduling (FSRS), notes, quiz results, errors, settings, and user-imported lecture JSON.
 - AI-generated and imported lectures sync with the signed-in user's account and appear on that user's other devices after the next sync.
+- Personal specialty modules organize user-created lectures and sync privately with the signed-in account; the OTR programme remains the built-in collection.
 - Background sync after local changes, on reconnect/focus, and every 30 seconds while active.
 - Per-record last-write-wins merge; flashcard progress favors the higher review count, then the later due date.
 - Private note-image storage with signed URLs. Images are resized to at most 1200 px and compressed below 500 KB before upload.
@@ -16,7 +17,7 @@ Offline-ready medical study app with Supabase email sign-in and cross-device syn
 ## Supabase setup
 
 1. Create a Supabase project.
-2. In **SQL Editor**, run [`supabase/migrations/202611070001_initial_schema.sql`](./supabase/migrations/202611070001_initial_schema.sql). It creates the profile trigger, per-user study tables, indexes, RLS policies, and a private `note-images` bucket with user-folder policies.
+2. In **SQL Editor**, run the migrations in order: [`202611070001_initial_schema.sql`](./supabase/migrations/202611070001_initial_schema.sql), then [`202611120001_user_modules.sql`](./supabase/migrations/202611120001_user_modules.sql). The first migration creates the per-user study tables and private note-image bucket; the second adds the per-user modules table, index, grants, and RLS policy.
 3. In **Authentication → URL Configuration**, set the production site URL and add your local URL (for example `http://localhost:5173`) and deployed site URL (for example `https://your-site.netlify.app/**`) to the allowed redirect URLs. Enable email magic links and configure the email provider.
 4. Copy `.env.example` to `.env.local` for local frontend configuration:
 
@@ -62,7 +63,7 @@ npm run build
 3. Local mutations are written to IndexedDB/localStorage and an IndexedDB retry queue. A debounced background sync pushes queued changes, then pulls records changed since the last successful sync.
 4. Failed requests stay queued and retry on the next change, reconnect, focus, manual sync, or polling interval. The cloud indicator shows offline, syncing, synced, conflict-choice, or error state.
 
-AI-generated courses are saved to the local course library and queued in the `lectures` table for the currently signed-in account. To make them available on another browser or device, deploy with the Supabase environment variables above, apply the initial schema migration, sign in with the same account on both devices, and confirm the sync indicator reports **Synchronisé**. If the second device has local data already, choose **Télécharger les données cloud** in Settings to initialize it from the account.
+AI-generated courses are saved to the local course library and queued in the `lectures` table for the currently signed-in account. Personal module metadata syncs through the `modules` table; lecture module assignments are stored in the synchronized lecture content. To make them available on another browser or device, deploy with the Supabase environment variables above, apply both migrations in order, sign in with the same account on both devices, and confirm the sync indicator reports **Synchronisé**. If the second device has local data already, choose **Télécharger les données cloud** in Settings to initialize it from the account.
 
 ## API routes
 

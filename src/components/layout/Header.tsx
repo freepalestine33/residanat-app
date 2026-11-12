@@ -13,9 +13,9 @@ export const Header: React.FC = () => {
     return (
       <header className="app-header app-header-collapsed">
         <div className="app-header-inner collapsed-inner">
-          <Link className="brand-lockup" to="/" aria-label="Résidanat, accueil">
+          <Link className="brand-lockup" to="/" aria-label="EasyMed, accueil">
             <span className="brand-mark"><BookOpen size={19} strokeWidth={1.8} /></span>
-            <span className="brand-name">Résidanat</span>
+            <span className="brand-name">EasyMed</span>
           </Link>
           <div className="collapsed-summary">
             <span><strong>{dueCount}</strong> à revoir</span>
@@ -34,11 +34,11 @@ export const Header: React.FC = () => {
   return (
     <header className="app-header">
       <div className="app-header-inner">
-        <Link className="brand-lockup" to="/" aria-label="Résidanat, accueil">
+        <Link className="brand-lockup" to="/" aria-label="EasyMed, accueil">
           <span className="brand-mark"><BookOpen size={19} strokeWidth={1.8} /></span>
           <span>
-            <span className="brand-name">Résidanat</span>
-            <span className="brand-caption">Smart Learning</span>
+            <span className="brand-name">EasyMed</span>
+            <span className="brand-caption">Révisions médicales</span>
           </span>
         </Link>
 

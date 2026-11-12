@@ -16,6 +16,7 @@ export async function loadLectureIndex(): Promise<LectureMeta[]> {
       id: content.id,
       progId: content.progId ?? null,
       otrNumber: content.otrNumber,
+      moduleId: content.moduleId ?? null,
       name: content.name,
       cards: content.cards.length,
       quiz: content.quiz.length,

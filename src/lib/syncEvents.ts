@@ -1,6 +1,6 @@
 import { db, type SyncQueueItem } from '../db/db';
 
-export type SyncCollection = 'lectures' | 'cards' | 'quizResults' | 'errors' | 'notes' | 'settings';
+export type SyncCollection = 'lectures' | 'modules' | 'cards' | 'quizResults' | 'errors' | 'notes' | 'settings';
 
 export async function queueSyncChange(
   collection: SyncCollection,
@@ -16,6 +16,10 @@ export async function queueSyncChange(
 
 export function notifySyncChange() {
   if (typeof window !== 'undefined') window.dispatchEvent(new Event('residanat:local-change'));
+}
+
+export function notifyModulesUpdated() {
+  if (typeof window !== 'undefined') window.dispatchEvent(new Event('residanat:modules-updated'));
 }
 
 /** Raw local map (lectureId → value) used by the synced lecture progress. */

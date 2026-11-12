@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, BookOpenText, Check, CheckCircle2, Clipboard, Layers3, ListChecks } from 'lucide-react';
+import { ArrowLeft, ArrowRight, BookOpenText, Check, CheckCircle2, Clipboard, Layers3, ListChecks, RotateCcw } from 'lucide-react';
 import { Header } from '../components/layout/Header';
 import { TabBar } from '../components/layout/TabBar';
 import { coreTabs } from '../components/layout/tabs';
 import { loadLectureById, loadLecturePdf } from '../data/lectures';
 import { LectureNotFoundError } from '../lib/content';
 import { isCorrectSelection } from '../lib/answers';
-import { loadLectureAnswers, saveQuizResult } from '../lib/quizHistory';
+import { loadLectureAnswers, restartLectureAnswers, saveQuizResult } from '../lib/quizHistory';
 import { filterQuizQuestions, summarizeQuiz } from '../lib/quizSummary';
 import { Rating, review } from '../lib/srs';
 import { CardWebSearchButton } from '../components/ui/CardWebSearchButton';
@@ -60,6 +60,9 @@ export default function LecturePage() {
   const [vfAnswers, setVfAnswers] = useState<Record<string, boolean>>({});
   const [vfResults, setVfResults] = useState<Record<string, boolean>>({});
   const [resultError, setResultError] = useState('');
+  const [restartError, setRestartError] = useState('');
+  const [restartNotice, setRestartNotice] = useState('');
+  const [restartingAnswers, setRestartingAnswers] = useState(false);
   const userNavigatedRef = useRef(false);
   const userSectionRef = useRef(false);
   const { refreshDueCount } = useCardStore();
@@ -87,6 +90,10 @@ export default function LecturePage() {
     setCopyError('');
     setVfAnswers({});
     setVfResults({});
+    setResultError('');
+    setRestartError('');
+    setRestartNotice('');
+    setRestartingAnswers(false);
     loadLectureById(id)
       .then((data) => { if (active) setLecture(data); })
       .catch((reason: unknown) => {
@@ -266,6 +273,34 @@ export default function LecturePage() {
     }
   };
 
+  const restartAnswers = async () => {
+    if (!lecture || restartingAnswers) return;
+    const confirmed = window.confirm(
+      'Recommencer le quiz et les vrai/faux de ce cours ? Toutes les réponses enregistrées et les révisions programmées pour ces questions seront supprimées. Les cartes, leur progression, les notes et le contenu du cours seront conservés.',
+    );
+    if (!confirmed) return;
+
+    setRestartError('');
+    setRestartNotice('');
+    setResultError('');
+    setRestartingAnswers(true);
+    try {
+      await restartLectureAnswers(lecture.id);
+      setSelections({});
+      setQuizResults({});
+      setQuizSummaryOpen(false);
+      setQuizIncorrectOnly(false);
+      setRetryingQuizIds({});
+      setVfAnswers({});
+      setVfResults({});
+      setRestartNotice('Les réponses du quiz et du Vrai/Faux ont été réinitialisées.');
+    } catch (reason) {
+      setRestartError(reason instanceof Error ? reason.message : String(reason));
+    } finally {
+      setRestartingAnswers(false);
+    }
+  };
+
   if (error && !lecture) {
     return <><Header /><TabBar tabs={coreTabs} /><main className="wrap"><section className="panel"><p className="eyebrow">{notFound ? 'Cours introuvable' : 'Erreur de chargement'}</p><h2>{notFound ? 'Ce cours n’est pas disponible.' : 'Le cours ne peut pas être chargé.'}</h2><p className="muted">{notFound ? 'Vérifiez le lien ou choisissez un cours dans la liste.' : 'Réessayez plus tard, ou revenez à la liste des cours.'}</p>{!notFound && <p className="muted">{error}</p>}<Link className="btn ghost" to="/lectures">Retour aux cours</Link></section></main></>;
   }
@@ -323,6 +358,8 @@ export default function LecturePage() {
       <TabBar tabs={coreTabs} />
       <main className="wrap">
         {resultError && <p className="notice error" role="alert">Impossible d’enregistrer le résultat localement : {resultError}</p>}
+        {restartError && <p className="notice error" role="alert">Impossible de réinitialiser les réponses : {restartError}</p>}
+        {restartNotice && <p className="notice success" role="status">{restartNotice}</p>}
         {copyError && <p className="notice error" role="alert">{copyError}</p>}
         <nav className="lecture-topbar" aria-label="Retour à la liste des cours">
           <Link className="back-link" to="/lectures">
@@ -334,6 +371,18 @@ export default function LecturePage() {
           <p className="eyebrow">Cours interactif · {lecture.id}</p>
           <h2>{lecture.name}</h2>
           <p className="muted">{lecture.cards.length} cartes · {lecture.quiz.length} quiz · {lecture.vf.length} vrai/faux</p>
+          {(lecture.quiz.length > 0 || lecture.vf.length > 0) && (
+            <button
+              type="button"
+              className="btn ghost btn-sm"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', marginTop: '0.25rem' }}
+              disabled={restartingAnswers}
+              onClick={() => void restartAnswers()}
+            >
+              <RotateCcw size={15} aria-hidden="true" />
+              {restartingAnswers ? 'Réinitialisation…' : 'Recommencer quiz et Vrai/Faux'}
+            </button>
+          )}
           {uploadedPdf && <>
             <p style={{ marginTop: '0.5rem' }}><a className="text-link" href={uploadedPdf.url} target="_blank" rel="noreferrer">Ouvrir le PDF source{uploadedPdf.name ? ` (${uploadedPdf.name})` : ''} ↗</a></p>
             <p className="muted" style={{ fontSize: '0.8rem' }}>Le PDF importé est conservé sur cet appareil et n’est pas inclus dans la synchronisation du cours.</p>

@@ -8,6 +8,7 @@ export interface Note { id?: number; syncId?: string; imagePath?: string; rel: s
 export interface QuizResult { id: string; lectureId: string; questionId: string; score: number; details: Record<string, unknown>; updatedAt: number }
 export interface SyncQueueItem { key: string; collection: string; recordId: string; operation: 'upsert' | 'delete'; record?: Record<string, unknown>; updatedAt: number }
 export interface UserLecture { id: string; name: string; content: Lecture; updatedAt: number; pdfBlob?: Blob; pdfName?: string }
+export interface UserModule { id: string; name: string; createdAt: number; updatedAt: number }
 export interface CustomCard { gid: string; lectureId: string; card: Card; updatedAt: number }
 
 class AppDB extends Dexie {
@@ -17,6 +18,7 @@ class AppDB extends Dexie {
   quizResults!: Table<QuizResult, string>;
   syncQueue!: Table<SyncQueueItem, string>;
   userLectures!: Table<UserLecture, string>;
+  modules!: Table<UserModule, string>;
   customCards!: Table<CustomCard, string>;
   constructor() {
     super('residanat');
@@ -44,6 +46,16 @@ class AppDB extends Dexie {
       syncQueue: 'key, collection, updatedAt',
       userLectures: 'id, updatedAt',
       customCards: 'gid, lectureId, updatedAt',
+    });
+    this.version(5).stores({
+      cards: 'gid, due, updated',
+      attempts: '++id, qid, at',
+      notes: '++id, rel, updated, syncId',
+      quizResults: 'id, lectureId, questionId, updatedAt',
+      syncQueue: 'key, collection, updatedAt',
+      userLectures: 'id, updatedAt',
+      customCards: 'gid, lectureId, updatedAt',
+      modules: 'id, name, updatedAt',
     });
   }
 }
