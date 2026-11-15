@@ -14,6 +14,7 @@ import { NoteAudioPlayer } from './NoteAudioPlayer';
 import { VoiceNoteRecorder } from './VoiceNoteRecorder';
 import { NoteVideoList, NoteVideosField } from './NoteVideos';
 import type { NoteVideo } from '../../types/note';
+import '../../styles/notes-composer.css';
 
 const MAX_SOURCE_IMAGE_BYTES = 8 * 1024 * 1024;
 const IMAGE_FETCH_TIMEOUT_MS = 15_000;
@@ -92,7 +93,11 @@ export const CardNoteControl: React.FC<CardNoteControlProps> = ({ relation, labe
   const autoMemoText = useRef('');
   const [open, setOpen] = useState(false);
   const [composerOpen, setComposerOpen] = useState(false);
-  const [attachmentsOpen, setAttachmentsOpen] = useState(false);
+  const [showImage, setShowImage] = useState(false);
+  const [showLink, setShowLink] = useState(false);
+  const [showVideo, setShowVideo] = useState(false);
+  const [showAudio, setShowAudio] = useState(false);
+  const [showMemo, setShowMemo] = useState(false);
   const [draft, setDraft] = useState('');
   const [draftLink, setDraftLink] = useState('');
   const [draftImage, setDraftImage] = useState<Blob | string | null>();
@@ -151,6 +156,7 @@ export const CardNoteControl: React.FC<CardNoteControlProps> = ({ relation, labe
   };
 
   const attachMemo = () => {
+    setShowMemo(true);
     if (memo.state.status === 'ready') {
       const ready = memo.state.memo;
       setDraftMemo(ready);
@@ -280,7 +286,11 @@ export const CardNoteControl: React.FC<CardNoteControlProps> = ({ relation, labe
   const resetComposer = () => {
     setComposerOpen(false);
     setEditingId(undefined);
-    setAttachmentsOpen(false);
+    setShowImage(false);
+    setShowLink(false);
+    setShowVideo(false);
+    setShowAudio(false);
+    setShowMemo(false);
     setDraft('');
     setDraftLink('');
     setDraftImage(undefined);
@@ -306,7 +316,11 @@ export const CardNoteControl: React.FC<CardNoteControlProps> = ({ relation, labe
   const edit = (note: Note) => {
     setComposerOpen(true);
     setEditingId(note.id);
-    setAttachmentsOpen(Boolean(note.image));
+    setShowImage(Boolean(note.image));
+    setShowLink(Boolean(note.link));
+    setShowVideo(Boolean(note.videos?.length));
+    setShowAudio(Boolean(note.audio));
+    setShowMemo(Boolean(note.memo));
     setDraft(note.text);
     setDraftLink(note.link ?? '');
     setDraftImage(note.image);
@@ -388,44 +402,51 @@ export const CardNoteControl: React.FC<CardNoteControlProps> = ({ relation, labe
       resetAttachmentFeedback();
     }
     setEditingId(undefined);
-    setAttachmentsOpen(false);
+    setShowImage(false);
+    setShowLink(false);
+    setShowVideo(false);
+    setShowAudio(false);
+    setShowMemo(false);
     setComposerOpen(true);
   };
-const renderEditor = () => <form className="card-note-form" onSubmit={(event) => void save(event)}>
+const renderEditor = () => {
+  const imageOn = showImage || Boolean(draftImage);
+  const linkOn = showLink || Boolean(draftLink);
+  const videoOn = showVideo || draftVideos.length > 0;
+  const audioOn = showAudio || Boolean(draftAudio);
+  const memoOn = showMemo || Boolean(draftMemo);
+  return <form className="card-note-form nc-form" onSubmit={(event) => void save(event)}>
     <label>
       <span className="field-label">{editingId === undefined ? 'Ajouter une note' : 'Modifier la note'}</span>
-      <textarea value={draft} onChange={(event) => setDraft(event.target.value)} rows={3} placeholder="Un rappel, une astuce ou un point à revoir…" />
+      <textarea className="nc-text" value={draft} onChange={(event) => setDraft(event.target.value)} rows={3} placeholder="Un rappel, une astuce ou un point à revoir…" />
     </label>
 
-    {(formError || error) && <p className="notice error" role="alert">{formError || error}</p>}
-
-    <div className="btn-row card-note-submit">
-      <button className="btn btn-sm" type="submit" disabled={attachmentBusy}>
-        {editingId === undefined ? <><Plus size={15} aria-hidden="true" /> Enregistrer</> : <>Enregistrer la modification</>}
+    <div className="nc-tools" role="group" aria-label="Ajouter à la note">
+      <button type="button" className={`nc-tool${imageOn ? ' is-on' : ''}`} aria-pressed={imageOn} onClick={() => setShowImage((value) => !value)}>
+        <span aria-hidden="true">🖼</span> Image
       </button>
-      <button className="btn ghost btn-sm" type="button" onClick={resetComposer}>Annuler</button>
+      <button type="button" className={`nc-tool${linkOn ? ' is-on' : ''}`} aria-pressed={linkOn} onClick={() => setShowLink((value) => !value)}>
+        <span aria-hidden="true">🔗</span> Lien
+      </button>
+      <button type="button" className={`nc-tool${videoOn ? ' is-on' : ''}`} aria-pressed={videoOn} onClick={() => setShowVideo((value) => !value)}>
+        <span aria-hidden="true">▶</span> Vidéo
+      </button>
+      <button type="button" className={`nc-tool${audioOn ? ' is-on' : ''}`} aria-pressed={audioOn} onClick={() => setShowAudio((value) => !value)}>
+        <span aria-hidden="true">🎙</span> Vocal
+      </button>
+      {canMemo && <button type="button" className={`nc-tool${memoOn ? ' is-on' : ''}`} aria-pressed={memoOn} onClick={() => setShowMemo((value) => !value)}>
+        <span aria-hidden="true">✨</span> Mémo IA
+      </button>}
     </div>
 
-    <button
-      type="button"
-      className="card-note-attach-toggle"
-      aria-expanded={attachmentsOpen}
-      aria-controls={`${ids}-attachments`}
-      onClick={() => setAttachmentsOpen((value) => !value)}
-    >
-      <ImagePlus size={15} aria-hidden="true" />
-      {attachmentsOpen ? 'Masquer les ajouts' : 'Ajouter photo, mémo vocal ou vidéo'}
-    </button>
+    {linkOn && <div className="nc-extra">
+      <label>
+        <span className="field-label">Lien</span>
+        <input type="url" value={draftLink} onChange={(event) => setDraftLink(event.target.value)} placeholder="https://…" />
+      </label>
+    </div>}
 
-    {attachmentsOpen && <div className="card-note-attachments" id={`${ids}-attachments`}>
-      <div className="card-note-attachment-heading">
-        <div>
-          <span className="field-label">Photo, mémo vocal ou vidéo</span>
-          <p>Collez, déposez ou choisissez une image, enregistrez un mémo vocal, ou ajoutez une vidéo YouTube.</p>
-        </div>
-        <ImagePlus size={19} aria-hidden="true" />
-      </div>
-
+    {imageOn && <div className="nc-extra">
       <label className="card-note-paste-field">
         <span className="card-note-paste-icon"><ClipboardPaste size={16} aria-hidden="true" /></span>
         <span className="visually-hidden">Coller une image ou une adresse de photo</span>
@@ -441,26 +462,7 @@ const renderEditor = () => <form className="card-note-form" onSubmit={(event) =>
           disabled={attachmentBusy}
         />
       </label>
-      <p className="card-note-attachment-help" id={`${ids}-paste-help`}>Le champ est activable au toucher pour recevoir une image copiée. Les liens directs sont importés si le site l’autorise.</p>
-
-      <div className="card-note-audio-section">
-        <span className="field-label">Mémo vocal</span>
-        <VoiceNoteRecorder
-          disabled={attachmentBusy}
-          onRecorded={(blob, seconds) => {
-            setDraftAudio(blob);
-            setDraftAudioDuration(seconds);
-            setAttachmentError('');
-            setAttachmentStatus('Mémo vocal enregistré.');
-            setFormError('');
-          }}
-        />
-      </div>
-
-      <div className="card-note-video-section">
-        <NoteVideosField videos={draftVideos} onChange={setDraftVideos} disabled={attachmentBusy} />
-      </div>
-
+      <p className="card-note-attachment-help" id={`${ids}-paste-help`}>Collez une image copiée (ex. Google Images) ou une adresse directe — les liens d’images sont importés si le site l’autorise.</p>
       <div
         className="card-note-dropzone"
         onDragOver={(event) => event.preventDefault()}
@@ -483,6 +485,48 @@ const renderEditor = () => <form className="card-note-form" onSubmit={(event) =>
           <ImagePlus size={15} aria-hidden="true" />
           Choisir un fichier
         </label>
+      </div>
+    </div>}
+
+    {videoOn && <div className="nc-extra">
+      <NoteVideosField videos={draftVideos} onChange={setDraftVideos} disabled={attachmentBusy} />
+    </div>}
+
+    {audioOn && <div className="nc-extra">
+      <span className="field-label">Mémo vocal</span>
+      <VoiceNoteRecorder
+        disabled={attachmentBusy}
+        onRecorded={(blob, seconds) => {
+          setShowAudio(true);
+          setDraftAudio(blob);
+          setDraftAudioDuration(seconds);
+          setAttachmentError('');
+          setAttachmentStatus('Mémo vocal enregistré.');
+          setFormError('');
+        }}
+      />
+    </div>}
+
+    {memoOn && <div className="nc-extra">
+      <span className="field-label">Mémo visuel (IA)</span>
+      <div className="btn-row" style={{ marginTop: '0.4rem' }}>
+        <button
+          type="button"
+          className="btn ghost btn-sm"
+          onClick={attachMemo}
+          disabled={attachmentBusy || memo.state.status === 'loading' || memoPending}
+        >
+          <Wand2 size={14} aria-hidden="true" />
+          {memo.state.status === 'loading' || memoPending ? 'Création du mémo…' : memo.state.status === 'ready' ? 'Joindre ce mémo' : 'Créer un mémo visuel (IA)'}
+        </button>
+        {memo.state.status === 'ready' && <button
+          type="button"
+          className="btn ghost btn-sm"
+          onClick={() => startMemo(memo.nextVariant)}
+          disabled={attachmentBusy}
+        >
+          Autre version
+        </button>}
       </div>
     </div>}
 
@@ -534,8 +578,18 @@ const renderEditor = () => <form className="card-note-form" onSubmit={(event) =>
     {!attachmentStatus && !attachmentBusy && <span className="visually-hidden" id={`${ids}-attachment-status`} />}
     {attachmentError && <p className="notice error card-note-attachment-error" role="alert">{attachmentError}</p>}
 
+    {(formError || error) && <p className="notice error" role="alert">{formError || error}</p>}
+
     <p className="muted card-note-hint">Votre texte, sa photo, son mémo vocal et ses vidéos sont enregistrés ensemble sur cette carte.</p>
+    <div className="nc-actions">
+      <button className="btn btn-sm" type="submit" disabled={attachmentBusy}>
+        {editingId === undefined ? <><Plus size={15} aria-hidden="true" /> Enregistrer</> : <>Enregistrer la modification</>}
+      </button>
+      <button className="btn ghost btn-sm" type="button" onClick={resetComposer}>Annuler</button>
+      <span className="muted nc-hint">Ctrl + Entrée pour enregistrer</span>
+    </div>
   </form>;
+};
 return (
     <div className="card-note-widget">
       <button
@@ -594,6 +648,7 @@ return (
                   return;
                 }
                 if (!composerOpen) startNewNote();
+                setShowAudio(true);
                 setDraftAudio(blob);
                 setDraftAudioDuration(seconds);
                 setAttachmentError('');
