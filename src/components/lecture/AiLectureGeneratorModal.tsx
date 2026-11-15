@@ -47,6 +47,7 @@ export const AiLectureGeneratorModal: React.FC<AiLectureGeneratorModalProps> = (
   // Form State
   const [modules, setModules] = useState<Array<{ id: string; name: string }>>([]);
   const [selectedModuleId, setSelectedModuleId] = useState<string | null>(initialModuleId ?? null);
+  const [customLecture, setCustomLecture] = useState(false);
   const [otrNumber, setOtrNumber] = useState<number | undefined>(initialModuleId ? undefined : initialOtrNumber ?? 11);
   const [customName, setCustomName] = useState('');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -98,6 +99,7 @@ export const AiLectureGeneratorModal: React.FC<AiLectureGeneratorModalProps> = (
   useEffect(() => {
     if (!isOpen) return;
     setSelectedModuleId(initialModuleId ?? null);
+    setCustomLecture(false);
     setOtrNumber(initialModuleId ? undefined : initialOtrNumber ?? 11);
     const refreshModules = () => {
       void db.modules.toArray().then(setModules).catch((reason: unknown) => {
@@ -688,9 +690,17 @@ export const AiLectureGeneratorModal: React.FC<AiLectureGeneratorModalProps> = (
                 <label className="field-label" htmlFor="ai-module-select">Enregistrer dans</label>
                 <select
                   id="ai-module-select"
-                  value={selectedModuleId ?? ''}
+                  value={customLecture ? '__custom' : selectedModuleId ?? ''}
                   onChange={(event) => {
-                    const moduleId = event.target.value || null;
+                    const value = event.target.value;
+                    if (value === '__custom') {
+                      setCustomLecture(true);
+                      setSelectedModuleId(null);
+                      setOtrNumber(undefined);
+                      return;
+                    }
+                    setCustomLecture(false);
+                    const moduleId = value || null;
                     setSelectedModuleId(moduleId);
                     setOtrNumber(moduleId ? undefined : initialOtrNumber ?? 11);
                   }}
@@ -698,10 +708,11 @@ export const AiLectureGeneratorModal: React.FC<AiLectureGeneratorModalProps> = (
                 >
                   <option value="">OTR · programme officiel</option>
                   {modules.map((module) => <option key={module.id} value={module.id}>{module.name}</option>)}
+                  <option value="__custom">✏️ Cours libre — hors liste</option>
                 </select>
               </div>
 
-              {!selectedModuleId && <div>
+              {!selectedModuleId && !customLecture && <div>
                 <label className="field-label" htmlFor="ai-otr-select">
                   Associer à un cours du programme OTR
                 </label>
@@ -730,16 +741,21 @@ export const AiLectureGeneratorModal: React.FC<AiLectureGeneratorModalProps> = (
               {/* Custom Title */}
               <div>
                 <label className="field-label" htmlFor="ai-title-input">
-                  Titre du cours
+                  {customLecture ? 'Nom du cours / leçon' : 'Titre du cours'}
                 </label>
                 <input
                   id="ai-title-input"
                   type="text"
                   value={customName}
                   onChange={(e) => setCustomName(e.target.value)}
-                  placeholder={currentTopic?.title || 'Ex : Boiterie chez l’enfant (QCM)'}
+                  placeholder={customLecture ? 'Ex : Syndrome du canal carpien, analyse d\'images…' : currentTopic?.title || 'Ex : Boiterie chez l’enfant (QCM)'}
                   style={{ width: '100%', padding: '0.55rem', borderRadius: '8px' }}
                 />
+                {customLecture && (
+                  <p className="muted" style={{ fontSize: '0.78rem', margin: '0.35rem 0 0' }}>
+                    Cours hors programme : la banque QCM cherchera les chapitres d'annales correspondant au titre pour guider la génération.
+                  </p>
+                )}
               </div>
             </div>
 
