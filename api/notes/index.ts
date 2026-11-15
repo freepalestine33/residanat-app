@@ -34,6 +34,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         if (!imageUrl) throw new ApiError(404, 'This note image is no longer available.');
         return res.status(200).json({ imageUrl });
       }
+      if (req.query.audioPath !== undefined) {
+        if (typeof req.query.audioPath !== 'string' || !req.query.audioPath) {
+          throw new ApiError(400, 'audioPath is invalid.');
+        }
+        const { data: row, error } = await client.supabase
+          .from('notes')
+          .select('id')
+          .eq('user_id', client.user.id)
+          .eq('data->>audio_path', req.query.audioPath)
+          .is('deleted_at', null)
+          .maybeSingle();
+        if (error) throw new ApiError(500, 'Could not find this note audio.');
+        if (!row) throw new ApiError(404, 'This note audio is no longer available.');
+        const audioUrl = await createImageUrl(client, req.query.audioPath);
+        if (!audioUrl) throw new ApiError(404, 'This note audio is no longer available.');
+        return res.status(200).json({ audioUrl });
+      }
       const { data, error } = await client.supabase
         .from('notes')
         .select('*')

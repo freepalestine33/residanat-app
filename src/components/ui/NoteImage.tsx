@@ -10,6 +10,8 @@ interface NoteImageProps {
 
 export function NoteImage({ image, imagePath, className, alt }: NoteImageProps) {
   const [src, setSrc] = useState('');
+  const [viewerOpen, setViewerOpen] = useState(false);
+  const dialogRef = useRef<HTMLDialogElement>(null);
   const refreshAttempted = useRef(false);
 
   useEffect(() => {
@@ -22,6 +24,13 @@ export function NoteImage({ image, imagePath, className, alt }: NoteImageProps) 
     setSrc(url);
     return () => URL.revokeObjectURL(url);
   }, [image, imagePath]);
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+    if (viewerOpen && !dialog.open) dialog.showModal();
+    if (!viewerOpen && dialog.open) dialog.close();
+  }, [viewerOpen]);
 
   const refreshImageUrl = async () => {
     if (!imagePath || refreshAttempted.current) return;
@@ -46,5 +55,27 @@ export function NoteImage({ image, imagePath, className, alt }: NoteImageProps) 
     }
   };
 
-  return src ? <img className={className} src={src} alt={alt} onError={() => void refreshImageUrl()} /> : null;
+  if (!src) return null;
+  return (
+    <>
+      <button
+        type="button"
+        className="note-image-trigger"
+        onClick={() => setViewerOpen(true)}
+        aria-label={`Agrandir l’image : ${alt}`}
+        title="Agrandir l’image"
+      >
+        <img className={className} src={src} alt={alt} onError={() => void refreshImageUrl()} />
+      </button>
+      <dialog
+        ref={dialogRef}
+        className="note-image-dialog"
+        aria-label={alt}
+        onClose={() => setViewerOpen(false)}
+        onClick={(event) => { if (event.target === dialogRef.current) setViewerOpen(false); }}
+      >
+        <img className="note-image-full" src={src} alt={alt} />
+      </dialog>
+    </>
+  );
 }

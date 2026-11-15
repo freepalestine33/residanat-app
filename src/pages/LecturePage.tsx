@@ -446,7 +446,7 @@ export default function LecturePage() {
                           {copiedCardId === card.id ? <Check size={17} aria-hidden="true" /> : <Clipboard size={17} aria-hidden="true" />}
                         </button>
                         <CardWebSearchButton lectureName={lecture.name} question={card.q} answer={card.a} />
-                        <CardNoteControl relation={'card:' + lecture.id + '.' + card.id} label={'Carte ' + card.id} />
+                        <CardNoteControl relation={'card:' + lecture.id + '.' + card.id} label={'Carte ' + card.id} question={card.q} answer={card.a} />
                         <CardSpeakButton question={card.q} answer={card.a} />
                         <CardEditControl lectureId={lecture.id} card={card} label={lecture.name} />
                         <CardAddControl lectureId={lecture.id} label={lecture.name} />

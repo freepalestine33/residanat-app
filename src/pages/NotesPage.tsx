@@ -10,6 +10,7 @@ import { compressNoteImage } from '../lib/images';
 import type { Note } from '../types/note';
 import { isPhotoLink, PhotoLinkPreview } from '../components/ui/PhotoLinkPreview';
 import { NoteImage } from '../components/ui/NoteImage';
+import { NoteAudioPlayer } from '../components/ui/NoteAudioPlayer';
 
 type NoteEntry = { key: string; note: Note | LegacyNote; legacy: boolean };
 
@@ -186,6 +187,7 @@ export function NotesPage() {
                       ? <PhotoLinkPreview url={note.link} />
                       : <a className="text-link" href={previewLink(note.link)} target="_blank" rel="noreferrer">{note.link}</a>)}
                     {note.image && (!isLegacy || note.image !== '[idb]') && <NoteImage image={note.image} imagePath={'imagePath' in note ? note.imagePath : undefined} className="note-image" alt="Image jointe à la note" />}
+                    {'audio' in note && note.audio && <NoteAudioPlayer audio={note.audio} audioPath={note.audioPath} duration={note.audioDuration} />}
                     {isLegacy && note.image === '[idb]' && <p className="muted">Image conservée dans le stockage source historique.</p>}
                     {isLegacy ? <div className="btn-row">
                       <p className="muted">Conservée sans modification dans le stockage historique.</p>

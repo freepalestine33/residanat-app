@@ -202,15 +202,30 @@ async function queueNote(note: Note) {
   });
 }
 
+// Mirrors the server cap in api/_lib/noteImages.ts: PNGs that already fit are
+// uploaded lossless (memo posters stay sharp); everything else is recompressed.
+const MAX_NOTE_IMAGE_BYTES = 500 * 1024;
+const isLosslessPng = (blob: Blob) => blob.type === 'image/png' && blob.size <= MAX_NOTE_IMAGE_BYTES;
+
 async function imageFields(image: unknown) {
   if (image instanceof Blob) {
+    if (isLosslessPng(image)) return { image_base64: await blobToBase64(image), image_mime: image.type };
     const compressed = await compressNoteImage(new File([image], 'note-image', { type: image.type || 'image/webp' }));
     return { image_base64: await blobToBase64(compressed), image_mime: compressed.type };
   }
   if (typeof image !== 'string' || !image.startsWith('data:image/')) return {};
   const blob = await (await fetch(image)).blob();
+  if (isLosslessPng(blob)) return { image_base64: await blobToBase64(blob), image_mime: blob.type };
   const compressed = await compressNoteImage(new File([blob], 'note-image', { type: blob.type }));
   return { image_base64: await blobToBase64(compressed), image_mime: compressed.type };
+}
+
+// Voice memos are already small (mono, ~24 kbps, 2 min cap): upload as-is.
+async function audioFields(audio: unknown) {
+  if (audio instanceof Blob) {
+    return { audio_base64: await blobToBase64(audio), audio_mime: audio.type || 'audio/webm' };
+  }
+  return {};
 }
 
 async function prepareChanges(items: SyncQueueItem[]): Promise<PushChanges> {
@@ -228,8 +243,8 @@ async function prepareChanges(items: SyncQueueItem[]): Promise<PushChanges> {
     }
     const record = { ...(item.record ?? {}) };
     if (collection === 'notes') {
-      const { image, ...rest } = record;
-      changes.notes.push({ ...rest, ...await imageFields(image) });
+      const { image, audio, ...rest } = record;
+      changes.notes.push({ ...rest, ...await imageFields(image), ...await audioFields(audio) });
     } else {
       changes[collection].push(record);
     }
@@ -286,6 +301,9 @@ async function applyNotes(records: CloudRecord[], forceCloud = false) {
       link: typeof data.link === 'string' ? data.link : undefined,
       image: typeof record.image_url === 'string' ? record.image_url : undefined,
       imagePath: typeof record.image_path === 'string' ? record.image_path : undefined,
+      audio: typeof data.audio_url === 'string' ? data.audio_url : undefined,
+      audioPath: typeof data.audio_path === 'string' ? data.audio_path : undefined,
+      audioDuration: typeof data.audio_duration === 'number' ? data.audio_duration : undefined,
       updated,
     });
   }

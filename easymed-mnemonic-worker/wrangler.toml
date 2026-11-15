@@ -1,0 +1,23 @@
+name = "easymed-mnemonic"
+main = "src/index.ts"
+compatibility_date = "2026-10-01"
+
+# Workers AI (FLUX.1-schnell + a small text model). Free: 10,000 neurons/day.
+[ai]
+binding = "AI"
+
+# Image cache. Create with:  npx wrangler kv namespace create IMAGES
+# then paste the printed id below.
+[[kv_namespaces]]
+binding = "IMAGES"
+id = "0462d89daa134c0fabd51f5b5c9e63a8"
+
+[vars]
+# Comma-separated list of sites allowed to call this Worker.
+ALLOWED_ORIGINS = "https://easymed1.netlify.app,http://localhost:5174"
+ALLOW_LOCALHOST = "true"          # set to "false" in production
+DAILY_NEURON_BUDGET = "9000"      # our safety cap (Cloudflare free = 10,000 neurons/day)
+DAILY_PER_IP = "15"               # new memos+illustrations per visitor per UTC day
+IMAGE_STEPS = "4"                 # 4 = cheapest/default, max 8
+LLM_MODEL = "@cf/meta/llama-3.2-3b-instruct"                 # writes the illustration prompt
+MEMO_MODEL = "@cf/mistralai/mistral-small-3.1-24b-instruct"   # writes the memo (good French + JSON)

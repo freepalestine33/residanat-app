@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import { readFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
@@ -7,6 +7,9 @@ import { fileURLToPath } from 'node:url';
 const repoRoot = dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
+  test: {
+    exclude: ['easymed-mnemonic-worker/**', 'node_modules/**', 'dist/**'],
+  },
   plugins: [
     react(),
     {

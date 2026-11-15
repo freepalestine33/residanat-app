@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { getBody, requireArray, requireMethod, requireObject, requireString, requireTimestamp, sendError, ApiError } from '../_lib/http';
-import { uploadNoteImage } from '../_lib/noteImages';
+import { uploadNoteAudio, uploadNoteImage } from '../_lib/noteImages';
 import { mergeFlashcard, upsertIfNewer } from '../_lib/sync';
 import { authenticateRequest } from '../_lib/supabase';
 
@@ -70,6 +70,9 @@ function parseRecord(value: unknown, collection: Collection | 'settings'): Recor
     image_path: typeof record.image_path === 'string' ? record.image_path : null,
     image_base64: record.image_base64,
     image_mime: record.image_mime,
+    audio_base64: record.audio_base64,
+    audio_mime: record.audio_mime,
+    audio_changed: record.audio_changed === true,
     updated_at,
     deleted_at: record.deleted_at ?? null,
   };
@@ -102,18 +105,29 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           continue;
         }
         const record = parseRecord(item, collection) as Record<string, unknown> & { id: string; updated_at: string };
-        if (collection === 'notes' && typeof record.image_base64 === 'string') {
+        let previousAudioPath: string | null = null;
+        if (collection === 'notes' && (typeof record.image_base64 === 'string' || record.audio_changed === true)) {
           const { data: existing, error: existingError } = await client.supabase
             .from('notes')
-            .select('updated_at')
+            .select('updated_at, data')
             .eq('user_id', client.user.id)
             .eq('id', record.id)
             .maybeSingle();
           if (existingError) throw new ApiError(500, 'Could not check the existing note.');
-          if (existing && Date.parse(existing.updated_at) >= Date.parse(record.updated_at)) continue;
+          if (existing && Date.parse(String(existing.updated_at)) >= Date.parse(record.updated_at)) continue;
+          const existingData = existing?.data as Record<string, unknown> | null;
+          previousAudioPath = typeof existingData?.audio_path === 'string' ? existingData.audio_path : null;
+        }
+        if (collection === 'notes' && typeof record.image_base64 === 'string') {
           record.image_path = await uploadNoteImage(client, requireString(record.id, 'notes.id', 300), record.updated_at, record.image_mime, record.image_base64);
           delete record.image_base64;
           delete record.image_mime;
+        }
+        if (collection === 'notes' && typeof record.audio_base64 === 'string') {
+          const data = record.data as Record<string, unknown>;
+          data.audio_path = await uploadNoteAudio(client, requireString(record.id, 'notes.id', 300), record.updated_at, record.audio_mime, record.audio_base64);
+          delete record.audio_base64;
+          delete record.audio_mime;
         }
         const stored = await upsertIfNewer(
           client,
@@ -121,6 +135,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           record,
           collection === 'cards' ? mergeFlashcard : undefined,
         );
+        if (stored && collection === 'notes' && record.audio_changed === true && previousAudioPath) {
+          const nextAudioPath = (record.data as Record<string, unknown>).audio_path;
+          if (nextAudioPath !== previousAudioPath) {
+            await client.supabase.storage.from('note-images').remove([previousAudioPath]);
+          }
+        }
         if (stored) accepted++;
       }
     }

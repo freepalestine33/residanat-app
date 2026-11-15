@@ -4,7 +4,7 @@ import type { Card } from '../types/card';
 
 export interface CardProgress { gid: string; due: number; state: unknown; updated: number } // state = ts-fsrs Card
 export interface McqAttempt { id?: number; qid: number; at: number; picked: string[]; correct: boolean }
-export interface Note { id?: number; syncId?: string; imagePath?: string; rel: string; text: string; link?: string; image?: Blob | string; updated: number }
+export interface Note { id?: number; syncId?: string; imagePath?: string; rel: string; text: string; link?: string; image?: Blob | string; audio?: Blob | string; audioPath?: string; audioDuration?: number; clearImage?: boolean; clearAudio?: boolean; audioChanged?: boolean; updated: number }
 export interface QuizResult { id: string; lectureId: string; questionId: string; score: number; details: Record<string, unknown>; updatedAt: number }
 export interface SyncQueueItem { key: string; collection: string; recordId: string; operation: 'upsert' | 'delete'; record?: Record<string, unknown>; updatedAt: number }
 export interface UserLecture { id: string; name: string; content: Lecture; updatedAt: number; pdfBlob?: Blob; pdfName?: string }

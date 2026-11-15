@@ -462,7 +462,7 @@ export const StudyPage: React.FC = () => {
               <div><p className="eyebrow">Carte en cours</p><p className="muted"><Link className="text-link" to={`/lecture/${current.lectureId}`}>{current.lectureName}</Link></p></div>
               <div className="study-session-actions-top">
                 <CardWebSearchButton lectureName={current.lectureName} question={current.card.q} answer={current.card.a} />
-                <CardNoteControl relation={`card:${current.lectureId}.${current.card.id}`} label={`Carte · ${current.lectureName}`} />
+                <CardNoteControl relation={`card:${current.lectureId}.${current.card.id}`} label={`Carte · ${current.lectureName}`} question={current.card.q} answer={current.card.a} />
                 <CardSpeakButton question={current.card.q} answer={current.card.a} />
                 <CardEditControl lectureId={current.lectureId} card={current.card} label={current.lectureName} />
                 <CardAddControl lectureId={current.lectureId} label={current.lectureName} />

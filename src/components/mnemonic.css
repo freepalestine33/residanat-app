@@ -1,0 +1,93 @@
+/* src/components/mnemonic.css — uses your existing design tokens (works with both themes) */
+.mnemo-trigger.has-image { color: var(--accent-contrast, #fff); background: var(--accent, #4f46e5); }
+.mnemo-dialog {
+  width: min(960px, calc(100vw - 1.5rem));
+  max-height: calc(100dvh - 1.5rem);
+  padding: 0; border: 1px solid var(--border-strong, #d3d4e8); border-radius: 22px;
+  background: var(--card, #ffffff); color: var(--text, #171a2e); box-shadow: var(--shadow-lg, 0 18px 44px rgba(55,48,163,.2));
+}
+.mnemo-dialog::backdrop { background: rgba(8, 10, 24, 0.6); }
+.mnemo-panel { display: grid; gap: 0.85rem; padding: 1.1rem; overflow: auto; max-height: calc(100dvh - 1.5rem); }
+.mnemo-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.mnemo-stage { display: grid; place-items: center; min-height: 240px; border-radius: 16px; background: var(--card2, #eeeefa); overflow: hidden; }
+.mnemo-loading { display: grid; justify-items: center; gap: 0.8rem; padding: 2rem 1rem; text-align: center; }
+.mnemo-spinner { width: 34px; height: 34px; border-radius: 50%; border: 3px solid var(--border-strong, #d3d4e8); border-top-color: var(--accent, #4f46e5); animation: mnemo-spin 0.8s linear infinite; }
+@keyframes mnemo-spin { to { transform: rotate(360deg); } }
+.mnemo-note { font-size: 0.75rem; }
+
+/* host for the offscreen poster that gets exported into a note image.
+   Fixed width + desktop grid + larger type: the poster must look identical
+   on every device (viewport media queries would otherwise give phones a
+   narrow multi-row layout with tiny text). */
+.memo-export-host {
+  position: fixed;
+  left: -10000px;
+  top: 0;
+  width: 960px;
+  pointer-events: none;
+}
+.memo-export-host .memo-steps { grid-template-columns: repeat(var(--n), minmax(0, 1fr)); }
+.memo-export-host .memo-steps[data-n="5"],
+.memo-export-host .memo-steps[data-n="6"] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.memo-export-host .memo-step:not(:last-child)::after { display: block; }
+.memo-export-host .memo-steps[data-n="5"] .memo-step::after,
+.memo-export-host .memo-steps[data-n="6"] .memo-step::after { display: none; }
+.memo-export-host .memo-title { font-size: 1.9rem; }
+.memo-export-host .memo-sub { font-size: 1.15rem; }
+.memo-export-host .memo-h { font-size: 1.12rem; }
+.memo-export-host .memo-cap { font-size: 1rem; }
+.memo-export-host .memo-tag { font-size: 0.78rem; }
+.memo-export-host .memo-legend li { font-size: 0.92rem; }
+.card-note-memo-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
+.card-note-memo-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.85rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--border));
+  border-radius: 10px;
+  cursor: pointer;
+}
+.card-note-memo-btn:hover:not(:disabled) {
+  color: var(--accent-contrast, #fff);
+  background: var(--accent);
+}
+.card-note-memo-btn:disabled { opacity: 0.6; cursor: wait; }
+.card-note-memo-alt { background: transparent; }
+
+/* ---- memo poster (paper look; fixed colours so the PNG export looks the same in both themes) ---- */
+.mnemo-stage:has(.memo-poster) { background: transparent; min-height: 0; overflow: visible; }
+.memo-poster { margin: 0; width: 100%; padding: clamp(1rem, 3vw, 1.6rem); color: #3b2a1a; border-radius: 18px;
+  background: linear-gradient(180deg, #fbf3e4, #f3e6cc); border: 1px solid #e2d2b0; font-family: ui-sans-serif, system-ui, "Segoe UI", Roboto, Arial, sans-serif; }
+.memo-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; text-align: center; }
+.memo-head-text { flex: 1; min-width: 0; }
+.memo-title { margin: 0; color: #3b2a1a; font-size: clamp(1.2rem, 3.4vw, 2rem); font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; text-transform: uppercase; }
+.memo-sub { margin: 0.35rem 0 0; color: #5a4630; font-size: clamp(0.85rem, 2vw, 1.15rem); font-weight: 700; letter-spacing: 0.04em; }
+.memo-art { flex: 0 0 auto; width: clamp(84px, 16vw, 150px); height: auto; aspect-ratio: 1; object-fit: cover; border-radius: 16px; border: 2px solid #e2d2b0; }
+.memo-steps { display: grid; grid-template-columns: repeat(var(--n), minmax(0, 1fr)); gap: 0.75rem; margin: 1.1rem 0 0; padding: 0; list-style: none; }
+.memo-step { position: relative; display: grid; justify-items: center; align-content: start; gap: 0.35rem; padding: 1.4rem 0.7rem 0.9rem; text-align: center;
+  background: #fffaf0; border: 2px solid color-mix(in srgb, var(--c) 35%, #e2d2b0); border-radius: 16px; }
+.memo-step:not(:last-child)::after { content: "→"; position: absolute; top: 50%; right: -0.72rem; z-index: 1; transform: translateY(-50%); color: var(--c); font-size: 1.1rem; font-weight: 800; }
+.memo-num { position: absolute; top: -0.7rem; left: 50%; display: grid; place-items: center; width: 1.7rem; height: 1.7rem; transform: translateX(-50%); color: #fff; background: var(--c); border-radius: 50%; font-size: 0.85rem; font-weight: 800; }
+.memo-icon { display: grid; place-items: center; width: 3.2rem; height: 3.2rem; color: var(--c); background: color-mix(in srgb, var(--c) 12%, #fffaf0); border-radius: 14px; }
+.memo-icon svg { width: 1.9rem; height: 1.9rem; }
+.memo-tag { padding: 0.12rem 0.55rem; color: #fff; background: var(--c); border-radius: 999px; font-size: 0.68rem; font-weight: 800; letter-spacing: 0.06em; }
+.memo-h { margin: 0; color: var(--c); font-size: clamp(0.9rem, 2vw, 1.05rem); font-weight: 800; line-height: 1.15; text-transform: uppercase; overflow-wrap: break-word; hyphens: auto; }
+.memo-cap { margin: 0; color: #3b2a1a; font-size: clamp(0.78rem, 1.8vw, 0.92rem); line-height: 1.4; overflow-wrap: anywhere; }
+.memo-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; margin: 1rem 0 0; padding: 0; list-style: none; }
+.memo-legend li { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.3rem 0.7rem; background: color-mix(in srgb, var(--c) 14%, #fffaf0); border: 1px solid color-mix(in srgb, var(--c) 40%, #e2d2b0); border-radius: 10px; font-size: 0.82rem; }
+.memo-legend b { padding: 0.05rem 0.45rem; color: #fff; background: var(--c); border-radius: 6px; font-weight: 800; }
+.memo-credit { margin-top: 0.9rem; color: #7a6548; font-size: 0.68rem; text-align: center; }
+/* 5-6 steps: two rows of three, no arrows */
+.memo-steps[data-n="5"], .memo-steps[data-n="6"] { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 1.3rem; }
+.memo-steps[data-n="5"] .memo-step::after, .memo-steps[data-n="6"] .memo-step::after { display: none; }
+@media (max-width: 760px) {
+  .memo-steps, .memo-steps[data-n="5"], .memo-steps[data-n="6"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .memo-step:not(:last-child)::after { display: none; }
+  .memo-step:last-child:nth-child(odd) { grid-column: 1 / -1; }
+}
+@media (max-width: 420px) { .memo-steps { grid-template-columns: minmax(0, 1fr); } }

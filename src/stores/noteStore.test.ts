@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { resolveNoteImage } from './noteStore';
+import { resolveNoteAudio, resolveNoteImage } from './noteStore';
 
 describe('note image persistence', () => {
   const previous = { image: new Blob(['old']), imagePath: 'notes/old.webp' };
@@ -17,6 +17,27 @@ describe('note image persistence', () => {
     expect(resolveNoteImage({ image: replacement }, previous)).toEqual({
       image: replacement,
       imagePath: previous.imagePath,
+    });
+  });
+});
+
+describe('note audio persistence', () => {
+  const previous = { audio: new Blob(['old']), audioPath: 'notes/old.webm', audioDuration: 42 };
+
+  it('preserves the current audio when an edit does not change it', () => {
+    expect(resolveNoteAudio({}, previous)).toEqual(previous);
+  });
+
+  it('persists an explicit audio clear instead of restoring the previous audio', () => {
+    expect(resolveNoteAudio({ clearAudio: true }, previous)).toEqual({ audio: undefined, audioPath: undefined, audioDuration: undefined });
+  });
+
+  it('uses a replacement recording and keeps the existing remote audio path', () => {
+    const replacement = new Blob(['new'], { type: 'audio/webm' });
+    expect(resolveNoteAudio({ audio: replacement, audioDuration: 12 }, previous)).toEqual({
+      audio: replacement,
+      audioPath: previous.audioPath,
+      audioDuration: 12,
     });
   });
 });

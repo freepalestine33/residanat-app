@@ -3,6 +3,17 @@ import type { AuthenticatedClient } from './supabase';
 
 const MAX_IMAGE_BYTES = 500 * 1024;
 const allowedTypes = new Set(['image/jpeg', 'image/png', 'image/webp']);
+const audioExtensions: Record<string, string> = {
+  'audio/webm': 'webm',
+  'audio/mp4': 'm4a',
+  'audio/x-m4a': 'm4a',
+  'audio/m4a': 'm4a',
+  'audio/aac': 'aac',
+  'audio/ogg': 'ogg',
+  'audio/mpeg': 'mp3',
+  'audio/wav': 'wav',
+  'audio/x-wav': 'wav',
+};
 
 export async function uploadNoteImage(
   client: AuthenticatedClient,
@@ -24,6 +35,29 @@ export async function uploadNoteImage(
   const path = `${client.user.id}/${noteId}/${version}.${ext}`;
   const { error } = await client.supabase.storage.from('note-images').upload(path, buffer, { contentType: mime, upsert: true });
   if (error) throw new ApiError(500, 'Could not upload the note image.');
+  return path;
+}
+
+export async function uploadNoteAudio(
+  client: AuthenticatedClient,
+  noteId: string,
+  updatedAt: string,
+  mime: unknown,
+  base64: unknown,
+): Promise<string> {
+  const ext = typeof mime === 'string' ? audioExtensions[mime] : undefined;
+  if (!ext) throw new ApiError(400, 'Use a WebM, MP4, OGG, MPEG, or WAV audio recording.');
+  if (typeof base64 !== 'string' || base64.length > Math.ceil(MAX_IMAGE_BYTES * 4 / 3) + 128) {
+    throw new ApiError(413, 'Audio must be 500 KB or smaller.');
+  }
+  const encoded = base64.replace(/^data:[^;]+;base64,/, '');
+  if (!/^[A-Za-z0-9+/]*={0,2}$/.test(encoded)) throw new ApiError(400, 'Audio data is invalid.');
+  const buffer = Buffer.from(encoded, 'base64');
+  if (!buffer.length || buffer.length > MAX_IMAGE_BYTES) throw new ApiError(413, 'Audio must be 500 KB or smaller.');
+  const version = Date.parse(updatedAt);
+  const path = `${client.user.id}/${noteId}/audio-${version}.${ext}`;
+  const { error } = await client.supabase.storage.from('note-images').upload(path, buffer, { contentType: mime as string, upsert: true });
+  if (error) throw new ApiError(500, 'Could not upload the note audio.');
   return path;
 }
 

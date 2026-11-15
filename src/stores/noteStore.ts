@@ -26,6 +26,18 @@ export function resolveNoteImage(
   };
 }
 
+export function resolveNoteAudio(
+  note: Pick<Note, 'audio' | 'audioPath' | 'audioDuration' | 'clearAudio'>,
+  previous?: Pick<Note, 'audio' | 'audioPath' | 'audioDuration'>,
+) {
+  if (note.clearAudio) return { audio: undefined, audioPath: undefined, audioDuration: undefined };
+  return {
+    audio: note.audio ?? previous?.audio,
+    audioPath: note.audioPath ?? previous?.audioPath,
+    audioDuration: note.audioDuration ?? previous?.audioDuration,
+  };
+}
+
 export const useNoteStore = create<NoteState>((set, get) => ({
   notes: [],
   loading: false,
@@ -45,19 +57,29 @@ export const useNoteStore = create<NoteState>((set, get) => ({
     try {
       const previous = note.id === undefined ? undefined : await db.notes.get(note.id);
       const image = resolveNoteImage(note, previous);
-      const { clearImage: _clearImage, ...noteValues } = note;
+      const audio = resolveNoteAudio(note, previous);
+      const { clearImage: _clearImage, clearAudio: _clearAudio, audioChanged: _audioChanged, ...noteValues } = note;
       const value = {
         ...noteValues,
         syncId: note.syncId ?? previous?.syncId ?? createId(),
         ...image,
+        ...audio,
         updated: Date.now(),
       };
       await db.notes.put(value);
       await queueSyncChange('notes', value.syncId, 'upsert', {
         id: value.syncId,
-        data: { rel: value.rel, text: value.text, link: value.link },
+        data: {
+          rel: value.rel,
+          text: value.text,
+          link: value.link,
+          audio_path: value.audioPath ?? null,
+          audio_duration: value.audioDuration ?? null,
+        },
         image: value.image,
         image_path: value.imagePath ?? null,
+        audio: value.audio,
+        audio_changed: note.audioChanged === true ? true : undefined,
         updated_at: new Date(value.updated).toISOString(),
         deleted_at: null,
       });

@@ -6,6 +6,11 @@ export interface Note {
   text: string;
   link?: string;
   image?: Blob | string;
+  audio?: Blob | string;
+  audioPath?: string;
+  audioDuration?: number;
   clearImage?: boolean;
+  clearAudio?: boolean;
+  audioChanged?: boolean;
   updated: number; // Timestamp
 }

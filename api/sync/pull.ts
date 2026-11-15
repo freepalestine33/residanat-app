@@ -22,10 +22,22 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       readSince(client, 'notes', since),
       readSettings(client, since),
     ]);
-    const notes = await Promise.all(noteRows.map(async (row) => ({
-      ...row,
-      image_url: await createImageUrl(client, typeof row.image_path === 'string' ? row.image_path : null),
-    })));
+    const notes = await Promise.all(noteRows.map(async (row) => {
+      const data = row.data && typeof row.data === 'object' && !Array.isArray(row.data)
+        ? { ...(row.data as Record<string, unknown>) }
+        : row.data;
+      if (data && typeof data === 'object' && typeof (data as Record<string, unknown>).audio_path === 'string') {
+        (data as Record<string, unknown>).audio_url = await createImageUrl(
+          client,
+          (data as Record<string, unknown>).audio_path as string,
+        );
+      }
+      return {
+        ...row,
+        data,
+        image_url: await createImageUrl(client, typeof row.image_path === 'string' ? row.image_path : null),
+      };
+    }));
     const syncedAt = new Date().toISOString();
     const { error } = await client.supabase.from('sync_state').upsert({
       user_id: client.user.id,
