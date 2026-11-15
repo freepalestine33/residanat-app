@@ -556,24 +556,37 @@ return (
         </div>
         {loading && <p className="muted" role="status">Chargement des notes…</p>}
         {!composerOpen && (formError || error) && <p className="notice error" role="alert">{formError || error}</p>}
-        {!composerOpen && canMemo && <div className="card-note-memo-actions">
-          <button
-            type="button"
-            className="card-note-memo-btn"
-            onClick={() => { if (!composerOpen) startNewNote(); attachMemo(); }}
-            disabled={attachmentBusy || memo.state.status === 'loading' || memoPending}
-          >
-            <Wand2 size={15} aria-hidden="true" />
-            {memo.state.status === 'loading' || memoPending ? 'Création du mémo…' : 'Créer un mémo visuel (IA)'}
-          </button>
-          {memo.state.status === 'ready' && <button
-            type="button"
-            className="card-note-memo-btn card-note-memo-alt"
-            onClick={() => { if (!composerOpen) startNewNote(); startMemo(memo.nextVariant); }}
+        {!composerOpen && <div className="card-note-memo-actions">
+          {canMemo && <>
+            <button
+              type="button"
+              className="card-note-memo-btn"
+              onClick={() => { if (!composerOpen) startNewNote(); attachMemo(); }}
+              disabled={attachmentBusy || memo.state.status === 'loading' || memoPending}
+            >
+              <Wand2 size={15} aria-hidden="true" />
+              {memo.state.status === 'loading' || memoPending ? 'Création du mémo…' : 'Créer un mémo visuel (IA)'}
+            </button>
+            {memo.state.status === 'ready' && <button
+              type="button"
+              className="card-note-memo-btn card-note-memo-alt"
+              onClick={() => { if (!composerOpen) startNewNote(); startMemo(memo.nextVariant); }}
+              disabled={attachmentBusy}
+            >
+              Autre version
+            </button>}
+          </>}
+          <VoiceNoteRecorder
             disabled={attachmentBusy}
-          >
-            Autre version
-          </button>}
+            onRecorded={(blob, seconds) => {
+              if (!composerOpen) startNewNote();
+              setDraftAudio(blob);
+              setDraftAudioDuration(seconds);
+              setAttachmentError('');
+              setAttachmentStatus('Mémo vocal enregistré.');
+              setFormError('');
+            }}
+          />
         </div>}
         {!composerOpen && <button className="card-note-new" type="button" aria-label={`Ajouter une note · ${label}`} onClick={startNewNote}>
           <span className="card-note-new-icon"><Plus size={16} aria-hidden="true" /></span>

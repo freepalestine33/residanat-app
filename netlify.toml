@@ -3,6 +3,9 @@
   publish = "dist"
   functions = "netlify/functions"
 
+[build.environment]
+  VITE_MNEMONIC_API = "https://easymed-mnemonic.easymed-yassine.workers.dev"
+
 [[redirects]]
   from = "/api/sync/pull"
   to = "/.netlify/functions/sync-pull"
