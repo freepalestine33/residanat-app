@@ -7,7 +7,6 @@ const routeImports: Record<string, () => Promise<unknown>> = {
   '/lecture': () => import('../pages/LecturePage'),
   '/quiz': () => import('../pages/GlobalPracticePage'),
   '/vf': () => import('../pages/GlobalPracticePage'),
-  '/qcm': () => import('../pages/QcmBankPage'),
   '/notes': () => import('../pages/NotesPage'),
   '/settings': () => import('../pages/SettingsPage'),
 };

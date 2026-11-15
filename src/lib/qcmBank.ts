@@ -19,16 +19,6 @@ export interface QcmBankEntry {
   sources: string[];
 }
 
-export interface QcmBankIndexEntry {
-  id: number;
-  module: string;
-  chapter: string;
-  otr_number: number | null;
-  star: boolean;
-  corrected: boolean;
-}
-
-const INDEX_SELECT = 'id,module,chapter,otr_number,star,corrected';
 const FULL_SELECT = 'id,bank_id,otr_number,module,chapter,context,star,corrected,stem,options,justification,sources';
 
 function supabaseRestUrl(): string | null {
@@ -51,32 +41,7 @@ async function qcmFetch(path: string): Promise<unknown> {
   return response.json();
 }
 
-let indexPromise: Promise<QcmBankIndexEntry[]> | null = null;
-
-/** Index léger (sans énoncés) pour naviguer module → chapitre. Mis en cache pour la session. */
-export function fetchQcmBankIndex(): Promise<QcmBankIndexEntry[]> {
-  indexPromise ??= qcmFetch(`${INDEX_SELECT}&order=module.asc,chapter.asc`)
-    .then((data) => (Array.isArray(data) ? (data as QcmBankIndexEntry[]) : []))
-    .catch((reason) => {
-      indexPromise = null;
-      throw reason;
-    });
-  return indexPromise;
-}
-
-/** Questions complètes d'un chapitre. */
-export async function fetchQcmChapter(module: string, chapter: string): Promise<QcmBankEntry[]> {
-  const params = new URLSearchParams({
-    select: FULL_SELECT,
-    module: `eq.${module}`,
-    chapter: `eq.${chapter}`,
-    order: 'star.desc,corrected.desc,bank_id.asc',
-  });
-  const data = await qcmFetch(params.toString());
-  return Array.isArray(data) ? (data as QcmBankEntry[]) : [];
-}
-
-/** Questions complètes d'un sujet OTR (pour le mode entraînement par sujet). */
+/** Questions complètes d'un sujet OTR (pour guider la génération IA). */
 export async function fetchQcmByOtr(otrNumber: number, limit = 60): Promise<QcmBankEntry[]> {
   const params = new URLSearchParams({
     select: FULL_SELECT,
@@ -87,40 +52,6 @@ export async function fetchQcmByOtr(otrNumber: number, limit = 60): Promise<QcmB
   });
   const data = await qcmFetch(params.toString());
   return Array.isArray(data) ? (data as QcmBankEntry[]) : [];
-}
-
-export interface QcmChapterRef {
-  module: string;
-  chapter: string;
-}
-
-export interface QcmBankIndex {
-  /** module -> chapter -> nb de questions */
-  tree: Map<string, Map<string, number>>;
-  chaptersByOtr: Map<number, QcmChapterRef[]>;
-  total: number;
-}
-
-/** Construit l'arborescence module → chapitre et l'index par sujet OTR. */
-export function buildQcmBankIndex(entries: QcmBankIndexEntry[]): QcmBankIndex {
-  const tree = new Map<string, Map<string, number>>();
-  const chaptersByOtr = new Map<number, QcmChapterRef[]>;
-  const seen = new Set<string>();
-  for (const entry of entries) {
-    const moduleChapters = tree.get(entry.module) ?? new Map<string, number>();
-    moduleChapters.set(entry.chapter, (moduleChapters.get(entry.chapter) ?? 0) + 1);
-    tree.set(entry.module, moduleChapters);
-    if (entry.otr_number != null) {
-      const key = `${entry.module}::${entry.chapter}`;
-      if (!seen.has(key)) {
-        seen.add(key);
-        const list = chaptersByOtr.get(entry.otr_number) ?? [];
-        list.push({ module: entry.module, chapter: entry.chapter });
-        chaptersByOtr.set(entry.otr_number, list);
-      }
-    }
-  }
-  return { tree, chaptersByOtr, total: entries.length };
 }
 
 const EXAM_CONTEXT_CACHE = new Map<string, Promise<string>>();
