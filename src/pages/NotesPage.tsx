@@ -11,6 +11,8 @@ import type { Note } from '../types/note';
 import { isPhotoLink, PhotoLinkPreview } from '../components/ui/PhotoLinkPreview';
 import { NoteImage } from '../components/ui/NoteImage';
 import { NoteAudioPlayer } from '../components/ui/NoteAudioPlayer';
+import { NoteVideoList, NoteVideosField } from '../components/ui/NoteVideos';
+import type { NoteVideo } from '../types/note';
 
 type NoteEntry = { key: string; note: Note | LegacyNote; legacy: boolean };
 
@@ -24,6 +26,7 @@ export function NotesPage() {
   const [text, setText] = useState('');
   const [link, setLink] = useState('');
   const [image, setImage] = useState<Blob | string | undefined>();
+  const [videos, setVideos] = useState<NoteVideo[]>([]);
   const [editing, setEditing] = useState<number>();
   const [formError, setFormError] = useState('');
 
@@ -65,6 +68,7 @@ export function NotesPage() {
     setText('');
     setLink('');
     setImage(undefined);
+    setVideos([]);
     setRel(searchParams.get('rel') || 'libre');
     setFormError('');
   };
@@ -74,16 +78,17 @@ export function NotesPage() {
     setText(note.text);
     setLink(note.link ?? '');
     setImage(note.image);
+    setVideos(note.videos ?? []);
     setFormError('');
   };
   const save = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (!text.trim() && !link.trim() && !image) {
-      setFormError('Ajoutez un texte, un lien ou une image avant d’enregistrer.');
+    if (!text.trim() && !link.trim() && !image && !videos.length) {
+      setFormError('Ajoutez un texte, un lien, une image ou une vidéo avant d’enregistrer.');
       return;
     }
     clearError();
-    await upsertNote({ id: editing, rel: rel.trim() || 'libre', text: text.trim(), link: link.trim() || undefined, image, updated: Date.now() });
+    await upsertNote({ id: editing, rel: rel.trim() || 'libre', text: text.trim(), link: link.trim() || undefined, image, videos, updated: Date.now() });
     const nextError = useNoteStore.getState().error;
     if (nextError) {
       setFormError(nextError);
@@ -156,6 +161,7 @@ export function NotesPage() {
                 }).catch((reason: unknown) => setFormError(reason instanceof Error ? reason.message : String(reason)));
               }} />
             </label>
+            <NoteVideosField videos={videos} onChange={setVideos} />
             {image && <NoteImage image={image} className="note-image" alt="Image jointe à la note" />}
             {formError && <p className="notice error" role="alert">{formError}</p>}
             <div className="btn-row">
@@ -188,6 +194,7 @@ export function NotesPage() {
                       : <a className="text-link" href={previewLink(note.link)} target="_blank" rel="noreferrer">{note.link}</a>)}
                     {note.image && (!isLegacy || note.image !== '[idb]') && <NoteImage image={note.image} imagePath={'imagePath' in note ? note.imagePath : undefined} className="note-image" alt="Image jointe à la note" />}
                     {'audio' in note && note.audio && <NoteAudioPlayer audio={note.audio} audioPath={note.audioPath} duration={note.audioDuration} />}
+                    {'videos' in note && note.videos?.length ? <NoteVideoList videos={note.videos} noteKey={`notes-${note.syncId ?? note.id ?? key}`} /> : null}
                     {isLegacy && note.image === '[idb]' && <p className="muted">Image conservée dans le stockage source historique.</p>}
                     {isLegacy ? <div className="btn-row">
                       <p className="muted">Conservée sans modification dans le stockage historique.</p>

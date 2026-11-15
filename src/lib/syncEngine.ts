@@ -19,6 +19,7 @@ import {
 import { preserveLocalLecturePdf } from './userLectureSync';
 import { notifyCustomCardsUpdated, queueCustomCardSnapshot } from './customCards';
 import { readSyncResponse } from './syncResponse';
+import { sanitizeNoteVideos } from './youtube';
 
 export type SyncStatus = 'local' | 'offline' | 'syncing' | 'synced' | 'error' | 'conflict';
 type Collection = 'lectures' | 'modules' | 'customCards' | 'cards' | 'quizResults' | 'errors' | 'notes';
@@ -304,6 +305,7 @@ async function applyNotes(records: CloudRecord[], forceCloud = false) {
       audio: typeof data.audio_url === 'string' ? data.audio_url : undefined,
       audioPath: typeof data.audio_path === 'string' ? data.audio_path : undefined,
       audioDuration: typeof data.audio_duration === 'number' ? data.audio_duration : undefined,
+      videos: data.videos === null ? [] : sanitizeNoteVideos(data.videos) ?? existing?.videos,
       updated,
     });
   }

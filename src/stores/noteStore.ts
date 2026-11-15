@@ -64,6 +64,7 @@ export const useNoteStore = create<NoteState>((set, get) => ({
         syncId: note.syncId ?? previous?.syncId ?? createId(),
         ...image,
         ...audio,
+        videos: note.videos ?? previous?.videos,
         updated: Date.now(),
       };
       await db.notes.put(value);
@@ -75,6 +76,7 @@ export const useNoteStore = create<NoteState>((set, get) => ({
           link: value.link,
           audio_path: value.audioPath ?? null,
           audio_duration: value.audioDuration ?? null,
+          videos: value.videos?.length ? value.videos : null,
         },
         image: value.image,
         image_path: value.imagePath ?? null,

@@ -6577,3 +6577,177 @@ select:focus {
   }
 }
 
+
+/* Note YouTube videos */
+.note-videos {
+  display: grid;
+  gap: 0.7rem;
+  margin-top: 0.5rem;
+}
+
+.note-video {
+  display: grid;
+  gap: 0.3rem;
+  min-width: 0;
+}
+
+.note-video-frame {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--text) 10%, var(--card));
+  overflow: hidden;
+}
+
+.note-video-placeholder {
+  padding: 0;
+  cursor: pointer;
+}
+
+.note-video-placeholder img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.note-video-play {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.55);
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.note-video-placeholder:hover .note-video-play,
+.note-video-placeholder:focus-visible .note-video-play {
+  background: rgba(0, 0, 0, 0.75);
+  transform: scale(1.06);
+}
+
+.note-video-start {
+  position: absolute;
+  right: 0.5rem;
+  bottom: 0.5rem;
+  padding: 0.1rem 0.45rem;
+  border-radius: 6px;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.72);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.note-video-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  min-width: 0;
+}
+
+.note-video-label {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--text);
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.note-video-link {
+  flex: 0 0 auto;
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.note-video-link:hover {
+  text-decoration: underline;
+}
+
+.note-videos-field {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.note-videos-field > .field-label {
+  margin: 0;
+}
+
+.note-videos-add {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.4rem;
+}
+
+.note-videos-add input {
+  width: 100%;
+  min-width: 0;
+  padding: 0.5rem 0.65rem;
+  color: var(--text);
+  background: var(--card);
+  border: 1px solid var(--border-strong, var(--border));
+  border-radius: 8px;
+  font: inherit;
+  font-size: 0.82rem;
+}
+
+.note-videos-add input:focus {
+  border-color: var(--accent);
+  outline: 2px solid color-mix(in srgb, var(--accent) 25%, transparent);
+  outline-offset: 1px;
+}
+
+.note-videos-add .btn {
+  justify-self: start;
+}
+
+.note-videos-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.note-videos-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+  font-size: 0.82rem;
+}
+
+.note-videos-list-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.note-videos-hint {
+  margin: 0;
+  font-size: 0.76rem;
+}
+
+@media (min-width: 560px) {
+  .note-videos-add {
+    grid-template-columns: minmax(0, 1fr) 140px auto;
+    align-items: center;
+  }
+}

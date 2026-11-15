@@ -11,6 +11,8 @@ import MemoInfographic from '../MemoInfographic';
 import type { Memo } from '../../lib/mnemonicApi';
 import { NoteAudioPlayer } from './NoteAudioPlayer';
 import { VoiceNoteRecorder } from './VoiceNoteRecorder';
+import { NoteVideoList, NoteVideosField } from './NoteVideos';
+import type { NoteVideo } from '../../types/note';
 
 const MAX_SOURCE_IMAGE_BYTES = 8 * 1024 * 1024;
 const IMAGE_FETCH_TIMEOUT_MS = 15_000;
@@ -99,6 +101,7 @@ export const CardNoteControl: React.FC<CardNoteControlProps> = ({ relation, labe
   const [draftImage, setDraftImage] = useState<Blob | string | null>();
   const [draftAudio, setDraftAudio] = useState<Blob | string | null>();
   const [draftAudioDuration, setDraftAudioDuration] = useState<number>();
+  const [draftVideos, setDraftVideos] = useState<NoteVideo[]>([]);
   const [imagePasteValue, setImagePasteValue] = useState('');
   const [editingId, setEditingId] = useState<number>();
   const [formError, setFormError] = useState('');
@@ -304,6 +307,7 @@ export const CardNoteControl: React.FC<CardNoteControlProps> = ({ relation, labe
     setDraftImage(undefined);
     setDraftAudio(undefined);
     setDraftAudioDuration(undefined);
+    setDraftVideos([]);
     setImagePasteValue('');
     setFormError('');
     resetAttachmentFeedback();
@@ -328,6 +332,7 @@ export const CardNoteControl: React.FC<CardNoteControlProps> = ({ relation, labe
     setDraftImage(note.image);
     setDraftAudio(note.audio);
     setDraftAudioDuration(note.audioDuration);
+    setDraftVideos(note.videos ?? []);
     setImagePasteValue('');
     setFormError('');
     resetAttachmentFeedback();
@@ -346,8 +351,8 @@ export const CardNoteControl: React.FC<CardNoteControlProps> = ({ relation, labe
       }
     }
     const clearedAttachment = editingId !== undefined && (draftImage === null || draftAudio === null);
-    if (!draft.trim() && !draftLink.trim() && !draftImage && !draftAudio && !clearedAttachment) {
-      setFormError('Ajoutez un commentaire, un lien, une photo ou un mémo vocal avant de l’enregistrer.');
+    if (!draft.trim() && !draftLink.trim() && !draftImage && !draftAudio && !draftVideos.length && !clearedAttachment) {
+      setFormError('Ajoutez un commentaire, un lien, une photo, un mémo vocal ou une vidéo avant de l’enregistrer.');
       return;
     }
     clearError();
@@ -362,6 +367,7 @@ export const CardNoteControl: React.FC<CardNoteControlProps> = ({ relation, labe
       audioDuration: draftAudioDuration,
       clearAudio: draftAudio === null,
       audioChanged: draftAudio instanceof Blob || draftAudio === null ? true : undefined,
+      videos: draftVideos,
       updated: Date.now(),
     });
     const nextError = useNoteStore.getState().error;
@@ -392,6 +398,7 @@ export const CardNoteControl: React.FC<CardNoteControlProps> = ({ relation, labe
       setDraftImage(undefined);
       setDraftAudio(undefined);
       setDraftAudioDuration(undefined);
+      setDraftVideos([]);
       setImagePasteValue('');
       setFormError('');
       resetAttachmentFeedback();
@@ -423,14 +430,14 @@ const renderEditor = () => <form className="card-note-form" onSubmit={(event) =>
       onClick={() => setAttachmentsOpen((value) => !value)}
     >
       <ImagePlus size={15} aria-hidden="true" />
-      {attachmentsOpen ? 'Masquer les ajouts' : 'Ajouter une photo ou un mémo vocal'}
+      {attachmentsOpen ? 'Masquer les ajouts' : 'Ajouter photo, mémo vocal ou vidéo'}
     </button>
 
     {attachmentsOpen && <div className="card-note-attachments" id={`${ids}-attachments`}>
       <div className="card-note-attachment-heading">
         <div>
-          <span className="field-label">Photo ou mémo vocal</span>
-          <p>Collez, déposez ou choisissez une image, ou enregistrez un mémo vocal.</p>
+          <span className="field-label">Photo, mémo vocal ou vidéo</span>
+          <p>Collez, déposez ou choisissez une image, enregistrez un mémo vocal, ou ajoutez une vidéo YouTube.</p>
         </div>
         <ImagePlus size={19} aria-hidden="true" />
       </div>
@@ -464,6 +471,10 @@ const renderEditor = () => <form className="card-note-form" onSubmit={(event) =>
             setFormError('');
           }}
         />
+      </div>
+
+      <div className="card-note-video-section">
+        <NoteVideosField videos={draftVideos} onChange={setDraftVideos} disabled={attachmentBusy} />
       </div>
 
       <div
@@ -599,6 +610,7 @@ return (
             {note.link && <PhotoLinkPreview url={note.link} />}
             {note.image && <NoteImage image={note.image} imagePath={note.imagePath} className="card-note-image" alt="Photo jointe à la note" />}
             {note.audio && <NoteAudioPlayer audio={note.audio} audioPath={note.audioPath} duration={note.audioDuration} />}
+            {note.videos?.length ? <NoteVideoList videos={note.videos} noteKey={`note-${note.syncId ?? note.id}`} /> : null}
             <div className="card-note-saved-meta"><span className="muted">{new Date(note.updated).toLocaleDateString('fr-FR')}</span>
               {note.id !== undefined && <div className="card-note-actions">
                 <button type="button" className="text-link" onClick={() => edit(note)}><Pencil size={13} /> Modifier</button>

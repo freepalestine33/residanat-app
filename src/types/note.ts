@@ -1,3 +1,9 @@
+export interface NoteVideo {
+  id: string; // YouTube video id (11 chars)
+  start?: number; // start time in seconds
+  label?: string;
+}
+
 export interface Note {
   id?: number;
   syncId?: string;
@@ -9,6 +15,7 @@ export interface Note {
   audio?: Blob | string;
   audioPath?: string;
   audioDuration?: number;
+  videos?: NoteVideo[];
   clearImage?: boolean;
   clearAudio?: boolean;
   audioChanged?: boolean;
