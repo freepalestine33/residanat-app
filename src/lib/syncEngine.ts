@@ -20,6 +20,13 @@ import { preserveLocalLecturePdf } from './userLectureSync';
 import { notifyCustomCardsUpdated, queueCustomCardSnapshot } from './customCards';
 import { readSyncResponse } from './syncResponse';
 import { sanitizeNoteVideos } from './youtube';
+import type { Memo } from './mnemonicApi';
+
+function sanitizeNoteMemo(value: unknown): Memo | undefined {
+  if (!value || typeof value !== 'object') return undefined;
+  const memo = value as Memo;
+  return Array.isArray(memo.steps) && memo.steps.length ? memo : undefined;
+}
 
 export type SyncStatus = 'local' | 'offline' | 'syncing' | 'synced' | 'error' | 'conflict';
 type Collection = 'lectures' | 'modules' | 'customCards' | 'cards' | 'quizResults' | 'errors' | 'notes';
@@ -306,6 +313,9 @@ async function applyNotes(records: CloudRecord[], forceCloud = false) {
       audioPath: typeof data.audio_path === 'string' ? data.audio_path : undefined,
       audioDuration: typeof data.audio_duration === 'number' ? data.audio_duration : undefined,
       videos: data.videos === null ? [] : sanitizeNoteVideos(data.videos) ?? existing?.videos,
+      memo: data.memo === null ? undefined : sanitizeNoteMemo(data.memo) ?? existing?.memo,
+      imageBytes: typeof data.image_bytes === 'number' ? data.image_bytes : existing?.imageBytes,
+      audioBytes: typeof data.audio_bytes === 'number' ? data.audio_bytes : existing?.audioBytes,
       updated,
     });
   }

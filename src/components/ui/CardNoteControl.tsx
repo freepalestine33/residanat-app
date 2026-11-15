@@ -3,12 +3,13 @@ import { ArrowLeft, ClipboardPaste, ImagePlus, LoaderCircle, MessageCircle, Penc
 import { useNoteStore } from '../../stores/noteStore';
 import type { Note } from '../../types/note';
 import { compressNoteImage } from '../../lib/images';
+import { checkMediaQuota } from '../../lib/mediaUsage';
 import { PhotoLinkPreview } from './PhotoLinkPreview';
 import { getHttpUrl, getImageImportFailure, getPastedAttachment } from './cardNoteAttachments';
 import { NoteImage } from './NoteImage';
 import { useMnemonicMemo } from '../../hooks/useMnemonicMemo';
-import MemoInfographic from '../MemoInfographic';
 import type { Memo } from '../../lib/mnemonicApi';
+import { NoteMemo } from './NoteMemo';
 import { NoteAudioPlayer } from './NoteAudioPlayer';
 import { VoiceNoteRecorder } from './VoiceNoteRecorder';
 import { NoteVideoList, NoteVideosField } from './NoteVideos';
@@ -16,9 +17,6 @@ import type { NoteVideo } from '../../types/note';
 
 const MAX_SOURCE_IMAGE_BYTES = 8 * 1024 * 1024;
 const IMAGE_FETCH_TIMEOUT_MS = 15_000;
-// Must stay under the server cap in api/_lib/noteImages.ts (500 KB) so the
-// memo PNG syncs lossless; larger exports fall back to photo compression.
-const MEMO_PNG_MAX_BYTES = 490 * 1024;
 
 function memoToText(memo: Memo) {
   return [
@@ -89,8 +87,7 @@ export const CardNoteControl: React.FC<CardNoteControlProps> = ({ relation, labe
   const canMemo = Boolean(question && answer);
   const memo = useMnemonicMemo(question ?? '', answer ?? '');
   const [memoPending, setMemoPending] = useState(false);
-  const [posterMemo, setPosterMemo] = useState<Memo | null>(null);
-  const posterRef = useRef<HTMLElement>(null);
+  const [draftMemo, setDraftMemo] = useState<Memo | null>(null);
   const draftRef = useRef('');
   const autoMemoText = useRef('');
   const [open, setOpen] = useState(false);
@@ -126,62 +123,25 @@ export const CardNoteControl: React.FC<CardNoteControlProps> = ({ relation, labe
     setAttachmentStatus('');
   };
 
-  // Once a requested memo is ready, it is rendered offscreen and exported as the note image.
+  // Once a requested memo is ready, store its small JSON on the note draft.
   useEffect(() => {
     if (!memoPending) return;
     if (memo.state.status === 'ready') {
       setMemoPending(false);
-      setPosterMemo(memo.state.memo);
+      const ready = memo.state.memo;
+      setDraftMemo(ready);
+      const memoText = memoToText(ready);
+      if (!draftRef.current.trim() || draftRef.current.trim() === autoMemoText.current) {
+        setDraft(memoText);
+        autoMemoText.current = memoText;
+      }
+      setAttachmentStatus('Mémo visuel joint. Enregistrez la note pour le synchroniser.');
+      setFormError('');
     } else if (memo.state.status === 'error') {
       setMemoPending(false);
       setAttachmentError(memo.state.message);
     }
   }, [memo.state, memoPending]);
-
-  useEffect(() => {
-    if (!posterMemo || !posterRef.current) return;
-    let cancelled = false;
-    void (async () => {
-      setAttachmentBusy(true);
-      setAttachmentError('');
-      setAttachmentStatus('Export du mémo en image…');
-      try {
-        const { toBlob } = await import('html-to-image');
-        const node = posterRef.current as HTMLElement;
-        let blob = await toBlob(node, { pixelRatio: 2, backgroundColor: '#fbf3e4' });
-        if (blob && blob.size > MEMO_PNG_MAX_BYTES) {
-          blob = await toBlob(node, { pixelRatio: 1.5, backgroundColor: '#fbf3e4' });
-        }
-        if (!blob) throw new Error('Export de l’image impossible.');
-        let image: Blob;
-        if (blob.size <= MEMO_PNG_MAX_BYTES) {
-          image = blob;
-        } else {
-          setAttachmentStatus('Compression de l’image…');
-          image = await compressNoteImage(new File([blob], 'memo-visuel.png', { type: 'image/png' }));
-        }
-        if (cancelled) return;
-        setDraftImage(image);
-        const memoText = memoToText(posterMemo);
-        if (!draftRef.current.trim() || draftRef.current.trim() === autoMemoText.current) {
-          setDraft(memoText);
-          autoMemoText.current = memoText;
-        }
-        setAttachmentStatus('Mémo visuel joint. Enregistrez la note pour le synchroniser.');
-        setFormError('');
-        setPosterMemo(null);
-      } catch (reason) {
-        if (!cancelled) {
-          setPosterMemo(null);
-          setAttachmentStatus('');
-          setAttachmentError(errorMessage(reason));
-        }
-      } finally {
-        if (!cancelled) setAttachmentBusy(false);
-      }
-    })();
-    return () => { cancelled = true; };
-  }, [posterMemo]);
 
   const startMemo = (variant: number) => {
     setMemoPending(true);
@@ -192,7 +152,14 @@ export const CardNoteControl: React.FC<CardNoteControlProps> = ({ relation, labe
 
   const attachMemo = () => {
     if (memo.state.status === 'ready') {
-      setPosterMemo(memo.state.memo);
+      const ready = memo.state.memo;
+      setDraftMemo(ready);
+      const memoText = memoToText(ready);
+      if (!draftRef.current.trim() || draftRef.current.trim() === autoMemoText.current) {
+        setDraft(memoText);
+        autoMemoText.current = memoText;
+      }
+      setAttachmentStatus('Mémo visuel joint. Enregistrez la note pour le synchroniser.');
       return;
     }
     startMemo(0);
@@ -219,6 +186,12 @@ export const CardNoteControl: React.FC<CardNoteControlProps> = ({ relation, labe
     setAttachmentStatus('Compression de la photo…');
     try {
       const compressed = await compressNoteImage(file);
+      const quotaError = await checkMediaQuota(compressed.size);
+      if (quotaError) {
+        setAttachmentStatus('');
+        setAttachmentError(quotaError);
+        return;
+      }
       setDraftImage(compressed);
       setAttachmentError('');
       setAttachmentStatus('Photo prête à être enregistrée.');
@@ -254,6 +227,12 @@ export const CardNoteControl: React.FC<CardNoteControlProps> = ({ relation, labe
       const file = await fetchImageFile(url, controller.signal);
       setAttachmentStatus('Compression de la photo…');
       const compressed = await compressNoteImage(file);
+      const quotaError = await checkMediaQuota(compressed.size);
+      if (quotaError) {
+        setAttachmentStatus('');
+        setAttachmentError(quotaError);
+        return;
+      }
       setDraftImage(compressed);
       setDraftLink((current) => current.trim() === url ? '' : current);
       setAttachmentError('');
@@ -308,6 +287,7 @@ export const CardNoteControl: React.FC<CardNoteControlProps> = ({ relation, labe
     setDraftAudio(undefined);
     setDraftAudioDuration(undefined);
     setDraftVideos([]);
+    setDraftMemo(null);
     setImagePasteValue('');
     setFormError('');
     resetAttachmentFeedback();
@@ -333,6 +313,7 @@ export const CardNoteControl: React.FC<CardNoteControlProps> = ({ relation, labe
     setDraftAudio(note.audio);
     setDraftAudioDuration(note.audioDuration);
     setDraftVideos(note.videos ?? []);
+    setDraftMemo(note.memo ?? null);
     setImagePasteValue('');
     setFormError('');
     resetAttachmentFeedback();
@@ -351,8 +332,8 @@ export const CardNoteControl: React.FC<CardNoteControlProps> = ({ relation, labe
       }
     }
     const clearedAttachment = editingId !== undefined && (draftImage === null || draftAudio === null);
-    if (!draft.trim() && !draftLink.trim() && !draftImage && !draftAudio && !draftVideos.length && !clearedAttachment) {
-      setFormError('Ajoutez un commentaire, un lien, une photo, un mémo vocal ou une vidéo avant de l’enregistrer.');
+    if (!draft.trim() && !draftLink.trim() && !draftImage && !draftAudio && !draftVideos.length && !draftMemo && !clearedAttachment) {
+      setFormError('Ajoutez un commentaire, un lien, une photo, un mémo vocal, un mémo visuel ou une vidéo avant de l’enregistrer.');
       return;
     }
     clearError();
@@ -368,6 +349,8 @@ export const CardNoteControl: React.FC<CardNoteControlProps> = ({ relation, labe
       clearAudio: draftAudio === null,
       audioChanged: draftAudio instanceof Blob || draftAudio === null ? true : undefined,
       videos: draftVideos,
+      memo: draftMemo ?? undefined,
+      clearMemo: draftMemo === null,
       updated: Date.now(),
     });
     const nextError = useNoteStore.getState().error;
@@ -399,6 +382,7 @@ export const CardNoteControl: React.FC<CardNoteControlProps> = ({ relation, labe
       setDraftAudio(undefined);
       setDraftAudioDuration(undefined);
       setDraftVideos([]);
+      setDraftMemo(null);
       setImagePasteValue('');
       setFormError('');
       resetAttachmentFeedback();
@@ -531,13 +515,26 @@ const renderEditor = () => <form className="card-note-form" onSubmit={(event) =>
         </button>
       </div>
     </div>}
+    {draftMemo && <div className="card-note-memo-preview">
+      <NoteMemo memo={draftMemo} />
+      <div className="card-note-image-preview-meta">
+        <span>Mémo visuel</span>
+        <button type="button" className="card-note-remove-image" onClick={() => {
+          setDraftMemo(null);
+          setAttachmentError('');
+          setAttachmentStatus('Mémo visuel retiré. Enregistrez pour confirmer la modification.');
+        }} disabled={attachmentBusy}>
+          <Trash2 size={14} aria-hidden="true" />
+          Retirer
+        </button>
+      </div>
+    </div>}
     {attachmentBusy && <p className="card-note-attachment-status is-busy" id={`${ids}-attachment-status`} role="status"><LoaderCircle size={15} aria-hidden="true" />{attachmentStatus}</p>}
     {!attachmentBusy && attachmentStatus && <p className="card-note-attachment-status" id={`${ids}-attachment-status`} role="status">{attachmentStatus}</p>}
     {!attachmentStatus && !attachmentBusy && <span className="visually-hidden" id={`${ids}-attachment-status`} />}
     {attachmentError && <p className="notice error card-note-attachment-error" role="alert">{attachmentError}</p>}
 
-    <p className="muted card-note-hint">Votre texte, sa photo et son mémo vocal sont enregistrés ensemble sur cette carte.</p>
-    {posterMemo && <div className="memo-export-host" aria-hidden="true"><MemoInfographic ref={posterRef} memo={posterMemo} /></div>}
+    <p className="muted card-note-hint">Votre texte, sa photo, son mémo vocal et ses vidéos sont enregistrés ensemble sur cette carte.</p>
   </form>;
 return (
     <div className="card-note-widget">
@@ -590,12 +587,19 @@ return (
           <VoiceNoteRecorder
             disabled={attachmentBusy}
             onRecorded={(blob, seconds) => {
-              if (!composerOpen) startNewNote();
-              setDraftAudio(blob);
-              setDraftAudioDuration(seconds);
-              setAttachmentError('');
-              setAttachmentStatus('Mémo vocal enregistré.');
-              setFormError('');
+              void checkMediaQuota(blob.size).then((quotaError) => {
+                if (quotaError) {
+                  setAttachmentError(quotaError);
+                  setAttachmentStatus('');
+                  return;
+                }
+                if (!composerOpen) startNewNote();
+                setDraftAudio(blob);
+                setDraftAudioDuration(seconds);
+                setAttachmentError('');
+                setAttachmentStatus('Mémo vocal enregistré.');
+                setFormError('');
+              });
             }}
           />
         </div>}
@@ -611,6 +615,7 @@ return (
             {note.image && <NoteImage image={note.image} imagePath={note.imagePath} className="card-note-image" alt="Photo jointe à la note" />}
             {note.audio && <NoteAudioPlayer audio={note.audio} audioPath={note.audioPath} duration={note.audioDuration} />}
             {note.videos?.length ? <NoteVideoList videos={note.videos} noteKey={`note-${note.syncId ?? note.id}`} /> : null}
+            {note.memo && <NoteMemo memo={note.memo} />}
             <div className="card-note-saved-meta"><span className="muted">{new Date(note.updated).toLocaleDateString('fr-FR')}</span>
               {note.id !== undefined && <div className="card-note-actions">
                 <button type="button" className="text-link" onClick={() => edit(note)}><Pencil size={13} /> Modifier</button>

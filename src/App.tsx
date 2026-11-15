@@ -1,4 +1,4 @@
-﻿import { useEffect } from 'react';
+﻿import { useEffect, Component, type ReactNode } from 'react';
 import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import { ToastContainer } from './components/ui/Toast';
@@ -18,6 +18,9 @@ const GlobalPracticePage = lazy(() => import('./pages/GlobalPracticePage').then(
 const NotesPage = lazy(() => import('./pages/NotesPage').then((module) => ({ default: module.NotesPage })));
 const SettingsPage = lazy(() => import('./pages/SettingsPage').then((module) => ({ default: module.SettingsPage })));
 const DesignPreviewPage = lazy(() => import('./pages/DesignPreviewPage').then((module) => ({ default: module.DesignPreviewPage })));
+const SeedPage = import.meta.env.DEV
+  ? lazy(() => import('./pages/SeedPage').then((module) => ({ default: module.SeedPage })))
+  : null;
 
 function SignedInApp() {
   const loadSettings = useSettingsStore((state) => state.loadSettings);
@@ -51,11 +54,28 @@ function SignedInApp() {
   );
 }
 
+class DevErrorBoundary extends Component<{ children: ReactNode }, { error: Error | null }> {
+  state = { error: null as Error | null };
+  static getDerivedStateFromError(error: Error) { return { error }; }
+  render() {
+    if (this.state.error) {
+      return <main className="auth-shell"><pre style={{ whiteSpace: 'pre-wrap', color: 'red' }}>{this.state.error.stack ?? String(this.state.error)}</pre></main>;
+    }
+    return this.props.children;
+  }
+}
+
 export default function App() {
   useSync();
   useEffect(() => { document.title = 'EasyMed'; }, []);
   if (import.meta.env.DEV && window.location.hash === '#/__design-preview') {
     return <Suspense fallback={<main className="auth-shell" role="status">Chargement de la page…</main>}><DesignPreviewPage /></Suspense>;
+  }
+  if (import.meta.env.DEV && SeedPage && window.location.hash === '#/__seed') {
+    return <Suspense fallback={<main className="auth-shell" role="status">Chargement de la page…</main>}><SeedPage /></Suspense>;
+  }
+  if (import.meta.env.DEV && window.location.hash === '#/__notes') {
+    return <HashRouter><Suspense fallback={<main className="auth-shell" role="status">Chargement de la page…</main>}><DevErrorBoundary><NotesPage /></DevErrorBoundary></Suspense></HashRouter>;
   }
   return (
     <HashRouter>

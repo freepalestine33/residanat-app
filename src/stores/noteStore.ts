@@ -3,6 +3,7 @@ import type { Note } from '../types/note';
 import { db } from '../db/db';
 import { queueSyncChange } from '../lib/syncEvents';
 import { createId } from '../lib/createId';
+import { checkMediaQuota } from '../lib/mediaUsage';
 
 interface NoteState {
   notes: Note[];
@@ -56,15 +57,37 @@ export const useNoteStore = create<NoteState>((set, get) => ({
   upsertNote: async (note) => {
     try {
       const previous = note.id === undefined ? undefined : await db.notes.get(note.id);
+      // Enforce the per-user media cap when new blobs replace or add media.
+      const delta =
+        (note.image instanceof Blob ? note.image.size - (previous?.imageBytes ?? 0) : 0) +
+        (note.audio instanceof Blob ? note.audio.size - (previous?.audioBytes ?? 0) : 0);
+      if (delta > 0) {
+        const quotaError = await checkMediaQuota(delta);
+        if (quotaError) {
+          set({ error: quotaError });
+          return;
+        }
+      }
       const image = resolveNoteImage(note, previous);
       const audio = resolveNoteAudio(note, previous);
-      const { clearImage: _clearImage, clearAudio: _clearAudio, audioChanged: _audioChanged, ...noteValues } = note;
+      const { clearImage: _clearImage, clearAudio: _clearAudio, clearMemo: _clearMemo, audioChanged: _audioChanged, ...noteValues } = note;
       const value = {
         ...noteValues,
         syncId: note.syncId ?? previous?.syncId ?? createId(),
         ...image,
         ...audio,
         videos: note.videos ?? previous?.videos,
+        memo: note.clearMemo ? undefined : note.memo ?? previous?.memo,
+        imageBytes: image.image instanceof Blob
+          ? image.image.size
+          : image.image === undefined
+            ? undefined
+            : note.imageBytes ?? previous?.imageBytes,
+        audioBytes: audio.audio instanceof Blob
+          ? audio.audio.size
+          : audio.audio === undefined
+            ? undefined
+            : note.audioBytes ?? previous?.audioBytes,
         updated: Date.now(),
       };
       await db.notes.put(value);
@@ -77,6 +100,9 @@ export const useNoteStore = create<NoteState>((set, get) => ({
           audio_path: value.audioPath ?? null,
           audio_duration: value.audioDuration ?? null,
           videos: value.videos?.length ? value.videos : null,
+          memo: value.memo ?? null,
+          image_bytes: value.imageBytes ?? null,
+          audio_bytes: value.audioBytes ?? null,
         },
         image: value.image,
         image_path: value.imagePath ?? null,

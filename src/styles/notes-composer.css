@@ -1,0 +1,160 @@
+/* Note composer (NotesPage) — uses only existing design tokens, no blur/filter. */
+.nc-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.nc-head h1 {
+  font-size: clamp(1.3rem, 2.4vw, 1.7rem);
+}
+
+.nc-saved {
+  padding: 0.3rem 0.7rem;
+  color: var(--green);
+  background: var(--green-soft);
+  border-radius: 99px;
+  font-size: 0.74rem;
+  font-weight: 620;
+  white-space: nowrap;
+  animation: fadeIn 0.2s ease;
+}
+
+.nc-form {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 0.85rem;
+  min-width: 0;
+}
+
+.nc-text {
+  display: block;
+  width: 100%;
+  min-height: 5.5rem;
+  max-width: 100%;
+  resize: vertical;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.nc-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.nc-tool {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 36px;
+  padding: 0.4rem 0.8rem;
+  color: var(--text-secondary);
+  background: var(--card);
+  border: 1px solid var(--border-strong);
+  border-radius: 99px;
+  font-size: 0.78rem;
+  font-weight: 580;
+  cursor: pointer;
+  transition: color var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast);
+}
+
+.nc-tool:hover {
+  color: var(--text);
+  background: var(--card2);
+}
+
+.nc-tool.is-on {
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
+}
+
+.nc-extra {
+  display: block;
+  min-width: 0;
+  padding: 0.7rem 0.8rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  animation: fadeIn 0.18s ease;
+}
+
+.nc-extra input:not([type="file"]) {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+}
+
+.nc-image .btn-row {
+  margin-top: 0.5rem;
+}
+
+.nc-thumb {
+  max-height: 11rem;
+  margin-top: 0;
+}
+
+.nc-rel {
+  display: grid;
+  gap: 0.3rem;
+  min-width: 0;
+}
+
+.nc-rel select {
+  width: 100%;
+  max-width: 100%;
+}
+
+.nc-rel-chip {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.nc-advanced {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.nc-advanced summary {
+  width: fit-content;
+  cursor: pointer;
+  user-select: none;
+}
+
+.nc-advanced input {
+  display: block;
+  width: 100%;
+  margin: 0.4rem 0 0.25rem;
+}
+
+.nc-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.nc-hint {
+  margin-left: auto;
+  font-size: 0.7rem;
+}
+
+.nc-search {
+  display: block;
+  width: 100%;
+  margin: 0.6rem 0 0.8rem;
+}
+
+@media (max-width: 640px) {
+  .nc-hint {
+    display: none;
+  }
+
+  .nc-actions .btn:first-child {
+    flex: 1 1 auto;
+  }
+}

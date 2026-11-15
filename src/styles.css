@@ -6751,3 +6751,40 @@ select:focus {
     align-items: center;
   }
 }
+
+/* Progressive list rendering + offscreen paint skipping */
+.library-show-more,
+.notes-show-more {
+  margin: 0.75rem auto 0;
+  display: flex;
+}
+
+.course-card,
+.note-card,
+.card-note-entry {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 220px;
+}
+
+.note-memo {
+  display: grid;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+}
+
+.note-memo .memo-poster {
+  margin: 0;
+}
+
+.note-memo-download {
+  justify-self: start;
+}
+
+.card-note-memo-preview {
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.5rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+}

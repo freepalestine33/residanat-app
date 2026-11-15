@@ -16,6 +16,9 @@ import type { LectureMeta } from '../types/lecture';
 
 const AiLectureGeneratorModal = lazy(() => import('../components/lecture/AiLectureGeneratorModal').then((module) => ({ default: module.AiLectureGeneratorModal })));
 
+const COURSE_PAGE_SIZE = 48;
+const COURSE_PAGE_INCREMENT = 48;
+
 const CourseProgressRing: React.FC<{ percent: number }> = ({ percent }) => {
   const gradientId = useId();
   const value = Math.max(0, Math.min(100, Math.round(percent)));
@@ -74,6 +77,7 @@ export const LecturesPage: React.FC = () => {
   const [moduleName, setModuleName] = useState('');
   const [creatingModule, setCreatingModule] = useState(false);
   const [operationError, setOperationError] = useState('');
+  const [courseLimit, setCourseLimit] = useState(COURSE_PAGE_SIZE);
 
   const refreshModules = () => db.modules.toArray().then(setModules);
 
@@ -162,6 +166,7 @@ export const LecturesPage: React.FC = () => {
   };
 
   const term = normalizeSearch(query);
+  useEffect(() => { setCourseLimit(COURSE_PAGE_SIZE); }, [term, selectedModuleId, interactiveOnly]);
   const visibleTopics = useMemo(() => otrProgramme.filter((topic) => {
     const lecture = lectures.find((item) => item.moduleId == null && (item.id === topic.lectureId || item.otrNumber === topic.number));
     if (interactiveOnly && !(lecture && lecture.cards > 0)) return false;
@@ -187,6 +192,12 @@ export const LecturesPage: React.FC = () => {
     return counts;
   }, [lectures]);
   const selectedModule = modules.find((module) => module.id === selectedModuleId);
+
+  const renderShowMore = (total: number) => total > courseLimit ? (
+    <button type="button" className="btn ghost btn-sm library-show-more" onClick={() => setCourseLimit((value) => value + COURSE_PAGE_INCREMENT)}>
+      Afficher plus · {total - courseLimit} restants
+    </button>
+  ) : null;
 
   const renderUserActions = (lecture: LectureMeta) => (
     <>
@@ -339,7 +350,7 @@ export const LecturesPage: React.FC = () => {
               <p className="library-empty"><BookOpen size={20} aria-hidden="true" />Aucun cours ne correspond à cette recherche.</p>
             )}
             <div className="course-grid library-course-grid">
-              {visibleTopics.map((topic) => {
+              {visibleTopics.slice(0, courseLimit).map((topic) => {
                 const lecture = lectures.find((item) => item.moduleId == null && (item.id === topic.lectureId || item.otrNumber === topic.number));
                 return <article key={topic.number} className={lecture ? 'course-card' : 'course-card course-card-coming-soon'}>
                   <div className="course-card-topline">
@@ -382,6 +393,7 @@ export const LecturesPage: React.FC = () => {
                 </article>;
               })}
             </div>
+            {renderShowMore(visibleTopics.length)}
             {otherOtrLectures.length > 0 && (
               <section className="other-lectures-section">
                 <div className="library-section-heading">
@@ -389,7 +401,7 @@ export const LecturesPage: React.FC = () => {
                   <span className="muted">{otherOtrLectures.length} cours</span>
                 </div>
                 <div className="course-grid library-course-grid">
-                  {otherOtrLectures.map((lecture) => (
+                  {otherOtrLectures.slice(0, courseLimit).map((lecture) => (
                     <article key={lecture.id} className="course-card">
                       <div className="course-card-topline">
                         <span className="course-index">OTR</span>
@@ -410,6 +422,7 @@ export const LecturesPage: React.FC = () => {
                     </article>
                   ))}
                 </div>
+                {renderShowMore(otherOtrLectures.length)}
               </section>
             )}
           </>}
@@ -431,7 +444,7 @@ export const LecturesPage: React.FC = () => {
                 </p>
               ) : (
                 <div className="course-grid library-course-grid">
-                  {customModuleLectures.map((lecture) => (
+                  {customModuleLectures.slice(0, courseLimit).map((lecture) => (
                     <article key={lecture.id} className="course-card">
                       <div className="course-card-topline">
                         <span className="course-index">{String(lecture.cards).padStart(2, '0')} cartes</span>
@@ -453,6 +466,7 @@ export const LecturesPage: React.FC = () => {
                   ))}
                 </div>
               )}
+              {renderShowMore(customModuleLectures.length)}
             </>
           )}
         </section>

@@ -3,9 +3,10 @@ import { Link } from 'react-router-dom';
 import { Header } from '../components/layout/Header';
 import { TabBar } from '../components/layout/TabBar';
 import { coreTabs } from '../components/layout/tabs';
-import { loadAllLectures } from '../data/lectures';
+import { loadLectureIndex } from '../data/lectures';
+import { loadPracticeLectures, type PracticeLecture } from '../lib/practiceContent';
 import { saveQuizResult } from '../lib/quizHistory';
-import type { Lecture } from '../lib/schema';
+import type { LectureMeta } from '../types/lecture';
 
 type Kind = 'quiz' | 'vf';
 type PracticeQuestion = {
@@ -45,7 +46,7 @@ function shuffle<T>(values: T[]): T[] {
   return shuffled;
 }
 
-function createPool(lectures: Lecture[], kind: Kind, scope: string): PracticeQuestion[] {
+function createPool(lectures: PracticeLecture[], kind: Kind, scope: string): PracticeQuestion[] {
   return lectures
     .filter((lecture) => scope === 'ALL' || lecture.id === scope)
     .flatMap((lecture) => kind === 'quiz'
@@ -70,8 +71,10 @@ function createPool(lectures: Lecture[], kind: Kind, scope: string): PracticeQue
 }
 
 export function GlobalPracticePage({ kind }: { kind: Kind }) {
-  const [lectures, setLectures] = useState<Lecture[]>([]);
+  const [lectures, setLectures] = useState<LectureMeta[]>([]);
+  const [practiceLectures, setPracticeLectures] = useState<PracticeLecture[] | null>(null);
   const [loading, setLoading] = useState(true);
+  const [starting, setStarting] = useState(false);
   const [error, setError] = useState('');
   const [scope, setScope] = useState('ALL');
   const [count, setCount] = useState('10');
@@ -81,14 +84,19 @@ export function GlobalPracticePage({ kind }: { kind: Kind }) {
 
   useEffect(() => {
     let active = true;
-    loadAllLectures()
+    loadLectureIndex()
       .then((items) => { if (active) setLectures(items); })
       .catch((reason: unknown) => { if (active) setError(reason instanceof Error ? reason.message : String(reason)); })
       .finally(() => { if (active) setLoading(false); });
     return () => { active = false; };
   }, []);
 
-  const pool = useMemo(() => createPool(lectures, kind, scope), [lectures, kind, scope]);
+  const poolSize = useMemo(
+    () => lectures
+      .filter((lecture) => scope === 'ALL' || lecture.id === scope)
+      .reduce((sum, lecture) => sum + (kind === 'quiz' ? lecture.quiz : lecture.vf), 0),
+    [lectures, kind, scope],
+  );
   useEffect(() => {
     setSession(createPracticeSession(kind));
     setExam(false);
@@ -97,12 +105,22 @@ export function GlobalPracticePage({ kind }: { kind: Kind }) {
   const activeSession = getPracticeSessionForKind(session, kind);
   const { queue, index, selected, checked, results, complete } = activeSession;
   const current = queue[index];
-  const start = () => {
-    const shuffled = shuffle(pool);
-    setSession({
-      ...createPracticeSession(kind),
-      queue: count === 'all' ? shuffled : shuffled.slice(0, Math.min(Number(count), shuffled.length)),
-    });
+  const start = async () => {
+    setStarting(true);
+    setError('');
+    try {
+      const items = practiceLectures ?? await loadPracticeLectures();
+      setPracticeLectures(items);
+      const shuffled = shuffle(createPool(items, kind, scope));
+      setSession({
+        ...createPracticeSession(kind),
+        queue: count === 'all' ? shuffled : shuffled.slice(0, Math.min(Number(count), shuffled.length)),
+      });
+    } catch (reason) {
+      setError(reason instanceof Error ? reason.message : String(reason));
+    } finally {
+      setStarting(false);
+    }
   };
   const getCorrect = (question: PracticeQuestion, answers: string[]) => {
     const correct = question.options.flatMap((option, optionIndex) => option.correct ? [String(optionIndex)] : []);
@@ -171,16 +189,16 @@ export function GlobalPracticePage({ kind }: { kind: Kind }) {
             <label>
               <span className="field-label">Questions</span>
               <select value={count} onChange={(event) => setCount(event.target.value)} disabled={loading}>
-                <option value="5">5</option><option value="10">10</option><option value="20">20</option><option value="all">Toutes ({pool.length})</option>
+                <option value="5">5</option><option value="10">10</option><option value="20">20</option><option value="all">Toutes ({poolSize})</option>
               </select>
             </label>
             {kind === 'quiz' && <label className="check-filter exam-toggle"><input type="checkbox" checked={exam} onChange={(event) => setExam(event.target.checked)} /> Mode examen · correction à la fin</label>}
           </div>
           <div className="btn-row">
-            <button type="button" className="btn" disabled={loading || pool.length === 0} onClick={start}>{queue.length ? 'Recommencer la session' : 'Démarrer la session'}</button>
+            <button type="button" className="btn" disabled={loading || starting || poolSize === 0} onClick={() => void start()}>{starting ? 'Chargement des questions…' : queue.length ? 'Recommencer la session' : 'Démarrer la session'}</button>
             {queue.length > 0 && !complete && <button type="button" className="btn ghost" onClick={() => setSession(createPracticeSession(kind))}>Quitter</button>}
           </div>
-          {!loading && !error && pool.length === 0 && <p className="muted">Aucune question disponible pour cette portée.</p>}
+          {!loading && !error && poolSize === 0 && <p className="muted">Aucune question disponible pour cette portée.</p>}
         </section>
 
         {current && !complete && (
@@ -231,7 +249,7 @@ export function GlobalPracticePage({ kind }: { kind: Kind }) {
                 {question.explanation && <p className="muted">{question.explanation}</p>}
               </article>
             ))}
-            <button type="button" className="btn" onClick={start}>Nouvelle session</button>
+            <button type="button" className="btn" onClick={() => void start()}>Nouvelle session</button>
           </section>
         )}
       </main>

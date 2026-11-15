@@ -1,3 +1,5 @@
+import type { Memo } from '../lib/mnemonicApi';
+
 export interface NoteVideo {
   id: string; // YouTube video id (11 chars)
   start?: number; // start time in seconds
@@ -16,8 +18,12 @@ export interface Note {
   audioPath?: string;
   audioDuration?: number;
   videos?: NoteVideo[];
+  memo?: Memo;
+  imageBytes?: number;
+  audioBytes?: number;
   clearImage?: boolean;
   clearAudio?: boolean;
+  clearMemo?: boolean;
   audioChanged?: boolean;
   updated: number; // Timestamp
 }

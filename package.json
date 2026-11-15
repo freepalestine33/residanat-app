@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && tsc --noEmit -p tsconfig.api.json && vite build",
+    "build": "node scripts/build-practice-index.mjs && tsc -b && tsc --noEmit -p tsconfig.api.json && vite build",
+    "content:practice": "node scripts/build-practice-index.mjs",
     "preview": "vite preview",
     "export:content": "node scripts/export-content.mjs",
     "validate:content": "tsx scripts/validate-content.ts",

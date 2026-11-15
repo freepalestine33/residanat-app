@@ -65,7 +65,7 @@ export function NoteImage({ image, imagePath, className, alt }: NoteImageProps) 
         aria-label={`Agrandir l’image : ${alt}`}
         title="Agrandir l’image"
       >
-        <img className={className} src={src} alt={alt} onError={() => void refreshImageUrl()} />
+        <img className={className} src={src} alt={alt} loading="lazy" decoding="async" onError={() => void refreshImageUrl()} />
       </button>
       <dialog
         ref={dialogRef}
@@ -74,7 +74,7 @@ export function NoteImage({ image, imagePath, className, alt }: NoteImageProps) 
         onClose={() => setViewerOpen(false)}
         onClick={(event) => { if (event.target === dialogRef.current) setViewerOpen(false); }}
       >
-        <img className="note-image-full" src={src} alt={alt} />
+        <img className="note-image-full" src={src} alt={alt} loading="lazy" decoding="async" />
       </dialog>
     </>
   );

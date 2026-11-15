@@ -11,6 +11,7 @@ import { useSettingsStore } from '../stores/settingsStore';
 import { useSyncStore } from '../stores/syncStore';
 import { createId } from '../lib/createId';
 import { deleteUserLecture as deleteUserLectureRecord } from '../lib/userLectureActions';
+import { formatMediaBytes, getMediaUsage, MEDIA_LIMIT_BYTES } from '../lib/mediaUsage';
 
 const LOCAL_KEYS = [
   'sa_settings_v1',
@@ -42,9 +43,11 @@ export function SettingsPage() {
   const [exportError, setExportError] = useState('');
   const [confirmClear, setConfirmClear] = useState(false);
   const [importedLectures, setImportedLectures] = useState<UserLecture[]>([]);
+  const [mediaUsage, setMediaUsage] = useState<number | null>(null);
 
   const refreshImported = async () => setImportedLectures(await db.userLectures.toArray());
   useEffect(() => { void refreshImported(); }, []);
+  useEffect(() => { void getMediaUsage().then(setMediaUsage).catch(() => setMediaUsage(null)); }, []);
 
   const sendLink = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -251,6 +254,9 @@ export function SettingsPage() {
           <p className="eyebrow">Sauvegarde et stockage</p>
           <h2>Données sur cet appareil</h2>
           <p className="muted">Vos données de révision sont conservées dans ce navigateur et restent accessibles hors ligne. Effacer cet appareil ne supprime pas votre copie cloud.</p>
+          {mediaUsage !== null && (
+            <p className="muted">Médias joints (photos et mémos vocaux) : <strong>{formatMediaBytes(mediaUsage)} / {formatMediaBytes(MEDIA_LIMIT_BYTES)}</strong> utilisés.</p>
+          )}
           <div className="btn-row">
             <button className="btn ghost" type="button" onClick={() => void exportData()}>Exporter une sauvegarde JSON</button>
             <button className="btn ghost" type="button" disabled={busy} onClick={() => void clearLocalData()}>{confirmClear ? 'Confirmer l’effacement local' : 'Effacer les données locales'}</button>
