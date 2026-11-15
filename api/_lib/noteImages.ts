@@ -45,7 +45,8 @@ export async function uploadNoteAudio(
   mime: unknown,
   base64: unknown,
 ): Promise<string> {
-  const ext = typeof mime === 'string' ? audioExtensions[mime] : undefined;
+  const baseMime = typeof mime === 'string' ? mime.split(';')[0].trim().toLowerCase() : '';
+  const ext = audioExtensions[baseMime];
   if (!ext) throw new ApiError(400, 'Use a WebM, MP4, OGG, MPEG, or WAV audio recording.');
   if (typeof base64 !== 'string' || base64.length > Math.ceil(MAX_IMAGE_BYTES * 4 / 3) + 128) {
     throw new ApiError(413, 'Audio must be 500 KB or smaller.');
@@ -56,7 +57,7 @@ export async function uploadNoteAudio(
   if (!buffer.length || buffer.length > MAX_IMAGE_BYTES) throw new ApiError(413, 'Audio must be 500 KB or smaller.');
   const version = Date.parse(updatedAt);
   const path = `${client.user.id}/${noteId}/audio-${version}.${ext}`;
-  const { error } = await client.supabase.storage.from('note-images').upload(path, buffer, { contentType: mime as string, upsert: true });
+  const { error } = await client.supabase.storage.from('note-images').upload(path, buffer, { contentType: baseMime, upsert: true });
   if (error) throw new ApiError(500, 'Could not upload the note audio.');
   return path;
 }
