@@ -5,13 +5,10 @@ import { formatAudioTime } from '../../lib/audioTime';
 const MAX_SECONDS = 120;
 const BITRATE = 24_000;
 const MIME_CANDIDATES = [
+  'audio/mp4;codecs=mp4a.40.2',
+  'audio/mp4',
   'audio/webm;codecs=opus',
   'audio/webm',
-  'audio/mp4',
-  'audio/x-m4a',
-  'audio/aac',
-  'audio/ogg;codecs=opus',
-  'audio/ogg',
 ];
 
 function pickMime() {
