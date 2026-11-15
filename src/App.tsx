@@ -15,6 +15,7 @@ const DraftPreviewPage = lazy(() => import('./pages/DraftPreviewPage').then((mod
 const ProgressPage = lazy(() => import('./pages/ProgressPage').then((module) => ({ default: module.ProgressPage })));
 const LecturePage = lazy(() => import('./pages/LecturePage'));
 const GlobalPracticePage = lazy(() => import('./pages/GlobalPracticePage').then((module) => ({ default: module.GlobalPracticePage })));
+const QcmBankPage = lazy(() => import('./pages/QcmBankPage').then((module) => ({ default: module.QcmBankPage })));
 const NotesPage = lazy(() => import('./pages/NotesPage').then((module) => ({ default: module.NotesPage })));
 const SettingsPage = lazy(() => import('./pages/SettingsPage').then((module) => ({ default: module.SettingsPage })));
 const DesignPreviewPage = lazy(() => import('./pages/DesignPreviewPage').then((module) => ({ default: module.DesignPreviewPage })));
@@ -43,6 +44,7 @@ function SignedInApp() {
       <Route path="/lecture/:id" element={<LecturePage />} />
       <Route path="/quiz" element={<GlobalPracticePage kind="quiz" />} />
       <Route path="/vf" element={<GlobalPracticePage kind="vf" />} />
+      <Route path="/qcm" element={<QcmBankPage />} />
       <Route path="/notes" element={<NotesPage />} />
       <Route path="/settings" element={<SettingsPage />} />
       <Route path="*" element={<Navigate to="/" replace />} />

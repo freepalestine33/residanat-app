@@ -1,4 +1,5 @@
 import { LectureSchema, type Lecture } from './schema';
+import { fetchQcmExamContext } from './qcmBank';
 
 export type AiProvider = 'gemini' | 'groq' | 'openrouter' | 'openai';
 
@@ -8,6 +9,8 @@ export interface GenerateLectureOptions {
   model?: string;
   endpoint?: string;
   isMcqFocused?: boolean;
+  /** Bloc « questions d'annales » de la banque QCM OTR, injecté dans le prompt. */
+  examContext?: string;
   onProgress?: (message: string) => void;
 }
 
@@ -258,7 +261,7 @@ export function extractJsonFromAiResponse(rawText: string): unknown {
   return JSON.parse(jsonSubstring);
 }
 
-function buildPrompt(input: GenerateLectureInput, isMcqFocused?: boolean): string {
+function buildPrompt(input: GenerateLectureInput, isMcqFocused?: boolean, examContext?: string): string {
   return `${MEDICAL_AI_PROMPT_TEMPLATE}
 
 <metadata>
@@ -267,7 +270,7 @@ Identifiant : ${input.id}
 ${input.otrNumber ? `Sujet OTR N° ${input.otrNumber}` : ''}
 ${isMcqFocused ? 'Attention : Le document source contient des QCM / questions d’examen. Extrais-les fidèlement.' : ''}
 </metadata>
-
+${examContext ? `\n${examContext}\n` : ''}
 <texte_source>
 ${input.text.slice(0, 180000)}
 </texte_source>
@@ -288,7 +291,7 @@ export async function generateLectureWithGemini(
   }
 
   const model = options.model || 'gemini-1.5-flash';
-  const prompt = buildPrompt(input, options.isMcqFocused);
+  const prompt = buildPrompt(input, options.isMcqFocused, options.examContext);
 
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`;
 
@@ -411,7 +414,7 @@ export function fitGroqRequest(args: {
   return { source, maxTokens, estimatedInputTokens, truncated };
 }
 
-function groqPromptParts(input: GenerateLectureInput, isMcqFocused?: boolean): { before: string; after: string } {
+function groqPromptParts(input: GenerateLectureInput, isMcqFocused?: boolean, examContext?: string): { before: string; after: string } {
   return {
     before: `${MEDICAL_AI_PROMPT_TEMPLATE}
 
@@ -421,7 +424,7 @@ Identifiant : ${input.id}
 ${input.otrNumber ? `Sujet OTR N° ${input.otrNumber}` : ''}
 ${isMcqFocused ? 'Attention : Le document source contient des QCM / questions d’examen. Extrais-les fidèlement.' : ''}
 </metadata>
-
+${examContext ? `\n${examContext}\n` : ''}
 <texte_source>
 `,
     after: `
@@ -601,7 +604,7 @@ export async function generateLectureWithGroq(
   }
 
   const model = options.model || 'openai/gpt-oss-120b';
-  const { before, after } = groqPromptParts(input, options.isMcqFocused);
+  const { before, after } = groqPromptParts(input, options.isMcqFocused, options.examContext);
   const probe = fitGroqRequest({
     system: GROQ_SYSTEM_PROMPT,
     before,
@@ -657,7 +660,7 @@ export async function generateLectureWithOpenRouter(
   }
 
   const model = options.model || 'google/gemini-2.0-flash-exp:free';
-  const prompt = buildPrompt(input, options.isMcqFocused);
+  const prompt = buildPrompt(input, options.isMcqFocused, options.examContext);
 
   const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
     method: 'POST',
@@ -715,7 +718,7 @@ export async function generateLectureWithOpenAi(
   }
 
   const model = options.model || 'gpt-4o';
-  const prompt = buildPrompt(input, options.isMcqFocused);
+  const prompt = buildPrompt(input, options.isMcqFocused, options.examContext);
 
   const response = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
@@ -770,15 +773,18 @@ export async function generateLecture(
   input: GenerateLectureInput,
   options: GenerateLectureOptions
 ): Promise<GenerateLectureResult> {
+  // Injecte les questions d'annales de la banque QCM OTR comme référence de priorité.
+  const examContext = options.examContext ?? await fetchQcmExamContext(input).catch(() => '');
+  const enriched = examContext ? { ...options, examContext } : options;
   const provider = options.provider || 'gemini';
   if (provider === 'gemini') {
-    return generateLectureWithGemini(input, options);
+    return generateLectureWithGemini(input, enriched);
   }
   if (provider === 'groq') {
-    return generateLectureWithGroq(input, options);
+    return generateLectureWithGroq(input, enriched);
   }
   if (provider === 'openrouter') {
-    return generateLectureWithOpenRouter(input, options);
+    return generateLectureWithOpenRouter(input, enriched);
   }
-  return generateLectureWithOpenAi(input, options);
+  return generateLectureWithOpenAi(input, enriched);
 }
