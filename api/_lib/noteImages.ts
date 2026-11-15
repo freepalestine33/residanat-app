@@ -58,7 +58,7 @@ export async function uploadNoteAudio(
   const version = Date.parse(updatedAt);
   const path = `${client.user.id}/${noteId}/audio-${version}.${ext}`;
   const { error } = await client.supabase.storage.from('note-images').upload(path, buffer, { contentType: baseMime, upsert: true });
-  if (error) throw new ApiError(500, 'Could not upload the note audio.');
+  if (error) throw new ApiError(500, `Could not upload the note audio: ${error.message}`);
   return path;
 }
 
