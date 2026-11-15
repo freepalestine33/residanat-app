@@ -105,8 +105,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           continue;
         }
         const record = parseRecord(item, collection) as Record<string, unknown> & { id: string; updated_at: string };
+        const audioChanged = record.audio_changed === true;
         let previousAudioPath: string | null = null;
-        if (collection === 'notes' && (typeof record.image_base64 === 'string' || record.audio_changed === true)) {
+        if (collection === 'notes' && (typeof record.image_base64 === 'string' || audioChanged)) {
           const { data: existing, error: existingError } = await client.supabase
             .from('notes')
             .select('updated_at, data')
@@ -129,13 +130,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           delete record.audio_base64;
           delete record.audio_mime;
         }
+        if (collection === 'notes') delete record.audio_changed; // control flag, not a column
         const stored = await upsertIfNewer(
           client,
           tables[collection],
           record,
           collection === 'cards' ? mergeFlashcard : undefined,
         );
-        if (stored && collection === 'notes' && record.audio_changed === true && previousAudioPath) {
+        if (stored && collection === 'notes' && audioChanged && previousAudioPath) {
           const nextAudioPath = (record.data as Record<string, unknown>).audio_path;
           if (nextAudioPath !== previousAudioPath) {
             await client.supabase.storage.from('note-images').remove([previousAudioPath]);
