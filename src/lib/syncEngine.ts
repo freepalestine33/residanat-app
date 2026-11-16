@@ -482,14 +482,22 @@ async function pushQueue(token: string) {
   for (let index = 0; index < regular.length; index += 100) batches.push(regular.slice(index, index + 100));
   batches.push(...imageNotes.map((item) => [item]));
 
+  let firstError: unknown;
   for (const batch of batches) {
-    const body = { deviceId: deviceId(), changes: await prepareChanges(batch) };
-    await requestApi('/api/sync/push', 'POST', token, body);
-    for (const item of batch) {
-      const latest = await db.syncQueue.get(item.key);
-      if (latest?.updatedAt === item.updatedAt) await db.syncQueue.delete(item.key);
+    try {
+      const body = { deviceId: deviceId(), changes: await prepareChanges(batch) };
+      await requestApi('/api/sync/push', 'POST', token, body);
+      for (const item of batch) {
+        const latest = await db.syncQueue.get(item.key);
+        if (latest?.updatedAt === item.updatedAt) await db.syncQueue.delete(item.key);
+      }
+    } catch (error) {
+      // Keep the failed batch queued for the next sync, but don't let it block
+      // the remaining batches — one oversized recording must not stall everything.
+      firstError ??= error;
     }
   }
+  if (firstError) throw firstError;
 }
 
 async function performSync(user: User, initialChoice?: 'upload' | 'download'): Promise<SyncOutcome> {
