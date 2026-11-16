@@ -3,6 +3,9 @@ import { db } from '../db/db';
 /** Soft per-user cap for note media (photos + voice memos) stored in Supabase. */
 export const MEDIA_LIMIT_BYTES = 50 * 1024 * 1024; // 50 MB
 
+/** Mirrors the server cap in api/_lib/noteImages.ts — larger audio can never sync. */
+export const AUDIO_SYNC_LIMIT_BYTES = 2 * 1024 * 1024; // 2 MB
+
 /** Total bytes of note media known to this device (synced notes carry their sizes). */
 export async function getMediaUsage(): Promise<number> {
   const notes = await db.notes.toArray();

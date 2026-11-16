@@ -44,9 +44,11 @@ export function SettingsPage() {
   const [confirmClear, setConfirmClear] = useState(false);
   const [importedLectures, setImportedLectures] = useState<UserLecture[]>([]);
   const [mediaUsage, setMediaUsage] = useState<number | null>(null);
+  const [pendingSync, setPendingSync] = useState<number | null>(null);
 
+  const refreshPendingSync = async () => setPendingSync(await db.syncQueue.count().catch(() => null));
   const refreshImported = async () => setImportedLectures(await db.userLectures.toArray());
-  useEffect(() => { void refreshImported(); }, []);
+  useEffect(() => { void refreshImported(); void refreshPendingSync(); }, []);
   useEffect(() => { void getMediaUsage().then(setMediaUsage).catch(() => setMediaUsage(null)); }, []);
 
   const sendLink = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -156,6 +158,7 @@ export function SettingsPage() {
     setBusy(true);
     await syncNow(user);
     setBusy(false);
+    void refreshPendingSync();
   };
 
   const initialSync = async (choice: 'upload' | 'download') => {
@@ -163,6 +166,7 @@ export function SettingsPage() {
     setBusy(true);
     await chooseInitialSync(user, choice);
     setBusy(false);
+    void refreshPendingSync();
   };
 
   return (
@@ -214,6 +218,12 @@ export function SettingsPage() {
             <>
               <p className="muted">Connecté en tant que {user.email ?? 'votre compte'}.</p>
               <p className="notice sync-detail" role="status">État de synchronisation : {status}{syncError ? ` · ${syncError}` : ''}</p>
+              {pendingSync !== null && pendingSync > 0 && (
+                <p className="notice" role="status">
+                  {pendingSync} élément{pendingSync === 1 ? '' : 's'} en attente d’envoi sur cet appareil.
+                  {syncError ? ' Le dernier échec est affiché ci-dessus — corrigez-le puis synchronisez à nouveau.' : ''}
+                </p>
+              )}
               {initialChoiceRequired && (
                 <div className="notice">
                   <strong>Choisissez comment démarrer sur cet appareil.</strong>

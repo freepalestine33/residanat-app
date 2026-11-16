@@ -3,7 +3,7 @@ import type { Note } from '../types/note';
 import { db } from '../db/db';
 import { queueSyncChange } from '../lib/syncEvents';
 import { createId } from '../lib/createId';
-import { checkMediaQuota } from '../lib/mediaUsage';
+import { AUDIO_SYNC_LIMIT_BYTES, checkMediaQuota } from '../lib/mediaUsage';
 
 interface NoteState {
   notes: Note[];
@@ -67,6 +67,10 @@ export const useNoteStore = create<NoteState>((set, get) => ({
           set({ error: quotaError });
           return;
         }
+      }
+      if (note.audio instanceof Blob && note.audio.size > AUDIO_SYNC_LIMIT_BYTES) {
+        set({ error: 'Ce mémo vocal dépasse 2 Mo et ne peut pas être synchronisé. Réenregistrez-le plus court.' });
+        return;
       }
       const image = resolveNoteImage(note, previous);
       const audio = resolveNoteAudio(note, previous);
